@@ -16,45 +16,34 @@ Window {
     color: CoreSystemPalette.window
 
     ColumnLayout {
-            anchors.fill: parent
-            anchors.margins: Constants.font.pixelSize
+        anchors.fill: parent
+        anchors.margins: Constants.font.pixelSize
 
-
-            CoreLabel {
-                text: qsTr("Login")
-                leftPadding:  Constants.font.pixelSize
-                topPadding: Constants.font.pixelSize
-            }
-
-            CoreGroupBox {
-                RowLayout {
-                    CoreButton {
-                        text: "shalom"
-                    }
-                    CoreButton {
-                        text: "Olam"
-                    }
+        FormGroupBox {
+            title: "Login"
+            body: RowLayout {
+                CoreButton {
+                    text: "ABC"
                 }
-            }
-            CoreLabel {
-                text: qsTr("Server")
-                leftPadding:  Constants.font.pixelSize
-                topPadding: Constants.font.pixelSize
-            }
-            CoreGroupBox {
-                RowLayout {
-                    CoreButton {
-                        text: "shalom"
-                    }
-                    CoreButton {
-                        text: "Olam"
-                    }
-                }
-            }
-            Item {
-                Layout.fillHeight: true
             }
         }
+
+        FormGroupBox {
+            title: qsTr("Server")
+            body: RowLayout {
+                    CoreButton {
+                        text: "shalom"
+                    }
+                    CoreButton {
+                        text: "Olam"
+                    }
+            }
+        }
+
+        Item {
+            Layout.fillHeight: true
+        }
+    }
 
 }
 
