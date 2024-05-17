@@ -17,15 +17,43 @@ Window {
 
     ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 10
+            anchors.margins: Constants.font.pixelSize
 
-            CoreButton {
-                text: "shalom"
-            }
-            CoreButton {
-                text: "Olam"
+
+            CoreLabel {
+                text: qsTr("Login")
+                leftPadding:  Constants.font.pixelSize
+                topPadding: Constants.font.pixelSize
             }
 
+            CoreGroupBox {
+                RowLayout {
+                    CoreButton {
+                        text: "shalom"
+                    }
+                    CoreButton {
+                        text: "Olam"
+                    }
+                }
+            }
+            CoreLabel {
+                text: qsTr("Server")
+                leftPadding:  Constants.font.pixelSize
+                topPadding: Constants.font.pixelSize
+            }
+            CoreGroupBox {
+                RowLayout {
+                    CoreButton {
+                        text: "shalom"
+                    }
+                    CoreButton {
+                        text: "Olam"
+                    }
+                }
+            }
+            Item {
+                Layout.fillHeight: true
+            }
         }
 
 }
