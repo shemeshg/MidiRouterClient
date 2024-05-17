@@ -30,7 +30,7 @@ Window {
                     CoreLabel { text: "Port: ";}
                     CoreTextField { Layout.fillWidth: true; text: "12345"}
                     CoreSwitch {
-                        text: "auto"
+                        text: "local"
                     }
                 }
                 CoreButton {
