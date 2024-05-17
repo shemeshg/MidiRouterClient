@@ -1,19 +1,32 @@
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
-import QtQuick 6.2
+import QtQuick
 import MidiRouterClient
+import QtQuick.Layouts
+import Core
+import QtQuick.Controls
 
 Window {
-    width: mainScreen.width
-    height: mainScreen.height
+    width: Constants.width
+    height: Constants.height
 
     visible: true
-    title: "MidiRouterClient"
+    title: "Midi Router"
+    color: CoreSystemPalette.window
 
-    Screen01 {
-        id: mainScreen
-    }
+    ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 10
+
+            CoreButton {
+                text: "shalom"
+            }
+            CoreButton {
+                text: "Olam"
+            }
+
+        }
 
 }
 

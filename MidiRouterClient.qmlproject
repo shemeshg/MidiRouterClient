@@ -2,7 +2,7 @@ import QmlProject
 
 Project {
     mainFile: "content/App.qml"
-    mainUiFile: "content/Screen01.ui.qml"
+    mainUiFile: "content/Screen01.qml"
 
     /* Include .qml, .js, and image files from current directory and subdirectories */
     QmlFiles {
@@ -102,7 +102,7 @@ Project {
 
     qdsVersion: "4.3"
 
-    quickVersion: "6.2"
+    quickVersion: "6.5"
 
     /* If any modules the project imports require widgets (e.g. QtCharts), widgetApp must be true */
     widgetApp: true
