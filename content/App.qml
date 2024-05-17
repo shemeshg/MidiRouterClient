@@ -20,30 +20,60 @@ Window {
         anchors.margins: Constants.font.pixelSize
 
         FormGroupBox {
-            title: "Login"
-            body: RowLayout {
-                CoreButton {
-                    text: "ABC"
+            title: "<h3>Login</h3>"
+            body: ColumnLayout {
+                RowLayout {
+                    CoreLabel { text: "Server name: ";}
+                    CoreTextField { Layout.fillWidth: true; text: "localhost"}
                 }
+                RowLayout {
+                    CoreLabel { text: "Port: ";}
+                    CoreTextField { Layout.fillWidth: true; text: "12345"}
+                    CoreSwitch {
+                        text: "auto"
+                    }
+                }
+                CoreButton {
+                    text: "Connect"
+                }
+
             }
         }
 
         FormGroupBox {
-            title: qsTr("Server")
-            body: RowLayout {
-                    CoreButton {
-                        text: "shalom"
+            title: qsTr("<h3>Server</h3>")
+            body: ColumnLayout {
+                RowLayout {
+                    CoreLabel { text: "Status: "; Layout.alignment: Qt.AlignRight}
+                    CoreLabel { Layout.fillWidth: true; text: "Running"}
+                }
+                RowLayout {
+                    CoreLabel { text: "Port: "; Layout.alignment: Qt.AlignRight}
+                    CoreTextField { Layout.fillWidth: true; text: "12345"}
+                    CoreSwitch {
+                        text: "auto"
                     }
-                    CoreButton {
-                        text: "Olam"
-                    }
+                }
+
+
+                CoreButton {
+                    text: "Stop"
+                }
+
             }
+
         }
+
+
+
 
         Item {
             Layout.fillHeight: true
         }
+
+
     }
+
 
 }
 

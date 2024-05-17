@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import MidiRouterClient
 
 GroupBox {
+
     palette.alternateBase: CoreSystemPalette.alternateBase
     palette.base: CoreSystemPalette.base
     palette.button: CoreSystemPalette.button

@@ -9,6 +9,7 @@ ColumnLayout {
     property string title: ""
     required property  Component body
 
+
     CoreLabel {
         text: title
         leftPadding:  Constants.font.pixelSize
@@ -17,6 +18,10 @@ ColumnLayout {
     }
 
     CoreGroupBox {
-        Loader { sourceComponent: body }
+        Layout.fillWidth: true
+        id: cgb
+        Loader {
+            width: cgb.width
+            sourceComponent: body }
     }
 }
