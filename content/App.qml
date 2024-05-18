@@ -51,8 +51,8 @@ Window {
             title: qsTr("<h3>Server</h3>")
             body: ColumnLayout {
                 RowLayout {
-                    CoreLabel { text: "Status: "; Layout.alignment: Qt.AlignRight}
-                    CoreLabel { Layout.fillWidth: true; text: "Running"}
+                    CoreLabel  { text: "Status: "; Layout.alignment: Qt.AlignRight}
+                    CoreLabelSelect { Layout.fillWidth: true; text: "Running"}
                 }
                 RowLayout {
                     CoreLabel { text: "Port: "; Layout.alignment: Qt.AlignRight}

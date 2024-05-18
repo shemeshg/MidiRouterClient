@@ -9,3 +9,4 @@ CoreTextArea 1.0 CoreTextArea.qml
 CoreSwitch 1.0 CoreSwitch.qml
 CoreCheckBox 1.0 CoreCheckBox.qml
 CoreGroupBox 1.0 CoreGroupBox.qml
+CoreLabelSelect 1.0 CoreLabelSelect.qml
