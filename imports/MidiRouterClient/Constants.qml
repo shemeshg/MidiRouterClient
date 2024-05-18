@@ -5,8 +5,8 @@ import QtQuick.Studio.Application
 import Dal
 
 QtObject {
-    readonly property int width: 800
-    readonly property int height: 500
+    //readonly property int width: 800
+    //readonly property int height: 500
 
     property string relativeFontDirectory: "fonts"
 
