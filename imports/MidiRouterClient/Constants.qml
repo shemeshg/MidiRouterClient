@@ -2,6 +2,7 @@ pragma Singleton
 
 import QtQuick 6.2
 import QtQuick.Studio.Application
+import Dal
 
 QtObject {
     readonly property int width: 800
@@ -45,4 +46,5 @@ QtObject {
             property bool isDarkTheme: !isDarkColor(systemPalette.text.toString())
         }
 
+    property DalData dalData: DalData {}
 }
