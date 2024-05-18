@@ -8,10 +8,10 @@ import Core
 import QtQuick.Controls
 
 Window {
-    width: Constants.dalData.width
-    height: Constants.dalData.height
-    x: Constants.dalData.x
-    y: Constants.dalData.y
+    width: Constants.balData.width
+    height: Constants.balData.height
+    x: Constants.balData.x
+    y: Constants.balData.y
 
     visible: true
     title: "Midi Router"
