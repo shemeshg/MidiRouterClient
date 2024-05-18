@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import MidiRouterClient
+
 
 ToolTip {
     id: toolTip
@@ -8,7 +8,7 @@ ToolTip {
         color: CoreSystemPalette.text
 
         text: toolTip.text
-        font: Constants.font //Constants.fontSizeNormal()
+        font: CoreSystemPalette.font //Constants.fontSizeNormal()
     }
     background: Rectangle {
         color: CoreSystemPalette.base

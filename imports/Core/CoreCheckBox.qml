@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import MidiRouterClient
+
 
 CheckBox {
     palette.alternateBase: CoreSystemPalette.alternateBase
@@ -19,5 +19,5 @@ CheckBox {
     palette.window: CoreSystemPalette.window
     palette.windowText: CoreSystemPalette.windowText
 
-    font: Constants.font
+    font: CoreSystemPalette.font
 }

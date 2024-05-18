@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import MidiRouterClient
+
 
 TextField {
 
@@ -26,5 +26,5 @@ TextField {
     palette.window: CoreSystemPalette.window
     palette.windowText: CoreSystemPalette.windowText
 
-    font:  Constants.font
+    font:  CoreSystemPalette.font
 }

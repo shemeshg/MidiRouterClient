@@ -20,4 +20,9 @@ SystemPalette {
         colorGroup: SystemPalette.Active
 
         property bool isDarkTheme: !isDarkColor(systemPalette.text.toString())
+
+        property font font: Qt.font({
+                                                 "family": Qt.application.font.family,
+                                                 "pixelSize": Qt.application.font.pixelSize
+                                             })
     }

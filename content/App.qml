@@ -15,6 +15,11 @@ Window {
     title: "Midi Router"
     color: CoreSystemPalette.window
 
+
+    Component.onCompleted: {
+        CoreSystemPalette.font = Constants.font
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: Constants.font.pixelSize

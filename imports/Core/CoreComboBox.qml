@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import MidiRouterClient
 
 ComboBox {
     palette.alternateBase : CoreSystemPalette.alternateBase
@@ -19,5 +18,5 @@ ComboBox {
     palette.window : CoreSystemPalette.window
     palette.windowText : CoreSystemPalette.windowText
 
-    font: Constants.font
+    font: CoreSystemPalette.font
 }
