@@ -10,5 +10,6 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
+        FormGroupBox.qml
 
 )

@@ -13,6 +13,8 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
+add_subdirectory(bal)
+
 qt_add_executable(MidiRouterClientApp src/main.cpp)
 
 qt_add_resources(MidiRouterClientApp "configuration"
@@ -26,6 +28,7 @@ target_link_libraries(MidiRouterClientApp PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    bal
 )
 
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)

@@ -7,12 +7,11 @@ import QtQuick.Controls
 ColumnLayout {
     id: fromGroupBox
     property string title: ""
-    required property  Component body
-
+    required property Component body
 
     CoreLabel {
         text: title
-        leftPadding:  Constants.font.pixelSize
+        leftPadding: Constants.font.pixelSize
         topPadding: Constants.font.pixelSize
         visible: Boolean(title)
     }
@@ -22,6 +21,7 @@ ColumnLayout {
         id: cgb
         Loader {
             width: cgb.width
-            sourceComponent: body }
+            sourceComponent: body
+        }
     }
 }

@@ -17,7 +17,9 @@ qt6_add_qml_module(Core
         CoreButton.qml
         CoreCheckBox.qml
         CoreComboBox.qml
+        CoreGroupBox.qml
         CoreLabel.qml
+        CoreLabelSelect.qml
         CoreSwitch.qml
         CoreSystemPalette.qml
         CoreTextArea.qml
