@@ -27,10 +27,13 @@ Window {
         Constants.balData.saveY(y)
     }
     ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: Constants.font.pixelSize
+
+        width: parent.width
+        height: parent.height
 
         FormGroupBox {
+            Layout.margins: Constants.font.pixelSize
+
             title: "<h3>Login</h3>"
             body: ColumnLayout {
                 RowLayout {
@@ -61,6 +64,7 @@ Window {
         }
 
         FormGroupBox {
+            Layout.margins: Constants.font.pixelSize
             title: qsTr("<h3>Server</h3>")
             body: ColumnLayout {
                 RowLayout {
