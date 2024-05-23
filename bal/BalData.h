@@ -29,6 +29,8 @@ void saveHeight(const int Height);
 
 //[[[end]]]
 
+void startServer();
+
 private:
     QSettings settings;
 

@@ -1,6 +1,9 @@
 find_package(Qt6 REQUIRED COMPONENTS Concurrent)
+add_subdirectory(RtMidiRouterLib)
+
 link_libraries(
      Qt6::Concurrent
+     RtMidiRouterLib
 )
 
 qt6_add_qml_module(bal

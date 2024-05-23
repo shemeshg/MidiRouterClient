@@ -92,7 +92,10 @@ Window {
                 }
 
                 CoreButton {
-                    text: "Stop"
+                    text: "start"
+                    onClicked: {
+                        Constants.balData.startServer()
+                    }
                 }
             }
         }

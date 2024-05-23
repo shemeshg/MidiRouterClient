@@ -1,4 +1,5 @@
 #include "BalData.h"
+#include "RtMidiRouterLib/MidiServerClass.h"
 
 BalData::BalData(QObject *parent)
     : BalDataPrivate{parent}
@@ -79,3 +80,8 @@ void BalData::saveHeight(const int s)
 
 //[[[end]]]
 
+void BalData::startServer()
+{
+    MidiServerClass mc{};
+    mc.connectAndExec();
+}
