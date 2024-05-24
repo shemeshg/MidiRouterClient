@@ -78,6 +78,7 @@ Window {
                     }
                 }
                 RowLayout {
+                    visible: !Constants.balData.isServerRunning
                     CoreLabel {
                         text: "Port: "
                         Layout.alignment: Qt.AlignRight
@@ -85,19 +86,38 @@ Window {
                     CoreTextField {
                         Layout.fillWidth: true
                         text: "12345"
+                        id: portNumber
+                        visible: !isAutoPort.checked
                     }
+                    Item {
+                        Layout.fillWidth: true
+                        visible: isAutoPort.checked
+                    }
+
                     CoreSwitch {
+                        id: isAutoPort
                         text: "auto"
                     }
                 }
 
                 CoreButton {
                     text: "start"
+                    enabled: Number.isInteger(Number(portNumber.text))
+                             && portNumber.text > 0
+                    visible: !Constants.balData.isServerRunning
                     onClicked: {
-                        Constants.balData.startServer(12345)
+                        let port = isAutoPort.checked ? 0 : Number(
+                                                            portNumber.text)
+
+                        Constants.balData.startServer(port)
+                        if (isAutoPort.checked) {
+                            portNumber.text = Constants.balData.serverPort
+                            isAutoPort.checked = false
+                        }
                     }
                 }
                 CoreButton {
+                    visible: Constants.balData.isServerRunning
                     text: "stop"
                     onClicked: {
                         Constants.balData.stopServer()
