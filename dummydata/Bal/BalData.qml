@@ -9,4 +9,14 @@ QtObject {
     function saveHeight(s){}
     function saveX(s){}
     function saveY(s){}
+
+    property int reqServerPortNumber: 12345
+    property int serverPort: 12345
+    property bool isServerRunning: false
+    function stopServer(){
+        isServerRunning = false
+    }
+    function startServer(){
+        isServerRunning = true
+    }
 }

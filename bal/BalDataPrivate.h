@@ -24,6 +24,7 @@ class BalDataPrivate : public JsAsync
     Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged )
     Q_PROPERTY(int serverPort READ serverPort  NOTIFY serverPortChanged )
     Q_PROPERTY(bool isServerRunning READ isServerRunning  NOTIFY isServerRunningChanged )
+    Q_PROPERTY(int reqServerPortNumber READ reqServerPortNumber WRITE setReqServerPortNumber NOTIFY reqServerPortNumberChanged )
     
     QML_ELEMENT
 public:
@@ -86,6 +87,18 @@ void setHeight(const int newHeight)
     bool isServerRunning() const{return m_isServerRunning;} 
     
 
+    
+    int reqServerPortNumber() const{return m_reqServerPortNumber;} 
+    
+void setReqServerPortNumber(const int newReqServerPortNumber)
+    {
+        if (m_reqServerPortNumber == newReqServerPortNumber)
+            return;
+        m_reqServerPortNumber = newReqServerPortNumber;
+        emit reqServerPortNumberChanged();
+    }
+
+
 
 signals:
     void xChanged();
@@ -94,6 +107,7 @@ signals:
     void heightChanged();
     void serverPortChanged();
     void isServerRunningChanged();
+    void reqServerPortNumberChanged();
     
 
 protected:
@@ -106,6 +120,7 @@ private:
     int m_y;
     int m_width;
     int m_height;
+    int m_reqServerPortNumber;
     
     void ctorClass();
 };

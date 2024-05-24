@@ -18,6 +18,7 @@ loadX();
 loadY();
 loadWidth();
 loadHeight();
+loadReqServerPortNumber();
 
 //[[[end]]]
 }
@@ -76,6 +77,17 @@ void BalData::saveHeight(const int s)
     settings.setValue("height", s);
     loadHeight();
 }
+void BalData::loadReqServerPortNumber()
+{
+    int s = settings.value("reqServerPortNumber", 12345).toInt();
+    setReqServerPortNumber(s);
+}
+
+void BalData::saveReqServerPortNumber(const int s)
+{
+    settings.setValue("reqServerPortNumber", s);
+    loadReqServerPortNumber();
+}
 
 //[[[end]]]
 
@@ -91,6 +103,9 @@ void BalData::startServer(int portNumber)
 {
     mc.start(portNumber);
     updateServerStatus();
+    if (isServerRunning()) {
+        saveReqServerPortNumber(serverPort());
+    }
 }
 
 void BalData::stopServer()

@@ -27,6 +27,7 @@ void saveX(const int X);
 void saveY(const int Y);
 void saveWidth(const int Width);
 void saveHeight(const int Height);
+void saveReqServerPortNumber(const int ReqServerPortNumber);
 
 //[[[end]]]
 
@@ -49,6 +50,7 @@ void loadX();
 void loadY();
 void loadWidth();
 void loadHeight();
+void loadReqServerPortNumber();
 
 //[[[end]]]
 MidiServerClass mc{};

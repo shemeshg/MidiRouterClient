@@ -85,8 +85,8 @@ Window {
                     }
                     CoreTextField {
                         Layout.fillWidth: true
-                        text: "12345"
-                        id: portNumber
+                        text: Constants.balData.reqServerPortNumber
+                        id: serverPortNumber
                         visible: !isAutoPort.checked
                     }
                     Item {
@@ -102,16 +102,16 @@ Window {
 
                 CoreButton {
                     text: "start"
-                    enabled: Number.isInteger(Number(portNumber.text))
-                             && portNumber.text > 0
+                    enabled: Number.isInteger(Number(serverPortNumber.text))
+                             && serverPortNumber.text > 0
                     visible: !Constants.balData.isServerRunning
                     onClicked: {
                         let port = isAutoPort.checked ? 0 : Number(
-                                                            portNumber.text)
+                                                            serverPortNumber.text)
 
                         Constants.balData.startServer(port)
                         if (isAutoPort.checked) {
-                            portNumber.text = Constants.balData.serverPort
+                            serverPortNumber.text = Constants.balData.serverPort
                             isAutoPort.checked = false
                         }
                     }
