@@ -1,14 +1,8 @@
 #include "MidiServerClass.h"
 
 #include "./libs/websocket/websocketclientwrapper.h"
-#include "./libs/websocket/websockettransport.h"
 
-#include <QCoreApplication>
 #include <QWebChannel>
-#include <QWebSocketServer>
-#include <QtCore/QCommandLineParser>
-#include <QtCore/QCommandLineOption>
-#include <QSettings>
 
 #include "webchannel/wcmidiout.h"
 #include "webchannel/wcmidiin.h"

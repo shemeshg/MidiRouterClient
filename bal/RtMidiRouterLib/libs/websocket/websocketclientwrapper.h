@@ -53,11 +53,8 @@
 
 #include <QObject>
 
-class WebSocketTransport;
-
-QT_BEGIN_NAMESPACE
-class QWebSocketServer;
-QT_END_NAMESPACE
+#include <QWebSocketServer>
+#include "websockettransport.h"
 
 class WebSocketClientWrapper : public QObject
 {

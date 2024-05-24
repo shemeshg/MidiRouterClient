@@ -3,12 +3,6 @@
 #include <QObject>
 #include "QtWebSockets/qwebsocketserver.h"
 
-class WebSocketTransport;
-
-QT_BEGIN_NAMESPACE
-class QWebSocketServer;
-QT_END_NAMESPACE
-
 class MidiServerClass
 {
 public:
