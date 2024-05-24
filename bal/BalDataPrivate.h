@@ -5,7 +5,6 @@
 #include <QQmlEngine>
 #include "JsAsync.h"
 
-
 /*[[[cog
 import cog
 from BalDataPrivate import classBalDataPrivate
@@ -18,23 +17,22 @@ cog.outl(classBalDataPrivate.getClassHeader(),
 class BalDataPrivate : public JsAsync
 {
     Q_OBJECT
-    Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged )
-    Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged )
-    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged )
-    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged )
-    Q_PROPERTY(int serverPort READ serverPort  NOTIFY serverPortChanged )
-    Q_PROPERTY(bool isServerRunning READ isServerRunning  NOTIFY isServerRunningChanged )
-    Q_PROPERTY(int reqServerPortNumber READ reqServerPortNumber WRITE setReqServerPortNumber NOTIFY reqServerPortNumberChanged )
-    
+    Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged)
+    Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged)
+    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
+    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
+    Q_PROPERTY(int serverPort READ serverPort NOTIFY serverPortChanged)
+    Q_PROPERTY(bool isServerRunning READ isServerRunning NOTIFY isServerRunningChanged)
+    Q_PROPERTY(int reqServerPortNumber READ reqServerPortNumber WRITE setReqServerPortNumber NOTIFY
+                   reqServerPortNumberChanged)
+
     QML_ELEMENT
 public:
     BalDataPrivate(QObject *parent = nullptr);
 
-    
-    
-    int x() const{return m_x;} 
-    
-void setX(const int newX)
+    int x() const { return m_x; }
+
+    void setX(const int newX)
     {
         if (m_x == newX)
             return;
@@ -42,11 +40,9 @@ void setX(const int newX)
         emit xChanged();
     }
 
+    int y() const { return m_y; }
 
-    
-    int y() const{return m_y;} 
-    
-void setY(const int newY)
+    void setY(const int newY)
     {
         if (m_y == newY)
             return;
@@ -54,11 +50,9 @@ void setY(const int newY)
         emit yChanged();
     }
 
+    int width() const { return m_width; }
 
-    
-    int width() const{return m_width;} 
-    
-void setWidth(const int newWidth)
+    void setWidth(const int newWidth)
     {
         if (m_width == newWidth)
             return;
@@ -66,11 +60,9 @@ void setWidth(const int newWidth)
         emit widthChanged();
     }
 
+    int height() const { return m_height; }
 
-    
-    int height() const{return m_height;} 
-    
-void setHeight(const int newHeight)
+    void setHeight(const int newHeight)
     {
         if (m_height == newHeight)
             return;
@@ -78,27 +70,19 @@ void setHeight(const int newHeight)
         emit heightChanged();
     }
 
+    int serverPort() const { return m_serverPort; }
 
-    
-    int serverPort() const{return m_serverPort;} 
-    
+    bool isServerRunning() const { return m_isServerRunning; }
 
-    
-    bool isServerRunning() const{return m_isServerRunning;} 
-    
+    int reqServerPortNumber() const { return m_reqServerPortNumber; }
 
-    
-    int reqServerPortNumber() const{return m_reqServerPortNumber;} 
-    
-void setReqServerPortNumber(const int newReqServerPortNumber)
+    void setReqServerPortNumber(const int newReqServerPortNumber)
     {
         if (m_reqServerPortNumber == newReqServerPortNumber)
             return;
         m_reqServerPortNumber = newReqServerPortNumber;
         emit reqServerPortNumberChanged();
     }
-
-
 
 signals:
     void xChanged();
@@ -108,12 +92,10 @@ signals:
     void serverPortChanged();
     void isServerRunningChanged();
     void reqServerPortNumberChanged();
-    
 
 protected:
     int m_serverPort;
     bool m_isServerRunning;
-    
 
 private:
     int m_x;
@@ -121,10 +103,8 @@ private:
     int m_width;
     int m_height;
     int m_reqServerPortNumber;
-    
+
     void ctorClass();
 };
 
 //[[[end]]]
-
-
