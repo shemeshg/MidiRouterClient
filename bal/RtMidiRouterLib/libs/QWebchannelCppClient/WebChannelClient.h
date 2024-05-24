@@ -1,4 +1,5 @@
 #pragma once
+// https://github.com/P1eaz/QWebchannelCppClient/blob/master/main.cpp
 
 #include <qjsonarray.h>
 #include <qjsonobject.h>
