@@ -97,6 +97,12 @@ Window {
                         Constants.balData.startServer()
                     }
                 }
+                CoreButton {
+                    text: "stop"
+                    onClicked: {
+                        Constants.balData.stopServer()
+                    }
+                }
             }
         }
 

@@ -18,11 +18,33 @@ using namespace Webchannel;
 
 MidiServerClass::MidiServerClass() {}
 
-void MidiServerClass::connectAndExec()
+void MidiServerClass::start()
 {
-    QWebSocketServer *server = new QWebSocketServer(QStringLiteral(
-                                                        "QWebChannel Standalone Example Server"),
-                                                    QWebSocketServer::NonSecureMode);
+    if (serverIsRunning) {
+        return;
+    }
+    server = new QWebSocketServer(QStringLiteral("QWebChannel Standalone Example Server"),
+                                  QWebSocketServer::NonSecureMode);
+
+    // wrap WebSocket clients in QWebChannelAbstractTransport objects
+    WebSocketClientWrapper *clientWrapper = new WebSocketClientWrapper(server); //NOLINT
+
+    // setup the channel
+    QWebChannel *channel = new QWebChannel(server); //NOLINT
+    QObject::connect(clientWrapper,
+                     &WebSocketClientWrapper::clientConnected,
+                     channel,
+                     &QWebChannel::connectTo);
+
+    // setup the dialog and publish it to the QWebChannel
+    WcMidiOut *wcmidiout = new WcMidiOut(server); //NOLINT
+    channel->registerObject(QStringLiteral("wcmidiout"), wcmidiout);
+    WcMidiIn *wcmidiin = new WcMidiIn(server); //NOLINT
+    channel->registerObject(QStringLiteral("wcmidiin"), wcmidiin);
+    WcUserData *wcuserdata = new WcUserData(server); //NOLINT
+    channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
+    //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
+
     if (!server->listen(QHostAddress::Any, port)) {
         //qFatal("Failed to open web socket server.");
         serverIsRunning = false;
@@ -33,21 +55,12 @@ void MidiServerClass::connectAndExec()
     if (!serverIsRunning){
         return;
     }
+}
 
-    // wrap WebSocket clients in QWebChannelAbstractTransport objects
-    WebSocketClientWrapper *clientWrapper=new WebSocketClientWrapper(server); //NOLINT
-
-    // setup the channel
-    QWebChannel *channel=new QWebChannel(); //NOLINT
-    QObject::connect(clientWrapper, &WebSocketClientWrapper::clientConnected,
-                     channel, &QWebChannel::connectTo);
-
-    // setup the dialog and publish it to the QWebChannel
-    WcMidiOut *wcmidiout = new WcMidiOut(); //NOLINT
-    channel->registerObject(QStringLiteral("wcmidiout"), wcmidiout);
-    WcMidiIn *wcmidiin = new WcMidiIn(); //NOLINT
-    channel->registerObject(QStringLiteral("wcmidiin"), wcmidiin);
-    WcUserData *wcuserdata = new WcUserData(); //NOLINT
-    channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
-    //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
+void MidiServerClass::stop()
+{
+    if (serverIsRunning) {
+        server->deleteLater();
+        serverIsRunning = false;
+    }
 }

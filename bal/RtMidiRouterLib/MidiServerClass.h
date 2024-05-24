@@ -1,14 +1,21 @@
 #pragma once
 
-namespace {
-    constexpr int defaultPort = 12345;
-}
+#include <QObject>
+#include "QtWebSockets/qwebsocketserver.h"
+
+class WebSocketTransport;
+
+QT_BEGIN_NAMESPACE
+class QWebSocketServer;
+QT_END_NAMESPACE
 
 class MidiServerClass
 {
 public:
     MidiServerClass();
-    void connectAndExec();
+    ~MidiServerClass() { stop(); }
+    void start();
+    void stop();
     int getPort(){
         return port;
     }
@@ -16,8 +23,9 @@ public:
         return serverIsRunning;
     }
 private:
-    int port = defaultPort;
+    int port = 12345;
     bool serverIsRunning = false;
+    QWebSocketServer *server;
 };
 
 

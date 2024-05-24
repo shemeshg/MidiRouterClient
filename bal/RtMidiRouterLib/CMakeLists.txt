@@ -22,6 +22,7 @@ add_library(RtMidiRouterLib STATIC
   MidiRoute/midiroute.cpp
   MidiRoute/rangemap.cpp
   MidiServerClass.cpp
+  MidiServerClass.h
   webchannel/virtualinout.cpp
   webchannel/wcmidiin.cpp
   webchannel/wcmidiout.cpp

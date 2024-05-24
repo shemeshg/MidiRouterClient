@@ -1,5 +1,6 @@
 #pragma once
 #include "BalDataPrivate.h"
+#include "RtMidiRouterLib/MidiServerClass.h"
 
 class BalData : public BalDataPrivate
 
@@ -30,6 +31,7 @@ void saveHeight(const int Height);
 //[[[end]]]
 
 void startServer();
+void stopServer();
 
 private:
     QSettings settings;
@@ -49,5 +51,5 @@ void loadWidth();
 void loadHeight();
 
 //[[[end]]]
-
+MidiServerClass mc{};
 };
