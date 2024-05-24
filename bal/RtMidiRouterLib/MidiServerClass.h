@@ -8,7 +8,7 @@ class MidiServerClass
 public:
     MidiServerClass();
     ~MidiServerClass() { stop(); }
-    void start();
+    void start(int portNumber);
     void stop();
     int getPort(){
         return port;
@@ -17,7 +17,7 @@ public:
         return serverIsRunning;
     }
 private:
-    int port = 12345;
+    int port = -1;
     bool serverIsRunning = false;
     QWebSocketServer *server;
 };

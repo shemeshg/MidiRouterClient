@@ -12,7 +12,7 @@ using namespace Webchannel;
 
 MidiServerClass::MidiServerClass() {}
 
-void MidiServerClass::start()
+void MidiServerClass::start(int portNumber)
 {
     if (serverIsRunning) {
         return;
@@ -39,11 +39,12 @@ void MidiServerClass::start()
     channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
     //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
 
-    if (!server->listen(QHostAddress::Any, port)) {
+    if (!server->listen(QHostAddress::Any, portNumber)) {
         //qFatal("Failed to open web socket server.");
         serverIsRunning = false;
     } else {
         serverIsRunning = true;
+        port = server->serverPort();
     }
 
     if (!serverIsRunning){

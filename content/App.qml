@@ -94,7 +94,7 @@ Window {
                 CoreButton {
                     text: "start"
                     onClicked: {
-                        Constants.balData.startServer()
+                        Constants.balData.startServer(12345)
                     }
                 }
                 CoreButton {

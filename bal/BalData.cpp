@@ -79,9 +79,9 @@ void BalData::saveHeight(const int s)
 
 //[[[end]]]
 
-void BalData::startServer()
-{    
-    mc.start();
+void BalData::startServer(int portNumber)
+{
+    mc.start(portNumber);
 }
 
 void BalData::stopServer()

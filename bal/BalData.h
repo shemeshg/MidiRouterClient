@@ -30,7 +30,7 @@ void saveHeight(const int Height);
 
 //[[[end]]]
 
-void startServer();
+void startServer(int portNumber);
 void stopServer();
 
 private:
