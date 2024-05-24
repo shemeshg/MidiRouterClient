@@ -37,6 +37,22 @@ p.is_local_storage = True
 p.local_storage_default = 500
 ary.append(p)
 
+
+
+p = Prpt("int",'serverPort')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = True
+ary.append(p)
+
+p = Prpt("bool",'isServerRunning')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = True
+ary.append(p)
+
+
+
 enumClasss = []
 
 classBalDataPrivate = PrptClass("BalDataPrivate", ary, enumClasss)

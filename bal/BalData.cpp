@@ -79,12 +79,22 @@ void BalData::saveHeight(const int s)
 
 //[[[end]]]
 
+void BalData::updateServerStatus()
+{
+    m_serverPort = mc.getPort();
+    m_isServerRunning = mc.getServerIsRunning();
+    emit serverPortChanged();
+    emit isServerRunningChanged();
+}
+
 void BalData::startServer(int portNumber)
 {
     mc.start(portNumber);
+    updateServerStatus();
 }
 
 void BalData::stopServer()
 {
     mc.stop();
+    updateServerStatus();
 }

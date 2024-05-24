@@ -52,4 +52,5 @@ void loadHeight();
 
 //[[[end]]]
 MidiServerClass mc{};
+void updateServerStatus();
 };

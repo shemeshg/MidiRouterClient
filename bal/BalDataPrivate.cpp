@@ -20,5 +20,6 @@ cog.outl(classBalDataPrivate.getClassCpp(),
 
 void BalDataPrivate::ctorClass()
 {
-
+    m_isServerRunning = false;
+    m_serverPort = -1;
 }

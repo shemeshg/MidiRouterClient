@@ -189,6 +189,9 @@ public:
 signals:
     ${signals_content}
 
+protected:
+    ${protected_content}
+
 private:
     ${private_content}
     void ctorClass();
@@ -201,6 +204,7 @@ private:
             public_content=self.get_public_content(),
             signals_content=self.get_signals_content(),
             private_content=self.get_private_content(),
+            protected_content = self.get_protected_content(),
             inhirit_from = self.inhirit_from)
 
     def get_q_object_content(self):
@@ -226,7 +230,15 @@ private:
     def get_private_content(self):
         private_content = ""
         for row in self.prptAry:
-            private_content = private_content + row.private_h_file(self.class_name)
+            if row.is_writable == True:
+                private_content = private_content + row.private_h_file(self.class_name)
+        return private_content
+
+    def get_protected_content(self):
+        private_content = ""
+        for row in self.prptAry:
+            if row.is_writable == False:
+                private_content = private_content + row.private_h_file(self.class_name)
         return private_content
 
 """

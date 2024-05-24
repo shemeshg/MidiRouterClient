@@ -74,7 +74,7 @@ Window {
                     }
                     CoreLabelSelect {
                         Layout.fillWidth: true
-                        text: "Running"
+                        text: Constants.balData.isServerRunning ? "Running " + Constants.balData.serverPort : "Stopped"
                     }
                 }
                 RowLayout {
