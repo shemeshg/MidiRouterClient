@@ -103,7 +103,8 @@ Window {
                 CoreButton {
                     text: "start"
                     enabled: Number.isInteger(Number(serverPortNumber.text))
-                             && serverPortNumber.text > 0
+                             && (serverPortNumber.text > 0
+                                 || isAutoPort.checked)
                     visible: !Constants.balData.isServerRunning
                     onClicked: {
                         let port = isAutoPort.checked ? 0 : Number(
