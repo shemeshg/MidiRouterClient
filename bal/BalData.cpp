@@ -93,15 +93,15 @@ void BalData::saveReqServerPortNumber(const int s)
 
 void BalData::updateServerStatus()
 {
-    m_serverPort = mc.getPort();
-    m_isServerRunning = mc.getServerIsRunning();
+    m_serverPort = msc.getPort();
+    m_isServerRunning = msc.getServerIsRunning();
     emit serverPortChanged();
     emit isServerRunningChanged();
 }
 
 void BalData::startServer(int portNumber)
 {
-    mc.start(portNumber);
+    msc.start(portNumber);
     updateServerStatus();
     if (isServerRunning()) {
         saveReqServerPortNumber(serverPort());
@@ -110,6 +110,16 @@ void BalData::startServer(int portNumber)
 
 void BalData::stopServer()
 {
-    mc.stop();
+    msc.stop();
     updateServerStatus();
+}
+
+void BalData::startClient(int portNumber)
+{
+    mcc.start(portNumber);
+}
+
+void BalData::stopClient()
+{
+    mcc.stop();
 }

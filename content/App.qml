@@ -59,6 +59,9 @@ Window {
                 }
                 CoreButton {
                     text: "Connect"
+                    onClicked: {
+                        Constants.balData.startClient(12345)
+                    }
                 }
             }
         }

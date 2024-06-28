@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QObject>
 #include "QtWebSockets/qwebsocketserver.h"
 
 class MidiServerClass

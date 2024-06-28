@@ -1,5 +1,6 @@
 #pragma once
 #include "BalDataPrivate.h"
+#include "RtMidiRouterLib/MidiClientClass.h"
 #include "RtMidiRouterLib/MidiServerClass.h"
 
 class BalData : public BalDataPrivate
@@ -34,6 +35,9 @@ void saveReqServerPortNumber(const int ReqServerPortNumber);
 void startServer(int portNumber);
 void stopServer();
 
+void startClient(int portNumber);
+void stopClient();
+
 private:
     QSettings settings;
 
@@ -53,6 +57,7 @@ void loadHeight();
 void loadReqServerPortNumber();
 
 //[[[end]]]
-MidiServerClass mc{};
+MidiServerClass msc{};
+MidiClientClass mcc{};
 void updateServerStatus();
 };

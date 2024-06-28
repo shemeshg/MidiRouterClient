@@ -15,14 +15,16 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets WebSockets WebChannel REQU
 add_subdirectory(RtMidiWrap)
 
 add_library(RtMidiRouterLib STATIC
+  MidiServerClass.cpp
+  MidiServerClass.h
+  MidiClientClass.cpp
+  MidiClientClass.h
   libs/QWebchannelCppClient/WebChannelClient.cpp
   libs/websocket/websocketclientwrapper.cpp
   libs/websocket/websockettransport.cpp    
   MidiRoute/filters/FilterMidiChannelMsg.cpp  
   MidiRoute/midiroute.cpp
   MidiRoute/rangemap.cpp
-  MidiServerClass.cpp
-  MidiServerClass.h
   webchannel/virtualinout.cpp
   webchannel/wcmidiin.cpp
   webchannel/wcmidiout.cpp
