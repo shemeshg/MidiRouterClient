@@ -34,8 +34,18 @@ Window {
         FormGroupBox {
             Layout.margins: Constants.font.pixelSize
 
-            title: "<h3>Login</h3>"
+            title: "<h3>Client</h3>"
             body: ColumnLayout {
+                RowLayout {
+                    CoreLabel {
+                        text: "Status: "
+                        Layout.alignment: Qt.AlignRight
+                    }
+                    CoreLabelSelect {
+                        Layout.fillWidth: true
+                        text: Constants.balData.isServerRunning ? "Running " + Constants.balData.serverPort : "Stopped"
+                    }
+                }
                 RowLayout {
                     CoreLabel {
                         text: "Server name: "
@@ -57,10 +67,19 @@ Window {
                         text: "local"
                     }
                 }
-                CoreButton {
-                    text: "Connect"
-                    onClicked: {
-                        Constants.balData.startClient(12345)
+                RowLayout {
+                    CoreButton {
+                        text: "Connect"
+                        onClicked: {
+                            Constants.balData.startClient(12345)
+                        }
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    CoreSwitch {
+                        text: "auto"
                     }
                 }
             }
