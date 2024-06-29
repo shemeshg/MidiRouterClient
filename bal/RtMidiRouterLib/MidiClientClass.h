@@ -1,5 +1,8 @@
 #pragma once
 #include <QString>
+#include "QtWebSockets/qwebsocket.h"
+#include "QtWebSockets/qwebsocketserver.h"
+#include "libs/QWebchannelCppClient/WebChannelClient.h"
 
 class MidiClientClass
 {
@@ -17,5 +20,8 @@ public:
 private:
     int port = -1;
     bool clientIsRunning = false;
-    //QWebSocketServer *server;
+
+    std::unique_ptr<QWebSocket> qwebsocket = std::unique_ptr<QWebSocket>(new QWebSocket());
+    std::unique_ptr<CWebChannelClient> qwebsocketClient = std::unique_ptr<CWebChannelClient>(
+        new CWebChannelClient(qwebsocket.get()));
 };
