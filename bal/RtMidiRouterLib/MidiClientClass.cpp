@@ -1,5 +1,6 @@
 #include "MidiClientClass.h"
 #include <QDebug>
+#include <QJSEngine>
 
 MidiClientClass::MidiClientClass()
 {
@@ -41,4 +42,22 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
 void MidiClientClass::stop()
 {
     qDebug() << "client stopped";
+}
+
+void MidiClientClass::invokeMethod(const QString &object,
+                                   const QString &method,
+                                   const QJsonArray &args,
+                                   bool isResponse,
+                                   const QJSValue &callback,
+                                   QJSEngine *engine)
+{
+    if (isResponse) {
+        auto resopnse1 = qwebsocketClient->invokeMethod(object, method, args);
+        resopnse1->connect(resopnse1, &CWebChannelResponse::result, [=](const QJsonValue &message) {
+            QJSValue cbCopy(callback);
+            cbCopy.call(QJSValueList{engine->toScriptValue(message)});
+        });
+    } else {
+        qwebsocketClient->invokeNoResponseMethod(object, method, args);
+    }
 }

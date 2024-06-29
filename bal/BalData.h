@@ -37,6 +37,7 @@ void stopServer();
 
 void startClient(const QString &serverName, int portNumber);
 void stopClient();
+void testDummyDelete(const QJSValue &callback);
 
 private:
     QSettings settings;

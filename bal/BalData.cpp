@@ -123,3 +123,8 @@ void BalData::stopClient()
 {
     mcc.stop();
 }
+
+void BalData::testDummyDelete(const QJSValue &callback)
+{
+    mcc.invokeMethod("wcmidiout", "getPortCount", {}, true, callback, qjsEngine(this));
+}

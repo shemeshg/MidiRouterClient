@@ -1,4 +1,5 @@
 #pragma once
+#include <QJSValue>
 #include <QString>
 #include "QtWebSockets/qwebsocket.h"
 #include "QtWebSockets/qwebsocketserver.h"
@@ -17,6 +18,14 @@ public:
     bool getClientIsRunning(){
         return clientIsRunning;
     }
+
+    void invokeMethod(const QString &object,
+                      const QString &method,
+                      const QJsonArray &args,
+                      bool isResponse,
+                      const QJSValue &callback,
+                      QJSEngine *engine);
+
 private:
     int port = -1;
     bool clientIsRunning = false;

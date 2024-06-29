@@ -74,6 +74,16 @@ Window {
                             Constants.balData.startClient("localhost", 12345)
                         }
                     }
+                    CoreButton {
+                        text: "test"
+                        onClicked: {
+                            Constants.balData.testDummyDelete(x => {
+                                                                  console.log(
+                                                                      "we have " + x)
+                                                              })
+                        }
+                    }
+
                     Item {
                         Layout.fillWidth: true
                     }
