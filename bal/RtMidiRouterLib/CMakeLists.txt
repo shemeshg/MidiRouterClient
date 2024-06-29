@@ -19,6 +19,8 @@ add_library(RtMidiRouterLib STATIC
   MidiServerClass.h
   MidiClientClass.cpp
   MidiClientClass.h
+  MidiClient/MidiClientConnection.h
+  MidiClient/MidiClientConnection.cpp
   libs/QWebchannelCppClient/WebChannelClient.cpp
   libs/websocket/websocketclientwrapper.cpp
   libs/websocket/websockettransport.cpp    

@@ -1,6 +1,7 @@
 #pragma once
 #include <QJSValue>
 #include <QString>
+#include "MidiClient/MidiClientConnection.h"
 #include "QtWebSockets/qwebsocket.h"
 #include "QtWebSockets/qwebsocketserver.h"
 #include "libs/QWebchannelCppClient/WebChannelClient.h"
@@ -25,6 +26,8 @@ public:
                       bool isResponse,
                       const QJSValue &callback,
                       QJSEngine *engine);
+
+    MidiClientConnection midiClientConnection{};
 
 private:
     int port = -1;

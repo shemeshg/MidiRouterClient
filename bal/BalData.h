@@ -7,6 +7,7 @@ class BalData : public BalDataPrivate
 
 {
     Q_OBJECT
+    Q_PROPERTY(MidiClientConnection *midiClientConnection READ midiClientConnection CONSTANT)
     QML_ELEMENT
 public:
     explicit BalData(QObject *parent = nullptr);
@@ -38,6 +39,8 @@ void stopServer();
 void startClient(const QString &serverName, int portNumber);
 void stopClient();
 void testDummyDelete(const QJSValue &callback);
+
+MidiClientConnection *midiClientConnection() { return &mcc.midiClientConnection; }
 
 private:
     QSettings settings;

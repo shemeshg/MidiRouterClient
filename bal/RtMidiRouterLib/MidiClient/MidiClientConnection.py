@@ -1,0 +1,24 @@
+from property import Prpt, PrptClass, EnumClass
+
+
+ary = []
+p = Prpt("QString",'serverStatusText')
+p.is_bindable = False
+p.is_writable = True
+p.is_notify = True
+ary.append(p)
+p = Prpt("ServerStatus",'serverStatus')
+p.is_bindable = False
+p.is_writable = True
+p.is_notify = True
+ary.append(p)
+
+enumClasss = []
+e = EnumClass("ServerStatus",
+        ["Stopped",
+        "Starting",
+        "Running",
+        "Failed"])
+enumClasss.append(e)
+
+classMidiClientConnection = PrptClass("MidiClientConnection", ary, enumClasss)
