@@ -66,8 +66,11 @@ public:
 	//ÊôÐÔ
 	//void setProperty(const QString& object, const QString& propertyName, );
 
+    void invokeNoResponseMethod(const QString &object,
+                                const QString &method,
+                                const QJsonArray &args);
 signals:
-	void initialized();
+    void initialized();
 
 private:
 	void handleReceivedMessage(const QString& text);

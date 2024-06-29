@@ -1,7 +1,12 @@
 #include "MidiClientClass.h"
 #include <QDebug>
 
-MidiClientClass::MidiClientClass() {}
+MidiClientClass::MidiClientClass()
+{
+    CWebChannelConnection::connect(qwebsocket.get(), &QWebSocket::disconnected, [=] {
+        qDebug() << "Disconnected";
+    });
+}
 
 void MidiClientClass::start(const QString &serverName, int portNumber)
 {
@@ -20,7 +25,9 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
         if (WaitForSignal(qwebsocketClient.get(), &CWebChannelClient::initialized)) {
             qDebug() << "Initialized";
             // Testing
-            auto outports = qwebsocketClient->invokeMethodBlocking("wcmidiout", "getPortCount", {});
+            QJsonValue outports = qwebsocketClient->invokeMethodBlocking("wcmidiout",
+                                                                         "getPortCount",
+                                                                         {});
             qDebug() << "We have " << outports << " out ports";
             // End testing
         } else {

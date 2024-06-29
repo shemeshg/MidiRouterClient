@@ -151,7 +151,22 @@ void CWebChannelClient::disconnect(const QString object, const QString& signal)
 	m_objects[object].Connections[signalID]->disconnect();
 }
 
+void CWebChannelClient::invokeNoResponseMethod(const QString &object,
+                                               const QString &method,
+                                               const QJsonArray &args)
+{
+    if (m_objects.find(object) == m_objects.end())
+        return;
+    if (m_objects[object].Methods.find(method) == m_objects[object].Methods.end())
+        return;
 
+    invoke({{"type", mtInvokeMethod},
+            {"object", object},
+            {"method", m_objects[object].Methods[method]},
+            {"args", args},
+            {"id", m_ID}},
+           false);
+}
 
 void CWebChannelClient::handleReceivedMessage(const QString& text)
 {
