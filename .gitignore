@@ -84,3 +84,4 @@ CMakeLists.txt.user
 *.qmlproject.qtds
 
 build/
+.vscode/
