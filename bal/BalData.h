@@ -35,7 +35,7 @@ void saveReqServerPortNumber(const int ReqServerPortNumber);
 void startServer(int portNumber);
 void stopServer();
 
-void startClient(int portNumber);
+void startClient(const QString &serverName, int portNumber);
 void stopClient();
 
 private:

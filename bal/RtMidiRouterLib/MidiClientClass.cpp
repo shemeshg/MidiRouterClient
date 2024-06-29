@@ -3,9 +3,9 @@
 
 MidiClientClass::MidiClientClass() {}
 
-void MidiClientClass::start(int portNumber)
+void MidiClientClass::start(const QString &serverName, int portNumber)
 {
-    qDebug() << "client starting at" << portNumber;
+    qDebug() << "client " << serverName << " port " << portNumber;
 }
 
 void MidiClientClass::stop()

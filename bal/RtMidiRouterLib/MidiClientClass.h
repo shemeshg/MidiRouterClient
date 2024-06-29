@@ -1,11 +1,12 @@
 #pragma once
+#include <QString>
 
 class MidiClientClass
 {
 public:
     MidiClientClass();
     ~MidiClientClass() { stop(); }
-    void start(int portNumber);
+    void start(const QString &serverName, int portNumber);
     void stop();
     int getPort(){
         return port;

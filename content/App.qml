@@ -71,7 +71,7 @@ Window {
                     CoreButton {
                         text: "Connect"
                         onClicked: {
-                            Constants.balData.startClient(12345)
+                            Constants.balData.startClient("localhost", 12345)
                         }
                     }
                     Item {

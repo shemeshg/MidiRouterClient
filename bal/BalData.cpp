@@ -114,9 +114,9 @@ void BalData::stopServer()
     updateServerStatus();
 }
 
-void BalData::startClient(int portNumber)
+void BalData::startClient(const QString &serverName, int portNumber)
 {
-    mcc.start(portNumber);
+    mcc.start(serverName, portNumber);
 }
 
 void BalData::stopClient()
