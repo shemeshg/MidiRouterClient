@@ -72,7 +72,7 @@ Window {
                         text: "Connect"
                         onClicked: {
                             Constants.balData.setAsyncServerStatusAndText(
-                                        1, () => {
+                                        Constants.ServerStatus.STARTING, () => {
                                             Constants.balData.startClient(
                                                 "localhost", 12345)
                                         })

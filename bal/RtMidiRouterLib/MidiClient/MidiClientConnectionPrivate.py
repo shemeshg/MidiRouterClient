@@ -15,10 +15,7 @@ ary.append(p)
 
 enumClasss = []
 e = EnumClass("ServerStatus",
-        ["Stopped",
-        "Starting",
-        "Running",
-        "Failed"])
+        ["STOPPED", "STARTING", "RUNNING", "FAILED"])
 enumClasss.append(e)
 
 classMidiClientConnectionPrivate = PrptClass("MidiClientConnectionPrivate", ary, enumClasss)

@@ -23,16 +23,12 @@ class MidiClientConnectionPrivate : public QObject
 public:
     MidiClientConnectionPrivate(QObject *parent = nullptr);
 
-    
-enum class ServerStatus {
-        Stopped, Starting, Running, Failed
-    };
-Q_ENUM(ServerStatus)
+    enum class ServerStatus { STOPPED, STARTING, RUNNING, FAILED };
+    Q_ENUM(ServerStatus)
 
-    
-    QString serverStatusText() const{return m_serverStatusText;} 
-    
-void setServerStatusText(const QString &newServerStatusText)
+    QString serverStatusText() const { return m_serverStatusText; }
+
+    void setServerStatusText(const QString &newServerStatusText)
     {
         if (m_serverStatusText == newServerStatusText)
             return;

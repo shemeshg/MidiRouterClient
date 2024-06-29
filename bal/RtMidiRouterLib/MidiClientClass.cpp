@@ -6,11 +6,11 @@ MidiClientClass::MidiClientClass()
 {
     CWebChannelConnection::connect(qwebsocket.get(), &QWebSocket::disconnected, [=] {
         if (midiClientConnection.serverStatus()
-            == MidiClientConnectionPrivate::ServerStatus::Starting) {
+            == MidiClientConnectionPrivate::ServerStatus::STARTING) {
             return;
         }
         midiClientConnection.setServerStatusAndText(
-            MidiClientConnectionPrivate::ServerStatus::Stopped);
+            MidiClientConnectionPrivate::ServerStatus::STOPPED);
         qDebug() << "Disconnected";
     });
 }
@@ -25,7 +25,7 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
 
     constexpr int msecTimeout = 1000;
     qDebug() << "opening ";
-    midiClientConnection.setServerStatusAndText(MidiClientConnectionPrivate::ServerStatus::Starting);
+    midiClientConnection.setServerStatusAndText(MidiClientConnectionPrivate::ServerStatus::STARTING);
     if (WaitForSignal(qwebsocket.get(), &QWebSocket::connected, msecTimeout)) {
         qDebug() << "connected.";
 
@@ -33,7 +33,7 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
         if (WaitForSignal(qwebsocketClient.get(), &CWebChannelClient::initialized)) {
             qDebug() << "Initialized";
             midiClientConnection.setServerStatusAndText(
-                MidiClientConnectionPrivate::ServerStatus::Running);
+                MidiClientConnectionPrivate::ServerStatus::RUNNING);
             // Testing
             QJsonValue outports = qwebsocketClient->invokeMethodBlocking("wcmidiout",
                                                                          "getPortCount",
@@ -42,13 +42,13 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
             // End testing
         } else {
             midiClientConnection.setServerStatusAndText(
-                MidiClientConnectionPrivate::ServerStatus::Failed);
+                MidiClientConnectionPrivate::ServerStatus::FAILED);
             qDebug() << "Did not Initialized";
         }
     } else {
         qDebug() << "Could not connect.";
         midiClientConnection.setServerStatusAndText(
-            MidiClientConnectionPrivate::ServerStatus::Failed);
+            MidiClientConnectionPrivate::ServerStatus::FAILED);
     }
 }
 
