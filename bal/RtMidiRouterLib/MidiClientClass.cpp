@@ -5,6 +5,10 @@
 MidiClientClass::MidiClientClass()
 {
     CWebChannelConnection::connect(qwebsocket.get(), &QWebSocket::disconnected, [=] {
+        if (midiClientConnection.serverStatus()
+            == MidiClientConnectionPrivate::ServerStatus::Starting) {
+            return;
+        }
         midiClientConnection.setServerStatusAndText(
             MidiClientConnectionPrivate::ServerStatus::Stopped);
         qDebug() << "Disconnected";

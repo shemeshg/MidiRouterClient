@@ -37,6 +37,15 @@ void startServer(int portNumber);
 void stopServer();
 
 void startClient(const QString &serverName, int portNumber);
+void setAsyncServerStatusAndText(MidiClientConnection::ServerStatus serverStatus,
+                                 const QJSValue &callback)
+{
+    makeAsync<bool>(callback, [=]() {
+        mcc.midiClientConnection.setServerStatusAndText(serverStatus);
+        return true;
+    });
+}
+
 void stopClient();
 void testDummyDelete(const QJSValue &callback);
 

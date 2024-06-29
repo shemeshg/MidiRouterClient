@@ -71,7 +71,11 @@ Window {
                     CoreButton {
                         text: "Connect"
                         onClicked: {
-                            Constants.balData.startClient("localhost", 12345)
+                            Constants.balData.setAsyncServerStatusAndText(
+                                        1, () => {
+                                            Constants.balData.startClient(
+                                                "localhost", 12345)
+                                        })
                         }
                     }
                     CoreButton {
