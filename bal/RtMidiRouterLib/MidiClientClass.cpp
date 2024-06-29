@@ -5,6 +5,8 @@
 MidiClientClass::MidiClientClass()
 {
     CWebChannelConnection::connect(qwebsocket.get(), &QWebSocket::disconnected, [=] {
+        midiClientConnection.setServerStatusAndText(
+            MidiClientConnectionPrivate::ServerStatus::Stopped);
         qDebug() << "Disconnected";
     });
 }
@@ -19,12 +21,15 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
 
     constexpr int msecTimeout = 1000;
     qDebug() << "opening ";
+    midiClientConnection.setServerStatusAndText(MidiClientConnectionPrivate::ServerStatus::Starting);
     if (WaitForSignal(qwebsocket.get(), &QWebSocket::connected, msecTimeout)) {
         qDebug() << "connected.";
 
         qwebsocketClient->initialize();
         if (WaitForSignal(qwebsocketClient.get(), &CWebChannelClient::initialized)) {
             qDebug() << "Initialized";
+            midiClientConnection.setServerStatusAndText(
+                MidiClientConnectionPrivate::ServerStatus::Running);
             // Testing
             QJsonValue outports = qwebsocketClient->invokeMethodBlocking("wcmidiout",
                                                                          "getPortCount",
@@ -32,10 +37,14 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
             qDebug() << "We have " << outports << " out ports";
             // End testing
         } else {
+            midiClientConnection.setServerStatusAndText(
+                MidiClientConnectionPrivate::ServerStatus::Failed);
             qDebug() << "Did not Initialized";
         }
     } else {
         qDebug() << "Could not connect.";
+        midiClientConnection.setServerStatusAndText(
+            MidiClientConnectionPrivate::ServerStatus::Failed);
     }
 }
 

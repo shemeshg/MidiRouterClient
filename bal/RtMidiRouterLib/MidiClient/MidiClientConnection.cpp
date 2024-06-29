@@ -1,24 +1,21 @@
 #include "MidiClientConnection.h"
 
-/*[[[cog
-import cog
-from MidiClientConnection import classMidiClientConnection
-
-
-cog.outl(classMidiClientConnection.getClassCpp(),
-        dedent=True, trimblanklines=True)
-
-
-]]] */
- MidiClientConnection:: MidiClientConnection(QObject *parent)
-    : QObject(parent)
+MidiClientConnection::MidiClientConnection(QObject *parent)
+    : MidiClientConnectionPrivate{parent}
 {
-    ctorClass();
+    setServerStatusAndText(ServerStatus::Stopped);
 }
 
-//[[[end]]]
-
-void MidiClientConnection::ctorClass()
+void MidiClientConnection::setServerStatusAndText(const ServerStatus &newServerStatus)
 {
-    m_serverStatusText = "Not Connected";
+    setServerStatus(newServerStatus);
+    if (newServerStatus == ServerStatus::Stopped) {
+        setServerStatusText("Stopped");
+    } else if (newServerStatus == ServerStatus::Starting) {
+        setServerStatusText("Starting");
+    } else if (newServerStatus == ServerStatus::Running) {
+        setServerStatusText("Running");
+    } else {
+        setServerStatusText("Failed");
+    }
 }

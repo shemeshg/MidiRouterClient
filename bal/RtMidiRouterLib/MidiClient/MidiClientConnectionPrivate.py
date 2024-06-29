@@ -21,4 +21,4 @@ e = EnumClass("ServerStatus",
         "Failed"])
 enumClasss.append(e)
 
-classMidiClientConnection = PrptClass("MidiClientConnection", ary, enumClasss)
+classMidiClientConnectionPrivate = PrptClass("MidiClientConnectionPrivate", ary, enumClasss)
