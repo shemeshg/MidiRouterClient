@@ -69,6 +69,11 @@ Window {
                 }
                 RowLayout {
                     CoreButton {
+                        id: connectBtn
+                        visible: Constants.balData.midiClientConnection.serverStatus
+                                 === Constants.ServerStatus.STOPPED
+                                 || Constants.balData.midiClientConnection.serverStatus
+                                 === Constants.ServerStatus.FAILED
                         text: "Connect"
                         onClicked: {
                             Constants.balData.setAsyncServerStatusAndText(
@@ -79,6 +84,17 @@ Window {
                         }
                     }
                     CoreButton {
+                        visible: Constants.balData.midiClientConnection.serverStatus
+                                 === Constants.ServerStatus.RUNNING
+                        text: "Disconnect"
+                        onClicked: {
+                            Constants.balData.stopClient()
+                        }
+                    }
+
+
+                    /*
+                    CoreButton {
                         text: "test"
                         onClicked: {
                             Constants.balData.testDummyDelete(x => {
@@ -87,7 +103,7 @@ Window {
                                                               })
                         }
                     }
-
+                    */
                     Item {
                         Layout.fillWidth: true
                     }
@@ -135,22 +151,30 @@ Window {
                         text: "auto"
                     }
                 }
-
-                CoreButton {
-                    text: "start"
-                    enabled: Number.isInteger(Number(serverPortNumber.text))
-                             && (serverPortNumber.text > 0
-                                 || isAutoPort.checked)
+                RowLayout {
                     visible: !Constants.balData.isServerRunning
-                    onClicked: {
-                        let port = isAutoPort.checked ? 0 : Number(
-                                                            serverPortNumber.text)
+                    CoreButton {
+                        text: "start"
+                        enabled: Number.isInteger(Number(serverPortNumber.text))
+                                 && (serverPortNumber.text > 0
+                                     || isAutoPort.checked)
 
-                        Constants.balData.startServer(port)
-                        if (isAutoPort.checked) {
-                            serverPortNumber.text = Constants.balData.serverPort
-                            isAutoPort.checked = false
+                        onClicked: {
+                            let port = isAutoPort.checked ? 0 : Number(
+                                                                serverPortNumber.text)
+
+                            Constants.balData.startServer(port)
+                            if (isAutoPort.checked) {
+                                serverPortNumber.text = Constants.balData.serverPort
+                                isAutoPort.checked = false
+                            }
                         }
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    CoreSwitch {
+                        text: "auto"
                     }
                 }
                 CoreButton {

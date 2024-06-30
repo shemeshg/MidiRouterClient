@@ -54,6 +54,7 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
 
 void MidiClientClass::stop()
 {
+    qwebsocket->close();
     qDebug() << "client stopped";
 }
 
