@@ -47,27 +47,40 @@ Window {
                     }
                 }
                 RowLayout {
+                    visible: connectBtn.visible
                     CoreLabel {
+                        visible: !clientConnectLocal.checked
                         text: "Server name: "
                     }
                     CoreTextField {
+                        visible: !clientConnectLocal.checked
                         Layout.fillWidth: true
                         text: "localhost"
                     }
-                }
-                RowLayout {
-                    CoreLabel {
-                        text: "Port: "
-                    }
-                    CoreTextField {
+                    Item {
                         Layout.fillWidth: true
-                        text: "12345"
+                        visible: clientConnectLocal.checked
                     }
                     CoreSwitch {
+                        id: clientConnectLocal
                         text: "local"
                     }
                 }
                 RowLayout {
+                    visible: !clientConnectLocal.checked && connectBtn.visible
+
+                    CoreLabel {
+                        text: "Port: "
+                    }
+                    CoreTextField {
+
+                        Layout.fillWidth: true
+                        text: "12345"
+                    }
+                }
+                RowLayout {
+                    visible: Constants.balData.midiClientConnection.serverStatus
+                             !== Constants.ServerStatus.STARTING
                     CoreButton {
                         id: connectBtn
                         visible: Constants.balData.midiClientConnection.serverStatus
@@ -84,6 +97,7 @@ Window {
                         }
                     }
                     CoreButton {
+                        id: disconnectBtn
                         visible: Constants.balData.midiClientConnection.serverStatus
                                  === Constants.ServerStatus.RUNNING
                         text: "Disconnect"
@@ -105,10 +119,12 @@ Window {
                     }
                     */
                     Item {
+                        visible: connectBtn.visible
                         Layout.fillWidth: true
                     }
 
                     CoreSwitch {
+                        visible: connectBtn.visible
                         text: "auto"
                     }
                 }
