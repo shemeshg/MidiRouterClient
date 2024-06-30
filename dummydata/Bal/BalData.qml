@@ -19,4 +19,24 @@ QtObject {
     function startServer(){
         isServerRunning = true
     }
+
+    property QtObject midiClientConnection:QtObject {
+        property string serverStatusText: "Not Running"
+        property int serverStatus: 0
+    }
+    function setAsyncServerStatusAndText(i,cb){
+        midiClientConnection.serverStatus = i;
+        midiClientConnection.serverStatusText = "StatusId: " + midiClientConnection.serverStatus
+        cb();
+    }
+
+    function startClient(){
+        midiClientConnection.serverStatus = 2;
+        midiClientConnection.serverStatusText = "Server running"
+    }
+
+    function stopClient(){
+        midiClientConnection.serverStatus = 0;
+        midiClientConnection.serverStatusText = "Stopped"
+    }
 }

@@ -13,6 +13,11 @@ Project {
         directory: "imports"
     }
 
+    QmlFiles {
+        directory: "dummydata"
+    }
+
+
     JavaScriptFiles {
         directory: "content"
     }
