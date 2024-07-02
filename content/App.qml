@@ -47,6 +47,64 @@ Window {
                     }
                 }
                 RowLayout {
+                    visible: Constants.balData.midiClientConnection.serverStatus
+                             !== Constants.ServerStatus.STARTING
+                    CoreButton {
+                        id: connectBtn
+                        enabled: Number.isInteger(Number(clientPortNumber.text))
+                                 && (clientPortNumber.text > 0)
+                        visible: !isAutoConnectClient.checked
+                                 && (Constants.balData.midiClientConnection.serverStatus
+                                     === Constants.ServerStatus.STOPPED
+                                     || Constants.balData.midiClientConnection.serverStatus
+                                     === Constants.ServerStatus.FAILED)
+                        text: "Connect"
+                        onClicked: {
+                            Constants.balData.setAsyncServerStatusAndText(
+                                        Constants.ServerStatus.STARTING, () => {
+                                            Constants.balData.startClient(
+                                                "localhost", 12345)
+                                        })
+                        }
+                    }
+                    CoreButton {
+                        id: disconnectBtn
+                        visible: Constants.balData.midiClientConnection.serverStatus
+                                 === Constants.ServerStatus.RUNNING
+                        text: "Disconnect"
+                        onClicked: {
+                            Constants.balData.stopClient()
+                        }
+                    }
+
+
+                    /*
+                    CoreButton {
+                        text: "test"
+                        onClicked: {
+                            Constants.balData.testDummyDelete(x => {
+                                                                  console.log(
+                                                                      "we have " + x)
+                                                              })
+                        }
+                    }
+                    */
+                    Item {
+                        visible: isAutoConnectClient.visible
+                        Layout.fillWidth: true
+                    }
+
+                    CoreSwitch {
+                        id: isAutoConnectClient
+                        visible: (Constants.balData.midiClientConnection.serverStatus
+                                  === Constants.ServerStatus.STOPPED
+                                  || Constants.balData.midiClientConnection.serverStatus
+                                  === Constants.ServerStatus.FAILED)
+                        text: "auto"
+                        checked: Constants.balData.isAutoConnectClient
+                    }
+                }
+                RowLayout {
                     visible: connectBtn.visible
                     CoreLabel {
                         visible: !isClientConnectLocal.checked
@@ -80,58 +138,6 @@ Window {
                         text: Constants.balData.clientPortNumber
                     }
                 }
-                RowLayout {
-                    visible: Constants.balData.midiClientConnection.serverStatus
-                             !== Constants.ServerStatus.STARTING
-                    CoreButton {
-                        id: connectBtn
-                        visible: Constants.balData.midiClientConnection.serverStatus
-                                 === Constants.ServerStatus.STOPPED
-                                 || Constants.balData.midiClientConnection.serverStatus
-                                 === Constants.ServerStatus.FAILED
-                        text: "Connect"
-                        onClicked: {
-                            Constants.balData.setAsyncServerStatusAndText(
-                                        Constants.ServerStatus.STARTING, () => {
-                                            Constants.balData.startClient(
-                                                "localhost", 12345)
-                                        })
-                        }
-                    }
-                    CoreButton {
-                        id: disconnectBtn
-                        visible: Constants.balData.midiClientConnection.serverStatus
-                                 === Constants.ServerStatus.RUNNING
-                        text: "Disconnect"
-                        onClicked: {
-                            Constants.balData.stopClient()
-                        }
-                    }
-
-
-                    /*
-                    CoreButton {
-                        text: "test"
-                        onClicked: {
-                            Constants.balData.testDummyDelete(x => {
-                                                                  console.log(
-                                                                      "we have " + x)
-                                                              })
-                        }
-                    }
-                    */
-                    Item {
-                        visible: connectBtn.visible
-                        Layout.fillWidth: true
-                    }
-
-                    CoreSwitch {
-                        id: isAutoConnectClient
-                        visible: connectBtn.visible
-                        text: "auto"
-                        checked: Constants.balData.isAutoConnectClient
-                    }
-                }
             }
         }
 
@@ -151,31 +157,10 @@ Window {
                 }
                 RowLayout {
                     visible: !Constants.balData.isServerRunning
-                    CoreLabel {
-                        text: "Port: "
-                        Layout.alignment: Qt.AlignRight
-                    }
-                    CoreTextField {
-                        Layout.fillWidth: true
-                        text: Constants.balData.reqServerPortNumber
-                        id: serverPortNumber
-                        visible: !isAutoPort.checked
-                    }
-                    Item {
-                        Layout.fillWidth: true
-                        visible: isAutoPort.checked
-                    }
-
-                    CoreSwitch {
-                        id: isAutoPort
-                        text: "auto"
-                    }
-                }
-                RowLayout {
-                    visible: !Constants.balData.isServerRunning
                     CoreButton {
                         text: "start"
-                        enabled: Number.isInteger(Number(serverPortNumber.text))
+                        visible: !isAutoStartServer.checked && Number.isInteger(
+                                     Number(serverPortNumber.text))
                                  && (serverPortNumber.text > 0
                                      || isAutoPort.checked)
 
@@ -197,6 +182,29 @@ Window {
                         id: isAutoStartServer
                         text: "auto"
                         checked: Constants.balData.isAutoStartServer
+                    }
+                }
+                RowLayout {
+                    visible: !Constants.balData.isServerRunning
+                             && !isAutoStartServer.checked
+                    CoreLabel {
+                        text: "Port: "
+                        Layout.alignment: Qt.AlignRight
+                    }
+                    CoreTextField {
+                        Layout.fillWidth: true
+                        text: Constants.balData.reqServerPortNumber
+                        id: serverPortNumber
+                        visible: !isAutoPort.checked
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                        visible: isAutoPort.checked
+                    }
+
+                    CoreSwitch {
+                        id: isAutoPort
+                        text: "auto"
                     }
                 }
                 CoreButton {
