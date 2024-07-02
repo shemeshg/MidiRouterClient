@@ -19,6 +19,11 @@ loadY();
 loadWidth();
 loadHeight();
 loadReqServerPortNumber();
+loadClientServerName();
+loadIsClientConnectLocal();
+loadIsAutoStartServer();
+loadClientPortNumber();
+loadIsAutoConnectClient();
 
 //[[[end]]]
 }
@@ -87,6 +92,61 @@ void BalData::saveReqServerPortNumber(const int s)
 {
     settings.setValue("reqServerPortNumber", s);
     loadReqServerPortNumber();
+}
+void BalData::loadClientServerName()
+{
+    QString s = settings.value("clientServerName", "localhost").toString();
+    setClientServerName(s);
+}
+
+void BalData::saveClientServerName(const QString s)
+{
+    settings.setValue("clientServerName", s);
+    loadClientServerName();
+}
+void BalData::loadIsClientConnectLocal()
+{
+    bool s = settings.value("isClientConnectLocal", true).toBool();
+    setIsClientConnectLocal(s);
+}
+
+void BalData::saveIsClientConnectLocal(const bool s)
+{
+    settings.setValue("isClientConnectLocal", s);
+    loadIsClientConnectLocal();
+}
+void BalData::loadIsAutoStartServer()
+{
+    bool s = settings.value("isAutoStartServer", true).toBool();
+    setIsAutoStartServer(s);
+}
+
+void BalData::saveIsAutoStartServer(const bool s)
+{
+    settings.setValue("isAutoStartServer", s);
+    loadIsAutoStartServer();
+}
+void BalData::loadClientPortNumber()
+{
+    int s = settings.value("clientPortNumber", 12345).toInt();
+    setClientPortNumber(s);
+}
+
+void BalData::saveClientPortNumber(const int s)
+{
+    settings.setValue("clientPortNumber", s);
+    loadClientPortNumber();
+}
+void BalData::loadIsAutoConnectClient()
+{
+    bool s = settings.value("isAutoConnectClient", true).toBool();
+    setIsAutoConnectClient(s);
+}
+
+void BalData::saveIsAutoConnectClient(const bool s)
+{
+    settings.setValue("isAutoConnectClient", s);
+    loadIsAutoConnectClient();
 }
 
 //[[[end]]]

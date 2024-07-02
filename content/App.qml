@@ -49,33 +49,35 @@ Window {
                 RowLayout {
                     visible: connectBtn.visible
                     CoreLabel {
-                        visible: !clientConnectLocal.checked
+                        visible: !isClientConnectLocal.checked
                         text: "Server name: "
                     }
                     CoreTextField {
-                        visible: !clientConnectLocal.checked
+                        id: clientServerName
+                        visible: !isClientConnectLocal.checked
                         Layout.fillWidth: true
-                        text: "localhost"
+                        text: Constants.balData.clientServerName
                     }
                     Item {
                         Layout.fillWidth: true
-                        visible: clientConnectLocal.checked
+                        visible: isClientConnectLocal.checked
                     }
                     CoreSwitch {
-                        id: clientConnectLocal
+                        id: isClientConnectLocal
+                        checked: Constants.balData.isClientConnectLocal
                         text: "local"
                     }
                 }
                 RowLayout {
-                    visible: !clientConnectLocal.checked && connectBtn.visible
+                    visible: !isClientConnectLocal.checked && connectBtn.visible
 
                     CoreLabel {
                         text: "Port: "
                     }
                     CoreTextField {
-
+                        id: clientPortNumber
                         Layout.fillWidth: true
-                        text: "12345"
+                        text: Constants.balData.clientPortNumber
                     }
                 }
                 RowLayout {
@@ -124,8 +126,10 @@ Window {
                     }
 
                     CoreSwitch {
+                        id: isAutoConnectClient
                         visible: connectBtn.visible
                         text: "auto"
+                        checked: Constants.balData.isAutoConnectClient
                     }
                 }
             }
@@ -190,7 +194,9 @@ Window {
                         Layout.fillWidth: true
                     }
                     CoreSwitch {
+                        id: isAutoStartServer
                         text: "auto"
+                        checked: Constants.balData.isAutoStartServer
                     }
                 }
                 CoreButton {

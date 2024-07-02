@@ -17,22 +17,28 @@ cog.outl(classBalDataPrivate.getClassHeader(),
 class BalDataPrivate : public JsAsync
 {
     Q_OBJECT
-    Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged)
-    Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged)
-    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
-    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
-    Q_PROPERTY(int serverPort READ serverPort NOTIFY serverPortChanged)
-    Q_PROPERTY(bool isServerRunning READ isServerRunning NOTIFY isServerRunningChanged)
-    Q_PROPERTY(int reqServerPortNumber READ reqServerPortNumber WRITE setReqServerPortNumber NOTIFY
-                   reqServerPortNumberChanged)
-
+    Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged )
+    Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged )
+    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged )
+    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged )
+    Q_PROPERTY(int serverPort READ serverPort  NOTIFY serverPortChanged )
+    Q_PROPERTY(bool isServerRunning READ isServerRunning  NOTIFY isServerRunningChanged )
+    Q_PROPERTY(int reqServerPortNumber READ reqServerPortNumber WRITE setReqServerPortNumber NOTIFY reqServerPortNumberChanged )
+    Q_PROPERTY(QString clientServerName READ clientServerName WRITE setClientServerName NOTIFY clientServerNameChanged )
+    Q_PROPERTY(bool isClientConnectLocal READ isClientConnectLocal WRITE setIsClientConnectLocal NOTIFY isClientConnectLocalChanged )
+    Q_PROPERTY(bool isAutoStartServer READ isAutoStartServer WRITE setIsAutoStartServer NOTIFY isAutoStartServerChanged )
+    Q_PROPERTY(int clientPortNumber READ clientPortNumber WRITE setClientPortNumber NOTIFY clientPortNumberChanged )
+    Q_PROPERTY(bool isAutoConnectClient READ isAutoConnectClient WRITE setIsAutoConnectClient NOTIFY isAutoConnectClientChanged )
+    
     QML_ELEMENT
 public:
     BalDataPrivate(QObject *parent = nullptr);
 
-    int x() const { return m_x; }
-
-    void setX(const int newX)
+    
+    
+    int x() const{return m_x;} 
+    
+void setX(const int newX)
     {
         if (m_x == newX)
             return;
@@ -40,9 +46,11 @@ public:
         emit xChanged();
     }
 
-    int y() const { return m_y; }
 
-    void setY(const int newY)
+    
+    int y() const{return m_y;} 
+    
+void setY(const int newY)
     {
         if (m_y == newY)
             return;
@@ -50,9 +58,11 @@ public:
         emit yChanged();
     }
 
-    int width() const { return m_width; }
 
-    void setWidth(const int newWidth)
+    
+    int width() const{return m_width;} 
+    
+void setWidth(const int newWidth)
     {
         if (m_width == newWidth)
             return;
@@ -60,9 +70,11 @@ public:
         emit widthChanged();
     }
 
-    int height() const { return m_height; }
 
-    void setHeight(const int newHeight)
+    
+    int height() const{return m_height;} 
+    
+void setHeight(const int newHeight)
     {
         if (m_height == newHeight)
             return;
@@ -70,19 +82,87 @@ public:
         emit heightChanged();
     }
 
-    int serverPort() const { return m_serverPort; }
 
-    bool isServerRunning() const { return m_isServerRunning; }
+    
+    int serverPort() const{return m_serverPort;} 
+    
 
-    int reqServerPortNumber() const { return m_reqServerPortNumber; }
+    
+    bool isServerRunning() const{return m_isServerRunning;} 
+    
 
-    void setReqServerPortNumber(const int newReqServerPortNumber)
+    
+    int reqServerPortNumber() const{return m_reqServerPortNumber;} 
+    
+void setReqServerPortNumber(const int newReqServerPortNumber)
     {
         if (m_reqServerPortNumber == newReqServerPortNumber)
             return;
         m_reqServerPortNumber = newReqServerPortNumber;
         emit reqServerPortNumberChanged();
     }
+
+
+    
+    QString clientServerName() const{return m_clientServerName;} 
+    
+void setClientServerName(const QString &newClientServerName)
+    {
+        if (m_clientServerName == newClientServerName)
+            return;
+        m_clientServerName = newClientServerName;
+        emit clientServerNameChanged();
+    }
+
+
+    
+    bool isClientConnectLocal() const{return m_isClientConnectLocal;} 
+    
+void setIsClientConnectLocal(const bool newIsClientConnectLocal)
+    {
+        if (m_isClientConnectLocal == newIsClientConnectLocal)
+            return;
+        m_isClientConnectLocal = newIsClientConnectLocal;
+        emit isClientConnectLocalChanged();
+    }
+
+
+    
+    bool isAutoStartServer() const{return m_isAutoStartServer;} 
+    
+void setIsAutoStartServer(const bool newIsAutoStartServer)
+    {
+        if (m_isAutoStartServer == newIsAutoStartServer)
+            return;
+        m_isAutoStartServer = newIsAutoStartServer;
+        emit isAutoStartServerChanged();
+    }
+
+
+    
+    int clientPortNumber() const{return m_clientPortNumber;} 
+    
+void setClientPortNumber(const int newClientPortNumber)
+    {
+        if (m_clientPortNumber == newClientPortNumber)
+            return;
+        m_clientPortNumber = newClientPortNumber;
+        emit clientPortNumberChanged();
+    }
+
+
+    
+    bool isAutoConnectClient() const{return m_isAutoConnectClient;} 
+    
+void setIsAutoConnectClient(const bool newIsAutoConnectClient)
+    {
+        if (m_isAutoConnectClient == newIsAutoConnectClient)
+            return;
+        m_isAutoConnectClient = newIsAutoConnectClient;
+        emit isAutoConnectClientChanged();
+    }
+
+
 
 signals:
     void xChanged();
@@ -92,10 +172,17 @@ signals:
     void serverPortChanged();
     void isServerRunningChanged();
     void reqServerPortNumberChanged();
+    void clientServerNameChanged();
+    void isClientConnectLocalChanged();
+    void isAutoStartServerChanged();
+    void clientPortNumberChanged();
+    void isAutoConnectClientChanged();
+    
 
 protected:
     int m_serverPort;
     bool m_isServerRunning;
+    
 
 private:
     int m_x;
@@ -103,7 +190,12 @@ private:
     int m_width;
     int m_height;
     int m_reqServerPortNumber;
-
+    QString m_clientServerName;
+    bool m_isClientConnectLocal;
+    bool m_isAutoStartServer;
+    int m_clientPortNumber;
+    bool m_isAutoConnectClient;
+    
     void ctorClass();
 };
 

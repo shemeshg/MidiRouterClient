@@ -15,7 +15,7 @@ class LclStor:
         t = Template("""
 void BalData::load${field_name_initCap}()
 {
-    int s = settings.value("${field_name}", ${local_storage_default}).${to_type}();
+    ${field_type} s = settings.value("${field_name}", ${local_storage_default}).${to_type}();
     set${field_name_initCap}(s);
 }
 
@@ -25,13 +25,19 @@ void BalData::save${field_name_initCap}(const ${field_type} s)
     load${field_name_initCap}();
 }""")
         for row in self.prptAry:
-            if self.row_is_ls(row):
+            if self.row_is_ls(row):                
                 to_type = "toInt"
+                local_storage_default = row.local_storage_default
+                if row.field_type == "bool":
+                    to_type = "toBool"
+                elif  row.field_type == "QString":
+                    to_type = "toString"
+                    local_storage_default = '"' + local_storage_default + '"'
                 s = s + t.substitute(field_name=row.field_name, 
                                     field_name_initCap=row.field_name_initCap,
                                     to_type = to_type,
                                     field_type = row.field_type,
-                                    local_storage_default = row.local_storage_default)
+                                    local_storage_default = local_storage_default)
         return s   
 
     def getLclStorHdrPrv(self):

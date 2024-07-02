@@ -30,6 +30,11 @@ void saveY(const int Y);
 void saveWidth(const int Width);
 void saveHeight(const int Height);
 void saveReqServerPortNumber(const int ReqServerPortNumber);
+void saveClientServerName(const QString ClientServerName);
+void saveIsClientConnectLocal(const bool IsClientConnectLocal);
+void saveIsAutoStartServer(const bool IsAutoStartServer);
+void saveClientPortNumber(const int ClientPortNumber);
+void saveIsAutoConnectClient(const bool IsAutoConnectClient);
 
 //[[[end]]]
 
@@ -68,6 +73,11 @@ void loadY();
 void loadWidth();
 void loadHeight();
 void loadReqServerPortNumber();
+void loadClientServerName();
+void loadIsClientConnectLocal();
+void loadIsAutoStartServer();
+void loadClientPortNumber();
+void loadIsAutoConnectClient();
 
 //[[[end]]]
 MidiServerClass msc{};
