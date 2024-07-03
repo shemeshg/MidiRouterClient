@@ -38,10 +38,10 @@ void saveIsAutoConnectClient(const bool IsAutoConnectClient);
 
 //[[[end]]]
 
+void onApplicationStarted();
 void startServer(int portNumber);
 void stopServer();
 
-void startClient(const QString &serverName, int portNumber);
 void setAsyncServerStatusAndText(MidiClientConnection::ServerStatus serverStatus,
                                  const QJSValue &callback)
 {
@@ -56,8 +56,10 @@ void testDummyDelete(const QJSValue &callback);
 
 MidiClientConnection *midiClientConnection() { return &mcc.midiClientConnection; }
 
+void startClient();
+
 private:
-    QSettings settings;
+QSettings settings;
 
 /*[[[cog
 import cog
@@ -80,6 +82,9 @@ void loadClientPortNumber();
 void loadIsAutoConnectClient();
 
 //[[[end]]]
+
+void startClient(const QString &serverName, int portNumber);
+
 MidiServerClass msc{};
 MidiClientClass mcc{};
 void updateServerStatus();

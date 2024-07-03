@@ -151,6 +151,26 @@ void BalData::saveIsAutoConnectClient(const bool s)
 
 //[[[end]]]
 
+void BalData::startClient()
+{
+    if (isClientConnectLocal()) {
+        startClient("localhost", reqServerPortNumber());
+    } else {
+        startClient(clientServerName(), clientPortNumber());
+    }
+}
+
+void BalData::onApplicationStarted()
+{
+    qDebug() << "Application staarted";
+    if (isAutoStartServer()) {
+        qDebug() << "Auto start server";
+        startServer(reqServerPortNumber());
+    }
+    if (isAutoConnectClient()) {
+        startClient();
+    }
+}
 void BalData::updateServerStatus()
 {
     m_serverPort = msc.getPort();

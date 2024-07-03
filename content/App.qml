@@ -18,6 +18,7 @@ Window {
 
     Component.onCompleted: {
         CoreSystemPalette.font = Constants.font
+        Constants.balData.onApplicationStarted()
     }
 
     Component.onDestruction: {
@@ -62,8 +63,7 @@ Window {
                         onClicked: {
                             Constants.balData.setAsyncServerStatusAndText(
                                         Constants.ServerStatus.STARTING, () => {
-                                            Constants.balData.startClient(
-                                                "localhost", 12345)
+                                            Constants.balData.startClient()
                                         })
                         }
                     }
@@ -101,6 +101,17 @@ Window {
                                   || Constants.balData.midiClientConnection.serverStatus
                                   === Constants.ServerStatus.FAILED)
                         text: "auto"
+                        onToggled: {
+                            Constants.balData.saveIsAutoConnectClient(checked)
+                            if (checked) {
+                                Constants.balData.setAsyncServerStatusAndText(
+                                            Constants.ServerStatus.STARTING,
+                                            () => {
+                                                Constants.balData.startClient()
+                                            })
+                            }
+                        }
+
                         checked: Constants.balData.isAutoConnectClient
                     }
                 }
@@ -115,6 +126,9 @@ Window {
                         visible: !isClientConnectLocal.checked
                         Layout.fillWidth: true
                         text: Constants.balData.clientServerName
+                        onTextEdited: {
+                            Constants.balData.saveClientServerName(text)
+                        }
                     }
                     Item {
                         Layout.fillWidth: true
@@ -124,6 +138,9 @@ Window {
                         id: isClientConnectLocal
                         checked: Constants.balData.isClientConnectLocal
                         text: "local"
+                        onToggled: {
+                            Constants.balData.saveIsClientConnectLocal(checked)
+                        }
                     }
                 }
                 RowLayout {
@@ -136,6 +153,9 @@ Window {
                         id: clientPortNumber
                         Layout.fillWidth: true
                         text: Constants.balData.clientPortNumber
+                        onTextEdited: {
+                            Constants.balData.saveClientPortNumber(text)
+                        }
                     }
                 }
             }
@@ -145,6 +165,17 @@ Window {
             Layout.margins: Constants.font.pixelSize
             title: qsTr("<h3>Server</h3>")
             body: ColumnLayout {
+                function doServerStart() {
+                    let port = isAutoPort.checked ? 0 : Number(
+                                                        serverPortNumber.text)
+
+                    Constants.balData.startServer(port)
+                    if (isAutoPort.checked) {
+                        serverPortNumber.text = Constants.balData.serverPort
+                        isAutoPort.checked = false
+                    }
+                }
+
                 RowLayout {
                     CoreLabel {
                         text: "Status: "
@@ -165,14 +196,7 @@ Window {
                                      || isAutoPort.checked)
 
                         onClicked: {
-                            let port = isAutoPort.checked ? 0 : Number(
-                                                                serverPortNumber.text)
-
-                            Constants.balData.startServer(port)
-                            if (isAutoPort.checked) {
-                                serverPortNumber.text = Constants.balData.serverPort
-                                isAutoPort.checked = false
-                            }
+                            doServerStart()
                         }
                     }
                     Item {
@@ -182,6 +206,12 @@ Window {
                         id: isAutoStartServer
                         text: "auto"
                         checked: Constants.balData.isAutoStartServer
+                        onToggled: {
+                            Constants.balData.saveIsAutoStartServer(checked)
+                            if (checked) {
+                                doServerStart()
+                            }
+                        }
                     }
                 }
                 RowLayout {
