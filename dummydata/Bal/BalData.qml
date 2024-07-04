@@ -19,6 +19,12 @@ QtObject {
     property bool isAutoConnectClient: false
     property int clientPortNumber: 12345
 
+    function onApplicationStarted(){}
+    function saveIsClientConnectLocal(){}
+    function saveIsAutoConnectClient(){}
+    function saveIsAutoStartServer(){}
+
+
     function stopServer() {
         isServerRunning = false
     }
