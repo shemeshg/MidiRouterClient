@@ -34,6 +34,8 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
             qDebug() << "Initialized";
             midiClientConnection.setServerStatusAndText(
                 MidiClientConnectionPrivate::ServerStatus::RUNNING);
+            midiClientConnection.setServerStatusText("Running " + serverName + " "
+                                                     + QString::number(portNumber));
             // Testing
             QJsonValue outports = qwebsocketClient->invokeMethodBlocking("wcmidiout",
                                                                          "getPortCount",
