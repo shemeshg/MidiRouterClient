@@ -9,7 +9,7 @@ class UserDataConfig : public UserDataConfigPrivate
     QML_ELEMENT
 public:
     explicit UserDataConfig(QObject *parent = nullptr):UserDataConfigPrivate{parent}{
-        setActivePresetID(2);
+        setActivePresetID(0);
     }
 
 public slots:

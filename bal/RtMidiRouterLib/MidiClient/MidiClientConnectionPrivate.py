@@ -13,6 +13,7 @@ p.is_writable = True
 p.is_notify = True
 ary.append(p)
 
+
 enumClasss = []
 e = EnumClass("ServerStatus",
         ["STOPPED", "STARTING", "RUNNING", "FAILED"])
