@@ -36,11 +36,13 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
                 MidiClientConnectionPrivate::ServerStatus::RUNNING);
             midiClientConnection.setServerStatusText("Running " + serverName + " "
                                                      + QString::number(portNumber));
-            // Testing
-            QJsonValue outports = qwebsocketClient->invokeMethodBlocking("wcmidiout",
-                                                                         "getPortCount",
-                                                                         {});
-            qDebug() << "We have " << outports << " out ports";
+
+            /*
+            QJsonValue jsonData = qwebsocketClient->invokeMethodBlocking("wcuserdata", "getJon", {});
+            qDebug() << "We await loginStatus.resetUserDataConfig(jsonData)" << jsonData
+                     << " out ports";
+
+            */
             // End testing
         } else {
             midiClientConnection.setServerStatusAndText(

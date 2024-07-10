@@ -65,6 +65,7 @@ Window {
                                         Constants.ServerStatus.STARTING, () => {
                                             Constants.balData.startClient()
                                         })
+                            console.log(JSON.stringify(Constants.balData))
                         }
                     }
                     CoreButton {
