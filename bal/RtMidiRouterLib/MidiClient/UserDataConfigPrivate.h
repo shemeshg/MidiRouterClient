@@ -19,8 +19,9 @@ class UserDataConfigPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(int activePresetID READ activePresetID WRITE setActivePresetID NOTIFY activePresetIDChanged )
     Q_PROPERTY(QString computerUuid READ computerUuid  CONSTANT )
-    Q_PROPERTY(QList<QList<Dropdownlist *>> dropdownlists READ dropdownlists  CONSTANT )
+    Q_PROPERTY(QList<QList<Dropdownlist *>> dropdownlists READ dropdownlists  NOTIFY dropdownlistsChanged )
     Q_PROPERTY(QString uniqueId READ uniqueId  NOTIFY uniqueIdChanged )
+    Q_PROPERTY(QStringList virtualInPorts READ virtualInPorts  NOTIFY virtualInPortsChanged )
     
     QML_ELEMENT
 public:
@@ -51,16 +52,23 @@ void setActivePresetID(const int newActivePresetID)
     QString uniqueId() const{return m_uniqueId;} 
     
 
+    
+    QStringList virtualInPorts() const{return m_virtualInPorts;} 
+    
+
 
 signals:
     void activePresetIDChanged();
+    void dropdownlistsChanged();
     void uniqueIdChanged();
+    void virtualInPortsChanged();
     
 
 protected:
     QString m_computerUuid;
     QList<QList<Dropdownlist *>> m_dropdownlists;
     QString m_uniqueId;
+    QStringList m_virtualInPorts;
     
 
 private:

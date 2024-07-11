@@ -44,4 +44,6 @@ UserDataConfig::UserDataConfig(QObject *parent)
     l.push_back(d);
 
     m_dropdownlists.push_back(l);
+
+    m_virtualInPorts = {"shalom", "olam"};
 }
