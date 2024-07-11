@@ -29,6 +29,7 @@ UserDataConfig::UserDataConfig(QObject *parent)
 {
     setActivePresetID(0);
     loadComputerUuid();
+    m_uniqueId = getUuId();
 
     clearDropdownlists();
     Dropdownlist *d = new Dropdownlist();
