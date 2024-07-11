@@ -1,5 +1,4 @@
 #pragma once
-
 #include "UserDataConfigPrivate.h"
 
 class UserDataConfig : public UserDataConfigPrivate
@@ -12,7 +11,7 @@ public:
 
 public slots:
 
-
 private:
     void loadComputerUuid();
+    void clearDropdownlists();
 };

@@ -12,6 +12,11 @@ p.is_bindable = False
 p.is_writable = False
 p.is_notify = False
 ary.append(p)
+p = Prpt("QList<QList<Dropdownlist *>>",'dropdownlists')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = False
+ary.append(p)
 
 enumClasss = []
 

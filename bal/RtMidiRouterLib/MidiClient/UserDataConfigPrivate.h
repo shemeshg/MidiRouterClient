@@ -4,6 +4,7 @@
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+#include "Dropdownlist.h"
 /*[[[cog
 import cog
 from UserDataConfigPrivate import classUserDataConfigPrivate
@@ -18,6 +19,7 @@ class UserDataConfigPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(int activePresetID READ activePresetID WRITE setActivePresetID NOTIFY activePresetIDChanged )
     Q_PROPERTY(QString computerUuid READ computerUuid  CONSTANT )
+    Q_PROPERTY(QList<QList<Dropdownlist *>> dropdownlists READ dropdownlists  CONSTANT )
     
     QML_ELEMENT
 public:
@@ -40,6 +42,10 @@ void setActivePresetID(const int newActivePresetID)
     QString computerUuid() const{return m_computerUuid;} 
     
 
+    
+    QList<QList<Dropdownlist *>> dropdownlists() const{return m_dropdownlists;} 
+    
+
 
 signals:
     void activePresetIDChanged();
@@ -47,6 +53,7 @@ signals:
 
 protected:
     QString m_computerUuid;
+    QList<QList<Dropdownlist *>> m_dropdownlists;
     
 
 private:
