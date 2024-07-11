@@ -1,13 +1,13 @@
 #include "UserDataConfig.h"
 #include <QSettings>
-#include <QUuid>
+#include "MidiClientUtil.h"
 
 void UserDataConfig::loadComputerUuid()
 {
     QSettings settings;
     QString s = settings.value("computerUuid", "").toString();
     if (s.isEmpty()) {
-        s = QUuid::createUuid().toString().replace("{", "").replace("}", "");
+        s = getUuId();
         settings.setValue("computerUuid", s);
     }
     m_computerUuid = s;
