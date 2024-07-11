@@ -9,6 +9,8 @@ class UserDataConfig : public UserDataConfigPrivate
 public:
     explicit UserDataConfig(QObject *parent = nullptr);
 
+    virtual ~UserDataConfig() { clearDropdownlists(); }
+
 public slots:
 
 private:

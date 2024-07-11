@@ -33,6 +33,7 @@ class BalDataPrivate : public JsAsync
     QML_ELEMENT
 public:
     BalDataPrivate(QObject *parent = nullptr);
+    virtual ~BalDataPrivate() = default;
 
     
     

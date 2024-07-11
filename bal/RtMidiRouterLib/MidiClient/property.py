@@ -183,6 +183,7 @@ class ${class_name} : public ${inhirit_from}
     QML_ELEMENT
 public:
     ${class_name}(QObject *parent = nullptr);
+    virtual ~${class_name}() = default;
 
     ${public_content}
 
