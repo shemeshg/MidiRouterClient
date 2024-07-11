@@ -16,6 +16,6 @@ public slots:
     void setServerStatusAndText(const ServerStatus &newServerStatus);
 
 private:
-    UserDataConfig userDataConfig_p{};
-    UserDataConfig *userDataConfig() { return &userDataConfig_p; }
+    UserDataConfig m_userDataConfig{};
+    UserDataConfig *userDataConfig() { return &m_userDataConfig; }
 };

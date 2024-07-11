@@ -17,6 +17,7 @@ class UserDataConfigPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int activePresetID READ activePresetID WRITE setActivePresetID NOTIFY activePresetIDChanged )
+    Q_PROPERTY(QString computerUuid READ computerUuid  CONSTANT )
     
     QML_ELEMENT
 public:
@@ -35,12 +36,17 @@ void setActivePresetID(const int newActivePresetID)
     }
 
 
+    
+    QString computerUuid() const{return m_computerUuid;} 
+    
+
 
 signals:
     void activePresetIDChanged();
     
 
 protected:
+    QString m_computerUuid;
     
 
 private:
