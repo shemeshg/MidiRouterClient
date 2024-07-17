@@ -31,6 +31,18 @@ add_library(RtMidiRouterLib STATIC
   MidiClient/Dropdownlist.cpp
   MidiClient/MidiClientUtil.h
   MidiClient/MidiClientUtil.cpp
+  MidiClient/PresetMidiControlPrivate.h
+  MidiClient/PresetMidiControlPrivate.cpp
+  MidiClient/PresetMidiControl.cpp
+  MidiClient/PresetMidiControl.h
+  MidiClient/MidiRoutePresetPrivate.h
+  MidiClient/MidiRoutePresetPrivate.cpp
+  MidiClient/MidiRoutePreset.cpp
+  MidiClient/MidiRoutePreset.h
+  MidiClient/MidiRouteInputPrivate.cpp
+  MidiClient/MidiRouteInputPrivate.h
+  MidiClient/MidiRouteInput.h
+  MidiClient/MidiRouteInput.cpp
 
   libs/QWebchannelCppClient/WebChannelClient.cpp
   libs/websocket/websocketclientwrapper.cpp

@@ -1,4 +1,4 @@
-#include "MidiClientConnection.h"
+#include "MidiClientConnectionPrivate.h"
 
 /*[[[cog
 import cog
