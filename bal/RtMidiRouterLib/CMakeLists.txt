@@ -13,36 +13,14 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets WebSockets WebChannel REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets WebSockets WebChannel REQUIRED)
 
 add_subdirectory(RtMidiWrap)
+add_subdirectory(MidiClient)
 
 add_library(RtMidiRouterLib STATIC
   MidiServerClass.cpp
   MidiServerClass.h
   MidiClientClass.cpp
   MidiClientClass.h
-  MidiClient/MidiClientConnection.h
-  MidiClient/MidiClientConnection.cpp
-  MidiClient/MidiClientConnectionPrivate.h
-  MidiClient/MidiClientConnectionPrivate.cpp
-  MidiClient/UserDataConfig.h
-  MidiClient/UserDataConfig.cpp
-  MidiClient/UserDataConfigPrivate.h
-  MidiClient/UserDataConfigPrivate.cpp
-  MidiClient/Dropdownlist.h
-  MidiClient/Dropdownlist.cpp
-  MidiClient/MidiClientUtil.h
-  MidiClient/MidiClientUtil.cpp
-  MidiClient/PresetMidiControlPrivate.h
-  MidiClient/PresetMidiControlPrivate.cpp
-  MidiClient/PresetMidiControl.cpp
-  MidiClient/PresetMidiControl.h
-  MidiClient/MidiRoutePresetPrivate.h
-  MidiClient/MidiRoutePresetPrivate.cpp
-  MidiClient/MidiRoutePreset.cpp
-  MidiClient/MidiRoutePreset.h
-  MidiClient/MidiRouteInputPrivate.cpp
-  MidiClient/MidiRouteInputPrivate.h
-  MidiClient/MidiRouteInput.h
-  MidiClient/MidiRouteInput.cpp
+
 
   libs/QWebchannelCppClient/WebChannelClient.cpp
   libs/websocket/websocketclientwrapper.cpp
@@ -78,6 +56,6 @@ add_library(RtMidiRouterLib STATIC
 )
 
 target_link_libraries(RtMidiRouterLib PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
-        RtMidiWrap)
+        RtMidiWrap midiClient)
 
 target_compile_definitions(RtMidiRouterLib PRIVATE RTMIDIROUTERLIB_LIBRARY)
