@@ -2,7 +2,7 @@ find_package(Qt6 REQUIRED COMPONENTS Concurrent)
 add_subdirectory(RtMidiRouterLib)
 
 
-qt6_add_qml_module(bal
+qt6_add_qml_module(Bal
         URI Bal
         VERSION 1.0
         SOURCES
@@ -13,4 +13,4 @@ qt6_add_qml_module(bal
             JsAsync.h
               )
 
-target_link_libraries(bal PRIVATE Qt6::Concurrent RtMidiRouterLib)
+target_link_libraries(Bal PRIVATE Qt6::Concurrent RtMidiRouterLib)

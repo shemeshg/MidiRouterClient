@@ -1,1 +1,1 @@
-# Dessign Studio for future Version 2
+# hello world for qt creator and qt designer workflow.

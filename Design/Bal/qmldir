@@ -1,0 +1,3 @@
+module Bal
+MyType 1.0 MyType.qml
+BalData 1.0 BalData.qml

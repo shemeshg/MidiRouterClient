@@ -1,59 +1,58 @@
-cmake_minimum_required(VERSION 3.21.1)
+cmake_minimum_required(VERSION 3.16)
 
-option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
-option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
+project(shalom VERSION 0.1 LANGUAGES CXX)
 
-project(MidiRouterClientApp LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_AUTOMOC ON)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
-find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
+qt_standard_project_setup(REQUIRES 6.5)
 
-if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
-    qt_standard_project_setup()
-endif()
 
-add_subdirectory(bal)
+list(APPEND QML_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Design/)
+set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's code model" FORCE)
 
-qt_add_executable(MidiRouterClientApp src/main.cpp)
 
-qt_add_resources(MidiRouterClientApp "configuration"
-    PREFIX "/"
-    FILES
-        qtquickcontrols2.conf
+
+qt_add_executable(${CMAKE_PROJECT_NAME}
+    main.cpp
 )
 
-target_link_libraries(MidiRouterClientApp PRIVATE
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Quick
-    bal
+
+qt_add_qml_module(${CMAKE_PROJECT_NAME}
+    URI shalom
+    VERSION 1.0
+    QML_FILES
+        Main.qml
 )
 
-set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
-set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
-    CACHE STRING "Import paths for Qt Creator's code model"
-    FORCE
+# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
+# If you are developing for iOS or macOS you should consider setting an
+# explicit, fixed bundle identifier manually though.
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appshalom
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
 )
 
-if (BUILD_QDS_COMPONENTS)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/qmlcomponents)
-endif()
+add_subdirectory(design/Design)
+add_subdirectory(design/DesignContent)
+add_subdirectory(design/Core)
+add_subdirectory(Bal)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/qmlmodules)
-
-if (LINK_INSIGHT)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/insight)
-endif ()
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    PRIVATE Qt6::Quick
+    Bal
+    Coreplugin
+    Designplugin
+    DesignContentplugin
+)
 
 include(GNUInstallDirs)
-install(TARGETS MidiRouterClientApp
+install(TARGETS ${CMAKE_PROJECT_NAME}
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
-# make IDEs aware of the QML import path
-set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
-    "Path to the custom QML components defined by the project")
