@@ -2,7 +2,8 @@
 #include <QDebug>
 #include <QJSEngine>
 
-MidiClientClass::MidiClientClass()
+MidiClientClass::MidiClientClass(QObject *parent)
+    : QObject(parent)
 {
     CWebChannelConnection::connect(qwebsocket.get(), &QWebSocket::disconnected, [=] {
         if (midiClientConnection.serverStatus()
@@ -12,11 +13,16 @@ MidiClientClass::MidiClientClass()
         midiClientConnection.setServerStatusAndText(
             MidiClientConnectionPrivate::ServerStatus::STOPPED);
         qDebug() << "Disconnected";
+        qwebsocketClient = std::unique_ptr<CWebChannelClient>(
+            new CWebChannelClient(qwebsocket.get()));
     });
+
+
 }
 
 void MidiClientClass::start(const QString &serverName, int portNumber)
 {
+
     qDebug() << "client " << serverName << " port " << portNumber;
     QString connectionString = "ws://%1:%2";
     connectionString = connectionString.arg(serverName).arg(portNumber);
@@ -37,12 +43,21 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
             midiClientConnection.setServerStatusText("Running " + serverName + " "
                                                      + QString::number(portNumber));
 
-            /*
+            /* */
             QJsonValue jsonData = qwebsocketClient->invokeMethodBlocking("wcuserdata", "getJon", {});
             qDebug() << "We await loginStatus.resetUserDataConfig(jsonData)" << jsonData
                      << " out ports";
 
-            */
+
+            QPointer<CWebChannelConnection> wcuserdataCallbacks;
+            wcuserdataCallbacks = qwebsocketClient->connect("wcuserdata", "userDataChanges");
+            connect(wcuserdataCallbacks,
+                &CWebChannelConnection::signal,
+                this,
+                &MidiClientClass::userDataChanges);
+
+
+
             // End testing
         } else {
             midiClientConnection.setServerStatusAndText(

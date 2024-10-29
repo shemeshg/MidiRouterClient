@@ -6,10 +6,10 @@
 #include "QtWebSockets/qwebsocketserver.h"
 #include "libs/QWebchannelCppClient/WebChannelClient.h"
 
-class MidiClientClass
+class MidiClientClass: public QObject
 {
 public:
-    MidiClientClass();
+    MidiClientClass(QObject *parent = nullptr);
     ~MidiClientClass() { stop(); }
     void start(const QString &serverName, int portNumber);
     void stop();
@@ -29,6 +29,11 @@ public:
 
     MidiClientConnection midiClientConnection{};
 
+private slots:
+    void userDataChanges(){
+        qDebug() << "Yes Changed";
+    }
+
 private:
     int port = -1;
     bool clientIsRunning = false;
@@ -36,4 +41,7 @@ private:
     std::unique_ptr<QWebSocket> qwebsocket = std::unique_ptr<QWebSocket>(new QWebSocket());
     std::unique_ptr<CWebChannelClient> qwebsocketClient = std::unique_ptr<CWebChannelClient>(
         new CWebChannelClient(qwebsocket.get()));
+
+
+
 };
