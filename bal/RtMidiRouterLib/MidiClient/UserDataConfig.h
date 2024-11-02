@@ -14,15 +14,23 @@ public:
 
     virtual ~UserDataConfig() { clearDropdownlists(); }
 
-    void resetUserDataConfig(QJsonValue jsonData){
-
-        QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
-        qDebug() << "json[" <<  jsonDoc.toJson() << "]";
-        qDebug()<<"check if this is not our ID";
+    void resetUserDataConfig(QJsonValue &jsonData){
+        QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());        
+        if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
+            setChanges(jsonDoc);
+        }
     }
+
+
 public slots:
 
 private:
     void loadComputerUuid();
     void clearDropdownlists();
+
+    void  setChanges(QJsonDocument &jsonDoc){
+        qDebug()<<"Empllay remote configuration";
+        qDebug() << "json[" <<  jsonDoc.toJson() << "]";
+
+    }
 };
