@@ -11,11 +11,11 @@ class MidiClientConnection : public MidiClientConnectionPrivate
     QML_ELEMENT
 public:
     explicit MidiClientConnection(QObject *parent = nullptr);
+    UserDataConfig *userDataConfig() { return &m_userDataConfig; }
 
 public slots:
     void setServerStatusAndText(const ServerStatus &newServerStatus);
 
-private:
+private:        
     UserDataConfig m_userDataConfig{};
-    UserDataConfig *userDataConfig() { return &m_userDataConfig; }
 };

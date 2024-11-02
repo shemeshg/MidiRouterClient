@@ -30,9 +30,7 @@ public:
     MidiClientConnection midiClientConnection{};
 
 private slots:
-    void userDataChanges(){
-        qDebug() << "Yes Changed";
-    }
+    void userDataChanges();
 
 private:
     int port = -1;
