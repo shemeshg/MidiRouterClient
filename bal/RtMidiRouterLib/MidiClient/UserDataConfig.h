@@ -20,9 +20,6 @@ public:
         if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
             setChanges(jsonDoc);
         }
-
-
-
     }
 
 
@@ -45,6 +42,8 @@ private:
             emit virtualInPortsChanged();
         }
         qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
+        //activePresetID - only one can be ativate maintain isActive at preset level no more.
+        //dropdownlists
 
     }
 };
