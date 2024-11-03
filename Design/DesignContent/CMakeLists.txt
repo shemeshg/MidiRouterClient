@@ -9,8 +9,8 @@ qt6_add_qml_module(DesignContent
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "FormGroupBox.qml"
         "App.qml"
+        "FormGroupBox.qml"
 )
 
 

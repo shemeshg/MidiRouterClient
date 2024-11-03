@@ -35,6 +35,9 @@ QtObject {
     property QtObject midiClientConnection: QtObject {
         property string serverStatusText: "Not Running"
         property int serverStatus: 0
+        property QtObject userDataConfig: QtObject {
+            property var virtualInPorts: ["virtual port1", "virtual port2"]
+        }
     }
     function setAsyncServerStatusAndText(i, cb) {
         midiClientConnection.serverStatus = i
@@ -51,4 +54,6 @@ QtObject {
         midiClientConnection.serverStatus = 0
         midiClientConnection.serverStatusText = "Stopped"
     }
+
+
 }

@@ -247,6 +247,13 @@ Window {
                     }
                 }
             }
+        }        
+
+        CoreLabel {
+            text: "<h1>BAD REFACTOR</h1>"
+        }
+        CoreLabel {
+            text: "virtual ports " + Constants.balData.midiClientConnection.userDataConfig.virtualInPorts
         }
 
         Item {
