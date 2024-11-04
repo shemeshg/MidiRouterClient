@@ -6,9 +6,9 @@
 #include <QGuiApplication>
 #include "qqmlextensionplugin.h"
 
+Q_IMPORT_QML_PLUGIN(BalPlugin)
 Q_IMPORT_QML_PLUGIN(CorePlugin)
 Q_IMPORT_QML_PLUGIN(DesignPlugin)
-Q_IMPORT_QML_PLUGIN(BalPlugin)
 Q_IMPORT_QML_PLUGIN(DesignContentPlugin)
 
 const char mainQmlFile[] = "qrc:/qt/qml/DesignContent/App.qml";

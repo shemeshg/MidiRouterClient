@@ -65,6 +65,14 @@ Window {
             Presets {
             }
         }
+
+        Component {
+            id: userControlsId
+            UserControls {
+
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
@@ -85,6 +93,12 @@ Window {
                 name: "Presets"
                 when: headerBarId.state === "Presets"
                 PropertyChanges { target: loaderId; sourceComponent: presetsId }
+            }
+            ,
+            State {
+                name: "UserControls"
+                when: headerBarId.state === "UserControls"
+                PropertyChanges { target: loaderId; sourceComponent: userControlsId }
             }
         ]
     }

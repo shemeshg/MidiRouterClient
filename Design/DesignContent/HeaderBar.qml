@@ -36,6 +36,14 @@ RowLayout {
                 checkable: true
                 checked: false
             }
+            CoreButton {
+                id: btnUserControlsId
+                text: "User controls"
+                hooverText: "User controls"
+                autoExclusive: true
+                checkable: true
+                checked: false
+            }
         }
     }
     Item {
@@ -54,6 +62,10 @@ RowLayout {
         State {
             name: "Presets"
             when: btnPresetsId.checked
+        },
+        State {
+            name: "UserControls"
+            when: btnUserControlsId.checked
         }
     ]
 
