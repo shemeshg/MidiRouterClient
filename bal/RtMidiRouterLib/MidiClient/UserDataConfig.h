@@ -29,24 +29,5 @@ private:
     void loadComputerUuid();
     void clearDropdownlists();
 
-    void  setChanges(QJsonDocument &jsonDoc){
-        qDebug()<<"Empllay remote configuration";
-        qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
-
-        if (jsonDoc["virtualInPorts"].isArray()){
-            m_virtualInPorts = {};
-
-            for (const QJsonValue &value : jsonDoc["virtualInPorts"].toArray()) {
-                m_virtualInPorts.append(value.toString());
-            }
-            emit virtualInPortsChanged();
-        }
-        //qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
-
-
-        if (jsonDoc["_activePresetID"].isDouble()){
-            setActivePresetID(jsonDoc["_activePresetID"].toInt());
-        }
-        //dropdownlists
-    }
+    void  setChanges(QJsonDocument &jsonDoc);
 };
