@@ -9,8 +9,11 @@ qt6_add_qml_module(DesignContent
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "App.qml"
         "FormGroupBox.qml"
+        "App.qml"
+        "HeaderBar.qml"
+        "VirtualPorts.qml"
+        "Login.qml"
 )
 
 
