@@ -14,6 +14,7 @@ qt6_add_qml_module(DesignContent
         "HeaderBar.qml"
         "VirtualPorts.qml"
         "Login.qml"
+        "Presets.qml"
 )
 
 

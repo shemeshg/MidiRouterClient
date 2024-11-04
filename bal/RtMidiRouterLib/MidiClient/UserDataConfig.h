@@ -31,7 +31,7 @@ private:
 
     void  setChanges(QJsonDocument &jsonDoc){
         qDebug()<<"Empllay remote configuration";
-        //qDebug() << "json[" <<  jsonDoc.toJson() << "]";
+        qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
 
         if (jsonDoc["virtualInPorts"].isArray()){
             m_virtualInPorts = {};
@@ -41,9 +41,12 @@ private:
             }
             emit virtualInPortsChanged();
         }
-        qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
-        //activePresetID - only one can be ativate maintain isActive at preset level no more.
-        //dropdownlists
+        //qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
 
+
+        if (jsonDoc["_activePresetID"].isDouble()){
+            setActivePresetID(jsonDoc["_activePresetID"].toInt());
+        }
+        //dropdownlists
     }
 };

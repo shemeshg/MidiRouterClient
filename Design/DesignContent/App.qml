@@ -60,6 +60,11 @@ Window {
             }
         }
 
+        Component {
+            id: presetsId
+            Presets {
+            }
+        }
         Item {
             Layout.fillHeight: true
         }
@@ -75,6 +80,11 @@ Window {
                 name: "VirtualPorts"
                 when: headerBarId.state === "VirtualPorts"
                 PropertyChanges { target: loaderId; sourceComponent: virtualPortsId }
+            },
+            State {
+                name: "Presets"
+                when: headerBarId.state === "Presets"
+                PropertyChanges { target: loaderId; sourceComponent: presetsId }
             }
         ]
     }

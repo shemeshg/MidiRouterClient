@@ -28,6 +28,14 @@ RowLayout {
                 checkable: true
                 checked: false
             }
+            CoreButton {
+                id: btnPresetsId
+                text: "Presets"
+                hooverText: "Presets"
+                autoExclusive: true
+                checkable: true
+                checked: false
+            }
         }
     }
     Item {
@@ -42,6 +50,10 @@ RowLayout {
         State {
             name: "VirtualPorts"
             when: btnVirtualPortsId.checked
+        },
+        State {
+            name: "Presets"
+            when: btnPresetsId.checked
         }
     ]
 

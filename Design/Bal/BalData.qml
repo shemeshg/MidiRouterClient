@@ -37,7 +37,9 @@ QtObject {
         property int serverStatus: 0
         property QtObject userDataConfig: QtObject {
             property var virtualInPorts: ["virtual port1", "virtual port2"]
+            property int activePresetID: 0
         }
+
     }
     function setAsyncServerStatusAndText(i, cb) {
         midiClientConnection.serverStatus = i
