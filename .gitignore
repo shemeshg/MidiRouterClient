@@ -76,4 +76,4 @@ CMakeLists.txt.user*
 build/
 
 # shemeshg
-*.qmlproject.qtds
+*.qmlproject.qtds.*
