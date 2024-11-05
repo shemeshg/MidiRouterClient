@@ -38,6 +38,7 @@ QtObject {
         property QtObject userDataConfig: QtObject {
             property var virtualInPorts: ["virtual port1", "virtual port2"]
             property int activePresetID: 0
+            property var dropdownlists: [{"name": "popo","data": "aaa\nbbb"},{"name": "t2","data": "po\nlo"}]
         }
 
     }

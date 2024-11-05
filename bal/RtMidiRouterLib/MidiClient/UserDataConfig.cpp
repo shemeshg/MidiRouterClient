@@ -15,10 +15,8 @@ void UserDataConfig::loadComputerUuid()
 
 void UserDataConfig::clearDropdownlists()
 {
-    for (const QList<Dropdownlist *> &innerList : m_dropdownlists) {
-        for (Dropdownlist *item : innerList) {
+    for (const Dropdownlist *item : m_dropdownlists) {
             delete item;
-        }
     }
     // Clear the outer list
     m_dropdownlists.clear();
@@ -26,7 +24,7 @@ void UserDataConfig::clearDropdownlists()
 
 void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     qDebug()<<"Empllay remote configuration";
-    qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
+    //qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
 
     if (jsonDoc["virtualInPorts"].isArray()){
         m_virtualInPorts = {};
@@ -42,7 +40,20 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     if (jsonDoc["_activePresetID"].isDouble()){
         setActivePresetID(jsonDoc["_activePresetID"].toInt());
     }
-    //dropdownlists
+
+    clearDropdownlists();
+    if (jsonDoc["dropdownlists"].isArray()){
+        qDebug()<<"dropdownlists"<<jsonDoc["dropdownlists"];
+        for (const QJsonValue &value : jsonDoc["dropdownlists"].toArray()) {
+            Dropdownlist *d = new Dropdownlist();
+            d->setName(value["name"].toString());
+            d->setData(value["data"].toString());
+            m_dropdownlists.push_back(d);
+        }
+        emit dropdownlistsChanged();
+    }
+
+    //now itterate per user preset
 }
 
 UserDataConfig::UserDataConfig(QObject *parent)
@@ -53,18 +64,5 @@ UserDataConfig::UserDataConfig(QObject *parent)
     m_uniqueId = getUuId();
 
     clearDropdownlists();
-    Dropdownlist *d = new Dropdownlist();
-    d->setData("my data1");
-    d->setName("my name1");
-
-    QList<Dropdownlist *> l;
-    l.push_back(d);
-    d = new Dropdownlist();
-    d->setData("my data2");
-    d->setName("my name2");
-    l.push_back(d);
-
-    m_dropdownlists.push_back(l);
-
-    m_virtualInPorts = {"shalom", "olam"};
+    m_virtualInPorts = {};
 }

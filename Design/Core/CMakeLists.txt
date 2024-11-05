@@ -14,17 +14,17 @@ qt6_add_qml_module(Core
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "CoreComboBox.qml"
-        "CoreGroupBox.qml"
-        "CoreLabel.qml"
-        "CoreSwitch.qml"
-        "CoreTextField.qml"
         "CoreSystemPalette.qml"
+        "CoreCheckBox.qml"
+        "CoreComboBox.qml"
         "CoreButton.qml"
+        "CoreGroupBox.qml"
+        "CoreSwitch.qml"
         "CoreTextArea.qml"
+        "CoreTextField.qml"
         "CoreLabelSelect.qml"
         "CoreToolTip.qml"
-        "CoreCheckBox.qml"
+        "CoreLabel.qml"
 )
 
 

@@ -10,4 +10,20 @@ ColumnLayout {
                 text: "User control dropdowns"
             }
 
+
+
+            Repeater {
+                Layout.fillWidth: true
+                model: Constants.balData.midiClientConnection.userDataConfig.dropdownlists
+
+                RowLayout {
+                    CoreLabel {
+                        text:   modelData.name
+                    }
+                    CoreTextArea {
+                        text:  modelData.data
+                    }
+                }
+            }
+
         }
