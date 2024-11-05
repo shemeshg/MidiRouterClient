@@ -14,9 +14,9 @@ qt6_add_qml_module(Design
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "EventListModel.qml"
         "EventListSimulator.qml"
         "Constants.qml"
+        "EventListModel.qml"
 )
 
 
