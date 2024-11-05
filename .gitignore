@@ -76,7 +76,7 @@ CMakeLists.txt.user*
 build/
 
 # shemeshg
-Design/Design/Design.qmlproject.qtds*
+Design/**.qmlproject.qtds*
 Design/App/autogen/
 Design/**/CMakeLists.txt
 Design/qds.cmake
