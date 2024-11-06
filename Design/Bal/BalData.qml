@@ -37,8 +37,12 @@ QtObject {
         property int serverStatus: 0
         property QtObject userDataConfig: QtObject {
             property var virtualInPorts: ["virtual port1", "virtual port2"]
-            property int activePresetID: 0
+            property int activePresetID: 1
             property var dropdownlists: [{"name": "popo","data": "aaa\nbbb"},{"name": "t2","data": "po\nlo"}]
+            property var midiRoutePresets: [
+                {name: "Preset 1"},
+                {name: "Preset 2"},
+                ]
         }
 
     }

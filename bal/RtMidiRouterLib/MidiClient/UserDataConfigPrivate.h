@@ -5,6 +5,7 @@
 #include <QQmlEngine>
 
 #include "Dropdownlist.h"
+#include "MidiRoutePreset.h"
 /*[[[cog
 import cog
 from UserDataConfigPrivate import classUserDataConfigPrivate
@@ -22,6 +23,7 @@ class UserDataConfigPrivate : public QObject
     Q_PROPERTY(QList<Dropdownlist *> dropdownlists READ dropdownlists  NOTIFY dropdownlistsChanged )
     Q_PROPERTY(QString uniqueId READ uniqueId  NOTIFY uniqueIdChanged )
     Q_PROPERTY(QStringList virtualInPorts READ virtualInPorts  NOTIFY virtualInPortsChanged )
+    Q_PROPERTY(QList<MidiRoutePreset *> midiRoutePresets READ midiRoutePresets  NOTIFY midiRoutePresetsChanged )
     
     QML_ELEMENT
 public:
@@ -42,11 +44,11 @@ void setActivePresetID(const int newActivePresetID)
 
 
     
-    QString computerUuid() const{return m_computerUuid;}
+    QString computerUuid() const{return m_computerUuid;} 
     
 
     
-    QList<Dropdownlist *> dropdownlists() const{return m_dropdownlists;}
+    QList<Dropdownlist *> dropdownlists() const{return m_dropdownlists;} 
     
 
     
@@ -57,12 +59,17 @@ void setActivePresetID(const int newActivePresetID)
     QStringList virtualInPorts() const{return m_virtualInPorts;} 
     
 
+    
+    QList<MidiRoutePreset *> midiRoutePresets() const{return m_midiRoutePresets;} 
+    
+
 
 signals:
     void activePresetIDChanged();
     void dropdownlistsChanged();
     void uniqueIdChanged();
     void virtualInPortsChanged();
+    void midiRoutePresetsChanged();
     
 
 protected:
@@ -70,6 +77,7 @@ protected:
     QList<Dropdownlist *> m_dropdownlists;
     QString m_uniqueId;
     QStringList m_virtualInPorts;
+    QList<MidiRoutePreset *> m_midiRoutePresets;
     
 
 private:

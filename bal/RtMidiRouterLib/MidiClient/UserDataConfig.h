@@ -28,6 +28,7 @@ public slots:
 private:
     void loadComputerUuid();
     void clearDropdownlists();
+    void clearMidiRoutePreset();
 
     void  setChanges(QJsonDocument &jsonDoc);
 };

@@ -10,4 +10,19 @@ ColumnLayout {
             CoreLabel {
                 text: "Selected preset id:" + Constants.balData.midiClientConnection.userDataConfig.activePresetID
             }
+
+            Repeater {
+                Layout.fillWidth: true
+                model: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets
+
+                RowLayout {
+                    CoreLabel {
+                        text:   modelData.name
+                    }
+                    CoreLabel {
+                        text: "*"
+                        visible: index === Constants.balData.midiClientConnection.userDataConfig.activePresetID
+                    }
+                }
+            }
         }

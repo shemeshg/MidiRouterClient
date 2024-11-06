@@ -27,8 +27,11 @@ p.is_bindable = False
 p.is_writable = False
 p.is_notify = True
 ary.append(p)
-
-
+p = Prpt("QList<MidiRoutePreset *>",'midiRoutePresets')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = True
+ary.append(p)
 
 enumClasss = []
 

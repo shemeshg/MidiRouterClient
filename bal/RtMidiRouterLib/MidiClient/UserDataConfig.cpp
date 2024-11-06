@@ -22,6 +22,15 @@ void UserDataConfig::clearDropdownlists()
     m_dropdownlists.clear();
 }
 
+void UserDataConfig::clearMidiRoutePreset()
+{
+    for (const MidiRoutePreset *item : m_midiRoutePresets) {
+        delete item;
+    }
+    // Clear the outer list
+    m_midiRoutePresets.clear();
+}
+
 void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     qDebug()<<"Empllay remote configuration";
     //qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
@@ -53,6 +62,7 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
         emit dropdownlistsChanged();
     }
 
+    clearMidiRoutePreset();
     //now itterate per user preset
 }
 
@@ -65,4 +75,10 @@ UserDataConfig::UserDataConfig(QObject *parent)
 
     clearDropdownlists();
     m_virtualInPorts = {};
+
+    clearMidiRoutePreset();
+    MidiRoutePreset *p = new MidiRoutePreset();
+    p->setName("Default preset");
+    m_midiRoutePresets.push_back(p);
+    emit midiRoutePresetsChanged();
 }
