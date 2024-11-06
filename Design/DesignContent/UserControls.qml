@@ -5,25 +5,30 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 ColumnLayout {            
+    Layout.fillWidth: true
+
+
+    CoreButton {
+        text: "Edit dropdowns"
+        onClicked: editDropDowns.visible = !editDropDowns.visible
+    }
+
+    ColumnLayout {
+        id: editDropDowns
+        visible: false
+        Repeater {
             Layout.fillWidth: true
-            CoreLabel {
-                text: "User control dropdowns"
-            }
+            model: Constants.balData.midiClientConnection.userDataConfig.dropdownlists
 
-
-
-            Repeater {
-                Layout.fillWidth: true
-                model: Constants.balData.midiClientConnection.userDataConfig.dropdownlists
-
-                RowLayout {
-                    CoreLabel {
-                        text:   modelData.name
-                    }
-                    CoreTextArea {
-                        text:  modelData.data
-                    }
+            RowLayout {
+                CoreLabel {
+                    text:   modelData.name
+                }
+                CoreTextArea {
+                    text:  modelData.data
                 }
             }
-
         }
+    }
+
+}

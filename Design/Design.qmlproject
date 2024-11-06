@@ -7,7 +7,7 @@ Project {
     mainFile: "DesignContent/App.qml"
     mainUiFile: "DesignContent/Screen01.qml"
     targetDirectory: "/opt/Design"
-    enableCMakeGeneration: true
+    enableCMakeGeneration: false
     enablePythonGeneration: false
     widgetApp: true
     importPaths: [ "." ]
