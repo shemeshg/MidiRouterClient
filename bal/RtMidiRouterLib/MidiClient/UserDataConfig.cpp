@@ -67,7 +67,10 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
         for (const QJsonValue &value : jsonDoc["midiRoutePresets"].toArray()) {
             MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
             p->setName(value["name"].toString());
+            p->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
+            p->setUuid(value["uuid"].toString());
             m_midiRoutePresets.push_back(p);
+
         }
         emit midiRoutePresetsChanged();
     }
