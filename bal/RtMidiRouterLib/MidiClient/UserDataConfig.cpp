@@ -63,7 +63,22 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     }
 
     clearMidiRoutePreset();
-    //now itterate per user preset
+    if (jsonDoc["midiRoutePresets"].isArray()){
+        for (const QJsonValue &value : jsonDoc["midiRoutePresets"].toArray()) {
+            MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
+            p->setName(value["name"].toString());
+            m_midiRoutePresets.push_back(p);
+        }
+        emit midiRoutePresetsChanged();
+    }
+    /*
+    QJsonValue gg = jsonDoc["midiRoutePresets"];
+    QJsonArray gg1 =  gg.toArray();
+    qDebug()<<"***#####";
+    qDebug()<<gg;
+    qDebug()<<"***";
+    qDebug()<<QJsonDocument(gg1).toJson();
+    */
 }
 
 UserDataConfig::UserDataConfig(QObject *parent)
@@ -77,7 +92,7 @@ UserDataConfig::UserDataConfig(QObject *parent)
     m_virtualInPorts = {};
 
     clearMidiRoutePreset();
-    MidiRoutePreset *p = new MidiRoutePreset();
+    MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
     p->setName("Default preset");
     m_midiRoutePresets.push_back(p);
     emit midiRoutePresetsChanged();
