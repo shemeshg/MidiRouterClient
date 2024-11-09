@@ -25,4 +25,8 @@ ColumnLayout {
                     }
                 }
             }
+
+            CoreLabel {
+                text: "preset 1 midiControlOn()" + JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets[0].midiControlOn)
+            }
         }

@@ -69,8 +69,25 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
             p->setName(value["name"].toString());
             p->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
             p->setUuid(value["uuid"].toString());
-            m_midiRoutePresets.push_back(p);
 
+            p->midiControlOn()->setChannel(value["midiControlOn"]["channel"].toInt());
+            p->midiControlOn()->setData1(value["midiControlOn"]["data1"].toInt());
+            p->midiControlOn()->setData2(value["midiControlOn"]["data2"].toInt());
+            p->midiControlOn()->setEventTypeId(value["midiControlOn"]["eventTypeId"].toInt());
+            p->midiControlOn()->setPresetMidiType(PresetMidiControl::PresetMidiType::PRESET_ON);
+            p->midiControlOn()->setPortName(value["midiControlOn"]["portName"].toString());
+            p->midiControlOn()->setPresetUuid(value["midiControlOn"]["presetUuid"].toString());
+            qDebug()<<"a "<<value["midiControlOn"];
+
+            p->midiControlOff()->setChannel(value["midiControlOff"]["channel"].toInt());
+            p->midiControlOff()->setData1(value["midiControlOff"]["data1"].toInt());
+            p->midiControlOff()->setData2(value["midiControlOff"]["data2"].toInt());
+            p->midiControlOff()->setEventTypeId(value["midiControlOff"]["eventTypeId"].toInt());
+            p->midiControlOff()->setPresetMidiType(PresetMidiControl::PresetMidiType::PRESET_OFF);
+            p->midiControlOff()->setPortName(value["midiControlOff"]["portName"].toString());
+            p->midiControlOff()->setPresetUuid(value["midiControlOff"]["presetUuid"].toString());
+
+            m_midiRoutePresets.push_back(p);            
         }
         emit midiRoutePresetsChanged();
     }

@@ -40,8 +40,70 @@ QtObject {
             property int activePresetID: 1
             property var dropdownlists: [{"name": "popo","data": "aaa\nbbb"},{"name": "t2","data": "po\nlo"}]
             property var midiRoutePresets: [
-                {name: "Preset 1"},
-                {name: "Preset 2"},
+                {
+                    "easyConfig": {
+                        "inputZonesAndRoutes": {}
+                    },
+                    "isEnabled": true,
+                    "isSendAllUserControls": false,
+                    "jsRouter": {
+                        "jsToServers": []
+                    },
+                    "midiControlOff": {
+                        "channel": -1,
+                        "data1": -1,
+                        "data2": -1,
+                        "eventTypeId": 0,
+                        "portName": "",
+                        "presetMidiType": 0,
+                        "presetUuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
+                    },
+                    "midiControlOn": {
+                        "channel": -1,
+                        "data1": -1,
+                        "data2": -1,
+                        "eventTypeId": 0,
+                        "portName": "",
+                        "presetMidiType": 1,
+                        "presetUuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
+                    },
+                    "midiRouteInputs": {},
+                    "name": "Default preset",
+                    "userControls": [],
+                    "uuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
+                },
+                {
+                    "easyConfig": {
+                        "inputZonesAndRoutes": {}
+                    },
+                    "isEnabled": true,
+                    "isSendAllUserControls": false,
+                    "jsRouter": {
+                        "jsToServers": []
+                    },
+                    "midiControlOff": {
+                        "channel": -1,
+                        "data1": -1,
+                        "data2": -1,
+                        "eventTypeId": 0,
+                        "portName": "",
+                        "presetMidiType": 0,
+                        "presetUuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
+                    },
+                    "midiControlOn": {
+                        "channel": -1,
+                        "data1": -1,
+                        "data2": -1,
+                        "eventTypeId": 0,
+                        "portName": "",
+                        "presetMidiType": 1,
+                        "presetUuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
+                    },
+                    "midiRouteInputs": {},
+                    "name": "another preset",
+                    "userControls": [],
+                    "uuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
+                }
                 ]
         }
 
