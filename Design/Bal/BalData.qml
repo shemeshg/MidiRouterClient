@@ -46,6 +46,11 @@ QtObject {
         }
 
     }
+
+    function saveClientPortNumber(i){
+        //dummy
+    }
+
     function setAsyncServerStatusAndText(i, cb) {
         midiClientConnection.serverStatus = i
         midiClientConnection.serverStatusText = "StatusId: " + midiClientConnection.serverStatus

@@ -12,6 +12,12 @@ public:
         : MidiRoutePresetPrivate{parent}{
         setComputerUuid(computerUuid);
         setUuid(getUuId());
+        m_midiControlOn = new PresetMidiControl(
+            PresetMidiControl::PresetMidiType::PRESET_ON,
+            uuid());
+        m_midiControlOff = new PresetMidiControl(
+            PresetMidiControl::PresetMidiType::PRESET_OFF,
+            uuid());
     };
 
 

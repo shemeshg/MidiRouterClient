@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+#include "PresetMidiControl.h"
 
 /*[[[cog
 import cog
@@ -20,6 +21,8 @@ class MidiRoutePresetPrivate : public QObject
     Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(QString computerUuid READ computerUuid WRITE setComputerUuid NOTIFY computerUuidChanged )
     Q_PROPERTY(bool isSendAllUserControls READ isSendAllUserControls WRITE setIsSendAllUserControls NOTIFY isSendAllUserControlsChanged )
+    Q_PROPERTY(PresetMidiControl * midiControlOn READ midiControlOn  NOTIFY midiControlOnChanged )
+    Q_PROPERTY(PresetMidiControl * midiControlOff READ midiControlOff  NOTIFY midiControlOffChanged )
     
     QML_ELEMENT
 public:
@@ -75,15 +78,27 @@ void setIsSendAllUserControls(const bool newIsSendAllUserControls)
     }
 
 
+    
+    PresetMidiControl * midiControlOn() const{return m_midiControlOn;} 
+    
+
+    
+    PresetMidiControl * midiControlOff() const{return m_midiControlOff;} 
+    
+
 
 signals:
     void nameChanged();
     void uuidChanged();
     void computerUuidChanged();
     void isSendAllUserControlsChanged();
+    void midiControlOnChanged();
+    void midiControlOffChanged();
     
 
 protected:
+    PresetMidiControl * m_midiControlOn;
+    PresetMidiControl * m_midiControlOff;
     
 
 private:

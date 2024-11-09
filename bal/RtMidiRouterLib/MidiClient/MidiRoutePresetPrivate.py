@@ -23,7 +23,16 @@ p.is_writable = True
 p.is_notify = True
 ary.append(p)
 
-
+p = Prpt("PresetMidiControl *",'midiControlOn')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = True
+ary.append(p)
+p = Prpt("PresetMidiControl *",'midiControlOff')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = True
+ary.append(p)
 
 
 enumClasss = []
