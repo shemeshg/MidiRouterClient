@@ -73,6 +73,12 @@ Window {
             }
         }
 
+        Component {
+            id: easyConfigId
+            EasyConfig {
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
@@ -99,6 +105,11 @@ Window {
                 name: "UserControls"
                 when: headerBarId.state === "UserControls"
                 PropertyChanges { target: loaderId; sourceComponent: userControlsId }
+            },
+            State {
+                name: "EasyConfig"
+                when: headerBarId.state === "EasyConfig"
+                PropertyChanges { target: loaderId; sourceComponent: easyConfigId }
             }
         ]
     }
