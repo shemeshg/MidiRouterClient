@@ -1,22 +1,19 @@
 from property import Prpt, PrptClass, EnumClass
 
+def create_prpt(type_name, name):
+    p = Prpt(type_name, name)
+    p.is_bindable = False
+    p.is_writable = True
+    p.is_notify = True
+    return p
 
-ary = []
-p = Prpt("QString",'serverStatusText')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("ServerStatus",'serverStatus')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
+ary = [
+    create_prpt("QString", 'serverStatusText'),
+    create_prpt("ServerStatus", 'serverStatus')
+]
 
-
-enumClasss = []
-e = EnumClass("ServerStatus",
-        ["STOPPED", "STARTING", "RUNNING", "FAILED"])
-enumClasss.append(e)
+enumClasss = [
+    EnumClass("ServerStatus", ["STOPPED", "STARTING", "RUNNING", "FAILED"])
+]
 
 classMidiClientConnectionPrivate = PrptClass("MidiClientConnectionPrivate", ary, enumClasss)

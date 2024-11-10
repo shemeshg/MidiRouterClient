@@ -1,46 +1,24 @@
 from property import Prpt, PrptClass, EnumClass
 
+def create_prpt(type_name, name):
+    p = Prpt(type_name, name)
+    p.is_bindable = False
+    p.is_writable = True
+    p.is_notify = True
+    return p
 
-ary = []
-p = Prpt("QString",'portName')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("PresetMidiType",'presetMidiType')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("QString",'presetUuid')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("int",'eventTypeId')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("int",'channel')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("int",'data1')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("int",'data2')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
+ary = [
+    create_prpt("QString", 'portName'),
+    create_prpt("PresetMidiType", 'presetMidiType'),
+    create_prpt("QString", 'presetUuid'),
+    create_prpt("int", 'eventTypeId'),
+    create_prpt("int", 'channel'),
+    create_prpt("int", 'data1'),
+    create_prpt("int", 'data2')
+]
 
-enumClasss = []
-e = EnumClass("PresetMidiType",
-        ["PRESET_OFF", "PRESET_ON"])
-enumClasss.append(e)
+enumClasss = [
+    EnumClass("PresetMidiType", ["PRESET_OFF", "PRESET_ON"])
+]
 
 classPresetMidiControlPrivate = PrptClass("PresetMidiControlPrivate", ary, enumClasss)

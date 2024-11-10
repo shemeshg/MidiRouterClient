@@ -1,39 +1,21 @@
 from property import Prpt, PrptClass
 
+def create_prpt(type_name, name, is_writable=True, is_notify=True):
+    p = Prpt(type_name, name)
+    p.is_bindable = False
+    p.is_writable = is_writable
+    p.is_notify = is_notify
+    return p
 
-ary = []
-p = Prpt("int",'activePresetID')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("QString",'computerUuid')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = False
-ary.append(p)
-p = Prpt("QList<Dropdownlist *>",'dropdownlists')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = True
-ary.append(p)
-p = Prpt("QString",'uniqueId')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = True
-ary.append(p)
-p = Prpt("QStringList",'virtualInPorts')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = True
-ary.append(p)
-p = Prpt("QList<MidiRoutePreset *>",'midiRoutePresets')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = True
-ary.append(p)
+ary = [
+    create_prpt("int", 'activePresetID'),
+    create_prpt("QString", 'computerUuid', is_writable=False, is_notify=False),
+    create_prpt("QList<Dropdownlist *>", 'dropdownlists', is_writable=False),
+    create_prpt("QString", 'uniqueId', is_writable=False),
+    create_prpt("QStringList", 'virtualInPorts', is_writable=False),
+    create_prpt("QList<MidiRoutePreset *>", 'midiRoutePresets', is_writable=False)
+]
 
 enumClasss = []
-
 
 classUserDataConfigPrivate = PrptClass("UserDataConfigPrivate", ary, enumClasss)

@@ -1,41 +1,21 @@
 from property import Prpt, PrptClass
 
+def create_prpt(type_name, name, is_writable=True):
+    p = Prpt(type_name, name)
+    p.is_bindable = False
+    p.is_writable = is_writable
+    p.is_notify = True
+    return p
 
-ary = []
-p = Prpt("QString",'name')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("QString",'uuid')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("QString",'computerUuid')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-p = Prpt("bool",'isSendAllUserControls')
-p.is_bindable = False
-p.is_writable = True
-p.is_notify = True
-ary.append(p)
-
-p = Prpt("PresetMidiControl *",'midiControlOn')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = True
-ary.append(p)
-p = Prpt("PresetMidiControl *",'midiControlOff')
-p.is_bindable = False
-p.is_writable = False
-p.is_notify = True
-ary.append(p)
-
+ary = [
+    create_prpt("QString", 'name'),
+    create_prpt("QString", 'uuid'),
+    create_prpt("QString", 'computerUuid'),
+    create_prpt("bool", 'isSendAllUserControls'),
+    create_prpt("PresetMidiControl *", 'midiControlOn', is_writable=False),
+    create_prpt("PresetMidiControl *", 'midiControlOff', is_writable=False)
+]
 
 enumClasss = []
-
 
 classMidiRoutePresetPrivate = PrptClass("MidiRoutePresetPrivate", ary, enumClasss)
