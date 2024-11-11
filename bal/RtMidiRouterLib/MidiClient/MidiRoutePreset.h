@@ -1,4 +1,5 @@
 #pragma once
+#include "EasyConfig.h"
 #include "MidiClientUtil.h"
 #include "MidiRoutePresetPrivate.h"
 
@@ -18,9 +19,18 @@ public:
         m_midiControlOff = new PresetMidiControl(
             PresetMidiControl::PresetMidiType::PRESET_OFF,
             uuid());
+
+        clearEasyConfig();
     };
 
-
+    void clearEasyConfig(){
+        for (const EasyConfig *item : m_easyConfig) {
+            delete item;
+        }
+        // Clear the outer list
+        m_easyConfig.clear();
+        emit easyConfigChanged();
+    }
 public slots:
 
 signals:

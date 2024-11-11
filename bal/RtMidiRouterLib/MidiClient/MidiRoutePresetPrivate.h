@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+#include "EasyConfig.h"
 #include "PresetMidiControl.h"
 
 /*[[[cog
@@ -23,6 +24,7 @@ class MidiRoutePresetPrivate : public QObject
     Q_PROPERTY(bool isSendAllUserControls READ isSendAllUserControls WRITE setIsSendAllUserControls NOTIFY isSendAllUserControlsChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOn READ midiControlOn  NOTIFY midiControlOnChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOff READ midiControlOff  NOTIFY midiControlOffChanged )
+    Q_PROPERTY(QList<EasyConfig *> easyConfig READ easyConfig  NOTIFY easyConfigChanged )
     
     QML_ELEMENT
 public:
@@ -86,6 +88,10 @@ void setIsSendAllUserControls(const bool newIsSendAllUserControls)
     PresetMidiControl * midiControlOff() const{return m_midiControlOff;} 
     
 
+    
+    QList<EasyConfig *> easyConfig() const{return m_easyConfig;} 
+    
+
 
 signals:
     void nameChanged();
@@ -94,11 +100,13 @@ signals:
     void isSendAllUserControlsChanged();
     void midiControlOnChanged();
     void midiControlOffChanged();
+    void easyConfigChanged();
     
 
 protected:
     PresetMidiControl * m_midiControlOn;
     PresetMidiControl * m_midiControlOff;
+    QList<EasyConfig *> m_easyConfig;
     
 
 private:

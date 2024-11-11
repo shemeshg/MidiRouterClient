@@ -77,7 +77,6 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
             p->midiControlOn()->setPresetMidiType(PresetMidiControl::PresetMidiType::PRESET_ON);
             p->midiControlOn()->setPortName(value["midiControlOn"]["portName"].toString());
             p->midiControlOn()->setPresetUuid(value["midiControlOn"]["presetUuid"].toString());
-            qDebug()<<"a "<<value["midiControlOn"];
 
             p->midiControlOff()->setChannel(value["midiControlOff"]["channel"].toInt());
             p->midiControlOff()->setData1(value["midiControlOff"]["data1"].toInt());
@@ -86,6 +85,19 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
             p->midiControlOff()->setPresetMidiType(PresetMidiControl::PresetMidiType::PRESET_OFF);
             p->midiControlOff()->setPortName(value["midiControlOff"]["portName"].toString());
             p->midiControlOff()->setPresetUuid(value["midiControlOff"]["presetUuid"].toString());
+
+
+            if (value["easyConfig"].isObject() && value["easyConfig"]["inputZonesAndRoutes"].isObject()){
+                p->clearEasyConfig();
+                qDebug()<<"a "<<value["easyConfig"];
+                auto a= value["easyConfig"]["inputZonesAndRoutes"].toObject();
+                for (auto it = a.begin();
+                     it != a.end(); ++it) {
+                    qDebug()<<"key: "<<it.key(); //Already QString
+                   //qDebug()<<it.value();
+                }
+            }
+
 
             m_midiRoutePresets.push_back(p);            
         }
