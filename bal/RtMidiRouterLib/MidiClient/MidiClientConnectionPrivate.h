@@ -1,5 +1,6 @@
 #pragma once
 
+#include "UserDataConfig.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
@@ -18,6 +19,7 @@ class MidiClientConnectionPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString serverStatusText READ serverStatusText WRITE setServerStatusText NOTIFY serverStatusTextChanged )
     Q_PROPERTY(ServerStatus serverStatus READ serverStatus WRITE setServerStatus NOTIFY serverStatusChanged )
+    Q_PROPERTY(UserDataConfig * userDataConfig READ userDataConfig  NOTIFY userDataConfigChanged )
     
     QML_ELEMENT
 public:
@@ -54,13 +56,19 @@ void setServerStatus(const ServerStatus &newServerStatus)
     }
 
 
+    
+    UserDataConfig * userDataConfig() const{return m_userDataConfig;} 
+    
+
 
 signals:
     void serverStatusTextChanged();
     void serverStatusChanged();
+    void userDataConfigChanged();
     
 
 protected:
+    UserDataConfig * m_userDataConfig;
     
 
 private:

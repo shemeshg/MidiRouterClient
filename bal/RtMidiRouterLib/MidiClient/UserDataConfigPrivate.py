@@ -1,11 +1,6 @@
-from property import Prpt, PrptClass
+from property import create_prpt, PrptClass
 
-def create_prpt(type_name, name, is_writable=True, is_notify=True):
-    p = Prpt(type_name, name)
-    p.is_bindable = False
-    p.is_writable = is_writable
-    p.is_notify = is_notify
-    return p
+
 
 ary = [
     create_prpt("int", 'activePresetID'),

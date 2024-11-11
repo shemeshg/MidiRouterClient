@@ -3,6 +3,13 @@ from string import Template
 def initCapital(s):
     return s[0].upper() + s[1:]
 
+def create_prpt(type_name, name, is_writable=True, is_notify=True):
+    p = Prpt(type_name, name)
+    p.is_bindable = False
+    p.is_writable = is_writable
+    p.is_notify = is_notify
+    return p
+
 class EnumClass:
     class_name = ""
     class_options = []

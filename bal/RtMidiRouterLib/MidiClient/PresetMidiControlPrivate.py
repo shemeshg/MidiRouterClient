@@ -1,11 +1,6 @@
-from property import Prpt, PrptClass, EnumClass
+from property import create_prpt, PrptClass, EnumClass
 
-def create_prpt(type_name, name):
-    p = Prpt(type_name, name)
-    p.is_bindable = False
-    p.is_writable = True
-    p.is_notify = True
-    return p
+
 
 ary = [
     create_prpt("QString", 'portName'),

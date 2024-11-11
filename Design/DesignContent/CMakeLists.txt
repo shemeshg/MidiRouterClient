@@ -16,6 +16,7 @@ qt6_add_qml_module(DesignContent
         "HeaderBar.qml"
         "UserControls.qml"
         "FormGroupBox.qml"
+        "EasyConfig.qml"
 )
 
 
