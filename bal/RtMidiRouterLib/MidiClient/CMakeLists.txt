@@ -31,6 +31,10 @@ add_library(midiClient STATIC
     EasyConfigPrivate.cpp
     EasyConfig.h
     EasyConfig.cpp
+    EasyConfigRoutePrivate.h
+    EasyConfigRoutePrivate.cpp
+    EasyConfigRoute.h
+    EasyConfigRoute.cpp
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel

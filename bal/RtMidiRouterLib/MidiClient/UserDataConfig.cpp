@@ -115,5 +115,5 @@ UserDataConfig::UserDataConfig(QObject *parent)
     MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
     p->setName("Default preset");
     m_midiRoutePresets.push_back(p);
-    emit midiRoutePresetsChanged();
+    emit midiRoutePresetsChanged();    
 }
