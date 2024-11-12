@@ -9,6 +9,7 @@
     #define SLEEP( milliseconds ) std::this_thread::sleep_for(std::chrono::milliseconds((DWORD) milliseconds));
 #else // Unix variants
   #include <unistd.h>
+  #include <memory>
   //#define SLEEP( milliseconds ) usleep( (unsigned long) (milliseconds * 1000.0) )
 #endif
 

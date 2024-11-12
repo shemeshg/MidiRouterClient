@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(shalom VERSION 0.1 LANGUAGES CXX)
+project(midiRouterClient VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    # Append -fPIC to the CXXFLAGS only if the system is Linux
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif()
+
+
+
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
@@ -37,10 +45,12 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-add_subdirectory(design/Design)
-add_subdirectory(design/DesignContent)
-add_subdirectory(design/Core)
+add_subdirectory(Design/Design)
+add_subdirectory(Design/DesignContent)
+add_subdirectory(Design/Core)
 add_subdirectory(Bal)
+
+
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     PRIVATE Qt6::Quick
