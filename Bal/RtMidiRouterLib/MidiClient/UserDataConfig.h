@@ -37,4 +37,7 @@ private:
     void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type);
 
 
+    QList<int> extractKeyboardSplits(const QJsonArray &array);
+    MidiRoutePreset *createMidiRoutePreset(const QJsonValue &value);
+    void updateEasyConfig(MidiRoutePreset *preset, const QJsonObject &easyConfig);
 };

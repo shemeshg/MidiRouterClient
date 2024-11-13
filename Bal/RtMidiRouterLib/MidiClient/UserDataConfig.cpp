@@ -52,40 +52,50 @@ void UserDataConfig::updateDropdownlists(const QJsonArray &array) {
 
 void UserDataConfig::updateMidiRoutePresets(const QJsonArray &array) {
     for (const QJsonValue &value : array) {
-        MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
-        p->setName(value["name"].toString());
-        p->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
-        p->setUuid(value["uuid"].toString());
-
-        updateMidiControl(p->midiControlOn(), value["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
-        updateMidiControl(p->midiControlOff(), value["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
-
+        MidiRoutePreset *preset = createMidiRoutePreset(value);
         if (value["easyConfig"].isObject() && value["easyConfig"]["inputZonesAndRoutes"].isObject()) {
-            p->clearEasyConfig();
-            auto a = value["easyConfig"]["inputZonesAndRoutes"].toObject();
-            for (auto it = a.begin(); it != a.end(); ++it) {
-                qDebug() << "key: " << it.key();
-                qDebug() << it.value();
-                EasyConfig *e=p->addEasyConfig(it.value().toString());
-
-
-                //{"easyConfigRoutes":[],"keyboardSplits":[{"splitPosition":60}],"midiInputName":"0_Scarlett 2i4 USB","zoneNames":["I0S0","I0S1"]}
-                if  (it.value().toObject()["keyboardSplits"].isArray()){
-                    QList<int> kbdSplits={};
-                    for (const QJsonValue &value : it.value().toObject()["keyboardSplits"].toArray()) {
-                        kbdSplits.push_back(value["splitPosition"].toInt());
-                    }
-                    e->setKeyboardSplits(kbdSplits);
-                    qDebug()<<"Our keyboard splits are "<<kbdSplits;
-                }
-
-            }
+            updateEasyConfig(preset, value["easyConfig"]["inputZonesAndRoutes"].toObject());
         }
-
-        m_midiRoutePresets.push_back(p);
+        m_midiRoutePresets.push_back(preset);
     }
     emit midiRoutePresetsChanged();
 }
+
+MidiRoutePreset* UserDataConfig::createMidiRoutePreset(const QJsonValue &value) {
+    MidiRoutePreset *preset = new MidiRoutePreset(m_computerUuid);
+    preset->setName(value["name"].toString());
+    preset->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
+    preset->setUuid(value["uuid"].toString());
+
+    updateMidiControl(preset->midiControlOn(), value["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
+    updateMidiControl(preset->midiControlOff(), value["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
+
+    return preset;
+}
+
+void UserDataConfig::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject &easyConfig) {
+    preset->clearEasyConfig();
+    for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
+        qDebug() << "key: " << it.key();
+        qDebug() << it.value();
+        EasyConfig *easyConfigEntry = preset->addEasyConfig(it.value().toString());
+
+        if (it.value().toObject()["keyboardSplits"].isArray()) {
+            QList<int> keyboardSplits = extractKeyboardSplits(it.value().toObject()["keyboardSplits"].toArray());
+            easyConfigEntry->setKeyboardSplits(keyboardSplits);
+            qDebug() << "Our keyboard splits are " << keyboardSplits;
+        }
+    }
+}
+
+QList<int> UserDataConfig::extractKeyboardSplits(const QJsonArray &array) {
+    QList<int> keyboardSplits;
+    for (const QJsonValue &value : array) {
+        keyboardSplits.push_back(value["splitPosition"].toInt());
+    }
+    return keyboardSplits;
+}
+
 
 void UserDataConfig::updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) {
     control->setChannel(value["channel"].toInt());
