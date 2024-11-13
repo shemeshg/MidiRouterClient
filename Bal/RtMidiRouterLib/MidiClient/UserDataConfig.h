@@ -31,4 +31,8 @@ private:
     void clearMidiRoutePreset();
 
     void  setChanges(QJsonDocument &jsonDoc);
+    void updateVirtualInPorts(const QJsonArray &array);
+    void updateDropdownlists(const QJsonArray &array);
+    void updateMidiRoutePresets(const QJsonArray &array);
+    void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type);
 };

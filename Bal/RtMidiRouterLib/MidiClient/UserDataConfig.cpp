@@ -31,86 +31,85 @@ void UserDataConfig::clearMidiRoutePreset()
     m_midiRoutePresets.clear();
 }
 
+
+void UserDataConfig::updateVirtualInPorts(const QJsonArray &array) {
+    m_virtualInPorts.clear();
+    for (const QJsonValue &value : array) {
+        m_virtualInPorts.append(value.toString());
+    }
+    emit virtualInPortsChanged();
+}
+
+void UserDataConfig::updateDropdownlists(const QJsonArray &array) {
+    for (const QJsonValue &value : array) {
+        Dropdownlist *d = new Dropdownlist();
+        d->setName(value["name"].toString());
+        d->setData(value["data"].toString());
+        m_dropdownlists.push_back(d);
+    }
+    emit dropdownlistsChanged();
+}
+
+void UserDataConfig::updateMidiRoutePresets(const QJsonArray &array) {
+    for (const QJsonValue &value : array) {
+        MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
+        p->setName(value["name"].toString());
+        p->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
+        p->setUuid(value["uuid"].toString());
+
+        updateMidiControl(p->midiControlOn(), value["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
+        updateMidiControl(p->midiControlOff(), value["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
+
+        if (value["easyConfig"].isObject() && value["easyConfig"]["inputZonesAndRoutes"].isObject()) {
+            p->clearEasyConfig();
+            auto a = value["easyConfig"]["inputZonesAndRoutes"].toObject();
+            for (auto it = a.begin(); it != a.end(); ++it) {
+                qDebug() << "key: " << it.key();
+                qDebug() << it.value();
+            }
+        }
+
+        m_midiRoutePresets.push_back(p);
+    }
+    emit midiRoutePresetsChanged();
+}
+
+void UserDataConfig::updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) {
+    control->setChannel(value["channel"].toInt());
+    control->setData1(value["data1"].toInt());
+    control->setData2(value["data2"].toInt());
+    control->setEventTypeId(value["eventTypeId"].toInt());
+    control->setPresetMidiType(type);
+    control->setPortName(value["portName"].toString());
+    control->setPresetUuid(value["presetUuid"].toString());
+}
+
+
 void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     qDebug()<<"Empllay remote configuration";
     //qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
 
-    if (jsonDoc["virtualInPorts"].isArray()){
-        m_virtualInPorts = {};
-
-        for (const QJsonValue &value : jsonDoc["virtualInPorts"].toArray()) {
-            m_virtualInPorts.append(value.toString());
-        }
-        emit virtualInPortsChanged();
+    if (jsonDoc["virtualInPorts"].isArray()) {
+            updateVirtualInPorts(jsonDoc["virtualInPorts"].toArray());
     }
     //qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
 
-
-    if (jsonDoc["_activePresetID"].isDouble()){
+    if (jsonDoc["_activePresetID"].isDouble()) {
         setActivePresetID(jsonDoc["_activePresetID"].toInt());
     }
 
+
     clearDropdownlists();
-    if (jsonDoc["dropdownlists"].isArray()){
-        qDebug()<<"dropdownlists"<<jsonDoc["dropdownlists"];
-        for (const QJsonValue &value : jsonDoc["dropdownlists"].toArray()) {
-            Dropdownlist *d = new Dropdownlist();
-            d->setName(value["name"].toString());
-            d->setData(value["data"].toString());
-            m_dropdownlists.push_back(d);
-        }
-        emit dropdownlistsChanged();
+    if (jsonDoc["dropdownlists"].isArray()) {
+        updateDropdownlists(jsonDoc["dropdownlists"].toArray());
     }
+
 
     clearMidiRoutePreset();
-    if (jsonDoc["midiRoutePresets"].isArray()){
-        for (const QJsonValue &value : jsonDoc["midiRoutePresets"].toArray()) {
-            MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
-            p->setName(value["name"].toString());
-            p->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
-            p->setUuid(value["uuid"].toString());
-
-            p->midiControlOn()->setChannel(value["midiControlOn"]["channel"].toInt());
-            p->midiControlOn()->setData1(value["midiControlOn"]["data1"].toInt());
-            p->midiControlOn()->setData2(value["midiControlOn"]["data2"].toInt());
-            p->midiControlOn()->setEventTypeId(value["midiControlOn"]["eventTypeId"].toInt());
-            p->midiControlOn()->setPresetMidiType(PresetMidiControl::PresetMidiType::PRESET_ON);
-            p->midiControlOn()->setPortName(value["midiControlOn"]["portName"].toString());
-            p->midiControlOn()->setPresetUuid(value["midiControlOn"]["presetUuid"].toString());
-
-            p->midiControlOff()->setChannel(value["midiControlOff"]["channel"].toInt());
-            p->midiControlOff()->setData1(value["midiControlOff"]["data1"].toInt());
-            p->midiControlOff()->setData2(value["midiControlOff"]["data2"].toInt());
-            p->midiControlOff()->setEventTypeId(value["midiControlOff"]["eventTypeId"].toInt());
-            p->midiControlOff()->setPresetMidiType(PresetMidiControl::PresetMidiType::PRESET_OFF);
-            p->midiControlOff()->setPortName(value["midiControlOff"]["portName"].toString());
-            p->midiControlOff()->setPresetUuid(value["midiControlOff"]["presetUuid"].toString());
-
-
-            if (value["easyConfig"].isObject() && value["easyConfig"]["inputZonesAndRoutes"].isObject()){
-                p->clearEasyConfig();
-                qDebug()<<"a "<<value["easyConfig"];
-                auto a= value["easyConfig"]["inputZonesAndRoutes"].toObject();
-                for (auto it = a.begin();
-                     it != a.end(); ++it) {
-                    qDebug()<<"key: "<<it.key(); //Already QString
-                   //qDebug()<<it.value();
-                }
-            }
-
-
-            m_midiRoutePresets.push_back(p);            
-        }
-        emit midiRoutePresetsChanged();
+    if (jsonDoc["midiRoutePresets"].isArray()) {
+        updateMidiRoutePresets(jsonDoc["midiRoutePresets"].toArray());
     }
-    /*
-    QJsonValue gg = jsonDoc["midiRoutePresets"];
-    QJsonArray gg1 =  gg.toArray();
-    qDebug()<<"***#####";
-    qDebug()<<gg;
-    qDebug()<<"***";
-    qDebug()<<QJsonDocument(gg1).toJson();
-    */
+
 }
 
 UserDataConfig::UserDataConfig(QObject *parent)
