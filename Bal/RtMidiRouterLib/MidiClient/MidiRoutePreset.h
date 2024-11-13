@@ -24,20 +24,20 @@ public:
     };
 
     void clearEasyConfig(){
-        for (const EasyConfig *item : m_easyConfig) {
+        for (EasyConfig *item : m_easyConfig) {
+            item->clearEasyConfigRoute();
             delete item;
         }
         // Clear the outer list
+
         m_easyConfig.clear();
         emit easyConfigChanged();
     }
 
 
-    EasyConfig *addEasyConfig(const QString &midiInputName ){
-        EasyConfig *e=new EasyConfig();
-        e->setMidiInputName(midiInputName);
-        m_easyConfig.push_back(e);
-        return e;
+    void addEasyConfig( EasyConfig *entry ){
+        m_easyConfig.push_back(entry);
+        emit easyConfigChanged();
     }
 public slots:
 

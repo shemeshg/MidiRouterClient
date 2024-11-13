@@ -78,12 +78,12 @@ void UserDataConfig::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject
     for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
         qDebug() << "key: " << it.key();
         qDebug() << it.value();
-        EasyConfig *easyConfigEntry = preset->addEasyConfig(it.value().toString());
+        EasyConfig *easyConfigEntry = new EasyConfig();
+        easyConfigEntry->setMidiInputName(it.key());
 
         if (it.value().toObject()["keyboardSplits"].isArray()) {
             QList<int> keyboardSplits = extractKeyboardSplits(it.value().toObject()["keyboardSplits"].toArray());
             easyConfigEntry->setKeyboardSplits(keyboardSplits);
-            qDebug() << "Our keyboard splits are " << easyConfigEntry->keyboardSplits();
         }
 
         if (it.value().toObject()["zoneNames"].isArray()) {
@@ -94,8 +94,33 @@ void UserDataConfig::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject
             }
 
             easyConfigEntry->setZoneNames(stringList);
-            qDebug() << "Our zone Names are " << easyConfigEntry->zoneNames();
+
         }
+
+        if (it.value().toObject()["easyConfigRoutes"].isArray()) {
+            QJsonArray jsonArray = it.value().toObject()["easyConfigRoutes"].toArray();
+            for (const QJsonValue &value : jsonArray) {
+                qDebug()<<"Lets parse easyConfigRoute "<< value;
+                EasyConfigRoute *easyConfigRoute = new EasyConfigRoute();
+                easyConfigRoute->setFromCcOrNrpnEnd(value["fromCcOrNrpnEnd"].toInt());
+                easyConfigRoute->setFromCcOrNrpnStart(value["fromCcOrNrpnStart"].toInt());
+                easyConfigRoute->setFromChannel(value["fromChannel"].toInt());
+                easyConfigRoute->setFromData1(value["fromData1"].toInt());
+                easyConfigRoute->setFromSelectedMidiEventTypeId(value["fromSelectedMidiEventTypeId"].toInt());
+                easyConfigRoute->setSplitRangeId(value["splitRangeId"].toInt());
+                easyConfigRoute->setToCcOrNrpnEnd(value["toCcOrNrpnEnd"].toInt());
+                easyConfigRoute->setToCcOrNrpnStart(value["toCcOrNrpnStart"].toInt());
+                easyConfigRoute->setToChannel(value["toChannel"].toInt());
+                easyConfigRoute->setToData1(value["toData1"].toInt());
+                easyConfigRoute->setToDestinationName(value["toDestinationName"].toString());
+                easyConfigRoute->setToSelectedMidiEventTypeId(value["toSelectedMidiEventTypeId"].toInt());
+                easyConfigRoute->setTranspose(value["transpose"].toInt());
+
+                easyConfigEntry->addEasyConfigRoute(easyConfigRoute);
+
+            }
+        }
+        preset->addEasyConfig(easyConfigEntry);
     }
 }
 
