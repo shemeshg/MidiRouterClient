@@ -28,7 +28,7 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
 
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}
-    URI shalom
+    URI Shalom
     VERSION 1.0
     QML_FILES
         Main.qml
