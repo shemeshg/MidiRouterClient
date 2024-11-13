@@ -40,4 +40,7 @@ private:
     QList<int> extractKeyboardSplits(const QJsonArray &array);
     MidiRoutePreset *createMidiRoutePreset(const QJsonValue &value);
     void updateEasyConfig(MidiRoutePreset *preset, const QJsonObject &easyConfig);
+    EasyConfig *createEasyConfigEntry(const QString &key, const QJsonObject &value);
+    EasyConfigRoute *createEasyConfigRoute(const QJsonObject &value);
+    QStringList convertToQStringList(const QJsonArray &array);
 };

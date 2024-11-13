@@ -16,7 +16,7 @@ void UserDataConfig::loadComputerUuid()
 void UserDataConfig::clearDropdownlists()
 {
     for (const Dropdownlist *item : m_dropdownlists) {
-            delete item;
+        delete item;
     }
     // Clear the outer list
     m_dropdownlists.clear();
@@ -78,50 +78,54 @@ void UserDataConfig::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject
     for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
         qDebug() << "key: " << it.key();
         qDebug() << it.value();
-        EasyConfig *easyConfigEntry = new EasyConfig();
-        easyConfigEntry->setMidiInputName(it.key());
-
-        if (it.value().toObject()["keyboardSplits"].isArray()) {
-            QList<int> keyboardSplits = extractKeyboardSplits(it.value().toObject()["keyboardSplits"].toArray());
-            easyConfigEntry->setKeyboardSplits(keyboardSplits);
-        }
-
-        if (it.value().toObject()["zoneNames"].isArray()) {
-            QJsonArray jsonArray = it.value().toObject()["zoneNames"].toArray();
-            QStringList stringList;
-            for (const QJsonValue &value : jsonArray) {
-                stringList.append(value.toString());
-            }
-
-            easyConfigEntry->setZoneNames(stringList);
-
-        }
-
-        if (it.value().toObject()["easyConfigRoutes"].isArray()) {
-            QJsonArray jsonArray = it.value().toObject()["easyConfigRoutes"].toArray();
-            for (const QJsonValue &value : jsonArray) {
-                qDebug()<<"Lets parse easyConfigRoute "<< value;
-                EasyConfigRoute *easyConfigRoute = new EasyConfigRoute();
-                easyConfigRoute->setFromCcOrNrpnEnd(value["fromCcOrNrpnEnd"].toInt());
-                easyConfigRoute->setFromCcOrNrpnStart(value["fromCcOrNrpnStart"].toInt());
-                easyConfigRoute->setFromChannel(value["fromChannel"].toInt());
-                easyConfigRoute->setFromData1(value["fromData1"].toInt());
-                easyConfigRoute->setFromSelectedMidiEventTypeId(value["fromSelectedMidiEventTypeId"].toInt());
-                easyConfigRoute->setSplitRangeId(value["splitRangeId"].toInt());
-                easyConfigRoute->setToCcOrNrpnEnd(value["toCcOrNrpnEnd"].toInt());
-                easyConfigRoute->setToCcOrNrpnStart(value["toCcOrNrpnStart"].toInt());
-                easyConfigRoute->setToChannel(value["toChannel"].toInt());
-                easyConfigRoute->setToData1(value["toData1"].toInt());
-                easyConfigRoute->setToDestinationName(value["toDestinationName"].toString());
-                easyConfigRoute->setToSelectedMidiEventTypeId(value["toSelectedMidiEventTypeId"].toInt());
-                easyConfigRoute->setTranspose(value["transpose"].toInt());
-
-                easyConfigEntry->addEasyConfigRoute(easyConfigRoute);
-
-            }
-        }
+        EasyConfig *easyConfigEntry = createEasyConfigEntry(it.key(), it.value().toObject());
         preset->addEasyConfig(easyConfigEntry);
     }
+}
+
+EasyConfig* UserDataConfig::createEasyConfigEntry(const QString &key, const QJsonObject &value) {
+    EasyConfig *easyConfigEntry = new EasyConfig();
+    easyConfigEntry->setMidiInputName(key);
+
+    if (value["keyboardSplits"].isArray()) {
+        QList<int> keyboardSplits = extractKeyboardSplits(value["keyboardSplits"].toArray());
+        easyConfigEntry->setKeyboardSplits(keyboardSplits);
+    }
+
+    if (value["zoneNames"].isArray()) {
+        QStringList zoneNames = convertToQStringList(value["zoneNames"].toArray());
+        easyConfigEntry->setZoneNames(zoneNames);
+    }
+
+    if (value["easyConfigRoutes"].isArray()) {
+        QJsonArray jsonArray = value["easyConfigRoutes"].toArray();
+        for (const QJsonValue &routeValue : jsonArray) {
+            qDebug() << "Lets parse easyConfigRoute " << routeValue;
+            EasyConfigRoute *easyConfigRoute = createEasyConfigRoute(routeValue.toObject());
+            easyConfigEntry->addEasyConfigRoute(easyConfigRoute);
+        }
+    }
+
+    return easyConfigEntry;
+}
+
+EasyConfigRoute* UserDataConfig::createEasyConfigRoute(const QJsonObject &value) {
+    EasyConfigRoute *easyConfigRoute = new EasyConfigRoute();
+    easyConfigRoute->setFromCcOrNrpnEnd(value["fromCcOrNrpnEnd"].toInt());
+    easyConfigRoute->setFromCcOrNrpnStart(value["fromCcOrNrpnStart"].toInt());
+    easyConfigRoute->setFromChannel(value["fromChannel"].toInt());
+    easyConfigRoute->setFromData1(value["fromData1"].toInt());
+    easyConfigRoute->setFromSelectedMidiEventTypeId(value["fromSelectedMidiEventTypeId"].toInt());
+    easyConfigRoute->setSplitRangeId(value["splitRangeId"].toInt());
+    easyConfigRoute->setToCcOrNrpnEnd(value["toCcOrNrpnEnd"].toInt());
+    easyConfigRoute->setToCcOrNrpnStart(value["toCcOrNrpnStart"].toInt());
+    easyConfigRoute->setToChannel(value["toChannel"].toInt());
+    easyConfigRoute->setToData1(value["toData1"].toInt());
+    easyConfigRoute->setToDestinationName(value["toDestinationName"].toString());
+    easyConfigRoute->setToSelectedMidiEventTypeId(value["toSelectedMidiEventTypeId"].toInt());
+    easyConfigRoute->setTranspose(value["transpose"].toInt());
+
+    return easyConfigRoute;
 }
 
 QList<int> UserDataConfig::extractKeyboardSplits(const QJsonArray &array) {
@@ -131,6 +135,16 @@ QList<int> UserDataConfig::extractKeyboardSplits(const QJsonArray &array) {
     }
     return keyboardSplits;
 }
+
+QStringList UserDataConfig::convertToQStringList(const QJsonArray &array) {
+    QStringList stringList;
+    for (const QJsonValue &value : array) {
+        stringList.append(value.toString());
+    }
+    return stringList;
+}
+
+
 
 
 void UserDataConfig::updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) {
@@ -149,7 +163,7 @@ void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     //qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
 
     if (jsonDoc["virtualInPorts"].isArray()) {
-            updateVirtualInPorts(jsonDoc["virtualInPorts"].toArray());
+        updateVirtualInPorts(jsonDoc["virtualInPorts"].toArray());
     }
     //qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
 
