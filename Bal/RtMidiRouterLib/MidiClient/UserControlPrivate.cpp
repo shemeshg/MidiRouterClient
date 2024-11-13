@@ -10,7 +10,7 @@ cog.outl(classUserControlPrivate.getClassCpp(),
 
 
 ]]] */
- EasyConfigRoutePrivate:: EasyConfigRoutePrivate(QObject *parent)
+ UserControlPrivate:: UserControlPrivate(QObject *parent)
     : QObject(parent)
 {
     ctorClass();

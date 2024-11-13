@@ -13,7 +13,7 @@ cog.outl(classUserControlPrivate.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
-class EasyConfigRoutePrivate : public QObject
+class UserControlPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(EventType eventType READ eventType WRITE setEventType NOTIFY eventTypeChanged )
@@ -30,8 +30,8 @@ class EasyConfigRoutePrivate : public QObject
     
     QML_ELEMENT
 public:
-    EasyConfigRoutePrivate(QObject *parent = nullptr);
-    virtual ~EasyConfigRoutePrivate() = default;
+    UserControlPrivate(QObject *parent = nullptr);
+    virtual ~UserControlPrivate() = default;
 
     
 enum class EventType {
