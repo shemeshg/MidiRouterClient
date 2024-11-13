@@ -83,7 +83,18 @@ void UserDataConfig::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject
         if (it.value().toObject()["keyboardSplits"].isArray()) {
             QList<int> keyboardSplits = extractKeyboardSplits(it.value().toObject()["keyboardSplits"].toArray());
             easyConfigEntry->setKeyboardSplits(keyboardSplits);
-            qDebug() << "Our keyboard splits are " << keyboardSplits;
+            qDebug() << "Our keyboard splits are " << easyConfigEntry->keyboardSplits();
+        }
+
+        if (it.value().toObject()["zoneNames"].isArray()) {
+            QJsonArray jsonArray = it.value().toObject()["zoneNames"].toArray();
+            QStringList stringList;
+            for (const QJsonValue &value : jsonArray) {
+                stringList.append(value.toString());
+            }
+
+            easyConfigEntry->setZoneNames(stringList);
+            qDebug() << "Our zone Names are " << easyConfigEntry->zoneNames();
         }
     }
 }
