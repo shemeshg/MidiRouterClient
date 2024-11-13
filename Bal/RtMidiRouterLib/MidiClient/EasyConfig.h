@@ -20,6 +20,9 @@ public:
         // Clear the outer list
         m_easyConfigRoutes.clear();
     }
+
+
+
 public slots:
 
 private:

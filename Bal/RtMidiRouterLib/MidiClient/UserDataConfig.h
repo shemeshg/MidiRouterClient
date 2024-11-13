@@ -35,4 +35,6 @@ private:
     void updateDropdownlists(const QJsonArray &array);
     void updateMidiRoutePresets(const QJsonArray &array);
     void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type);
+
+
 };

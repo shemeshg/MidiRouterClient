@@ -31,6 +31,14 @@ public:
         m_easyConfig.clear();
         emit easyConfigChanged();
     }
+
+
+    EasyConfig *addEasyConfig(const QString &midiInputName ){
+        EasyConfig *e=new EasyConfig();
+        e->setMidiInputName(midiInputName);
+        m_easyConfig.push_back(e);
+        return e;
+    }
 public slots:
 
 signals:

@@ -66,6 +66,19 @@ void UserDataConfig::updateMidiRoutePresets(const QJsonArray &array) {
             for (auto it = a.begin(); it != a.end(); ++it) {
                 qDebug() << "key: " << it.key();
                 qDebug() << it.value();
+                EasyConfig *e=p->addEasyConfig(it.value().toString());
+
+
+                //{"easyConfigRoutes":[],"keyboardSplits":[{"splitPosition":60}],"midiInputName":"0_Scarlett 2i4 USB","zoneNames":["I0S0","I0S1"]}
+                if  (it.value().toObject()["keyboardSplits"].isArray()){
+                    QList<int> kbdSplits={};
+                    for (const QJsonValue &value : it.value().toObject()["keyboardSplits"].toArray()) {
+                        kbdSplits.push_back(value["splitPosition"].toInt());
+                    }
+                    e->setKeyboardSplits(kbdSplits);
+                    qDebug()<<"Our keyboard splits are "<<kbdSplits;
+                }
+
             }
         }
 
