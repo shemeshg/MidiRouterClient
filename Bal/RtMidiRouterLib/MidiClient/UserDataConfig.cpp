@@ -61,14 +61,39 @@ void UserDataConfig::updateMidiRoutePresets(const QJsonArray &array) {
     emit midiRoutePresetsChanged();
 }
 
+UserControl* UserDataConfig::createUserControl(const QJsonValue &userControlValue) {
+    auto userControl = new UserControl();
+    userControl->setEventType(static_cast<UserControl::EventType>(userControlValue["eventType"].toInt()));
+    userControl->setDescription(userControlValue["description"].toString());
+    userControl->setInputVal(userControlValue["inputVal"].toInt());
+    userControl->setMinVal(userControlValue["minVal"].toInt());
+    userControl->setMaxVal(userControlValue["maxVal"].toInt());
+    userControl->setIs64Mode(userControlValue["is64Mode"].toBool());
+    userControl->setIsEditMode(userControlValue["isEditMode"].toBool());
+    userControl->setChannelId(userControlValue["channelId"].toInt());
+    userControl->setCcId(userControlValue["ccId"].toInt());
+    userControl->setNrpnControl(userControlValue["nrpnControl"].toInt());
+    userControl->setOutputPortnName(userControlValue["outputPortnName"].toString());
+    userControl->setIsShowDropdown(userControlValue["isShowDropdown"].toBool());
+    userControl->setDropdownListId(userControlValue["dropdownListId"].toInt());
+    return userControl;
+}
+
 MidiRoutePreset* UserDataConfig::createMidiRoutePreset(const QJsonValue &value) {
-    MidiRoutePreset *preset = new MidiRoutePreset(m_computerUuid);
+    auto preset = new MidiRoutePreset(m_computerUuid);
     preset->setName(value["name"].toString());
-    preset->setIsSendAllUserControls(value["isSendAllUserControls"].isBool());
+    preset->setIsSendAllUserControls(value["isSendAllUserControls"].toBool());
     preset->setUuid(value["uuid"].toString());
 
     updateMidiControl(preset->midiControlOn(), value["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
     updateMidiControl(preset->midiControlOff(), value["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
+
+    if (value["userControls"].isArray()) {
+        for (const auto &userControlValue : value["userControls"].toArray()) {
+            auto userControl = createUserControl(userControlValue);
+            preset->addUserControl(userControl);
+        }
+    }
 
     return preset;
 }
@@ -105,6 +130,8 @@ EasyConfig* UserDataConfig::createEasyConfigEntry(const QString &key, const QJso
             easyConfigEntry->addEasyConfigRoute(easyConfigRoute);
         }
     }
+
+
 
     return easyConfigEntry;
 }

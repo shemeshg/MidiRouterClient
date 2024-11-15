@@ -69,7 +69,21 @@ QtObject {
                     },
                     "midiRouteInputs": {},
                     "name": "Default preset",
-                    "userControls": [],
+                    "userControls": [{
+                            "eventType": 0,
+                            "description": "Description",
+                            "inputVal": "29",
+                            "minVal": "0",
+                            "maxVal": "127",
+                            "is64Mode": true,
+                            "isEditMode": true,
+                            "channelId": "1",
+                            "ccId": "7",
+                            "nrpnControl": "0",
+                            "outputPortnName": "0_Scarlett 2i4 USB",
+                            "isShowDropdown": true,
+                            "dropdownListId": 0
+                        }],
                     "uuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
                 },
                 {

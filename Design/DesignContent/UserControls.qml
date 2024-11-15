@@ -6,7 +6,10 @@ import QtQuick.Controls
 
 ColumnLayout {            
     Layout.fillWidth: true
-
+    CoreLabel {
+        text:  "User Controls: " + JSON.stringify(Constants.balData.midiClientConnection.
+                                                  userDataConfig.midiRoutePresets[0].userControls)
+    }
 
     CoreButton {
         text: "Edit dropdowns"

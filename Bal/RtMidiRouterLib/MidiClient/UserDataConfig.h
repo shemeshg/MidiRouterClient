@@ -43,4 +43,5 @@ private:
     EasyConfig *createEasyConfigEntry(const QString &key, const QJsonObject &value);
     EasyConfigRoute *createEasyConfigRoute(const QJsonObject &value);
     QStringList convertToQStringList(const QJsonArray &array);
+    UserControl *createUserControl(const QJsonValue &userControlValue);
 };

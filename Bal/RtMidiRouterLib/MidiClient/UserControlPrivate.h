@@ -27,6 +27,8 @@ class UserControlPrivate : public QObject
     Q_PROPERTY(int ccId READ ccId WRITE setCcId NOTIFY ccIdChanged )
     Q_PROPERTY(int nrpnControl READ nrpnControl WRITE setNrpnControl NOTIFY nrpnControlChanged )
     Q_PROPERTY(QString outputPortnName READ outputPortnName WRITE setOutputPortnName NOTIFY outputPortnNameChanged )
+    Q_PROPERTY(bool isShowDropdown READ isShowDropdown WRITE setIsShowDropdown NOTIFY isShowDropdownChanged )
+    Q_PROPERTY(int dropdownListId READ dropdownListId WRITE setDropdownListId NOTIFY dropdownListIdChanged )
     
     QML_ELEMENT
 public:
@@ -171,6 +173,30 @@ void setOutputPortnName(const QString &newOutputPortnName)
     }
 
 
+    
+    bool isShowDropdown() const{return m_isShowDropdown;} 
+    
+void setIsShowDropdown(const bool newIsShowDropdown)
+    {
+        if (m_isShowDropdown == newIsShowDropdown)
+            return;
+        m_isShowDropdown = newIsShowDropdown;
+        emit isShowDropdownChanged();
+    }
+
+
+    
+    int dropdownListId() const{return m_dropdownListId;} 
+    
+void setDropdownListId(const int newDropdownListId)
+    {
+        if (m_dropdownListId == newDropdownListId)
+            return;
+        m_dropdownListId = newDropdownListId;
+        emit dropdownListIdChanged();
+    }
+
+
 
 signals:
     void eventTypeChanged();
@@ -184,6 +210,8 @@ signals:
     void ccIdChanged();
     void nrpnControlChanged();
     void outputPortnNameChanged();
+    void isShowDropdownChanged();
+    void dropdownListIdChanged();
     
 
 protected:
@@ -201,6 +229,8 @@ private:
     int m_ccId;
     int m_nrpnControl;
     QString m_outputPortnName;
+    bool m_isShowDropdown;
+    int m_dropdownListId;
     
     void ctorClass();
 };
