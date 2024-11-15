@@ -17,6 +17,7 @@ qt6_add_qml_module(DesignContent
         "UserControls.qml"
         "FormGroupBox.qml"
         "EasyConfig.qml"
+        "InPorts.qml"
 )
 
 

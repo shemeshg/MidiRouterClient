@@ -52,7 +52,14 @@ RowLayout {
                 checkable: true
                 checked: false
             }
-
+            CoreButton {
+                id: btnInPortsId
+                text: "In ports"
+                hooverText: "In ports"
+                autoExclusive: true
+                checkable: true
+                checked: false
+            }
 
 
         }
@@ -81,6 +88,10 @@ RowLayout {
         State {
             name: "EasyConfig"
             when: btnEasyConfigId.checked
+        },
+        State {
+            name: "InPorts"
+            when: btnInPortsId.checked
         }
 
     ]

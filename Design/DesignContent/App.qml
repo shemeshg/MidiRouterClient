@@ -79,6 +79,12 @@ Window {
             }
         }
 
+        Component {
+            id: inPortsId
+            InPorts {
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
@@ -110,6 +116,11 @@ Window {
                 name: "EasyConfig"
                 when: headerBarId.state === "EasyConfig"
                 PropertyChanges { target: loaderId; sourceComponent: easyConfigId }
+            },
+            State {
+                name: "InPorts"
+                when: headerBarId.state === "InPorts"
+                PropertyChanges { target: loaderId; sourceComponent: inPortsId }
             }
         ]
     }
