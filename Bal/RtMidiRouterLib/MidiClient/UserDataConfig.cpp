@@ -80,38 +80,40 @@ UserControl* UserDataConfig::createUserControl(const QJsonValue &userControlValu
 }
 
 
-MidiRouteInput* UserDataConfig::createMidiRouteInputEntry( const QJsonObject &value) {
-    MidiRouteInput *midiRouteInputEEntry = new MidiRouteInput();
-    midiRouteInputEEntry->setMidiInputName(value["midiInputName"].toString());
-    auto ignoreTypes = value["ignoreTypes"];
-    midiRouteInputEEntry->setIgnoreTypesMidiSysex(ignoreTypes["midiSysex"].toBool());
-    midiRouteInputEEntry->setIgnoreTypesMidiTime(ignoreTypes["midiTime"].toBool());
-    midiRouteInputEEntry->setIgnoreTypesMidiSense(ignoreTypes["midiSense"].toBool());
-    auto midiRouteClock = value["midiRouteClock"];
-    midiRouteInputEEntry->setMidiRouteClockTimeSig(midiRouteClock["timeSig"].toInt());
-    midiRouteInputEEntry->setMidiRouteClockTimeSigDivBy(midiRouteClock["timeSigDivBy"].toInt());
-    midiRouteInputEEntry->setMidiRouteClockFromSppPos(midiRouteClock["fromSppPos"].toInt());
-    if (midiRouteClock["propegateInputs"].isArray()){
+MidiRouteInput* UserDataConfig::createMidiRouteInputEntry(const QJsonObject &value) {
+    auto midiRouteInputEntry = new MidiRouteInput();
+    midiRouteInputEntry->setMidiInputName(value["midiInputName"].toString());
+
+    const auto ignoreTypes = value["ignoreTypes"].toObject();
+    midiRouteInputEntry->setIgnoreTypesMidiSysex(ignoreTypes["midiSysex"].toBool());
+    midiRouteInputEntry->setIgnoreTypesMidiTime(ignoreTypes["midiTime"].toBool());
+    midiRouteInputEntry->setIgnoreTypesMidiSense(ignoreTypes["midiSense"].toBool());
+
+    const auto midiRouteClock = value["midiRouteClock"].toObject();
+    midiRouteInputEntry->setMidiRouteClockTimeSig(midiRouteClock["timeSig"].toInt());
+    midiRouteInputEntry->setMidiRouteClockTimeSigDivBy(midiRouteClock["timeSigDivBy"].toInt());
+    midiRouteInputEntry->setMidiRouteClockFromSppPos(midiRouteClock["fromSppPos"].toInt());
+
+    if (midiRouteClock["propegateInputs"].isArray()) {
         QStringList list;
-        for (const auto &propegateVal : midiRouteClock["propegateInputs"].toArray()) {            
-            list.push_back(propegateVal.toObject()["midiInputName"].toString()) ;
+        for (const auto &propegateVal : midiRouteClock["propegateInputs"].toArray()) {
+            list.push_back(propegateVal.toObject()["midiInputName"].toString());
         }
-        midiRouteInputEEntry->setMidiRouteClockPropegateInputs(list);        
+        midiRouteInputEntry->setMidiRouteClockPropegateInputs(list);
     }
 
-
-    if(value["cc14bitAry"].isArray()){
-        midiRouteInputEEntry->clearMidiRouteInputCc14bit();
+    if (value["cc14bitAry"].isArray()) {
+        midiRouteInputEntry->clearMidiRouteInputCc14bit();
         for (const auto &cc14bit : value["cc14bitAry"].toArray()) {
-            MidiRouteInputCc14bit *midiRouteInputCc14bit = new MidiRouteInputCc14bit();
-            midiRouteInputCc14bit->setChannel(cc14bit.toObject()["channel"].toInt());
-            midiRouteInputCc14bit->setCc(cc14bit.toObject()["cc"].toInt());
-            midiRouteInputEEntry->addMidiRouteInputCc14bit(midiRouteInputCc14bit);
+            auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
+            const auto cc14bitObj = cc14bit.toObject();
+            midiRouteInputCc14bit->setChannel(cc14bitObj["channel"].toInt());
+            midiRouteInputCc14bit->setCc(cc14bitObj["cc"].toInt());
+            midiRouteInputEntry->addMidiRouteInputCc14bit(midiRouteInputCc14bit);
         }
     }
-    //midiRouteInputEEntry->setMidiRouteClockPropegateInputs(convertToQStringList(value["midiRouteClock"]["propegateInputs"].toArray()));
-    //now for midiRouteInputs ***
-    return midiRouteInputEEntry;
+
+    return midiRouteInputEntry;
 }
 
 void UserDataConfig::updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs) {
