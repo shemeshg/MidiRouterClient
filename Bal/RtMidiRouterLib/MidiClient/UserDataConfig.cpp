@@ -79,6 +79,43 @@ UserControl* UserDataConfig::createUserControl(const QJsonValue &userControlValu
     return userControl;
 }
 
+
+MidiRouteInput* UserDataConfig::createMidiRouteInputEntry( const QJsonObject &value) {
+    MidiRouteInput *midiRouteInputEEntry = new MidiRouteInput();
+    midiRouteInputEEntry->setMidiInputName(value["midiInputName"].toString());
+    auto ignoreTypes = value["ignoreTypes"];
+    midiRouteInputEEntry->setIgnoreTypesMidiSysex(ignoreTypes["midiSysex"].toBool());
+    midiRouteInputEEntry->setIgnoreTypesMidiTime(ignoreTypes["midiTime"].toBool());
+    midiRouteInputEEntry->setIgnoreTypesMidiSense(ignoreTypes["midiSense"].toBool());
+    auto midiRouteClock = value["midiRouteClock"];
+    midiRouteInputEEntry->setMidiRouteClockTimeSig(midiRouteClock["timeSig"].toInt());
+    midiRouteInputEEntry->setMidiRouteClockTimeSigDivBy(midiRouteClock["timeSigDivBy"].toInt());
+    midiRouteInputEEntry->setMidiRouteClockFromSppPos(midiRouteClock["fromSppPos"].toInt());
+    if (midiRouteClock["propegateInputs"].isArray()){
+        QStringList list;
+        for (const auto &propegateVal : midiRouteClock["propegateInputs"].toArray()) {
+            ;
+            list.push_back(propegateVal.toObject()["midiInputName"].toString()) ;
+        }
+        midiRouteInputEEntry->setMidiRouteClockPropegateInputs(list);
+        qDebug()<<"Will propegate "<< list;
+    }
+
+    //midiRouteInputEEntry->setMidiRouteClockPropegateInputs(convertToQStringList(value["midiRouteClock"]["propegateInputs"].toArray()));
+    //now for midiRouteInputs ***
+    return midiRouteInputEEntry;
+}
+
+void UserDataConfig::updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs) {
+    preset->clearMidiRouteInputs();
+    for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
+        qDebug() << "midiRouteInputEntry key: " << it.key();
+        qDebug() << it.value();
+        MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntry( it.value().toObject());
+        preset->addMidiRouteInput(midiRouteInputEntry);
+    }
+}
+
 MidiRoutePreset* UserDataConfig::createMidiRoutePreset(const QJsonValue &value) {
     auto preset = new MidiRoutePreset(m_computerUuid);
     preset->setName(value["name"].toString());
@@ -95,8 +132,11 @@ MidiRoutePreset* UserDataConfig::createMidiRoutePreset(const QJsonValue &value) 
         }
     }
 
-    //now for midiRouteInputs ***
 
+
+    if (value["midiRouteInputs"].isObject()){
+        updateMidiRouteInputs(preset, value["midiRouteInputs"].toObject());
+    }
     return preset;
 }
 

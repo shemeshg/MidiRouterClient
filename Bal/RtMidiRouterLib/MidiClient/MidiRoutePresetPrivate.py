@@ -10,7 +10,8 @@ ary = [
     create_prpt("PresetMidiControl *", 'midiControlOn', is_writable=False),
     create_prpt("PresetMidiControl *", 'midiControlOff', is_writable=False),
     create_prpt("QList<EasyConfig *>", 'easyConfig', is_writable=False),
-    create_prpt("QList<UserControl *>", 'userControls', is_writable=False)
+    create_prpt("QList<UserControl *>", 'userControls', is_writable=False),
+    create_prpt("QList<MidiRouteInput *>", 'midiRouteInputs', is_writable=False)
 ]
 
 enumClasss = []

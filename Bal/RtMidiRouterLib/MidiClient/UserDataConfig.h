@@ -44,4 +44,6 @@ private:
     EasyConfigRoute *createEasyConfigRoute(const QJsonObject &value);
     QStringList convertToQStringList(const QJsonArray &array);
     UserControl *createUserControl(const QJsonValue &userControlValue);
+    void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs);
+    MidiRouteInput *createMidiRouteInputEntry(const QJsonObject &value);
 };

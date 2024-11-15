@@ -34,6 +34,17 @@ public:
         m_userControls.clear();
         emit userControlsChanged();
     }
+
+    void clearMidiRouteInputs(){
+        for (MidiRouteInput *item : m_midiRouteInputs) {
+            delete item;
+        }
+        // Clear the outer list
+
+        m_midiRouteInputs.clear();
+        emit midiRouteInputsChanged();
+    }
+
     void clearEasyConfig(){
         for (EasyConfig *item : m_easyConfig) {
             item->clearEasyConfigRoute();
@@ -54,6 +65,12 @@ public:
         m_easyConfig.push_back(entry);
         emit easyConfigChanged();
     }
+
+    void addMidiRouteInput( MidiRouteInput *entry ){
+        m_midiRouteInputs.push_back(entry);
+        emit midiRouteInputsChanged();
+    }
+
 public slots:
 
 signals:

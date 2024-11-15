@@ -18,4 +18,11 @@ cog.outl(classMidiRouteInputPrivate.getClassCpp(),
 
 //[[[end]]]
 
-void MidiRouteInputPrivate::ctorClass() {}
+void MidiRouteInputPrivate::ctorClass() {
+     m_ignoreTypesMidiSysex = true;
+     m_ignoreTypesMidiTime = true;
+    m_ignoreTypesMidiSense = true;
+     m_midiRouteClockTimeSig = 4;
+    m_midiRouteClockTimeSigDivBy = 4;
+    m_midiRouteClockFromSppPos = 0;
+}
