@@ -93,14 +93,22 @@ MidiRouteInput* UserDataConfig::createMidiRouteInputEntry( const QJsonObject &va
     midiRouteInputEEntry->setMidiRouteClockFromSppPos(midiRouteClock["fromSppPos"].toInt());
     if (midiRouteClock["propegateInputs"].isArray()){
         QStringList list;
-        for (const auto &propegateVal : midiRouteClock["propegateInputs"].toArray()) {
-            ;
+        for (const auto &propegateVal : midiRouteClock["propegateInputs"].toArray()) {            
             list.push_back(propegateVal.toObject()["midiInputName"].toString()) ;
         }
-        midiRouteInputEEntry->setMidiRouteClockPropegateInputs(list);
-        qDebug()<<"Will propegate "<< list;
+        midiRouteInputEEntry->setMidiRouteClockPropegateInputs(list);        
     }
 
+
+    if(value["cc14bitAry"].isArray()){
+        midiRouteInputEEntry->clearMidiRouteInputCc14bit();
+        for (const auto &cc14bit : value["cc14bitAry"].toArray()) {
+            MidiRouteInputCc14bit *midiRouteInputCc14bit = new MidiRouteInputCc14bit();
+            midiRouteInputCc14bit->setChannel(cc14bit.toObject()["channel"].toInt());
+            midiRouteInputCc14bit->setCc(cc14bit.toObject()["cc"].toInt());
+            midiRouteInputEEntry->addMidiRouteInputCc14bit(midiRouteInputCc14bit);
+        }
+    }
     //midiRouteInputEEntry->setMidiRouteClockPropegateInputs(convertToQStringList(value["midiRouteClock"]["propegateInputs"].toArray()));
     //now for midiRouteInputs ***
     return midiRouteInputEEntry;

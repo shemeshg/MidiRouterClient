@@ -39,6 +39,9 @@ add_library(midiClient STATIC
     UserControl.h
     UserControlPrivate.cpp
     UserControlPrivate.h
+    MidiRouteInputCc14bit.cpp
+    MidiRouteInputCc14bit.h
+    MidiRouteInputCc14bit.py
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
