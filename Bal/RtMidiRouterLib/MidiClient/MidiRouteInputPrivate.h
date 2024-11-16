@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MidiRouteInputCc14bit.h"
+#include "MidiRouterChain.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
@@ -26,6 +27,7 @@ class MidiRouteInputPrivate : public QObject
     Q_PROPERTY(int midiRouteClockFromSppPos READ midiRouteClockFromSppPos WRITE setMidiRouteClockFromSppPos NOTIFY midiRouteClockFromSppPosChanged )
     Q_PROPERTY(QStringList midiRouteClockPropegateInputs READ midiRouteClockPropegateInputs WRITE setMidiRouteClockPropegateInputs NOTIFY midiRouteClockPropegateInputsChanged )
     Q_PROPERTY(QList<MidiRouteInputCc14bit *> midiRouteInputCc14bit READ midiRouteInputCc14bit  NOTIFY midiRouteInputCc14bitChanged )
+    Q_PROPERTY(QList<MidiRouterChain *> midiRouterChains READ midiRouterChains  NOTIFY midiRouterChainsChanged )
     
     QML_ELEMENT
 public:
@@ -133,6 +135,10 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     QList<MidiRouteInputCc14bit *> midiRouteInputCc14bit() const{return m_midiRouteInputCc14bit;} 
     
 
+    
+    QList<MidiRouterChain *> midiRouterChains() const{return m_midiRouterChains;} 
+    
+
 
 signals:
     void midiInputNameChanged();
@@ -144,10 +150,12 @@ signals:
     void midiRouteClockFromSppPosChanged();
     void midiRouteClockPropegateInputsChanged();
     void midiRouteInputCc14bitChanged();
+    void midiRouterChainsChanged();
     
 
 protected:
     QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit;
+    QList<MidiRouterChain *> m_midiRouterChains;
     
 
 private:

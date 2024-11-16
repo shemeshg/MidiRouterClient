@@ -42,6 +42,10 @@ add_library(midiClient STATIC
     MidiRouteInputCc14bit.cpp
     MidiRouteInputCc14bit.h
     MidiRouteInputCc14bit.py
+    MidiRouterChainPrivate.h
+    MidiRouterChainPrivate.cpp
+    MidiRouterChain.h
+    MidiRouterChain.cpp
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
