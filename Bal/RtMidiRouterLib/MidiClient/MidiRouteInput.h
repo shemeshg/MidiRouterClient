@@ -12,7 +12,7 @@ public:
     explicit MidiRouteInput(QObject *parent = nullptr)
         : MidiRouteInputPrivate{parent} {
         clearMidiRouteInputCc14bit();
-        clearMidiRouterChain();
+        clearMidiRouterChains();
     };
 
     void addMidiRouteInputCc14bit( MidiRouteInputCc14bit *entry ){
@@ -35,7 +35,7 @@ public:
         emit midiRouterChainsChanged();
     }
 
-    void clearMidiRouterChain(){
+    void clearMidiRouterChains(){
         for (MidiRouterChain *item : m_midiRouterChains) {
             delete item;
         }

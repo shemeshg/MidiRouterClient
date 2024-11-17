@@ -113,7 +113,22 @@ MidiRouteInput* UserDataConfig::createMidiRouteInputEntry(const QJsonObject &val
         }
     }
 
-    //now all midi Chains and Filters
+
+    if (value["midiRouterChains"].isArray()) {
+        midiRouteInputEntry->clearMidiRouterChains();
+        //now all midi Chains and Filters
+        for (const auto &fval : value["midiRouterChains"].toArray()) {
+            auto midiRouterChain = new MidiRouterChain();
+            auto val = fval.toObject();
+            midiRouterChain->setName(val["name"].toString());
+            midiRouterChain->setIsEasyConfig(val["isEasyConfig"].isBool());
+            qDebug()<<"in chain"<<midiRouterChain->name();
+            //now for filters
+
+            midiRouteInputEntry->addMidiRouterChains(midiRouterChain);
+        }
+
+    }
     return midiRouteInputEntry;
 }
 
