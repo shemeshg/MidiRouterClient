@@ -19,6 +19,7 @@ class MidiRouterChainPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
     Q_PROPERTY(bool isEasyConfig READ isEasyConfig WRITE setIsEasyConfig NOTIFY isEasyConfigChanged )
+    Q_PROPERTY(QList<QVariant> midiRoutersFilters READ midiRoutersFilters  NOTIFY midiRoutersFiltersChanged )
     
     QML_ELEMENT
 public:
@@ -50,13 +51,19 @@ void setIsEasyConfig(const bool newIsEasyConfig)
     }
 
 
+    
+    QList<QVariant> midiRoutersFilters() const{return m_midiRoutersFilters;} 
+    
+
 
 signals:
     void nameChanged();
     void isEasyConfigChanged();
+    void midiRoutersFiltersChanged();
     
 
 protected:
+    QList<QVariant> m_midiRoutersFilters;
     
 
 private:

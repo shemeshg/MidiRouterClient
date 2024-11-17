@@ -46,6 +46,12 @@ add_library(midiClient STATIC
     MidiRouterChainPrivate.cpp
     MidiRouterChain.h
     MidiRouterChain.cpp
+    MidiRoutersFilter.h
+    MidiRoutersFilter.cpp
+    FilterMidiDestination.cpp
+    FilterMidiDestination.h
+    FilterMidiDestinationPrivate.cpp
+    FilterMidiDestinationPrivate.h
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
