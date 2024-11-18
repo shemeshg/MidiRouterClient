@@ -52,6 +52,10 @@ add_library(midiClient STATIC
     FilterMidiDestination.h
     FilterMidiDestinationPrivate.cpp
     FilterMidiDestinationPrivate.h
+    FilterToConslePrivate.h
+    FilterToConslePrivate.cpp
+    FilterToConsle.h
+    FilterToConsle.cpp
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel

@@ -1,5 +1,6 @@
 #include "UserDataConfig.h"
 #include <QSettings>
+#include "FilterToConsle.h"
 #include "MidiClientUtil.h"
 
 void UserDataConfig::loadComputerUuid()
@@ -144,10 +145,15 @@ void UserDataConfig::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFi
         for (const auto &filterVal : midiRoutersFilters.toArray()) {
             auto filter = filterVal.toObject();
 
-            if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::TO_MIDI_DESTINATION)){
-                FilterMidiDestination *fmd = new FilterMidiDestination();
+            if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::TO_MIDI_DESTINATION)){                
                 midiRouterChain->addFilterMidiDestination(filter["baseMidiRouteInput"].toObject()["midiInputName"].toString());
+            } else if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::TO_CONSOLE)){
+                midiRouterChain->addFilterToConsole(
+                    static_cast<FilterToConsole::LogTo>(filter["logTo"].toInt()),
+                    filter["userdata"].toString()
+                    );
             }
+
         }
     }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "FilterMidiDestination.h"
+#include "FilterToConsle.h"
 #include "MidiRouterChainPrivate.h"
 #include "MidiRoutersFilter.h"
 
@@ -34,6 +35,12 @@ public slots:
     void addFilterMidiDestination(QString midiDestination){
         auto f = new FilterMidiDestination();
         f->setFilter(midiDestination);
+        m_midiRoutersFilters.append(QVariant::fromValue(f));
+    }
+
+    void addFilterToConsole(FilterToConsole::LogTo logTo, QString userData){
+        auto f = new FilterToConsole();
+        f->setFilter(logTo, userData);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
     }
 signals:
