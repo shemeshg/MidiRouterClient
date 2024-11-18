@@ -60,6 +60,10 @@ add_library(midiClient STATIC
     FilterNetworkDestinationPrivate.cpp
     FilterNetworkDestinationPrivate.h
     FilterNetworkDestinationPrivate.py
+    FilterSchedulePrivate.h
+    FilterSchedulePrivate.cpp
+    FilterSchedule.h
+    FilterSchedule.cpp
 
 )
 

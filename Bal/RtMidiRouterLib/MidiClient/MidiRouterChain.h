@@ -1,6 +1,7 @@
 #pragma once
 #include "FilterMidiDestination.h"
 #include "FilterNetworkDestination.h"
+#include "FilterSchedule.h"
 #include "FilterToConsle.h"
 #include "MidiRouterChainPrivate.h"
 #include "MidiRoutersFilter.h"
@@ -51,6 +52,11 @@ public slots:
         m_midiRoutersFilters.append(QVariant::fromValue(f));
     }
 
+    void addFilterFilterSchedule(FilterSchedule::DefferedType defferedType, int defferedTo ){
+        auto f = new FilterSchedule();
+        f->setFilter(defferedType, defferedTo);
+        m_midiRoutersFilters.append(QVariant::fromValue(f));
+    }
 signals:
 
 
