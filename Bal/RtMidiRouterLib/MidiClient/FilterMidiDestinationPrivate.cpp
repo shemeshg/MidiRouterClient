@@ -19,5 +19,5 @@ cog.outl(classFilterMidiDestinationPrivate.getClassCpp(),
 //[[[end]]]
 
 void FilterMidiDestinationPrivate::ctorClass() {
-    m_filterType = FilterType::TO_MIDI_DESTINATION;
+    setFilterType( FilterType::TO_MIDI_DESTINATION);
 }

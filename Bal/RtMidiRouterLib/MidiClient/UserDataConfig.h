@@ -46,4 +46,5 @@ private:
     UserControl *createUserControl(const QJsonValue &userControlValue);
     void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs);
     MidiRouteInput *createMidiRouteInputEntry(const QJsonObject &value);
+    void updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain *midiRouterChain);
 };

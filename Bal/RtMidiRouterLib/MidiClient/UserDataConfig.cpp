@@ -123,7 +123,11 @@ MidiRouteInput* UserDataConfig::createMidiRouteInputEntry(const QJsonObject &val
             midiRouterChain->setName(val["name"].toString());
             midiRouterChain->setIsEasyConfig(val["isEasyConfig"].isBool());
             qDebug()<<"in chain"<<midiRouterChain->name();
+
+
             //now for filters
+            updateMidiRoutersFilters(val["midiRoutersFilters"],midiRouterChain);
+
 
             midiRouteInputEntry->addMidiRouterChains(midiRouterChain);
         }
@@ -132,11 +136,26 @@ MidiRouteInput* UserDataConfig::createMidiRouteInputEntry(const QJsonObject &val
     return midiRouteInputEntry;
 }
 
+
+void UserDataConfig::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain *midiRouterChain){
+    if (midiRoutersFilters.isArray()) {
+        qDebug()<<"we are in folter "<<midiRoutersFilters;
+        midiRouterChain->clearMidiRoutersFilters();
+        for (const auto &filterVal : midiRoutersFilters.toArray()) {
+            auto filter = filterVal.toObject();
+
+            if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::TO_MIDI_DESTINATION)){
+                FilterMidiDestination *fmd = new FilterMidiDestination();
+                midiRouterChain->addFilterMidiDestination(filter["baseMidiRouteInput"].toObject()["midiInputName"].toString());
+            }
+        }
+    }
+}
+
 void UserDataConfig::updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs) {
     preset->clearMidiRouteInputs();
     for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
         qDebug() << "midiRouteInputEntry key: " << it.key();
-        qDebug() << it.value();
         MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntry( it.value().toObject());
         preset->addMidiRouteInput(midiRouteInputEntry);
     }
@@ -170,7 +189,6 @@ void UserDataConfig::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject
     preset->clearEasyConfig();
     for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
         qDebug() << "key: " << it.key();
-        qDebug() << it.value();
         EasyConfig *easyConfigEntry = createEasyConfigEntry(it.key(), it.value().toObject());
         preset->addEasyConfig(easyConfigEntry);
     }
@@ -193,7 +211,7 @@ EasyConfig* UserDataConfig::createEasyConfigEntry(const QString &key, const QJso
     if (value["easyConfigRoutes"].isArray()) {
         QJsonArray jsonArray = value["easyConfigRoutes"].toArray();
         for (const QJsonValue &routeValue : jsonArray) {
-            qDebug() << "Lets parse easyConfigRoute " << routeValue;
+            qDebug() << "Lets parse easyConfigRoute ";
             EasyConfigRoute *easyConfigRoute = createEasyConfigRoute(routeValue.toObject());
             easyConfigEntry->addEasyConfigRoute(easyConfigRoute);
         }
