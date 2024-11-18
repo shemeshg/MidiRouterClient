@@ -152,6 +152,11 @@ void UserDataConfig::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFi
                     static_cast<FilterToConsole::LogTo>(filter["logTo"].toInt()),
                     filter["userdata"].toString()
                     );
+            } else if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::TO_NETWORK)){
+                midiRouterChain->addFilterNetworkDestination(
+                     filter["serverName"].toString(),
+                     filter["serverPort"].toInt(),
+                    filter["baseMidiRouteInput"].toObject()["midiInputName"].toString());
             }
 
         }

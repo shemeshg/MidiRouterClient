@@ -1,5 +1,6 @@
 #pragma once
 #include "FilterMidiDestination.h"
+#include "FilterNetworkDestination.h"
 #include "FilterToConsle.h"
 #include "MidiRouterChainPrivate.h"
 #include "MidiRoutersFilter.h"
@@ -43,6 +44,13 @@ public slots:
         f->setFilter(logTo, userData);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
     }
+
+    void addFilterNetworkDestination(QString serverName, int serverPort, QString baseMidiRouteInput){
+        auto f = new FilterNetworkDestination();
+        f->setFilter(serverName,  serverPort, baseMidiRouteInput);
+        m_midiRoutersFilters.append(QVariant::fromValue(f));
+    }
+
 signals:
 
 
