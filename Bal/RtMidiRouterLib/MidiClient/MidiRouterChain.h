@@ -1,4 +1,5 @@
 #pragma once
+#include "FilterAndTransform.h"
 #include "FilterMidiDestination.h"
 #include "FilterNetworkDestination.h"
 #include "FilterSchedule.h"
@@ -55,6 +56,14 @@ public slots:
     void addFilterFilterSchedule(FilterSchedule::DefferedType defferedType, int defferedTo ){
         auto f = new FilterSchedule();
         f->setFilter(defferedType, defferedTo);
+        m_midiRoutersFilters.append(QVariant::fromValue(f));
+    }
+
+    void addFilterAndTransform(QString name, FilterAndTransform::ConditionAction conditionAction, QString filterChannel,
+                               QString filterEvents, QString filterData1, QString filterData2 ){
+        auto f = new FilterAndTransform();
+        f->setFilter( name,  conditionAction,  filterChannel,
+                    filterEvents,  filterData1,  filterData2 );
         m_midiRoutersFilters.append(QVariant::fromValue(f));
     }
 signals:

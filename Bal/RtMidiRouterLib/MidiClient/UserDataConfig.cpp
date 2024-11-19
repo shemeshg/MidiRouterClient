@@ -159,6 +159,19 @@ void UserDataConfig::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFi
                         static_cast<FilterSchedule::DefferedType>(filter["defferedType"].toInt()),
                         filter["defferedTo"].toInt()
                     );
+            } else if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::TO_NETWORK)){
+                midiRouterChain->addFilterNetworkDestination(filter["serverName"].toString(),
+                                                             filter["serverPort"].toInt(),
+                                                             filter["baseMidiRouteInput"].toObject()["midiInputName"].toString()
+                                                             );
+            } else if (filter["filterType"].toInt() == static_cast<int>(MidiRoutersFilter::FilterType::FILTER_AND_TRANSFORM)) {
+                midiRouterChain->addFilterAndTransform(filter["name"].toString(),
+                                                       static_cast<FilterAndTransform::ConditionAction>(filter["conditionAction"].toInt()),
+                                                       filter["filterChannel"].toString(),
+                                                       filter["filterEvents"].toString(),
+                                                       filter["filterData1"].toString(),
+                                                       filter["filterData2"].toString()
+                                                       );
             }
 
         }

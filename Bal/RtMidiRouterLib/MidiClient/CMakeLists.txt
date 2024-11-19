@@ -64,6 +64,10 @@ add_library(midiClient STATIC
     FilterSchedulePrivate.cpp
     FilterSchedule.h
     FilterSchedule.cpp
+    FilterAndTransform.h
+    FilterAndTransform.cpp
+    FilterAndTransformPrivate.h
+    FilterAndTransformPrivate.cpp
 
 )
 
