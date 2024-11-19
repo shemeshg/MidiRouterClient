@@ -8,12 +8,22 @@ ColumnLayout {
     CoreLabel {
         text: "In ports"
     }
-    CoreTextArea {
-        text:
+    CoreButton{
+        onClicked: {
+            console.log(
             JSON.stringify(
-            Constants.balData.midiClientConnection.userDataConfig.
-                midiRoutePresets[0].midiRouteInputs
-                )
+            Constants.balData.midiClientConnection.userDataConfig)
+            )
+
+            dummy.text =             JSON.stringify(
+                        Constants.balData.midiClientConnection.userDataConfig.
+                            midiRoutePresets[0].midiRouteInputs
+                            )
+        }
+    }
+
+    CoreTextArea {
+        id: dummy
         wrapMode: Text.WordWrap
     }
 }

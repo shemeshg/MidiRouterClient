@@ -7,6 +7,15 @@ import QtQuick.Controls
 ColumnLayout {
             id: presets
             Layout.fillWidth: true
+            CoreButton {
+                text: "console.log getJson"
+                onClicked: {
+                    console.log(
+                                JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.getJson())
+                                )
+                }
+            }
+
             CoreLabel {
                 text: "Selected preset id:" + Constants.balData.midiClientConnection.userDataConfig.activePresetID
             }

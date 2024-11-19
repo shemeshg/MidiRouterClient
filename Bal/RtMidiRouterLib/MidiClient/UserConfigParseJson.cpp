@@ -73,6 +73,7 @@ MidiRoutePreset *UserConfigParseJson::createMidiRoutePreset(UserDataConfig *user
     if (midiRouteInputs.isObject()){
         updateMidiRouteInputs(preset, midiRouteInputs.toObject());
     }
+
     return preset;
 }
 

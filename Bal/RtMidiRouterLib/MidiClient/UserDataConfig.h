@@ -39,7 +39,7 @@ public:
     }
 
     void addMidiRoutePreset(MidiRoutePreset *preset){
-        m_midiRoutePresets.push_back(preset);
+        m_midiRoutePresets.push_back(preset);        
         emit midiRoutePresetsChanged();
     }
 
@@ -48,6 +48,16 @@ public:
 
 
 public slots:
+    QJsonObject getJson(){
+        QJsonObject inDict;
+        inDict["a"] = "shalom";
+        inDict["b"] = "olam";
+        QJsonArray ary;
+        ary.append(inDict);
+        QJsonObject json;
+        json["name"] = ary;
+        return json;
+    }
 
 private:
     void loadComputerUuid();
