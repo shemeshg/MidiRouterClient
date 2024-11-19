@@ -12,7 +12,7 @@ ColumnLayout {
         onClicked: {
             console.log(
             JSON.stringify(
-            Constants.balData.midiClientConnection.userDataConfig)
+            Constants.balData.midiClientConnection.userDataConfig.getJson())
             )
 
             dummy.text =             JSON.stringify(
