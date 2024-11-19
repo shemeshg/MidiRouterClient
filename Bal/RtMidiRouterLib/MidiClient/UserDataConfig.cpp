@@ -284,8 +284,6 @@ QStringList UserDataConfig::convertToQStringList(const QJsonArray &array) {
 }
 
 
-
-
 void UserDataConfig::updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) {
     control->setChannel(value["channel"].toInt());
     control->setData1(value["data1"].toInt());
