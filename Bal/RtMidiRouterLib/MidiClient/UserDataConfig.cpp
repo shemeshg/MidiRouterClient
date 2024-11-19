@@ -2,6 +2,7 @@
 #include <QSettings>
 #include "FilterToConsle.h"
 #include "MidiClientUtil.h"
+#include "UserConfigParseJson.h"
 
 void UserDataConfig::loadComputerUuid()
 {
@@ -32,35 +33,6 @@ void UserDataConfig::clearMidiRoutePreset()
     m_midiRoutePresets.clear();
 }
 
-
-void UserDataConfig::updateVirtualInPorts(const QJsonArray &array) {
-    m_virtualInPorts.clear();
-    for (const QJsonValue &value : array) {
-        m_virtualInPorts.append(value.toString());
-    }
-    emit virtualInPortsChanged();
-}
-
-void UserDataConfig::updateDropdownlists(const QJsonArray &array) {
-    for (const QJsonValue &value : array) {
-        Dropdownlist *d = new Dropdownlist();
-        d->setName(value["name"].toString());
-        d->setData(value["data"].toString());
-        m_dropdownlists.push_back(d);
-    }
-    emit dropdownlistsChanged();
-}
-
-void UserDataConfig::updateMidiRoutePresets(const QJsonArray &array) {
-    for (const QJsonValue &value : array) {
-        MidiRoutePreset *preset = createMidiRoutePreset(value);
-        if (value["easyConfig"].isObject() && value["easyConfig"]["inputZonesAndRoutes"].isObject()) {
-            updateEasyConfig(preset, value["easyConfig"]["inputZonesAndRoutes"].toObject());
-        }
-        m_midiRoutePresets.push_back(preset);
-    }
-    emit midiRoutePresetsChanged();
-}
 
 UserControl* UserDataConfig::createUserControl(const QJsonValue &userControlValue) {
     auto userControl = new UserControl();
@@ -294,26 +266,25 @@ void UserDataConfig::updateMidiControl(PresetMidiControl *control, const QJsonVa
     control->setPresetUuid(value["presetUuid"].toString());
 }
 
+void UserDataConfig::updateMidiRoutePresets(const QJsonArray &array) {
+    for (const QJsonValue &value : array) {
+        MidiRoutePreset *preset = createMidiRoutePreset(value);
+        if (value["easyConfig"].isObject() && value["easyConfig"]["inputZonesAndRoutes"].isObject()) {
+            updateEasyConfig(preset, value["easyConfig"]["inputZonesAndRoutes"].toObject());
+        }
+        m_midiRoutePresets.push_back(preset);
+    }
+    emit midiRoutePresetsChanged();
+}
 
 void UserDataConfig::setChanges(QJsonDocument &jsonDoc){
     qDebug()<<"Empllay remote configuration";
     //qDebug() << "json[" <<  jsonDoc.toJson().replace("\\n", "\n") << "]";
 
-    if (jsonDoc["virtualInPorts"].isArray()) {
-        updateVirtualInPorts(jsonDoc["virtualInPorts"].toArray());
-    }
+    UserConfigParseJson userConfigParseJson;
+    userConfigParseJson.setChanges(this, jsonDoc);
+
     //qDebug()<<"virtualInPorts are:" << m_virtualInPorts;
-
-    if (jsonDoc["_activePresetID"].isDouble()) {
-        setActivePresetID(jsonDoc["_activePresetID"].toInt());
-    }
-
-
-    clearDropdownlists();
-    if (jsonDoc["dropdownlists"].isArray()) {
-        updateDropdownlists(jsonDoc["dropdownlists"].toArray());
-    }
-
 
     clearMidiRoutePreset();
     if (jsonDoc["midiRoutePresets"].isArray()) {

@@ -23,16 +23,35 @@ public:
     }
 
 
+    void clearVirtualPorts(){
+        m_virtualInPorts.clear();
+        emit virtualInPortsChanged();
+    }
+
+    void addVirtualPort(QString port){
+        m_virtualInPorts.append(port);
+        emit virtualInPortsChanged();
+
+    }
+
+    void addDropdownList(QString name, QString data){
+        Dropdownlist *d = new Dropdownlist();
+        d->setName(name);
+        d->setData(data);
+        m_dropdownlists.push_back(d);
+        emit dropdownlistsChanged();
+    }
+
+    void clearDropdownlists();
 public slots:
 
 private:
     void loadComputerUuid();
-    void clearDropdownlists();
+
     void clearMidiRoutePreset();
 
     void  setChanges(QJsonDocument &jsonDoc);
-    void updateVirtualInPorts(const QJsonArray &array);
-    void updateDropdownlists(const QJsonArray &array);
+
     void updateMidiRoutePresets(const QJsonArray &array);
     void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type);
 
