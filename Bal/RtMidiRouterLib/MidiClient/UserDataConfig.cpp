@@ -1,6 +1,7 @@
 #include "UserDataConfig.h"
 #include <QSettings>
 #include "MidiClientUtil.h"
+#include "UserConfigGenJson.h"
 #include "UserConfigParseJson.h"
 
 void UserDataConfig::loadComputerUuid()
@@ -32,6 +33,11 @@ void UserDataConfig::clearMidiRoutePreset()
     // Clear the outer list
     m_midiRoutePresets.clear();
     emit midiRoutePresetsChanged();
+}
+
+QJsonObject UserDataConfig::getJson(){
+    UserConfigGenJson userConfigGenJson;
+    //return userConfigGenJson.getJson(this);
 }
 
 UserDataConfig::UserDataConfig(QObject *parent)

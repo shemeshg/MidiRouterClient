@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "UserDataConfigPrivate.h"
 #include <QJsonValue>
 #include <QtCore/qjsonarray.h>
@@ -48,16 +49,7 @@ public:
 
 
 public slots:
-    QJsonObject getJson(){
-        QJsonObject inDict;
-        inDict["a"] = "shalom";
-        inDict["b"] = "olam";
-        QJsonArray ary;
-        ary.append(inDict);
-        QJsonObject json;
-        json["name"] = ary;
-        return json;
-    }
+    QJsonObject getJson();
 
 private:
     void loadComputerUuid();
