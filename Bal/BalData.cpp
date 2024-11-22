@@ -179,6 +179,17 @@ void BalData::updateServerStatus()
     emit isServerRunningChanged();
 }
 
+void BalData::applyConfig(const QJSValue &callback)
+{
+    if (midiClientConnection()->serverStatus() != MidiClientConnectionPrivate::ServerStatus::RUNNING){
+        qDebug()<<"Not connected";
+        return;
+    }
+    auto json = mcc.midiClientConnection.userDataConfig()->getJson();
+    mcc.invokeMethod("wcuserdata", "applyConfig", {json}, true, callback, qjsEngine(this));
+
+}
+
 void BalData::startServer(int portNumber)
 {
     msc.start(portNumber);

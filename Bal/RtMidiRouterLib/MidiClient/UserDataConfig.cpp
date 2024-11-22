@@ -40,6 +40,8 @@ QJsonObject UserDataConfig::getJson(){
     return userConfigGenJson.getJson(this);
 }
 
+
+
 UserDataConfig::UserDataConfig(QObject *parent)
     : UserDataConfigPrivate{parent}
 {

@@ -29,6 +29,7 @@ public:
 
     MidiClientConnection midiClientConnection{};
 
+
 private slots:
     void userDataChanges();
 

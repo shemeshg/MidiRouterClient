@@ -53,7 +53,7 @@ void setAsyncServerStatusAndText(MidiClientConnection::ServerStatus serverStatus
 
 void stopClient();
 void testDummyDelete(const QJSValue &callback);
-
+void applyConfig(const QJSValue &callback);
 MidiClientConnection *midiClientConnection() { return &mcc.midiClientConnection; }
 
 void startClient();
@@ -88,4 +88,5 @@ void startClient(const QString &serverName, int portNumber);
 MidiServerClass msc{};
 MidiClientClass mcc{};
 void updateServerStatus();
+
 };

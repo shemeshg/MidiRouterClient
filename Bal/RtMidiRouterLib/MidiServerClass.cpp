@@ -35,7 +35,7 @@ void MidiServerClass::start(int portNumber)
     channel->registerObject(QStringLiteral("wcmidiout"), wcmidiout);
     WcMidiIn *wcmidiin = new WcMidiIn(server); //NOLINT
     channel->registerObject(QStringLiteral("wcmidiin"), wcmidiin);
-    WcUserData *wcuserdata = new WcUserData(server); //NOLINT
+    WcUserData *wcuserdata = new WcUserData(wcmidiin, wcmidiout, server); //NOLINT
     channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
     //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
 

@@ -8,6 +8,15 @@ ColumnLayout {
             id: presets
             Layout.fillWidth: true
             CoreButton {
+                text: "applayConfig"
+                onClicked: {
+                    Constants.balData.applyConfig(() => {
+                                                          console.log(
+                                                              "client says we have finished applay config" )
+                                                      })
+                }
+            }
+            CoreButton {
                 text: "console.log getJson"
                 onClicked: {
                     console.log(

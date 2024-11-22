@@ -1,7 +1,11 @@
 #include "wcuserdata.h"
 #include <QJsonDocument>
 
-WcUserData::WcUserData(QObject *parent) : QObject(parent)
+WcUserData::WcUserData(Webchannel::WcMidiIn *wcmidiin,
+                       Webchannel::WcMidiOut *wcmidiout,
+                       QObject *parent) :wcmidiin{wcmidiin},
+                        wcmidiout{wcmidiout},
+                        QObject(parent)
 {
 
     QString str = "{}";

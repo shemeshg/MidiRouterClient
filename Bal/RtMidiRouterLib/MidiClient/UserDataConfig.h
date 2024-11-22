@@ -51,6 +51,7 @@ public:
 public slots:
     QJsonObject getJson();
 
+
 private:
     void loadComputerUuid();
 
