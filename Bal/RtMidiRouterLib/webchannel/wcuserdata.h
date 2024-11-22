@@ -34,7 +34,7 @@ public:
     Q_INVOKABLE void applyConfig(const QJsonObject &json){
         ApplyConfig ac(wcmidiin, wcmidiout);
         ac.applyConfig(json);
-        setJon(json);
+        //setJon(json);
     }
 signals:
     bool userDataChanges(QVariant msg);
