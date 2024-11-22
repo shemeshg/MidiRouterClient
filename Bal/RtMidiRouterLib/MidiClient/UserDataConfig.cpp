@@ -37,7 +37,7 @@ void UserDataConfig::clearMidiRoutePreset()
 
 QJsonObject UserDataConfig::getJson(){
     UserConfigGenJson userConfigGenJson;
-    //return userConfigGenJson.getJson(this);
+    return userConfigGenJson.getJson(this);
 }
 
 UserDataConfig::UserDataConfig(QObject *parent)

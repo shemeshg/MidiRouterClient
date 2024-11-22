@@ -65,7 +65,72 @@ private:
             obj["midiControlOff"] = getModiControlOnOff(itm->midiControlOff());
             obj["midiRouteInputs"] = getMidiRouteInputs(itm->midiRouteInputs());
             obj["userControls"] = getUserControls(itm->userControls());
+            obj["easyConfig"] = getEasyConfig(itm->easyConfig());
+            ary.append(obj);
             i++;
+        }
+        return ary;
+    }
+
+    QJsonObject getEasyConfig(QList<EasyConfig *> easyConfigList){
+        QJsonObject obj;
+        //auto inputZonesAndRoutes = obj["inputZonesAndRoutes"].toObject();
+
+        QJsonObject inputZonesAndRoutes;
+        for (const auto &easyConfig: easyConfigList){
+
+            QJsonObject  easyConfigInput;
+            auto midiInputName = easyConfig->midiInputName();
+            easyConfigInput["midiInputName"] = midiInputName;
+            easyConfigInput["keyboardSplits"] = getKeyboardSplits(easyConfig->keyboardSplits());
+            easyConfigInput["zoneNames"] = getStringListToJsonAry(easyConfig->zoneNames());
+            easyConfigInput["easyConfigRoutes"] = getEasyConfigRoutes(easyConfig->easyConfigRoutes(),midiInputName);
+
+            inputZonesAndRoutes[midiInputName] = easyConfigInput;
+        }
+        obj["inputZonesAndRoutes"] = inputZonesAndRoutes;
+        return obj;
+    }
+
+    QJsonArray getEasyConfigRoutes(QList<EasyConfigRoute *> easyConfigRoutes,  QString midiInputName){
+        QJsonArray ary;
+        for (const auto &easyConfigRoute: easyConfigRoutes){
+            QJsonObject obj;
+            obj["midiInputName"] = midiInputName;
+            obj["splitRangeId"] = easyConfigRoute->splitRangeId();
+            obj["fromSelectedMidiEventTypeId"] = easyConfigRoute->fromSelectedMidiEventTypeId();
+            obj["fromChannel"] = easyConfigRoute->fromChannel();
+            obj["fromData1"] = easyConfigRoute->fromData1();
+            obj["transpose"] = easyConfigRoute->transpose();
+            obj["fromCcOrNrpnStart"] = easyConfigRoute->fromCcOrNrpnStart();
+            obj["fromCcOrNrpnEnd"] = easyConfigRoute->fromCcOrNrpnEnd();
+            obj["toCcOrNrpnStart"] = easyConfigRoute->toCcOrNrpnStart();
+            obj["toCcOrNrpnEnd"] = easyConfigRoute->toCcOrNrpnEnd();
+            obj["toSelectedMidiEventTypeId"] = easyConfigRoute->toSelectedMidiEventTypeId();
+            obj["toChannel"] = easyConfigRoute->toChannel();
+            obj["toData1"] = easyConfigRoute->toData1();
+            obj["toDestinationName"] = easyConfigRoute->toDestinationName();
+
+            ary.append(obj);
+        }
+        return ary;
+
+    }
+
+    QJsonArray getStringListToJsonAry(QStringList list ){
+        QJsonArray ary;
+        for (const auto &str: list){
+            ary.append(str);
+        }
+        return ary;
+    }
+
+    QJsonArray getKeyboardSplits(QList<int> keyboardSplits){
+        QJsonArray ary;
+        for (const auto &keyboardSplit: keyboardSplits){
+            QJsonObject obj;
+            obj["splitPosition"] = keyboardSplit;
+            ary.append(obj);
         }
         return ary;
     }
@@ -191,7 +256,7 @@ private:
         return ary;
     }
 
-    QJsonValue getMidiRouteInput(MidiRouteInput *midiRouteInput){
+    QJsonObject getMidiRouteInput(MidiRouteInput *midiRouteInput){
         QJsonObject obj;
         obj["midiInputName"] = midiRouteInput->midiInputName();
         obj["ignoreTypes"] = getIgnoreTypes(midiRouteInput);
@@ -226,6 +291,10 @@ private:
         }
         return ary;
     }
+
+
+
+
 };
 
 #endif // USERCONFIGGENJSON_H
