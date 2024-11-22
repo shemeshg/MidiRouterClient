@@ -53,6 +53,7 @@ add_library(RtMidiRouterLib STATIC
   webchannel/wcmidiinlistener.h
   webchannel/wcmidiout.h
   webchannel/wcuserdata.h
+  webchannel/ApplyConfig.h webchannel/ApplyConfig.cpp
 )
 
 target_link_libraries(RtMidiRouterLib PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel

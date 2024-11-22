@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include "WcMidiIn.h"
 #include "WcMidiOut.h"
+#include "ApplyConfig.h"
 
 class WcUserData : public QObject
 {
@@ -30,15 +31,10 @@ public:
 
     }
 
-    Q_INVOKABLE void applyConfig(QJsonObject json){
-        //qDebug()<<"Server will applay a config of "<<json;
-        wcmidiin->restart();
-        wcmidiout->restart();
-
-        auto inPortsMap = wcmidiin->getPorts();
-        auto outPortMap = wcmidiout->getPorts();
-        qDebug()<<inPortsMap;
-        //setJon(json);
+    Q_INVOKABLE void applyConfig(const QJsonObject &json){
+        ApplyConfig ac(wcmidiin, wcmidiout);
+        ac.applyConfig(json);
+        setJon(json);
     }
 signals:
     bool userDataChanges(QVariant msg);
