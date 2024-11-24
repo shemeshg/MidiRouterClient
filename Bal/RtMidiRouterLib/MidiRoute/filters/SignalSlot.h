@@ -18,6 +18,33 @@ public:
     QString connectionString;
     int remoteMidiPortNumber;
 
+    void openConnection(QString serverName, int serverPort, QString _remoteMidiPortName){
+
+        connectionString = "ws://%1:%2";
+        connectionString = connectionString.arg( serverName).arg(serverPort);
+
+        opendRemoteServersSockets = std::unique_ptr<QWebSocket>(new QWebSocket());
+        opendRemoteServers = std::unique_ptr<CWebChannelClient>(new CWebChannelClient(opendRemoteServersSockets.get()));
+
+        opendRemoteServersSockets->open(QUrl( connectionString ));
+
+        constexpr int msecTimeout = 100;
+        if (WaitForSignal(opendRemoteServersSockets.get(), &QWebSocket::connected, msecTimeout)){
+            qDebug() << "connected.";
+
+            opendRemoteServers->initialize();
+            if (WaitForSignal(opendRemoteServers.get(), &CWebChannelClient::initialized))
+            {
+                remoteMidiPortNumber = opendRemoteServers->invokeMethodBlocking("wcmidiin", "getPortNumber", {_remoteMidiPortName}).toInt();
+                opendRemoteServers->invokeMethodBlocking("wcmidiin", "openPort", {remoteMidiPortNumber});
+                qDebug() << "Initialized";
+            } else {
+                qDebug() << "Did not Initialized";
+            }
+
+        }
+    }
+
     void openConnection(QString serverName, int serverPort, int _remoteMidiPortNumber){
 
                remoteMidiPortNumber = _remoteMidiPortNumber;

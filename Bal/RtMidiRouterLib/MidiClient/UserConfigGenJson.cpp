@@ -195,9 +195,8 @@ QJsonArray UserConfigGenJson::getMidiRouterChains(MidiRouteInput *midiRouteInput
 }
 
 QJsonObject UserConfigGenJson::getBaseMidiRouteInput(QString strMidiInputName){
-    QJsonObject obj, midiInputName;
-    midiInputName["midiInputName"] = strMidiInputName;
-    obj["baseMidiRouteInput"] = midiInputName;
+    QJsonObject obj;
+    obj["midiInputName"] = strMidiInputName;
     return obj;
 }
 
@@ -208,7 +207,7 @@ QJsonArray UserConfigGenJson::getMidiRoutersFilters(QList<QVariant> midiRoutersF
         if (midiRoutersFilter.canConvert<FilterMidiDestination*>()) {
             auto filter = midiRoutersFilter.value<FilterMidiDestination*>();
             filterObj["filterType"] = static_cast<int>(filter->filterType());
-            filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->name());
+            filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->baseMidiRouteInput());
             ary.append(filterObj);
         } else if (midiRoutersFilter.canConvert<FilterToConsole*>()) {
             auto filter = midiRoutersFilter.value<FilterToConsole*>();
@@ -229,7 +228,7 @@ QJsonArray UserConfigGenJson::getMidiRoutersFilters(QList<QVariant> midiRoutersF
             filterObj["filterType"] = static_cast<int>(filter->filterType());
             filterObj["serverName"] = filter->serverName();
             filterObj["serverPort"] = filter->serverPort();
-            filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->name());
+            filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->baseMidiRouteInput());
 
             ary.append(filterObj);
         } else if (midiRoutersFilter.canConvert<FilterAndTransform*>()) {
