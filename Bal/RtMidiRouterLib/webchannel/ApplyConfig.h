@@ -110,13 +110,18 @@ public:
 
                     }
 
-                    /*
-                    for (let i = 0; i < configPort.cc14bitAry.length; i++) {
-                        const p = configPort.cc14bitAry[i];
-                        await midiPort.addCc14Bit(p.channel, p.cc)
+
+                    auto cc14bitAry = midiRouteInputObj["cc14bitAry"].toArray();
+                    wcmidiin->clearCc14Bit(portNumber);
+                    for (const auto &cc14: cc14bitAry){
+                        auto cc14Obj = cc14.toObject();
+                        qDebug()<<"CHANNEL CC "<<cc14Obj;
+                        wcmidiin->addCc14Bit(portNumber, cc14Obj["channel"].toInt(),cc14Obj["cc"].toInt());
+
                     }
-                    */
-                    // Inports chains and routes
+
+
+                    qDebug()<<"TODO Inports chains and routes";
                 } else if (!disCnctInPorts.contains(midiInputName)){
                     disCnctInPorts.append(midiInputName);
                 }
