@@ -47,7 +47,7 @@ public:
                     if (isEnabled){
                         qDebug()<<"TODO midiControlOff, check OFF iNports exists";
                         setMidiRouteInputs(midiRoutePresetObj);
-                        setEasyConfig(midiRoutePresetObj);
+
                     } else {
                         qDebug()<<"TODO  midiControlOn, check ON activation port  exists";
                     }
@@ -82,7 +82,11 @@ public:
                     setInportSettings(midiRouteInputObj, midiInputName);
 
 
-                    qDebug()<<"TODO Inports chains and routes";
+
+
+
+
+
                 } else if (!disCnctInPorts.contains(midiInputName)){
                     disCnctInPorts.append(midiInputName);
                 }
@@ -136,24 +140,28 @@ public:
             wcmidiin->addCc14Bit(portNumber, cc14Obj["channel"].toInt(),cc14Obj["cc"].toInt());
 
         }
-    }
 
-    void setEasyConfig(QJsonObject &midiRoutePresetObj)
-    {
-        auto easyConfig = midiRoutePresetObj["easyConfig"];
-        if (easyConfig.isObject()){
-            auto easyConfigObj = easyConfig.toObject();
-            auto inputZonesAndRoutes = easyConfigObj["inputZonesAndRoutes"];
-            qDebug()<<"inputZonesAndRoutes :";
-            if (inputZonesAndRoutes.isObject()){
-                auto inputZonesAndRoutesObj= inputZonesAndRoutes.toObject();
-                for (auto it = inputZonesAndRoutesObj.begin(); it != inputZonesAndRoutesObj.end(); ++it) {
-                    qDebug()<<"ZoneRoute input :"<< it.key();
-                    qDebug()<<"TODO if inport exists, and outport exists";
+        qDebug()<<"TODO Inports chains and routes";
+        auto midiRouterChains = midiRouteInputObj["midiRouterChains"].toArray();
+        for (const auto &midiRouterChain: midiRouterChains){
+            auto midiRouterChainObj =  midiRouterChain.toObject();
+            auto midiRoutersFilters = midiRouterChainObj["midiRoutersFilters"].toArray();
+            if (midiRoutersFilters.size() > 0){
+                qDebug()<<"TODO CREATE CHAIN AND PARSE FILTER "<<midiInputName<<midiRouterChainObj["name"].toString();
+                int chainId = wcmidiin->routingMidiChainsAaddChain(portNumber);
+                for (const auto &midiRoutersFilter:midiRoutersFilters){
+                    auto midiRoutersFilterObj = midiRoutersFilter.toObject();
+                    qDebug()<<"Add to chain "<<chainId<<midiRoutersFilterObj;
+                    //{"baseMidiRouteInput":{"baseMidiRouteInput":{"midiInputName":"To midi 0_Scarlett 2i4 USB"}},"filterType":0}
+
                 }
+
             }
         }
+
     }
+
+
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
