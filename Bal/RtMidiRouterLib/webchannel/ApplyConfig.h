@@ -66,6 +66,8 @@ public:
     }
 
 
+
+
     void setMidiRouteInputs(QJsonObject &midiRoutePresetObj){
         auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
 
@@ -77,48 +79,7 @@ public:
                 auto midiInputName = midiRouteInputObj["midiInputName"].toString();
 
                 if (inPorts.contains(midiInputName)){
-                    qDebug()<<"TODO Applay input to "<<midiRouteInputObj;
-                    int portNumber = wcmidiin->getPortNumber(midiInputName);
-
-                    wcmidiin->openPort(portNumber);
-
-                    wcmidiin->ignoreTypes(portNumber,
-                                          getBoolIgnoreTypes(midiRouteInputObj,"midiSysex"),
-                                          getBoolIgnoreTypes(midiRouteInputObj,"midiTime"),
-                                          getBoolIgnoreTypes(midiRouteInputObj,"midiSense"));
-
-                    wcmidiin->setTimeSig(portNumber,
-                                         getDoubleTimeSig(midiRouteInputObj,"timeSig"),
-                                         getDoubleTimeSig(midiRouteInputObj,"timeSigDivBy"),
-                                         getDoubleTimeSig(midiRouteInputObj,"fromSppPos")
-                                         );
-
-                    wcmidiin->clearPropegateClockPort(portNumber);
-                    auto propegateInputs = midiRouteInputObj["midiRouteClock"].toObject()["propegateInputs"];
-                    auto propegateInputsAry =  propegateInputs.toArray();
-                    for (const auto &propegateInput: propegateInputsAry){
-                        auto outPortName = propegateInput.toObject()["midiInputName"].toString();
-                        if (outPorts.contains(outPortName)){
-                            int outPortId = wcmidiout->getPortNumber(outPortName);
-                            wcmidiin->addPropegateClockPort(portNumber,outPortId);
-                        } else {
-                            DisCnctOutPort port;
-                            port.originedInPort = midiInputName;
-                            port.outPortName = outPortName;
-                            disCnctOutPort.append(port);
-                        }
-
-                    }
-
-
-                    auto cc14bitAry = midiRouteInputObj["cc14bitAry"].toArray();
-                    wcmidiin->clearCc14Bit(portNumber);
-                    for (const auto &cc14: cc14bitAry){
-                        auto cc14Obj = cc14.toObject();
-                        qDebug()<<"CHANNEL CC "<<cc14Obj;
-                        wcmidiin->addCc14Bit(portNumber, cc14Obj["channel"].toInt(),cc14Obj["cc"].toInt());
-
-                    }
+                    setInportSettings(midiRouteInputObj, midiInputName);
 
 
                     qDebug()<<"TODO Inports chains and routes";
@@ -127,6 +88,53 @@ public:
                 }
 
             }
+        }
+    }
+
+
+    inline void setInportSettings(QJsonObject &midiRouteInputObj, QString &midiInputName)
+    {
+        qDebug()<<"TODO Applay input to "<<midiRouteInputObj;
+        int portNumber = wcmidiin->getPortNumber(midiInputName);
+
+        wcmidiin->openPort(portNumber);
+
+        wcmidiin->ignoreTypes(portNumber,
+                              getBoolIgnoreTypes(midiRouteInputObj,"midiSysex"),
+                              getBoolIgnoreTypes(midiRouteInputObj,"midiTime"),
+                              getBoolIgnoreTypes(midiRouteInputObj,"midiSense"));
+
+        wcmidiin->setTimeSig(portNumber,
+                             getDoubleTimeSig(midiRouteInputObj,"timeSig"),
+                             getDoubleTimeSig(midiRouteInputObj,"timeSigDivBy"),
+                             getDoubleTimeSig(midiRouteInputObj,"fromSppPos")
+                             );
+
+        wcmidiin->clearPropegateClockPort(portNumber);
+        auto propegateInputs = midiRouteInputObj["midiRouteClock"].toObject()["propegateInputs"];
+        auto propegateInputsAry =  propegateInputs.toArray();
+        for (const auto &propegateInput: propegateInputsAry){
+            auto outPortName = propegateInput.toObject()["midiInputName"].toString();
+            if (outPorts.contains(outPortName)){
+                int outPortId = wcmidiout->getPortNumber(outPortName);
+                wcmidiin->addPropegateClockPort(portNumber,outPortId);
+            } else {
+                DisCnctOutPort port;
+                port.originedInPort = midiInputName;
+                port.outPortName = outPortName;
+                disCnctOutPort.append(port);
+            }
+
+        }
+
+
+        auto cc14bitAry = midiRouteInputObj["cc14bitAry"].toArray();
+        wcmidiin->clearCc14Bit(portNumber);
+        for (const auto &cc14: cc14bitAry){
+            auto cc14Obj = cc14.toObject();
+            qDebug()<<"CHANNEL CC "<<cc14Obj;
+            wcmidiin->addCc14Bit(portNumber, cc14Obj["channel"].toInt(),cc14Obj["cc"].toInt());
+
         }
     }
 
