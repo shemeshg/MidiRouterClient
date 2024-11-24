@@ -35,6 +35,19 @@ public:
         emit midiRouterChainsChanged();
     }
 
+
+    void clearEasyConfigMidiRouterChains(){
+        for (int i = m_midiRouterChains.size() - 1; i >= 0; --i) {
+            if (m_midiRouterChains[i]->isEasyConfig()) {
+                delete m_midiRouterChains[i];
+                m_midiRouterChains.removeAt(i);
+            }
+        }
+        emit midiRouterChainsChanged();
+    }
+
+
+
     void clearMidiRouterChains(){
         for (MidiRouterChain *item : m_midiRouterChains) {
             delete item;

@@ -18,4 +18,22 @@ cog.outl(classEasyConfigRoutePrivate.getClassCpp(),
 
 //[[[end]]]
 
-void EasyConfigRoutePrivate::ctorClass() {}
+void EasyConfigRoutePrivate::ctorClass() {
+    setSplitRangeId(-1);
+    setFromSelectedMidiEventTypeId(0);
+    setFromChannel(-1);
+    setFromData1(-1);
+    setTranspose(0);
+
+    setFromCcOrNrpnStart(0);
+    setFromCcOrNrpnEnd(127);
+    setToCcOrNrpnStart(0);
+    setToCcOrNrpnEnd(127);
+
+    setToSelectedMidiEventTypeId(0);
+    setToChannel(-1);
+    setToData1(-1);
+
+    setToDestinationName("");
+
+}
