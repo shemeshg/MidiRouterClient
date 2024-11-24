@@ -8,8 +8,8 @@ public:
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
     struct DisCnctOutPort{
-        std::string outPortName;
-        std::string originedInPort;
+        QString outPortName;
+        QString originedInPort;
     };
 
 
@@ -61,6 +61,11 @@ public:
         return midiRouteInputObj["ignoreTypes"].toObject()["name"].toBool();
     }
 
+    double getDoubleTimeSig(QJsonObject &midiRouteInputObj, QString name){
+        return midiRouteInputObj["midiRouteClock"].toObject()["name"].toBool();
+    }
+
+
     void setMidiRouteInputs(QJsonObject &midiRoutePresetObj){
         auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
 
@@ -82,13 +87,30 @@ public:
                                           getBoolIgnoreTypes(midiRouteInputObj,"midiTime"),
                                           getBoolIgnoreTypes(midiRouteInputObj,"midiSense"));
 
+                    wcmidiin->setTimeSig(portNumber,
+                                         getDoubleTimeSig(midiRouteInputObj,"timeSig"),
+                                         getDoubleTimeSig(midiRouteInputObj,"timeSigDivBy"),
+                                         getDoubleTimeSig(midiRouteInputObj,"fromSppPos")
+                                         );
+
+                    wcmidiin->clearPropegateClockPort(portNumber);
+                    auto propegateInputs = midiRouteInputObj["midiRouteClock"].toObject()["propegateInputs"];
+                    auto propegateInputsAry =  propegateInputs.toArray();
+                    for (const auto &propegateInput: propegateInputsAry){
+                        auto outPortName = propegateInput.toObject()["midiInputName"].toString();
+                        if (outPorts.contains(outPortName)){
+                            int outPortId = wcmidiout->getPortNumber(outPortName);
+                            wcmidiin->addPropegateClockPort(portNumber,outPortId);
+                        } else {
+                            DisCnctOutPort port;
+                            port.originedInPort = midiInputName;
+                            port.outPortName = outPortName;
+                            disCnctOutPort.append(port);
+                        }
+
+                    }
 
                     /*
-                    await midiPort.setTimeSig(configPort.midiRouteClock.timeSig, configPort.midiRouteClock.timeSigDivBy, configPort.midiRouteClock.fromSppPos)
-                    for (let i = 0; i < configPort.midiRouteClock.propegateInputs.length; i++) {
-                        const p = configPort.midiRouteClock.propegateInputs[i];
-                        await midiPort.addPropegateClockPort(p.midiInputId);
-                    }
                     for (let i = 0; i < configPort.cc14bitAry.length; i++) {
                         const p = configPort.cc14bitAry[i];
                         await midiPort.addCc14Bit(p.channel, p.cc)
