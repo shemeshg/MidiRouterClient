@@ -24,10 +24,10 @@ public:
 
         setVirtualPorts(inPortsMap, json);
 
-        QStringList inPorts=getMapStringVal(wcmidiin->getPorts());
-        QStringList outPorts = getMapStringVal(wcmidiout->getPorts());
-        QStringList disCnctInPorts;
-        QList<DisCnctOutPort> disCnctOutPort;
+        inPorts=getMapStringVal(wcmidiin->getPorts());
+        outPorts = getMapStringVal(wcmidiout->getPorts());
+        disCnctInPorts.clear();
+        disCnctOutPort.clear();
 
         setMidiRoutePresets(json);
     }
@@ -46,7 +46,7 @@ public:
                     bool isEnabled = midiRoutePresetObj["isEnabled"].toBool();
                     if (isEnabled){
                         qDebug()<<"TODO midiControlOff, check OFF iNports exists";
-                        qDebug()<<"TODO midiControlOff, check OFF activation port  exists";
+                        setMidiRouteInputs(midiRoutePresetObj);
                         setEasyConfig(midiRoutePresetObj);
                     } else {
                         qDebug()<<"TODO  midiControlOn, check ON activation port  exists";
@@ -57,12 +57,47 @@ public:
         }
     }
 
+    bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name){
+        return midiRouteInputObj["ignoreTypes"].toObject()["name"].toBool();
+    }
+
     void setMidiRouteInputs(QJsonObject &midiRoutePresetObj){
         auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
+
         if (midiRouteInputs.isObject()){
             auto midiRouteInputsObj = midiRouteInputs.toObject();
+
             for (auto it = midiRouteInputsObj.begin(); it != midiRouteInputsObj.end(); ++it) {
-                qDebug()<<"Check if "<<it.key()<<" Exists";
+                auto midiRouteInputObj = it.value().toObject();
+                auto midiInputName = midiRouteInputObj["midiInputName"].toString();
+
+                if (inPorts.contains(midiInputName)){
+                    qDebug()<<"TODO Applay input to "<<midiRouteInputObj;
+                    int portNumber = wcmidiin->getPortNumber(midiInputName);
+
+                    wcmidiin->openPort(portNumber);
+
+                    wcmidiin->ignoreTypes(portNumber,
+                                          getBoolIgnoreTypes(midiRouteInputObj,"midiSysex"),
+                                          getBoolIgnoreTypes(midiRouteInputObj,"midiTime"),
+                                          getBoolIgnoreTypes(midiRouteInputObj,"midiSense"));
+
+
+                    /*
+                    await midiPort.setTimeSig(configPort.midiRouteClock.timeSig, configPort.midiRouteClock.timeSigDivBy, configPort.midiRouteClock.fromSppPos)
+                    for (let i = 0; i < configPort.midiRouteClock.propegateInputs.length; i++) {
+                        const p = configPort.midiRouteClock.propegateInputs[i];
+                        await midiPort.addPropegateClockPort(p.midiInputId);
+                    }
+                    for (let i = 0; i < configPort.cc14bitAry.length; i++) {
+                        const p = configPort.cc14bitAry[i];
+                        await midiPort.addCc14Bit(p.channel, p.cc)
+                    }
+                    */
+                    // Inports chains and routes
+                } else if (!disCnctInPorts.contains(midiInputName)){
+                    disCnctInPorts.append(midiInputName);
+                }
 
             }
         }
@@ -87,6 +122,12 @@ public:
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
+
+
+    QStringList inPorts;
+    QStringList outPorts;
+    QStringList disCnctInPorts;
+    QList<DisCnctOutPort> disCnctOutPort;
 
     QStringList getMapStringVal(QVariantMap map){
         QStringList list;
