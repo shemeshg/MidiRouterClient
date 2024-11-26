@@ -76,92 +76,20 @@ public slots:
         if (toDestinationName.isEmpty()) {
             return;
         }
-        bool isAllDefault = true;
-        QString channelFilter = "[[0, 16, 0]]";
-        if (easyConfigRoute->fromChannel() != -1) {
-            isAllDefault = false;
-            channelFilter = QString{"[[%0, %1]]"}
-                                .arg(easyConfigRoute->fromChannel())
-                                .arg(easyConfigRoute->toChannel());
-        }
-        QString eventFilter = "[[0, 16, 0]]";
-        if (easyConfigRoute->fromSelectedMidiEventTypeId() != 0) {
-            isAllDefault = false;
-            if (easyConfigRoute->fromSelectedMidiEventTypeId() ==
-                    easyConfigRoute->toSelectedMidiEventTypeId() &&
-                easyConfigRoute->toSelectedMidiEventTypeId() ==
-                    (int)EasyConfig::DropdownMidiEventTypeEnum::noteOnOf) {
-                eventFilter = QString{"[[%0], [%1]]"}
-                                  .arg((int)EasyConfig::EventTypes::noteoff)
-                                  .arg((int)EasyConfig::EventTypes::noteon);
-            } else {
-                eventFilter =
-                    QString{"[[%0], [%1]]"}
-                        .arg((int)easyConfig->dropdownMidiEventTypeEnum
-                                 [(EasyConfig::DropdownMidiEventTypeEnum)
-                                  easyConfigRoute->fromSelectedMidiEventTypeId()])
-                        .arg((int)easyConfig->dropdownMidiEventTypeEnum
-                                 [(EasyConfig::DropdownMidiEventTypeEnum)
-                                  easyConfigRoute->toSelectedMidiEventTypeId()]);
-            }
-        }
 
-        QString data1Filter = "[[0, 127, 0]]";
-        QString data2Filter = "[[0, 127, 0]]";
-        int splitRangeId = easyConfigRoute->splitRangeId();
-        if (splitRangeId != -1) {
+        auto easyConfigRouteFilter = easyConfigRoute->getEasyConfigRouteFilter(easyConfig->keyboardSplits());
 
-            QList<int> keyboardSplits = easyConfig->keyboardSplits();
-            if (!keyboardSplits.contains(8)) {
-                keyboardSplits.append(8);
-                splitRangeId++;
-            }
-            if (!keyboardSplits.contains(98)) {
-                keyboardSplits.append(98);
-                splitRangeId++;
-            }
-            sortUniq(keyboardSplits);
-            int fromKey = keyboardSplits.at(splitRangeId);
-            int toKey = keyboardSplits.at(splitRangeId + 1);
-            data1Filter = QString{"[[%0, %1, %2]]"}.arg(
-                fromKey, toKey, fromKey + easyConfigRoute->transpose());
-        } else {
-            data1Filter =
-                QString{"[[0, 127, %0]]"}.arg(0 + easyConfigRoute->transpose());
-        }
-
-        if (easyConfigRoute->fromData1() != -1) {
-            if (easyConfigRoute->toData1() == -1) {
-                data1Filter = QString{"[[%0]]"}.arg(easyConfigRoute->fromData1());
-            } else {
-                data1Filter = QString{"[[%0, %1]]"}
-                                  .arg(easyConfigRoute->fromData1())
-                                  .arg(easyConfigRoute->toData1());
-            }
-        }
-        if (easyConfigRoute->fromData1() != -1 &&
-            easyConfigRoute->toData1() != -1) {
-            data1Filter = QString{"[[%0 %1]]"}
-                              .arg(easyConfigRoute->fromData1())
-                              .arg(easyConfigRoute->toData1());
-        }
-        if (easyConfigRoute->fromData1() != -1 ||
-            easyConfigRoute->toData1() != -1) {
-            data2Filter = QString{"[[%0, %1, %2, %3]]"}
-                              .arg(easyConfigRoute->fromCcOrNrpnStart())
-                              .arg(easyConfigRoute->fromCcOrNrpnEnd())
-                              .arg(easyConfigRoute->toCcOrNrpnStart())
-                              .arg(easyConfigRoute->toCcOrNrpnEnd());
-        }
-
-        if (!isAllDefault) {
+        if (!easyConfigRouteFilter.isAllDefault) {
             addFilterAndTransform(
                 "EasyConfig",
                 FilterAndTransform::ConditionAction::
                 DELETE_IF_NOT_MET_CONDITION,
-                channelFilter, eventFilter, data1Filter, data2Filter
+                easyConfigRouteFilter.channelFilter,
+                easyConfigRouteFilter.eventFilter,
+                easyConfigRouteFilter.data1Filter,
+                easyConfigRouteFilter.data2Filter
                 );
-            qDebug()<<"***EASY CONFIG FILTER "<<channelFilter<<eventFilter<<data1Filter<<data2Filter;
+
         }
 
         addFilterMidiDestination(toDestinationName);
@@ -172,9 +100,5 @@ signals:
 
 
 private:
-    void sortUniq(QList<int> &list) {
-        QSet<int> set(list.begin(), list.end());
-        list = QList<int>(set.begin(), set.end());
-        std::sort(list.begin(), list.end()); // Sort the list
-    }
+
 };
