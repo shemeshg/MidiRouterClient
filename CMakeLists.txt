@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(midiRouterClient VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(QT_QML_GENERATE_QMLLS_INI ON)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     # Append -fPIC to the CXXFLAGS only if the system is Linux
@@ -17,7 +18,7 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 qt_standard_project_setup(REQUIRES 6.5)
 
 
-list(APPEND QML_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Design/)
+list(APPEND QML_DIRS CMAKE_CURRENT_SOURCE_DIR}/Design/ ${CMAKE_CURRENT_BINARY_DIR}/Bal)
 set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's code model" FORCE)
 
 

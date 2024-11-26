@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21.1)
 
 option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
 option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
-
+set(QT_QML_GENERATE_QMLLS_INI ON)
 project(DesignApp LANGUAGES CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

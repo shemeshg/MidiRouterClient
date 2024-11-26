@@ -2,7 +2,7 @@ import QtQuick
 import Design
 import QtQuick.Layouts
 import Core
-import QtQuick.Controls
+
 
 ColumnLayout {
     id: fromGroupBox
@@ -10,10 +10,10 @@ ColumnLayout {
     required property Component body
 
     CoreLabel {
-        text: title
+        text: fromGroupBox.title
         leftPadding: Constants.font.pixelSize
         topPadding: Constants.font.pixelSize
-        visible: Boolean(title)
+        visible: Boolean(fromGroupBox.title)
     }
 
     CoreGroupBox {
@@ -21,7 +21,7 @@ ColumnLayout {
         id: cgb
         Loader {
             width: cgb.width
-            sourceComponent: body
+            sourceComponent: fromGroupBox.body
         }
     }
 }

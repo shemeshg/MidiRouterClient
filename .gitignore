@@ -81,3 +81,4 @@ Design/App/autogen/
 Design/**/CMakeLists.txt
 Design/qds.cmake
 .qmlls.ini
+Design-Debug/
