@@ -48,7 +48,7 @@ public:
 
     void createEasyConfigChains(EasyConfig *easyConfig) {
         for (auto easyConfigRoute : easyConfig->easyConfigRoutes()) {
-            auto midiRouterChain = new MidiRouterChain();
+            MidiRouterChain *midiRouterChain = new MidiRouterChain();
             midiRouterChain->setName("EasyConfig");
             midiRouterChain->setIsEasyConfig(true);
 

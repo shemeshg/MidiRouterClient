@@ -69,7 +69,7 @@ public:
                 input.value()->setMidiInputName(midiInputName);
                 addMidiRouteInput(input.value());
             }
-            input.value()->createInputChainsAndRoutes(easyConfig);
+            input.value()->createEasyConfigChains(easyConfig);
 
         }
     }
