@@ -161,6 +161,7 @@ public slots:
                 DELETE_IF_NOT_MET_CONDITION,
                 channelFilter, eventFilter, data1Filter, data2Filter
                 );
+            qDebug()<<"***EASY CONFIG FILTER "<<channelFilter<<eventFilter<<data1Filter<<data2Filter;
         }
 
         addFilterMidiDestination(toDestinationName);
