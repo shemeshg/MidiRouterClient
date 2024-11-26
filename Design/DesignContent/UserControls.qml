@@ -2,7 +2,7 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
-import QtQuick.Controls
+
 
 ColumnLayout {            
     Layout.fillWidth: true
@@ -23,12 +23,13 @@ ColumnLayout {
             Layout.fillWidth: true
             model: Constants.balData.midiClientConnection.userDataConfig.dropdownlists
 
-            RowLayout {
+            RowLayout {                
                 CoreLabel {
-                    text:   modelData.name
+
+                    text:   modelData.name // qmllint disable
                 }
                 CoreTextArea {
-                    text:  modelData.data
+                    text:  modelData.data // qmllint disable
                 }
             }
         }

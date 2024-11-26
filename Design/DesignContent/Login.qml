@@ -2,7 +2,7 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
-import QtQuick.Controls
+
 
 ColumnLayout {
             id: login
@@ -139,9 +139,11 @@ ColumnLayout {
             }
 
             FormGroupBox {
+
                 Layout.margins: Constants.font.pixelSize
                 title: qsTr("<h3>Server</h3>")
                 body: ColumnLayout {
+                    id: formGroupBoxServerBody
                     function doServerStart() {
                         let port = isAutoPort.checked ? 0 : Number(
                                                             serverPortNumber.text)
@@ -173,7 +175,7 @@ ColumnLayout {
                                          || isAutoPort.checked)
 
                             onClicked: {
-                                doServerStart()
+                                formGroupBoxServerBody.doServerStart()
                             }
                         }
                         Item {
@@ -186,7 +188,7 @@ ColumnLayout {
                             onToggled: {
                                 Constants.balData.saveIsAutoStartServer(checked)
                                 if (checked) {
-                                    doServerStart()
+                                    formGroupBoxServerBody.doServerStart()
                                 }
                             }
                         }
