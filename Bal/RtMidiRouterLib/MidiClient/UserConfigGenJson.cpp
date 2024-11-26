@@ -48,6 +48,7 @@ QJsonArray UserConfigGenJson::getMidiRoutePresets(UserDataConfig *userDataConfig
     int i=0;
     for (const auto &itm: userDataConfig->midiRoutePresets()){
         QJsonObject obj;
+        itm->recreateEasyConfig();
         obj["name"] = itm->name();
         obj["uuid"] = itm->uuid();
         obj["isEnabled"] = (i == userDataConfig->activePresetID());

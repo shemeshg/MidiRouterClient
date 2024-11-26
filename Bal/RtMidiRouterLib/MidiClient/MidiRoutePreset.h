@@ -58,7 +58,7 @@ public:
 
     void recreateEasyConfig(){
         for ( MidiRouteInput *input: m_midiRouteInputs){
-            input->clearMidiRouterChains();
+            input->clearEasyConfigMidiRouterChains();
         }
 
         for (EasyConfig *easyConfig: m_easyConfig){

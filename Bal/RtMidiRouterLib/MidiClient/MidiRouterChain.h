@@ -80,7 +80,7 @@ public slots:
         QString channelFilter = "[[0, 16, 0]]";
         if (easyConfigRoute->fromChannel() != -1) {
             isAllDefault = false;
-            channelFilter = QString{"[[{0}, {1}]]"}
+            channelFilter = QString{"[[%0, %1]]"}
                                 .arg(easyConfigRoute->fromChannel())
                                 .arg(easyConfigRoute->toChannel());
         }
@@ -91,12 +91,12 @@ public slots:
                     easyConfigRoute->toSelectedMidiEventTypeId() &&
                 easyConfigRoute->toSelectedMidiEventTypeId() ==
                     (int)EasyConfig::DropdownMidiEventTypeEnum::noteOnOf) {
-                eventFilter = QString{"[[{0}], [{1}]]"}
+                eventFilter = QString{"[[%0], [%1]]"}
                                   .arg((int)EasyConfig::EventTypes::noteoff)
                                   .arg((int)EasyConfig::EventTypes::noteon);
             } else {
                 eventFilter =
-                    QString{"[[{0}], [{1}]]"}
+                    QString{"[[%0], [%1]]"}
                         .arg((int)easyConfig->dropdownMidiEventTypeEnum
                                  [(EasyConfig::DropdownMidiEventTypeEnum)
                                   easyConfigRoute->fromSelectedMidiEventTypeId()])
@@ -123,31 +123,31 @@ public slots:
             sortUniq(keyboardSplits);
             int fromKey = keyboardSplits.at(splitRangeId);
             int toKey = keyboardSplits.at(splitRangeId + 1);
-            data1Filter = QString{"[[{0}, {1}, {2}]]"}.arg(
+            data1Filter = QString{"[[%0, %1, %2]]"}.arg(
                 fromKey, toKey, fromKey + easyConfigRoute->transpose());
         } else {
             data1Filter =
-                QString{"[[0, 127, {0}]]"}.arg(0 + easyConfigRoute->transpose());
+                QString{"[[0, 127, %0]]"}.arg(0 + easyConfigRoute->transpose());
         }
 
         if (easyConfigRoute->fromData1() != -1) {
             if (easyConfigRoute->toData1() == -1) {
-                data1Filter = QString{"[[{0}]]"}.arg(easyConfigRoute->fromData1());
+                data1Filter = QString{"[[%0]]"}.arg(easyConfigRoute->fromData1());
             } else {
-                data1Filter = QString{"[[{0}, {1}]]"}
+                data1Filter = QString{"[[%0, %1]]"}
                                   .arg(easyConfigRoute->fromData1())
                                   .arg(easyConfigRoute->toData1());
             }
         }
         if (easyConfigRoute->fromData1() != -1 &&
             easyConfigRoute->toData1() != -1) {
-            data1Filter = QString{"[[{0} {1}]]"}
+            data1Filter = QString{"[[%0 %1]]"}
                               .arg(easyConfigRoute->fromData1())
                               .arg(easyConfigRoute->toData1());
         }
         if (easyConfigRoute->fromData1() != -1 ||
             easyConfigRoute->toData1() != -1) {
-            data2Filter = QString{"[[{0}, {1}, {2}, {3}]]"}
+            data2Filter = QString{"[[%0, %1, %2, %3]]"}
                               .arg(easyConfigRoute->fromCcOrNrpnStart())
                               .arg(easyConfigRoute->fromCcOrNrpnEnd())
                               .arg(easyConfigRoute->toCcOrNrpnStart())
