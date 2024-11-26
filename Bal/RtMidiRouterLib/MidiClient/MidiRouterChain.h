@@ -66,6 +66,7 @@ public slots:
                     filterEvents,  filterData1,  filterData2 );
         m_midiRoutersFilters.append(QVariant::fromValue(f));
     }
+
 signals:
 
 

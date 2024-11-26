@@ -56,6 +56,24 @@ public:
         emit easyConfigChanged();
     }
 
+    void recreateEasyConfig(){
+        for ( MidiRouteInput *input: m_midiRouteInputs){
+            input->clearMidiRouterChains();
+        }
+
+        for (EasyConfig *easyConfig: m_easyConfig){
+            auto const midiInputName = easyConfig->midiInputName();
+            std::optional<MidiRouteInput*> input  = getInputForEasyConfig(midiInputName);
+            if (!input){
+                input = new MidiRouteInput();
+                input.value()->setMidiInputName(midiInputName);
+                addMidiRouteInput(input.value());
+            }
+            input.value()->createInputChainsAndRoutes(easyConfig);
+
+        }
+    }
+
     void addUserControl( UserControl *entry ){
         m_userControls.push_back(entry);
         emit userControlsChanged();
@@ -77,5 +95,13 @@ signals:
 
 
 private:
+    std::optional<MidiRouteInput *> getInputForEasyConfig(QString midiInputName) {
+        for (MidiRouteInput *input : m_midiRouteInputs) {
+            if (input->midiInputName() == midiInputName) {
+                return input;
+            }
+        }
 
+        return std::nullopt;
+    }
 };
