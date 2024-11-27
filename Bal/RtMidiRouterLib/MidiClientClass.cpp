@@ -43,7 +43,7 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
             midiClientConnection.setServerStatusText("Running " + serverName + " "
                                                      + QString::number(portNumber));
 
-            userDataChanges();
+            runUserDataChanges();
 
             QPointer<CWebChannelConnection> wcuserdataCallbacks;
             wcuserdataCallbacks = qwebsocketClient->connect("wcuserdata", "userDataChanges");
@@ -99,13 +99,19 @@ void MidiClientClass::invokeMethod(const QString &object,
     }
 }
 
-void MidiClientClass::userDataChanges(){
+void MidiClientClass::userDataChanges(const QJsonArray& message){
+    midiClientConnection.userDataConfig()->resetUserDataConfig(message);
+}
+
+void MidiClientClass::runUserDataChanges(){
+
     auto resopnse1 = qwebsocketClient->invokeMethod("wcuserdata", "getJon", {});
     resopnse1->connect(resopnse1, &CWebChannelResponse::result, [=](const QJsonValue& message)
             {
                 midiClientConnection.userDataConfig()->resetUserDataConfig(message);
             });
 }
+
 
 void MidiClientClass::dataToClient(const QJsonArray& message)
 {

@@ -31,7 +31,7 @@ public:
 
 
 private slots:
-    void userDataChanges();
+    void userDataChanges(const QJsonArray& message);
     void dataToClient(const QJsonArray &message);
 
 private:
@@ -42,5 +42,5 @@ private:
     std::unique_ptr<CWebChannelClient> qwebsocketClient = std::unique_ptr<CWebChannelClient>(
         new CWebChannelClient(qwebsocket.get()));
 
-
+    void runUserDataChanges();
 };
