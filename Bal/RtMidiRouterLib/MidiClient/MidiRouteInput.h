@@ -56,6 +56,14 @@ public:
         }
     }
 
+    void addMonitorEasyConfigIfRequired(){
+        if (monitor()->isMonitored()){
+            MidiRouterChain *midiRouterChain = new MidiRouterChain();
+            midiRouterChain->addEasyConfigMonitor();
+            addMidiRouterChains(midiRouterChain);
+        }
+    }
+
     void clearMidiRouterChains() {
         for (MidiRouterChain *item : m_midiRouterChains) {
             delete item;

@@ -53,6 +53,14 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
                 &MidiClientClass::userDataChanges);
 
 
+            QPointer<CWebChannelConnection> dataToClientCallback;
+            dataToClientCallback = qwebsocketClient->connect("wcmidiin", "dataToClient");
+
+            connect(dataToClientCallback,
+                    &CWebChannelConnection::signal,
+                    this,
+                    &MidiClientClass::dataToClient);
+
 
             // End testing
         } else {
@@ -98,3 +106,9 @@ void MidiClientClass::userDataChanges(){
                 midiClientConnection.userDataConfig()->resetUserDataConfig(message);
             });
 }
+
+void MidiClientClass::dataToClient(const QJsonArray& message)
+{
+    qDebug()<<"Monitoring works"<<message;
+}
+

@@ -38,6 +38,7 @@ private:
     QJsonObject getMidiRouteClock(MidiRouteInput *midiRouteInput);
 
     QJsonObject getIgnoreTypes(MidiRouteInput *midiRouteInput);
+    QJsonObject getMonitor(MidiRouteInput *midiRouteInput);
 
     QJsonArray getMidiRouterChains(MidiRouteInput *midiRouteInput);
 

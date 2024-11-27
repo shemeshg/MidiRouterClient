@@ -181,6 +181,13 @@ QJsonObject UserConfigGenJson::getIgnoreTypes(MidiRouteInput *midiRouteInput)
     return ignoreTypes;
 }
 
+
+QJsonObject UserConfigGenJson::getMonitor(MidiRouteInput *midiRouteInput){
+    QJsonObject monitor;
+    monitor["isMonitored"] = midiRouteInput->monitor()->isMonitored();
+    return monitor;
+}
+
 QJsonArray UserConfigGenJson::getMidiRouterChains(MidiRouteInput *midiRouteInput)
 {
     QJsonArray midiRouterChains;
@@ -254,7 +261,7 @@ QJsonObject UserConfigGenJson::getMidiRouteInput(MidiRouteInput *midiRouteInput)
     obj["ignoreTypes"] = getIgnoreTypes(midiRouteInput);
     obj["midiRouteClock"] = getMidiRouteClock(midiRouteInput);
     obj["cc14bitAry"] = getCc14bitAry(midiRouteInput);
-
+    obj["monitor"] = getMonitor(midiRouteInput);
 
     obj["midiRouterChains"] = getMidiRouterChains(midiRouteInput);
 

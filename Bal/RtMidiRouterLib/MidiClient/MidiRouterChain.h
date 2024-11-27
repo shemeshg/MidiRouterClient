@@ -7,6 +7,8 @@
 #include "FilterToConsle.h"
 #include "MidiRouterChainPrivate.h"
 #include "MidiRoutersFilter.h"
+#include <QtCore/qjsondocument.h>
+#include <QtCore/qjsonobject.h>
 
 
 class MidiRouterChain : public MidiRouterChainPrivate
@@ -66,6 +68,13 @@ public slots:
         f->setFilter( name,  conditionAction,  filterChannel,
                     filterEvents,  filterData1,  filterData2 );
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+    }
+
+    void addEasyConfigMonitor(){
+        QJsonObject obj;
+        obj["action"] = "monitor";
+        QJsonDocument doc{obj};
+        addFilterToConsole(FilterToConsole::LogTo::CLIENT,doc.toJson());
     }
 
     void setEasyConfigChain(EasyConfig *easyConfig,EasyConfigRoute *easyConfigRoute){
