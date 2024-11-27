@@ -85,6 +85,14 @@ Window {
             }
         }
 
+        Component {
+            id: monitorsId
+            Monitor {
+            }
+        }
+
+
+
         Item {
             Layout.fillHeight: true
         }
@@ -121,6 +129,12 @@ Window {
                 name: "InPorts"
                 when: headerBarId.state === "InPorts"
                 PropertyChanges { target: loaderId; sourceComponent: inPortsId }
+            }
+            ,
+            State {
+                name: "Monitor"
+                when: headerBarId.state === "Monitor"
+                PropertyChanges { target: loaderId; sourceComponent: monitorsId }
             }
         ]
     }
