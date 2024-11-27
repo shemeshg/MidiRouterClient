@@ -70,7 +70,10 @@ add_library(midiClient STATIC
     FilterAndTransformPrivate.cpp
     UserConfigParseJson.h UserConfigParseJson.cpp
     UserConfigGenJson.h UserConfigGenJson.cpp
-
+    Monitor.cpp
+    Monitor.h
+    MonitorPrivate.cpp
+    MonitorPrivate.h
 
 )
 

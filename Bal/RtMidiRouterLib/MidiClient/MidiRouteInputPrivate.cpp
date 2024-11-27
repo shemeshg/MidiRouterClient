@@ -25,4 +25,5 @@ void MidiRouteInputPrivate::ctorClass() {
      m_midiRouteClockTimeSig = 4;
     m_midiRouteClockTimeSigDivBy = 4;
     m_midiRouteClockFromSppPos = 0;
+    m_monitor = new Monitor();
 }

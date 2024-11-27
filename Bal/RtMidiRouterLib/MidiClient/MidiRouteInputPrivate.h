@@ -2,6 +2,7 @@
 
 #include "MidiRouteInputCc14bit.h"
 #include "MidiRouterChain.h"
+#include "Monitor.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
@@ -28,6 +29,7 @@ class MidiRouteInputPrivate : public QObject
     Q_PROPERTY(QStringList midiRouteClockPropegateInputs READ midiRouteClockPropegateInputs WRITE setMidiRouteClockPropegateInputs NOTIFY midiRouteClockPropegateInputsChanged )
     Q_PROPERTY(QList<MidiRouteInputCc14bit *> midiRouteInputCc14bit READ midiRouteInputCc14bit  NOTIFY midiRouteInputCc14bitChanged )
     Q_PROPERTY(QList<MidiRouterChain *> midiRouterChains READ midiRouterChains  NOTIFY midiRouterChainsChanged )
+    Q_PROPERTY(Monitor * monitor READ monitor  NOTIFY monitorChanged )
     
     QML_ELEMENT
 public:
@@ -139,6 +141,10 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     QList<MidiRouterChain *> midiRouterChains() const{return m_midiRouterChains;} 
     
 
+    
+    Monitor * monitor() const{return m_monitor;} 
+    
+
 
 signals:
     void midiInputNameChanged();
@@ -151,11 +157,13 @@ signals:
     void midiRouteClockPropegateInputsChanged();
     void midiRouteInputCc14bitChanged();
     void midiRouterChainsChanged();
+    void monitorChanged();
     
 
 protected:
     QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit;
     QList<MidiRouterChain *> m_midiRouterChains;
+    Monitor * m_monitor;
     
 
 private:

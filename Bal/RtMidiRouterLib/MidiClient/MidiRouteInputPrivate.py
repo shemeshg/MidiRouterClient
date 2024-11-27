@@ -13,7 +13,9 @@ ary = [
     create_prpt("int", 'midiRouteClockFromSppPos'),
     create_prpt("QStringList", 'midiRouteClockPropegateInputs'),
     create_prpt("QList<MidiRouteInputCc14bit *>", 'midiRouteInputCc14bit', is_writable=False),
-    create_prpt("QList<MidiRouterChain *>", 'midiRouterChains', is_writable=False)
+    create_prpt("QList<MidiRouterChain *>", 'midiRouterChains', is_writable=False),
+    create_prpt("Monitor *", 'monitor', is_writable=False)
+
 ]
 
 enumClasss = []
