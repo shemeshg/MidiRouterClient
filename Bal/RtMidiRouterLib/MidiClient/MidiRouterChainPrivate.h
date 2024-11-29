@@ -19,6 +19,7 @@ class MidiRouterChainPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
     Q_PROPERTY(bool isEasyConfig READ isEasyConfig WRITE setIsEasyConfig NOTIFY isEasyConfigChanged )
+    Q_PROPERTY(bool isRunForPresetOnAndOff READ isRunForPresetOnAndOff WRITE setIsRunForPresetOnAndOff NOTIFY isRunForPresetOnAndOffChanged )
     Q_PROPERTY(QList<QVariant> midiRoutersFilters READ midiRoutersFilters  NOTIFY midiRoutersFiltersChanged )
     
     QML_ELEMENT
@@ -52,6 +53,18 @@ void setIsEasyConfig(const bool newIsEasyConfig)
 
 
     
+    bool isRunForPresetOnAndOff() const{return m_isRunForPresetOnAndOff;} 
+    
+void setIsRunForPresetOnAndOff(const bool newIsRunForPresetOnAndOff)
+    {
+        if (m_isRunForPresetOnAndOff == newIsRunForPresetOnAndOff)
+            return;
+        m_isRunForPresetOnAndOff = newIsRunForPresetOnAndOff;
+        emit isRunForPresetOnAndOffChanged();
+    }
+
+
+    
     QList<QVariant> midiRoutersFilters() const{return m_midiRoutersFilters;} 
     
 
@@ -59,6 +72,7 @@ void setIsEasyConfig(const bool newIsEasyConfig)
 signals:
     void nameChanged();
     void isEasyConfigChanged();
+    void isRunForPresetOnAndOffChanged();
     void midiRoutersFiltersChanged();
     
 
@@ -69,6 +83,7 @@ protected:
 private:
     QString m_name;
     bool m_isEasyConfig;
+    bool m_isRunForPresetOnAndOff;
     
     void ctorClass();
 };

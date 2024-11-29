@@ -81,6 +81,12 @@ QJsonArray UserConfigGenJson::getMidiRoutePresets(UserDataConfig *userDataConfig
         obj["midiRouteInputs"] = getMidiRouteInputs(itm->midiRouteInputs());
         obj["userControls"] = getUserControls(itm->userControls());
         obj["easyConfig"] = getEasyConfig(itm->easyConfig());
+        //DUMMY DELETE
+        QJsonArray dummyAry;
+        QJsonObject dummyObj;
+        dummyObj["jsToServers"] = dummyAry;
+        obj["jsRouter"] = dummyObj;
+        //END DUMMY DELETE
         ary.append(obj);
     }
     return ary;
@@ -217,6 +223,7 @@ QJsonArray UserConfigGenJson::getMidiRouterChains(MidiRouteInput *midiRouteInput
         QJsonObject midiRouterChainObj;
         midiRouterChainObj["name"] = midiRouterChain->name();
         midiRouterChainObj["isEasyConfig"] = midiRouterChain->isEasyConfig();
+        midiRouterChainObj["isRunForPresetOnAndOff"] = midiRouterChain->isRunForPresetOnAndOff();
         midiRouterChainObj["midiRoutersFilters"] = getMidiRoutersFilters(midiRouterChain->midiRoutersFilters());
         midiRouterChains.append(midiRouterChainObj);
     }

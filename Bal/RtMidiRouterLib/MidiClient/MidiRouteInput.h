@@ -66,6 +66,7 @@ public:
     }
 
     void addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs){
+        qDebug()<<"midiPresetControlEasyConfigs";
         for (const auto &m: midiPresetControlEasyConfigs){
             if (m.pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();

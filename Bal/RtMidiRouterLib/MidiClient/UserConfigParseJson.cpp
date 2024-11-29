@@ -2,7 +2,8 @@
 
 
 
-void UserConfigParseJson::setChanges(UserDataConfig *userDataConfig, QJsonDocument &jsonDoc){
+void UserConfigParseJson::setChanges(UserDataConfig *userDataConfig, QJsonObject &jsonDoc){
+    qDebug()<<"setChanges "<<jsonDoc;
     updateVirtualInPorts(userDataConfig,jsonDoc["virtualInPorts"]);
 
     if (jsonDoc["_activePresetID"].isDouble()) {

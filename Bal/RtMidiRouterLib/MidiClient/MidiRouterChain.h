@@ -113,6 +113,7 @@ public slots:
     }
     void addEasyConfigPresetLogOnOff(QString presetUuid, bool isMidiControlOn){
         setIsEasyConfig(true);
+        setIsRunForPresetOnAndOff(true);
         QJsonObject obj;
         obj["action"] = "presetOnOff";
         obj["presetUuid"] = presetUuid;

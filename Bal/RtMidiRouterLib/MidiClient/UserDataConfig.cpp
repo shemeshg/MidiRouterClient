@@ -60,10 +60,20 @@ UserDataConfig::UserDataConfig(QObject *parent)
 }
 
 void UserDataConfig::resetUserDataConfig(const QJsonValue &jsonData){
-    QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
-    if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
+
+    //QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
+    //if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
 
         UserConfigParseJson userConfigParseJson;
-        userConfigParseJson.setChanges(this, jsonDoc);
-    }
+    QJsonObject j;
+        if (jsonData.isArray()){
+             QJsonArray a = jsonData.toArray();
+            j = a[0].toObject();
+        } else {
+
+            j = jsonData.toObject();
+        }
+        userConfigParseJson.setChanges(this, j);
+
+    //}
 }

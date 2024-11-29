@@ -12,7 +12,7 @@ public:
 
     }
 
-    void setChanges(UserDataConfig *userDataConfig, QJsonDocument &jsonDoc);
+    void setChanges(UserDataConfig *userDataConfig, QJsonObject &jsonDoc);
 
 private:
     void updateVirtualInPorts(UserDataConfig *userDataConfig, const QJsonValue &virtualInPorts);
