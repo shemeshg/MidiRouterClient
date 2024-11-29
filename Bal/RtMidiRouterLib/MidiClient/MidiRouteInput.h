@@ -69,36 +69,8 @@ public:
         for (const auto &m: midiPresetControlEasyConfigs){
             if (m.pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();
-                midiRouterChain->setName("EasyConfig");
-                midiRouterChain->setIsEasyConfig(true);
-                EasyConfigRoute ecr{};
-                ecr.setFromChannel(m.pmc->channel());
-                ecr.setToChannel(m.pmc->channel());
-                ecr.setFromSelectedMidiEventTypeId(m.pmc->eventTypeId());
-                ecr.setToSelectedMidiEventTypeId(m.pmc->eventTypeId());
-                ecr.setFromData1(m.pmc->data1());
-                if (m.pmc->data2()!= -1){
-                    ecr.setFromCcOrNrpnStart(m.pmc->data2());
-                    ecr.setFromCcOrNrpnEnd(m.pmc->data2());
-                    ecr.setToCcOrNrpnStart(m.pmc->data2());
-                    ecr.setToCcOrNrpnEnd(m.pmc->data2());
-                }
-                auto easyConfigRouteFilter = ecr.getEasyConfigRouteFilter({});
-
-                if (!easyConfigRouteFilter.isAllDefault) {
-                    midiRouterChain->addFilterAndTransform(
-                        "EasyConfig",
-                        FilterAndTransform::ConditionAction::
-                        DELETE_IF_NOT_MET_CONDITION,
-                        easyConfigRouteFilter.channelFilter,
-                        easyConfigRouteFilter.eventFilter,
-                        easyConfigRouteFilter.data1Filter,
-                        easyConfigRouteFilter.data2Filter
-                        );
-
-                }
-
-                ADD Preset change
+                midiRouterChain->addEasyConfigPresetFilter(m);
+                midiRouterChain->addEasyConfigPresetLogOnOff(m.pmc->presetUuid(), m.isMidiControlOn);
                 addMidiRouterChains(midiRouterChain);
             }
         }
