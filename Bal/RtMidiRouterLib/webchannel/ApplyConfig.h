@@ -90,10 +90,7 @@ private:
                 if (midiRoutePreset.isObject()) {
                     auto midiRoutePresetObj = midiRoutePreset.toObject();
                     bool isEnabled = midiRoutePresetObj["isEnabled"].toBool();
-                    if (isEnabled) {
-                        qDebug() << "TODO midiControlOff, check OFF iNports exists";
-                        setMidiRouteInputs(midiRoutePresetObj, isEnabled);
-                    }
+                    setMidiRouteInputs(midiRoutePresetObj, isEnabled);
                 }
             }
         }
