@@ -2,6 +2,7 @@
 #include "EasyConfig.h"
 #include "MidiClientUtil.h"
 #include "MidiRoutePresetPrivate.h"
+#include "MidiPresetControlEasyConfig.h"
 
 class MidiRoutePreset : public MidiRoutePresetPrivate
 
@@ -56,10 +57,11 @@ public:
         emit easyConfigChanged();
     }
 
-    void recreateEasyConfig(){
+    void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs){
         for ( MidiRouteInput *input: m_midiRouteInputs){
             input->clearEasyConfigMidiRouterChains();
             input->addMonitorEasyConfigIfRequired();
+            input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs);
         }
 
         for (EasyConfig *easyConfig: m_easyConfig){

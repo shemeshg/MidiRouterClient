@@ -71,11 +71,25 @@ public slots:
     }
 
     void addEasyConfigMonitor(){
+        setIsEasyConfig(true);
         QJsonObject obj;
         obj["action"] = "monitor";
         QJsonDocument doc{obj};
         addFilterToConsole(FilterToConsole::LogTo::CLIENT,doc.toJson());
     }
+
+
+    void addEasyConfigPresetLogOnOff(QString presetUuid, bool isMidiControlOn){
+        setIsEasyConfig(true);
+        QJsonObject obj;
+        obj["action"] = "presetOnOff";
+        obj["presetUuid"] = presetUuid;
+        obj["isMidiControlOn"] = isMidiControlOn;
+        QJsonDocument doc{obj};
+        addFilterToConsole(FilterToConsole::LogTo::SERVER,doc.toJson());
+    }
+
+
 
     void setEasyConfigChain(EasyConfig *easyConfig,EasyConfigRoute *easyConfigRoute){
         setName("EasyConfig");

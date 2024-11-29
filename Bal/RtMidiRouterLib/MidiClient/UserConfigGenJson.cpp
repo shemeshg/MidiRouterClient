@@ -1,5 +1,5 @@
 #include "UserConfigGenJson.h"
-
+#include "MidiPresetControlEasyConfig.h"
 
 
 QJsonObject UserConfigGenJson::getJson(UserDataConfig *userDataConfig){
@@ -43,15 +43,38 @@ QJsonArray UserConfigGenJson::getListToJMidiInsonAry(const QStringList &sl){
     return ary;
 }
 
+
+
+
+QList<MidiPresetControlEasyConfig> UserConfigGenJson::getMidiPresetControlEasyConfigs(UserDataConfig *userDataConfig)
+{
+    QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
+    for (const auto &itm: userDataConfig->midiRoutePresets()){
+        MidiPresetControlEasyConfig m;
+        if (itm->isEnabled()){
+            m.pmc = itm->midiControlOff();
+            m.isMidiControlOn = false;
+            midiPresetControlEasyConfigs.append(m);
+        } else {
+            m.pmc = itm->midiControlOn();
+            m.isMidiControlOn = true;
+            midiPresetControlEasyConfigs.append(m);
+        }
+    }
+    return midiPresetControlEasyConfigs;
+}
+
 QJsonArray UserConfigGenJson::getMidiRoutePresets(UserDataConfig *userDataConfig){
+
+
     QJsonArray ary;
-    int i=0;
     for (const auto &itm: userDataConfig->midiRoutePresets()){
         QJsonObject obj;
-        itm->recreateEasyConfig();
+        auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( userDataConfig);
+        itm->recreateEasyConfig(presetControlEasyConfigs);
         obj["name"] = itm->name();
         obj["uuid"] = itm->uuid();
-        obj["isEnabled"] = (i == userDataConfig->activePresetID());
+        obj["isEnabled"] = itm->isEnabled();
         obj["isSendAllUserControls"] = itm->isSendAllUserControls();
         obj["midiControlOn"] = getModiControlOnOff(itm->midiControlOn());
         obj["midiControlOff"] = getModiControlOnOff(itm->midiControlOff());
@@ -59,7 +82,6 @@ QJsonArray UserConfigGenJson::getMidiRoutePresets(UserDataConfig *userDataConfig
         obj["userControls"] = getUserControls(itm->userControls());
         obj["easyConfig"] = getEasyConfig(itm->easyConfig());
         ary.append(obj);
-        i++;
     }
     return ary;
 }

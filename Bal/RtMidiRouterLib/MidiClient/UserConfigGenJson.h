@@ -51,8 +51,7 @@ private:
     QJsonArray getUserControls(QList<UserControl *> userControls);
 
 
-
-
+    QList<MidiPresetControlEasyConfig> getMidiPresetControlEasyConfigs(UserDataConfig *userDataConfig);
 };
 
 #endif // USERCONFIGGENJSON_H

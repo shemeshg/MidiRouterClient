@@ -74,6 +74,7 @@ add_library(midiClient STATIC
     Monitor.h
     MonitorPrivate.cpp
     MonitorPrivate.h
+    MidiPresetControlEasyConfig.h
 
 )
 
