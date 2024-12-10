@@ -22,6 +22,13 @@ public:
     }
 
     Q_INVOKABLE QVariant getJon(){
+        auto json = userdata.toJsonObject();
+        QStringList inPorts=getMapStringVal(wcmidiin->getPorts());
+        QStringList outPorts=getMapStringVal(wcmidiout->getPorts());
+
+        json["connectedInPorts"] = QJsonArray::fromStringList(inPorts);
+        json["connectedOutPorts"] = QJsonArray::fromStringList(outPorts);
+        userdata = json.toVariantMap();
         return userdata;
 
     }
@@ -42,6 +49,14 @@ signals:
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
+
+    QStringList getMapStringVal(QVariantMap map){
+        QStringList list;
+        for (auto it = map.begin(); it != map.end(); ++it) {
+            list.append(it.value().toString());
+        }
+        return list;
+    }
 };
 
 

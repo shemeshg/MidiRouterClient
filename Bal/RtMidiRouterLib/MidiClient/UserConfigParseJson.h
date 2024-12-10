@@ -45,6 +45,7 @@ private:
     QStringList convertToQStringList(const QJsonArray &array);
 
     EasyConfigRoute* createEasyConfigRoute(const QJsonObject &value);
+    QStringList stringListFromJsonAry(const QJsonValue &j);
 };
 
 #endif // USERCONFIGPARSEJSON_H

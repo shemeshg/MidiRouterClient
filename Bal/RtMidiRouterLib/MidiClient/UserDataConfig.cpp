@@ -75,5 +75,4 @@ void UserDataConfig::resetUserDataConfig(const QJsonValue &jsonData){
         }
         userConfigParseJson.setChanges(this, j);
 
-    //}
 }

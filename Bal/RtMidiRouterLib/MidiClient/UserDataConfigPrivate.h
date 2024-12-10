@@ -24,6 +24,8 @@ class UserDataConfigPrivate : public QObject
     Q_PROPERTY(QString uniqueId READ uniqueId  NOTIFY uniqueIdChanged )
     Q_PROPERTY(QStringList virtualInPorts READ virtualInPorts  NOTIFY virtualInPortsChanged )
     Q_PROPERTY(QList<MidiRoutePreset *> midiRoutePresets READ midiRoutePresets  NOTIFY midiRoutePresetsChanged )
+    Q_PROPERTY(QStringList connectedInPorts READ connectedInPorts WRITE setConnectedInPorts NOTIFY connectedInPortsChanged )
+    Q_PROPERTY(QStringList connectedOutPorts READ connectedOutPorts WRITE setConnectedOutPorts NOTIFY connectedOutPortsChanged )
     
     QML_ELEMENT
 public:
@@ -63,6 +65,30 @@ void setActivePresetID(const int newActivePresetID)
     QList<MidiRoutePreset *> midiRoutePresets() const{return m_midiRoutePresets;} 
     
 
+    
+    QStringList connectedInPorts() const{return m_connectedInPorts;} 
+    
+void setConnectedInPorts(const QStringList &newConnectedInPorts)
+    {
+        if (m_connectedInPorts == newConnectedInPorts)
+            return;
+        m_connectedInPorts = newConnectedInPorts;
+        emit connectedInPortsChanged();
+    }
+
+
+    
+    QStringList connectedOutPorts() const{return m_connectedOutPorts;} 
+    
+void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
+    {
+        if (m_connectedOutPorts == newConnectedOutPorts)
+            return;
+        m_connectedOutPorts = newConnectedOutPorts;
+        emit connectedOutPortsChanged();
+    }
+
+
 
 signals:
     void activePresetIDChanged();
@@ -70,6 +96,8 @@ signals:
     void uniqueIdChanged();
     void virtualInPortsChanged();
     void midiRoutePresetsChanged();
+    void connectedInPortsChanged();
+    void connectedOutPortsChanged();
     
 
 protected:
@@ -82,6 +110,8 @@ protected:
 
 private:
     int m_activePresetID;
+    QStringList m_connectedInPorts;
+    QStringList m_connectedOutPorts;
     
     void ctorClass();
 };

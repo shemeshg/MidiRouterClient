@@ -22,6 +22,10 @@ ColumnLayout {
         }
     }
 
+    CoreLabel {
+        text: "Connected: " + Constants.balData.midiClientConnection.userDataConfig.connectedInPorts;
+    }
+
     CoreTextArea {
         id: dummy
         wrapMode: Text.WordWrap

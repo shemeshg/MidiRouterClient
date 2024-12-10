@@ -1,6 +1,18 @@
 #include "UserConfigParseJson.h"
 
 
+QStringList UserConfigParseJson::stringListFromJsonAry(const QJsonValue &j)
+{
+    QStringList s;
+    if (j.isArray()){
+        auto array = j.toArray();
+        for (const QJsonValue &value : array) {
+            s.append(value.toString());
+        }
+    }
+    return s;
+}
+
 
 void UserConfigParseJson::setChanges(UserDataConfig *userDataConfig, QJsonObject &jsonDoc){
     qDebug()<<"setChanges "<<jsonDoc;
@@ -10,10 +22,16 @@ void UserConfigParseJson::setChanges(UserDataConfig *userDataConfig, QJsonObject
         userDataConfig->setActivePresetID(jsonDoc["_activePresetID"].toInt());
     }
 
+
+    userDataConfig->setConnectedInPorts(stringListFromJsonAry(jsonDoc["connectedInPorts"]));
+    userDataConfig->setConnectedOutPorts(stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
+
     updateDropdownlists(userDataConfig, jsonDoc["dropdownlists"]);
 
     updateMidiRoutePresets(userDataConfig, jsonDoc["midiRoutePresets"]);
 }
+
+
 
 void UserConfigParseJson::updateVirtualInPorts(UserDataConfig *userDataConfig, const QJsonValue &virtualInPorts){
     if (virtualInPorts.isArray()){
