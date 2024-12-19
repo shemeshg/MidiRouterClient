@@ -7,8 +7,7 @@ import QtQuick.Layouts
 ColumnLayout {            
     Layout.fillWidth: true
     CoreLabel {
-        text:  "User Controls: " + JSON.stringify(Constants.balData.midiClientConnection.
-                                                  userDataConfig.midiRoutePresets[0].userControls)
+        text:  "User Controls: " + JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.activePreset.userControls)
     }
 
     CoreButton {

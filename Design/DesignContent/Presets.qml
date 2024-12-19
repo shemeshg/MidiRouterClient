@@ -41,6 +41,13 @@ ColumnLayout {
                         text: "*"
                         visible: index === Constants.balData.midiClientConnection.userDataConfig.activePresetID
                     }
+                    CoreButton {
+                        text: "select"
+                        visible: index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
+                        onClicked: {
+                            Constants.balData.midiClientConnection.userDataConfig.activePresetID = index;
+                        }
+                    }
                 }
             }
 
