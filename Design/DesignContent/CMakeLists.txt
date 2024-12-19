@@ -19,6 +19,12 @@ qt6_add_qml_module(DesignContent
         "InPorts.qml"
         "FormGroupBox.qml"
         "UserControls.qml"
+        "EditPreset.qml"
+        "ListPresets.qml"
 )
+
+
+
+
 
 
