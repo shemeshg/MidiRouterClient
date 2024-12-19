@@ -59,7 +59,7 @@ ColumnLayout {
                     CoreSwitch {
                         text: "isEnabled"
                         checked: modelData.isEnabled
-                        onCheckedChanged: {
+                        onToggled: {
                             modelData.isEnabled = checked;
                         }
                     }
