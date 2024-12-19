@@ -50,8 +50,17 @@ public:
 
 public slots:
     QJsonObject getJson();
+    void setActivePreset(int id){
+        setActivePresetID(id);
+        m_activePreset = m_midiRoutePresets.at(id);
+        emit activePresetChanged();
+    }
 
-
+    void addPreset(){        
+        MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
+        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()) );
+        addMidiRoutePreset(p);               
+    }
 private:
     void loadComputerUuid();
 

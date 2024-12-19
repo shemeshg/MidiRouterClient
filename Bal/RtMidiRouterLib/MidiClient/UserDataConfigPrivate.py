@@ -10,7 +10,8 @@ ary = [
     create_prpt("QStringList", 'virtualInPorts', is_writable=False),
     create_prpt("QList<MidiRoutePreset *>", 'midiRoutePresets', is_writable=False),
     create_prpt("QStringList", 'connectedInPorts'),
-    create_prpt("QStringList", 'connectedOutPorts')
+    create_prpt("QStringList", 'connectedOutPorts'),
+    create_prpt("MidiRoutePreset *", 'activePreset', is_writable=False)
 ]
 
 enumClasss = []

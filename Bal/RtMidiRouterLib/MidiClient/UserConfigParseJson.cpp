@@ -69,6 +69,10 @@ void UserConfigParseJson::updateMidiRoutePresets(UserDataConfig *userDataConfig,
         }
 
     }
+    if (userDataConfig->midiRoutePresets().size() == 0) {
+        userDataConfig->addPreset();
+        userDataConfig->setActivePreset(0);
+    }
 }
 
 MidiRoutePreset *UserConfigParseJson::createMidiRoutePreset(UserDataConfig *userDataConfig, const QJsonValue &value) {

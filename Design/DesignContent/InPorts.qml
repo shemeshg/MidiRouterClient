@@ -23,9 +23,17 @@ ColumnLayout {
     }
 
     CoreLabel {
-        text: "Connected: " + Constants.balData.midiClientConnection.userDataConfig.connectedInPorts;
+        text: "<h1>Connected in ports</h1>";
     }
 
+    Repeater {
+        model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
+        RowLayout {
+            CoreLabel {
+                text: modelData
+            }
+        }
+    }
     CoreTextArea {
         id: dummy
         wrapMode: Text.WordWrap

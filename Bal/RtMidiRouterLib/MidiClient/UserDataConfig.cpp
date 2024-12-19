@@ -45,7 +45,7 @@ QJsonObject UserDataConfig::getJson(){
 UserDataConfig::UserDataConfig(QObject *parent)
     : UserDataConfigPrivate{parent}
 {
-    setActivePresetID(0);
+    
     loadComputerUuid();
     m_uniqueId = getUuId();
 
@@ -53,10 +53,8 @@ UserDataConfig::UserDataConfig(QObject *parent)
     m_virtualInPorts = {};
 
     clearMidiRoutePreset();
-    MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
-    p->setName("Default preset");
-    m_midiRoutePresets.push_back(p);
-    emit midiRoutePresetsChanged();
+    addPreset();
+    setActivePreset(0);
 }
 
 void UserDataConfig::resetUserDataConfig(const QJsonValue &jsonData){

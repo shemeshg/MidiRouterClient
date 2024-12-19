@@ -20,4 +20,5 @@ cog.outl(classMidiClientConnectionPrivate.getClassCpp(),
 
 void MidiClientConnectionPrivate::ctorClass() {
     m_userDataConfig = new UserDataConfig();
+
 }
