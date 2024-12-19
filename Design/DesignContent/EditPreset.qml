@@ -6,9 +6,6 @@ import QtQuick.Layouts
 ColumnLayout {
     property var editedPreset: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets[presetsLoaderId.presetIndex]
 
-
-
-
     CoreLabel {
         text: "Edit Preset " + presetsLoaderId.presetIndex
     }
@@ -20,7 +17,8 @@ ColumnLayout {
                 editedPreset.isSendAllUserControls = isSendAllUserControlsId.checked;
                 editedPreset.midiControlOn.portName = presetMidiControlOnPortNameId.currentText;
                 editedPreset.midiControlOn.eventTypeId = presetMidiControlOnEventTypeId.currentValue;
-                
+                editedPreset.midiControlOn.channel = presetMidiControlOnChannelId.currentValue;
+
                 presets.state = "ListPresets";
             }
         }
@@ -44,20 +42,19 @@ ColumnLayout {
         id: isSendAllUserControlsId
         text: "isSendAllUserControls"
         checked: editedPreset.isSendAllUserControls
-
     }
     CoreLabel {
         text: "<H2>Midi control on</h2>"
     }
-    RowLayout{
+    RowLayout {
         CoreLabel {
             text: "portName"
         }
         CoreComboBox {
-            Layout.fillWidth: true
             id: presetMidiControlOnPortNameId
+            Layout.fillWidth: true
             model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-                        
+
             Component.onCompleted: {
                 var index = model.indexOf(editedPreset.midiControlOn.portName);
                 if (index !== -1) {
@@ -67,15 +64,41 @@ ColumnLayout {
         }
     }
 
-    RowLayout{
+    RowLayout {
         CoreLabel {
-            text: "event type"
+            text: "Event"
         }
         MidiControlEventType {
             id: presetMidiControlOnEventTypeId
-            Layout.fillWidth: true  
+            Layout.fillWidth: true
             Component.onCompleted: {
-                currentIndex = editedPreset.midiControlOn.eventTypeId  
+                currentIndex = editedPreset.midiControlOn.eventTypeId;
+            }
+        }
+    }
+    RowLayout {
+        CoreLabel {
+            text: "Channel"
+        }
+        // CoreComboBox with value of -1 for text "-" and 1 to 16 for the rest
+        CoreComboBox {
+            id: presetMidiControlOnChannelId
+
+            textRole: "text"
+            valueRole: "value"
+            model: [
+                {
+                    value: -1,
+                    text: "-"
+                },
+                ...Array.from({
+                    length: 16
+                }, (_, i) => ({
+                            value: i + 1,
+                            text: (i + 1).toString()
+                        }))]
+            Component.onCompleted: {                
+                currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.channel)
             }
         }
     }
