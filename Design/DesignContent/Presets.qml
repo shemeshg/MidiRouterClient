@@ -48,6 +48,21 @@ ColumnLayout {
                             Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index);
                         }
                     }
+                    CoreButton {
+                        text: "delete"
+                        visible: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets.length > 1 && 
+                                    index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
+                        onClicked: {
+                            Constants.balData.midiClientConnection.userDataConfig.deletePreset(index);
+                        }
+                    }
+                    CoreSwitch {
+                        text: "isEnabled"
+                        checked: modelData.isEnabled
+                        onCheckedChanged: {
+                            modelData.isEnabled = checked;
+                        }
+                    }
                 }
             }
 
