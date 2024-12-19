@@ -15,6 +15,8 @@ ColumnLayout {
             text: "save"
             onClicked: {
                 editedPreset.name = nameId.text;
+                editedPreset.isSendAllUserControls = isSendAllUserControlsId.checked;
+                editedPreset.midiControlOn.portName = presetMidiControlOnPortNameId.currentText;
                 presets.state = "ListPresets";
             }
         }
@@ -32,6 +34,31 @@ ColumnLayout {
         CoreTextField {
             id: nameId
             text: editedPreset.name
+        }
+    }
+    CoreSwitch {
+        id: isSendAllUserControlsId
+        text: "isSendAllUserControls"
+        checked: editedPreset.isSendAllUserControls
+
+    }
+    CoreLabel {
+        text: "<H2>Midi control on</h2>"
+    }
+    RowLayout{
+        CoreLabel {
+            text: "portName"
+        }
+        CoreComboBox {
+            id: presetMidiControlOnPortNameId
+            model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+                        
+            Component.onCompleted: {
+                var index = model.indexOf(editedPreset.midiControlOn.portName);
+                if (index !== -1) {
+                    currentIndex = index;
+                }
+            }
         }
     }
 }
