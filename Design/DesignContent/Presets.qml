@@ -45,7 +45,7 @@ ColumnLayout {
                         text: "select"
                         visible: index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
                         onClicked: {
-                            Constants.balData.midiClientConnection.userDataConfig.activePresetID = index;
+                            Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index);
                         }
                     }
                 }
