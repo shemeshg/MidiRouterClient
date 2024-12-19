@@ -80,24 +80,9 @@ ColumnLayout {
         CoreLabel {
             text: "Channel"
         }
-        // CoreComboBox with value of -1 for text "-" and 1 to 16 for the rest
-        CoreComboBox {
+        MidiControlChannel {
             id: presetMidiControlOnChannelId
-
-            textRole: "text"
-            valueRole: "value"
-            model: [
-                {
-                    value: -1,
-                    text: "-"
-                },
-                ...Array.from({
-                    length: 16
-                }, (_, i) => ({
-                            value: i + 1,
-                            text: (i + 1).toString()
-                        }))]
-            Component.onCompleted: {                
+            Component.onCompleted: {
                 currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.channel)
             }
         }

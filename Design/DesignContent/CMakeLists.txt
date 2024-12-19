@@ -22,7 +22,10 @@ qt6_add_qml_module(DesignContent
         "EditPreset.qml"
         "ListPresets.qml"
         "MidiControlEventType.qml"
+        "MidiControlChannel.qml"
 )
+
+
 
 
 
