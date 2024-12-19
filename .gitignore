@@ -83,3 +83,4 @@ Design/qds.cmake
 .qmlls.ini
 Design-Debug/
 Design/App/autogen/
+.vscode/
