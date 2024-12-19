@@ -14,6 +14,8 @@ cog.outl(classPresetMidiControlPrivate.getClassCpp(),
     : QObject(parent)
 {
     m_channel = -1;
+    m_data1 = -1;
+    m_data2 = -1;
     ctorClass();
 }
 
