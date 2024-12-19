@@ -7,6 +7,8 @@ ColumnLayout {
     property var editedPreset: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets[presetsLoaderId.presetIndex]
 
 
+
+
     CoreLabel {
         text: "Edit Preset " + presetsLoaderId.presetIndex
     }
@@ -17,6 +19,8 @@ ColumnLayout {
                 editedPreset.name = nameId.text;
                 editedPreset.isSendAllUserControls = isSendAllUserControlsId.checked;
                 editedPreset.midiControlOn.portName = presetMidiControlOnPortNameId.currentText;
+                editedPreset.midiControlOn.eventTypeId = presetMidiControlOnEventTypeId.currentValue;
+                
                 presets.state = "ListPresets";
             }
         }
@@ -50,6 +54,7 @@ ColumnLayout {
             text: "portName"
         }
         CoreComboBox {
+            Layout.fillWidth: true
             id: presetMidiControlOnPortNameId
             model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
                         
@@ -58,6 +63,19 @@ ColumnLayout {
                 if (index !== -1) {
                     currentIndex = index;
                 }
+            }
+        }
+    }
+
+    RowLayout{
+        CoreLabel {
+            text: "event type"
+        }
+        MidiControlEventType {
+            id: presetMidiControlOnEventTypeId
+            Layout.fillWidth: true  
+            Component.onCompleted: {
+                currentIndex = editedPreset.midiControlOn.eventTypeId  
             }
         }
     }

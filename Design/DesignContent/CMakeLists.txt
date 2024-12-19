@@ -21,7 +21,10 @@ qt6_add_qml_module(DesignContent
         "UserControls.qml"
         "EditPreset.qml"
         "ListPresets.qml"
+        "MidiControlEventType.qml"
 )
+
+
 
 
 
