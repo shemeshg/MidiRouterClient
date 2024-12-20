@@ -33,48 +33,51 @@ ColumnLayout {
                 }
             }
         }
-        RowLayout {
-            CoreLabel {
-                text: "Event"
-            }
-            MidiControlEventType {
-                id: presetMidiControlOnEventTypeId
-                Layout.fillWidth: true
-                Component.onCompleted: {
-                    currentIndex = midiControl.eventTypeId;
+        ColumnLayout {
+            visible: presetMidiControlOnPortNameId.currentText !== ""
+            RowLayout {
+                CoreLabel {
+                    text: "Event"
+                }
+                MidiControlEventType {
+                    id: presetMidiControlOnEventTypeId
+                    Layout.fillWidth: true
+                    Component.onCompleted: {
+                        currentIndex = midiControl.eventTypeId;
+                    }
                 }
             }
-        }
-        RowLayout {
-            CoreLabel {
-                text: "Channel"
-            }
-            MidiControlChannel {
-                id: presetMidiControlOnChannelId
-                Component.onCompleted: {
-                    currentIndex = model.findIndex(item => item.value === midiControl.channel);
+            RowLayout {
+                CoreLabel {
+                    text: "Channel"
+                }
+                MidiControlChannel {
+                    id: presetMidiControlOnChannelId
+                    Component.onCompleted: {
+                        currentIndex = model.findIndex(item => item.value === midiControl.channel);
+                    }
                 }
             }
-        }
-        RowLayout {
-            CoreLabel {
-                text: "Data1"
-            }
-            MidiControlData {
-                id: presetMidiControlOnData1Id
-                Component.onCompleted: {
-                    currentIndex = model.findIndex(item => item.value === midiControl.data1);
+            RowLayout {
+                CoreLabel {
+                    text: "Data1"
+                }
+                MidiControlData {
+                    id: presetMidiControlOnData1Id
+                    Component.onCompleted: {
+                        currentIndex = model.findIndex(item => item.value === midiControl.data1);
+                    }
                 }
             }
-        }
-        RowLayout {
-            CoreLabel {
-                text: "Data2"
-            }
-            MidiControlData {
-                id: presetMidiControlOnData2Id
-                Component.onCompleted: {
-                    currentIndex = model.findIndex(item => item.value === midiControl.data2);
+            RowLayout {
+                CoreLabel {
+                    text: "Data2"
+                }
+                MidiControlData {
+                    id: presetMidiControlOnData2Id
+                    Component.onCompleted: {
+                        currentIndex = model.findIndex(item => item.value === midiControl.data2);
+                    }
                 }
             }
         }
