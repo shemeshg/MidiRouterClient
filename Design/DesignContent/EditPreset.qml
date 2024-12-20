@@ -18,7 +18,10 @@ ColumnLayout {
                 editedPreset.midiControlOn.portName = presetMidiControlOnPortNameId.currentText;
                 editedPreset.midiControlOn.eventTypeId = presetMidiControlOnEventTypeId.currentValue;
                 editedPreset.midiControlOn.channel = presetMidiControlOnChannelId.currentValue;
-
+                presetMidiControlOnData1Id.accepted()
+                editedPreset.midiControlOn.data1 = presetMidiControlOnData1Id.currentValue;
+                presetMidiControlOnData2Id.accepted()
+                editedPreset.midiControlOn.data2 = presetMidiControlOnData2Id.currentValue;
                 presets.state = "ListPresets";
             }
         }
@@ -87,4 +90,27 @@ ColumnLayout {
             }
         }
     }
+
+    RowLayout {
+        CoreLabel {
+            text: "Data1"
+        } 
+        MidiControlData {
+            id: presetMidiControlOnData1Id
+            Component.onCompleted: {
+                currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.data1)
+            }               
+        }
+    }
+    RowLayout {
+        CoreLabel {
+            text: "Data2"
+        } 
+        MidiControlData {
+            id: presetMidiControlOnData2Id
+            Component.onCompleted: {
+                currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.data2)
+            }               
+        }
+    }    
 }

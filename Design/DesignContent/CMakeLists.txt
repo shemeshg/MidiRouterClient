@@ -23,14 +23,5 @@ qt6_add_qml_module(DesignContent
         "ListPresets.qml"
         "MidiControlEventType.qml"
         "MidiControlChannel.qml"
+        "MidiControlData.qml"
 )
-
-
-
-
-
-
-
-
-
-
