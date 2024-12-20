@@ -12,16 +12,22 @@ ColumnLayout {
     RowLayout {
         CoreButton {
             text: "save"
+
+            function setMidiControlData(control, data) {
+                control.portName = data.presetMidiControlOnPortNameId.currentText;
+                control.eventTypeId = data.presetMidiControlOnEventTypeId.currentValue;
+                control.channel = data.presetMidiControlOnChannelId.currentValue;
+                data.presetMidiControlOnData1Id.accepted();
+                control.data1 = data.presetMidiControlOnData1Id.currentValue;
+                data.presetMidiControlOnData2Id.accepted();
+                control.data2 = data.presetMidiControlOnData2Id.currentValue;
+            }
+
             onClicked: {
                 editedPreset.name = nameId.text;
                 editedPreset.isSendAllUserControls = isSendAllUserControlsId.checked;
-                editedPreset.midiControlOn.portName = presetMidiControlOnPortNameId.currentText;
-                editedPreset.midiControlOn.eventTypeId = presetMidiControlOnEventTypeId.currentValue;
-                editedPreset.midiControlOn.channel = presetMidiControlOnChannelId.currentValue;
-                presetMidiControlOnData1Id.accepted()
-                editedPreset.midiControlOn.data1 = presetMidiControlOnData1Id.currentValue;
-                presetMidiControlOnData2Id.accepted()
-                editedPreset.midiControlOn.data2 = presetMidiControlOnData2Id.currentValue;
+                setMidiControlData(editedPreset.midiControlOn, editPresetControlOnId);
+                setMidiControlData(editedPreset.midiControlOff, editPresetControlOffId);
                 presets.state = "ListPresets";
             }
         }
@@ -49,68 +55,16 @@ ColumnLayout {
     CoreLabel {
         text: "<H2>Midi control on</h2>"
     }
-    RowLayout {
-        CoreLabel {
-            text: "portName"
-        }
-        CoreComboBox {
-            id: presetMidiControlOnPortNameId
-            Layout.fillWidth: true
-            model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-
-            Component.onCompleted: {
-                var index = model.indexOf(editedPreset.midiControlOn.portName);
-                if (index !== -1) {
-                    currentIndex = index;
-                }
-            }
-        }
+    EditPresetControl {
+        id: editPresetControlOnId
+        midiControl: editedPreset.midiControlOn
     }
 
-    RowLayout {
-        CoreLabel {
-            text: "Event"
-        }
-        MidiControlEventType {
-            id: presetMidiControlOnEventTypeId
-            Layout.fillWidth: true
-            Component.onCompleted: {
-                currentIndex = editedPreset.midiControlOn.eventTypeId;
-            }
-        }
+    CoreLabel {
+        text: "<H2>Midi control off</h2>"
     }
-    RowLayout {
-        CoreLabel {
-            text: "Channel"
-        }
-        MidiControlChannel {
-            id: presetMidiControlOnChannelId
-            Component.onCompleted: {
-                currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.channel)
-            }
-        }
+    EditPresetControl {
+        id: editPresetControlOffId
+        midiControl: editedPreset.midiControlOff
     }
-
-    RowLayout {
-        CoreLabel {
-            text: "Data1"
-        } 
-        MidiControlData {
-            id: presetMidiControlOnData1Id
-            Component.onCompleted: {
-                currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.data1)
-            }               
-        }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "Data2"
-        } 
-        MidiControlData {
-            id: presetMidiControlOnData2Id
-            Component.onCompleted: {
-                currentIndex = model.findIndex(item => item.value === editedPreset.midiControlOn.data2)
-            }               
-        }
-    }    
 }
