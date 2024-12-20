@@ -5,11 +5,16 @@ import QtQuick.Layouts
 
 ColumnLayout {
         required property var midiControl;
-        property alias presetMidiControlOnPortNameId: presetMidiControlOnPortNameId;
-        property alias presetMidiControlOnEventTypeId: presetMidiControlOnEventTypeId;
-        property alias presetMidiControlOnChannelId: presetMidiControlOnChannelId;
-        property alias presetMidiControlOnData1Id: presetMidiControlOnData1Id;
-        property alias presetMidiControlOnData2Id: presetMidiControlOnData2Id;
+
+        function setMidiControlData(control) {
+            control.portName = presetMidiControlOnPortNameId.currentText;
+            control.eventTypeId = presetMidiControlOnEventTypeId.currentValue;
+            control.channel = presetMidiControlOnChannelId.currentValue;
+            presetMidiControlOnData1Id.accepted();
+            control.data1 = presetMidiControlOnData1Id.currentValue;
+            presetMidiControlOnData2Id.accepted();
+            control.data2 = presetMidiControlOnData2Id.currentValue;
+        }
 
         RowLayout {
             CoreLabel {

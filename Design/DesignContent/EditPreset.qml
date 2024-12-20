@@ -13,21 +13,13 @@ ColumnLayout {
         CoreButton {
             text: "save"
 
-            function setMidiControlData(control, data) {
-                control.portName = data.presetMidiControlOnPortNameId.currentText;
-                control.eventTypeId = data.presetMidiControlOnEventTypeId.currentValue;
-                control.channel = data.presetMidiControlOnChannelId.currentValue;
-                data.presetMidiControlOnData1Id.accepted();
-                control.data1 = data.presetMidiControlOnData1Id.currentValue;
-                data.presetMidiControlOnData2Id.accepted();
-                control.data2 = data.presetMidiControlOnData2Id.currentValue;
-            }
+
 
             onClicked: {
                 editedPreset.name = nameId.text;
                 editedPreset.isSendAllUserControls = isSendAllUserControlsId.checked;
-                setMidiControlData(editedPreset.midiControlOn, editPresetControlOnId);
-                setMidiControlData(editedPreset.midiControlOff, editPresetControlOffId);
+                editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
+                editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
                 presets.state = "ListPresets";
             }
         }
