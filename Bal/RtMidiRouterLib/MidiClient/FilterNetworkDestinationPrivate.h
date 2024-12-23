@@ -24,7 +24,9 @@ class FilterNetworkDestinationPrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     FilterNetworkDestinationPrivate(QObject *parent = nullptr);
-    virtual ~FilterNetworkDestinationPrivate() = default;
+    virtual ~FilterNetworkDestinationPrivate() {
+        
+    }
 
     
     

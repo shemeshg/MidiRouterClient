@@ -33,7 +33,9 @@ class UserControlPrivate : public QObject
     QML_ELEMENT
 public:
     UserControlPrivate(QObject *parent = nullptr);
-    virtual ~UserControlPrivate() = default;
+    virtual ~UserControlPrivate() {
+        
+    }
 
     
 enum class EventType {

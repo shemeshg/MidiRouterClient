@@ -31,7 +31,11 @@ class UserDataConfigPrivate : public QObject
     QML_ELEMENT
 public:
     UserDataConfigPrivate(QObject *parent = nullptr);
-    virtual ~UserDataConfigPrivate() = default;
+    virtual ~UserDataConfigPrivate() {
+        clearDropdownlists();
+    clearMidiRoutePresets();
+    
+    }
 
     
     

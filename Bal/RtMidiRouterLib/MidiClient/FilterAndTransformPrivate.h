@@ -27,7 +27,9 @@ class FilterAndTransformPrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     FilterAndTransformPrivate(QObject *parent = nullptr);
-    virtual ~FilterAndTransformPrivate() = default;
+    virtual ~FilterAndTransformPrivate() {
+        
+    }
 
     
 enum class ConditionAction {

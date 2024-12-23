@@ -153,6 +153,10 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
     """)    
         return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name )
 
+    def destructot_h_file(self):
+        t = Template("""clear${field_name_initCap}();
+    """)
+        return t.substitute(field_name_initCap=self.field_name_initCap)    
 
     def public_slots_h_file(self):
         type_in_list = self.field_type.split("<")[1].split(">")[0]
@@ -227,7 +231,9 @@ class ${class_name} : public ${inhirit_from}
     QML_ELEMENT
 public:
     ${class_name}(QObject *parent = nullptr);
-    virtual ~${class_name}() = default;
+    virtual ~${class_name}() {
+        ${destructor_h_file}
+    }
 
     ${public_content}
     ${public_pointer_list}
@@ -252,6 +258,7 @@ private:
             private_content=self.get_private_content(),
             protected_content = self.get_protected_content(),
             public_pointer_list = self.get_public_pointer_list(),
+            destructor_h_file = self.get_destructor_h_file(),
             inhirit_from = self.inhirit_from)
 
     def get_q_object_content(self):
@@ -294,6 +301,14 @@ private:
             if row.is_list:
                 private_content = private_content + row.public_slots_h_file()
         return private_content
+    
+    def get_destructor_h_file(self):
+        private_content = ""
+        for row in self.prptAry:
+            if row.is_list:
+                private_content = private_content + row.destructot_h_file()
+        return private_content
+
 
 """
 ary = []

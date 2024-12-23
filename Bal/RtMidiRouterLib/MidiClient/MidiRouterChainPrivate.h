@@ -25,7 +25,9 @@ class MidiRouterChainPrivate : public QObject
     QML_ELEMENT
 public:
     MidiRouterChainPrivate(QObject *parent = nullptr);
-    virtual ~MidiRouterChainPrivate() = default;
+    virtual ~MidiRouterChainPrivate() {
+        
+    }
 
     
     

@@ -33,7 +33,9 @@ class EasyConfigRoutePrivate : public QObject
     QML_ELEMENT
 public:
     EasyConfigRoutePrivate(QObject *parent = nullptr);
-    virtual ~EasyConfigRoutePrivate() = default;
+    virtual ~EasyConfigRoutePrivate() {
+        
+    }
 
     
     

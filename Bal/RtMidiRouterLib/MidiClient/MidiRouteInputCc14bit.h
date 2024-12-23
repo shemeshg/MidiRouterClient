@@ -22,7 +22,9 @@ class MidiRouteInputCc14bit : public QObject
     QML_ELEMENT
 public:
     MidiRouteInputCc14bit(QObject *parent = nullptr);
-    virtual ~MidiRouteInputCc14bit() = default;
+    virtual ~MidiRouteInputCc14bit() {
+        
+    }
 
     
     

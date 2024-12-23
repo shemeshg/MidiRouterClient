@@ -22,7 +22,9 @@ class MidiRoutersFilter : public QObject
     QML_ELEMENT
 public:
     MidiRoutersFilter(QObject *parent = nullptr);
-    virtual ~MidiRoutersFilter() = default;
+    virtual ~MidiRoutersFilter() {
+        
+    }
 
     
 enum class FilterType {

@@ -88,7 +88,7 @@ MidiRoutePreset *UserConfigParseJson::createMidiRoutePreset(UserDataConfig *user
     if (userControls.isArray()) {
         for (const auto &userControlValue : userControls.toArray()) {
             auto userControl = createUserControl(userControlValue);
-            preset->addUserControl(userControl);
+            preset->addUserControls(userControl);
         }
     }
 
@@ -132,7 +132,7 @@ void UserConfigParseJson::updateMidiRouteInputs(MidiRoutePreset *preset, const Q
     preset->clearMidiRouteInputs();
     for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
         MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntry( it.value().toObject());
-        preset->addMidiRouteInput(midiRouteInputEntry);
+        preset->addMidiRouteInputs(midiRouteInputEntry);
     }
 }
 
@@ -259,7 +259,7 @@ EasyConfig *UserConfigParseJson::createEasyConfigEntry(const QString &key, const
         QJsonArray jsonArray = value["easyConfigRoutes"].toArray();
         for (const QJsonValue &routeValue : jsonArray) {
             EasyConfigRoute *easyConfigRoute = createEasyConfigRoute(routeValue.toObject());
-            easyConfigEntry->addEasyConfigRoute(easyConfigRoute);
+            easyConfigEntry->addEasyConfigRoutes(easyConfigRoute);
         }
     }
 

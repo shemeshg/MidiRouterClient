@@ -27,7 +27,9 @@ class PresetMidiControlPrivate : public QObject
     QML_ELEMENT
 public:
     PresetMidiControlPrivate(QObject *parent = nullptr);
-    virtual ~PresetMidiControlPrivate() = default;
+    virtual ~PresetMidiControlPrivate() {
+        
+    }
 
     
 enum class PresetMidiType {

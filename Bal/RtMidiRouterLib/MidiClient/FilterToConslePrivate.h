@@ -23,7 +23,9 @@ class FilterToConslePrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     FilterToConslePrivate(QObject *parent = nullptr);
-    virtual ~FilterToConslePrivate() = default;
+    virtual ~FilterToConslePrivate() {
+        
+    }
 
     
 enum class LogTo {

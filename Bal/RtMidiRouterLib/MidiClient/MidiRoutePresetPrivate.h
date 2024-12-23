@@ -34,7 +34,12 @@ class MidiRoutePresetPrivate : public QObject
     QML_ELEMENT
 public:
     MidiRoutePresetPrivate(QObject *parent = nullptr);
-    virtual ~MidiRoutePresetPrivate() = default;
+    virtual ~MidiRoutePresetPrivate() {
+        clearEasyConfig();
+    clearUserControls();
+    clearMidiRouteInputs();
+    
+    }
 
     
     
@@ -118,6 +123,84 @@ void setIsEnabled(const bool newIsEnabled)
     
 
     
+        void delEasyConfig(int id)
+        {
+            if (id < m_easyConfig.size())
+            {
+                delete m_easyConfig.at(id);
+                m_easyConfig.removeAt(id);
+                emit easyConfigChanged();
+            }
+        }
+
+        void addEasyConfig(EasyConfig * item)
+        {
+            m_easyConfig.push_back(item);
+            emit easyConfigChanged();
+        }
+
+        void clearEasyConfig()
+        {
+            for (const EasyConfig * item : m_easyConfig) {
+                delete item;
+            }
+            // Clear the outer list
+            m_easyConfig.clear();
+            emit easyConfigChanged();
+        }
+        
+        void delUserControls(int id)
+        {
+            if (id < m_userControls.size())
+            {
+                delete m_userControls.at(id);
+                m_userControls.removeAt(id);
+                emit userControlsChanged();
+            }
+        }
+
+        void addUserControls(UserControl * item)
+        {
+            m_userControls.push_back(item);
+            emit userControlsChanged();
+        }
+
+        void clearUserControls()
+        {
+            for (const UserControl * item : m_userControls) {
+                delete item;
+            }
+            // Clear the outer list
+            m_userControls.clear();
+            emit userControlsChanged();
+        }
+        
+        void delMidiRouteInputs(int id)
+        {
+            if (id < m_midiRouteInputs.size())
+            {
+                delete m_midiRouteInputs.at(id);
+                m_midiRouteInputs.removeAt(id);
+                emit midiRouteInputsChanged();
+            }
+        }
+
+        void addMidiRouteInputs(MidiRouteInput * item)
+        {
+            m_midiRouteInputs.push_back(item);
+            emit midiRouteInputsChanged();
+        }
+
+        void clearMidiRouteInputs()
+        {
+            for (const MidiRouteInput * item : m_midiRouteInputs) {
+                delete item;
+            }
+            // Clear the outer list
+            m_midiRouteInputs.clear();
+            emit midiRouteInputsChanged();
+        }
+        
     
 signals:
     void nameChanged();

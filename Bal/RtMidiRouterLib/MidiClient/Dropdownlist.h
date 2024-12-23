@@ -22,7 +22,9 @@ class Dropdownlist : public QObject
     QML_ELEMENT
 public:
     Dropdownlist(QObject *parent = nullptr);
-    virtual ~Dropdownlist() = default;
+    virtual ~Dropdownlist() {
+        
+    }
 
     
     

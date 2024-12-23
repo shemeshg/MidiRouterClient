@@ -24,7 +24,9 @@ class MidiClientConnectionPrivate : public QObject
     QML_ELEMENT
 public:
     MidiClientConnectionPrivate(QObject *parent = nullptr);
-    virtual ~MidiClientConnectionPrivate() = default;
+    virtual ~MidiClientConnectionPrivate() {
+        
+    }
 
     
 enum class ServerStatus {

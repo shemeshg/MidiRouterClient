@@ -34,7 +34,11 @@ class MidiRouteInputPrivate : public QObject
     QML_ELEMENT
 public:
     MidiRouteInputPrivate(QObject *parent = nullptr);
-    virtual ~MidiRouteInputPrivate() = default;
+    virtual ~MidiRouteInputPrivate() {
+        clearMidiRouteInputCc14bit();
+    clearMidiRouterChains();
+    
+    }
 
     
     
@@ -146,6 +150,58 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     
 
     
+        void delMidiRouteInputCc14bit(int id)
+        {
+            if (id < m_midiRouteInputCc14bit.size())
+            {
+                delete m_midiRouteInputCc14bit.at(id);
+                m_midiRouteInputCc14bit.removeAt(id);
+                emit midiRouteInputCc14bitChanged();
+            }
+        }
+
+        void addMidiRouteInputCc14bit(MidiRouteInputCc14bit * item)
+        {
+            m_midiRouteInputCc14bit.push_back(item);
+            emit midiRouteInputCc14bitChanged();
+        }
+
+        void clearMidiRouteInputCc14bit()
+        {
+            for (const MidiRouteInputCc14bit * item : m_midiRouteInputCc14bit) {
+                delete item;
+            }
+            // Clear the outer list
+            m_midiRouteInputCc14bit.clear();
+            emit midiRouteInputCc14bitChanged();
+        }
+        
+        void delMidiRouterChains(int id)
+        {
+            if (id < m_midiRouterChains.size())
+            {
+                delete m_midiRouterChains.at(id);
+                m_midiRouterChains.removeAt(id);
+                emit midiRouterChainsChanged();
+            }
+        }
+
+        void addMidiRouterChains(MidiRouterChain * item)
+        {
+            m_midiRouterChains.push_back(item);
+            emit midiRouterChainsChanged();
+        }
+
+        void clearMidiRouterChains()
+        {
+            for (const MidiRouterChain * item : m_midiRouterChains) {
+                delete item;
+            }
+            // Clear the outer list
+            m_midiRouterChains.clear();
+            emit midiRouterChainsChanged();
+        }
+        
     
 signals:
     void midiInputNameChanged();

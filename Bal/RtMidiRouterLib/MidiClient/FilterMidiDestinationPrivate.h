@@ -22,7 +22,9 @@ class FilterMidiDestinationPrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     FilterMidiDestinationPrivate(QObject *parent = nullptr);
-    virtual ~FilterMidiDestinationPrivate() = default;
+    virtual ~FilterMidiDestinationPrivate() {
+        
+    }
 
     
     

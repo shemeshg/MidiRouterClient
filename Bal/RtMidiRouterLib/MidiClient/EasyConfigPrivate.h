@@ -25,7 +25,10 @@ class EasyConfigPrivate : public QObject
     QML_ELEMENT
 public:
     EasyConfigPrivate(QObject *parent = nullptr);
-    virtual ~EasyConfigPrivate() = default;
+    virtual ~EasyConfigPrivate() {
+        clearEasyConfigRoutes();
+    
+    }
 
     
     
@@ -69,6 +72,32 @@ void setZoneNames(const QStringList &newZoneNames)
     
 
     
+        void delEasyConfigRoutes(int id)
+        {
+            if (id < m_easyConfigRoutes.size())
+            {
+                delete m_easyConfigRoutes.at(id);
+                m_easyConfigRoutes.removeAt(id);
+                emit easyConfigRoutesChanged();
+            }
+        }
+
+        void addEasyConfigRoutes(EasyConfigRoute * item)
+        {
+            m_easyConfigRoutes.push_back(item);
+            emit easyConfigRoutesChanged();
+        }
+
+        void clearEasyConfigRoutes()
+        {
+            for (const EasyConfigRoute * item : m_easyConfigRoutes) {
+                delete item;
+            }
+            // Clear the outer list
+            m_easyConfigRoutes.clear();
+            emit easyConfigRoutesChanged();
+        }
+        
     
 signals:
     void midiInputNameChanged();

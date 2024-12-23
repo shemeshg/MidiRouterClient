@@ -24,7 +24,9 @@ class FilterSchedulePrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     FilterSchedulePrivate(QObject *parent = nullptr);
-    virtual ~FilterSchedulePrivate() = default;
+    virtual ~FilterSchedulePrivate() {
+        
+    }
 
     
 enum class DefferedType {
