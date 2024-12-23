@@ -7,7 +7,13 @@ public:
     ApplyConfig(Webchannel::WcMidiIn *wcmidiin, Webchannel::WcMidiOut *wcmidiout)
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
+    struct DisCnctInPort {
+        QString presetUuid;
+        QString inPortName;
+    };
+
     struct DisCnctOutPort {
+        QString presetUuid;
         QString outPortName;
         QString originedInPort;
     };
@@ -25,7 +31,7 @@ public:
         inPorts = getMapStringVal(wcmidiin->getPorts());
         outPorts = getMapStringVal(wcmidiout->getPorts());
         disCnctInPorts.clear();
-        disCnctOutPort.clear();
+        disCnctOutPorts.clear();
 
         setMidiRoutePresets(json);
     }
@@ -36,8 +42,8 @@ private:
 
     QStringList inPorts;
     QStringList outPorts;
-    QStringList disCnctInPorts;
-    QList<DisCnctOutPort> disCnctOutPort;
+    QList<DisCnctInPort> disCnctInPorts;
+    QList<DisCnctOutPort> disCnctOutPorts;
 
     enum class FilterType {
         TO_MIDI_DESTINATION,
@@ -114,19 +120,29 @@ private:
                  ++it) {
                 auto midiRouteInputObj = it.value().toObject();
                 auto midiInputName = midiRouteInputObj["midiInputName"].toString();
+                
+                QString presetUuid = midiRoutePresetObj["uuid"].toString();
+                if (inPorts.contains(midiInputName)) {                    
+                    setInportSettings(midiRouteInputObj, midiInputName, isEnabled,
+                                      presetUuid);
 
-                if (inPorts.contains(midiInputName)) {
-                    setInportSettings(midiRouteInputObj, midiInputName, isEnabled);
-
-                } else if (!disCnctInPorts.contains(midiInputName)) {
-                    disCnctInPorts.append(midiInputName);
+                } 
+                else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
+                         [&midiInputName](const DisCnctInPort& port) { 
+                             return port.inPortName == midiInputName; 
+                         })) {
+                    DisCnctInPort port;
+                    port.presetUuid = presetUuid;
+                    port.inPortName = midiInputName;
+                    disCnctInPorts.append(port);
                 }
+                
             }
         }
     }
 
     void setInportSettings(QJsonObject &midiRouteInputObj,
-                           QString &midiInputName, bool isEnabled) {
+                           QString &midiInputName, bool isEnabled, QString presetUuid) {
         qDebug() << "TODO Applay input to " << midiRouteInputObj;
         int portNumber = wcmidiin->getPortNumber(midiInputName);
 
@@ -154,9 +170,10 @@ private:
                     wcmidiin->addPropegateClockPort(portNumber, outPortId);
                 } else {
                     DisCnctOutPort port;
+                    port.presetUuid = presetUuid;
                     port.originedInPort = midiInputName;
                     port.outPortName = outPortName;
-                    disCnctOutPort.append(port);
+                    disCnctOutPorts.append(port);
                 }
             }
 
