@@ -13,12 +13,13 @@ cog.outl(classPresetMidiControlPrivate.getClassCpp(),
  PresetMidiControlPrivate:: PresetMidiControlPrivate(QObject *parent)
     : QObject(parent)
 {
-    m_channel = -1;
-    m_data1 = -1;
-    m_data2 = -1;
     ctorClass();
 }
 
 //[[[end]]]
 
-void PresetMidiControlPrivate::ctorClass() {}
+void PresetMidiControlPrivate::ctorClass() {
+    m_channel = -1;
+    m_data1 = -1;
+    m_data2 = -1;
+}
