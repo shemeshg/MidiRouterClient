@@ -1,6 +1,6 @@
 #!/bin/zsh
-
-cd ..
+script_dir=$(dirname "$0")
+cd "$script_dir/.."
 if [ ! -d ".venv" ]; then
     python3 -m venv .venv
     source .venv/bin/activate
