@@ -10,7 +10,8 @@ pip install cogapp
 
 cog qt headers
 ```
-python -m cogapp -h
+cd MidiRouterClient/Bal/RtMidiRouterLib/MidiClient
+python -m cogapp -r *.h *.cpp
 cog -h
 ```
 
