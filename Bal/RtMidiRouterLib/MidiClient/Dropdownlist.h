@@ -49,7 +49,8 @@ void setData(const QString &newData)
     }
 
 
-
+    
+    
 signals:
     void nameChanged();
     void dataChanged();

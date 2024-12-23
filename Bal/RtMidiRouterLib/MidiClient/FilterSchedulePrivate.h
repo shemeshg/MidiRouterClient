@@ -56,7 +56,8 @@ void setDefferedTo(const int newDefferedTo)
     }
 
 
-
+    
+    
 signals:
     void defferedTypeChanged();
     void defferedToChanged();

@@ -119,7 +119,8 @@ void setData2(const int newData2)
     }
 
 
-
+    
+    
 signals:
     void portNameChanged();
     void presetMidiTypeChanged();

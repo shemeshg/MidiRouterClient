@@ -25,15 +25,7 @@ void UserDataConfig::clearDropdownlists()
     emit dropdownlistsChanged();
 }
 
-void UserDataConfig::clearMidiRoutePreset()
-{
-    for (const MidiRoutePreset *item : m_midiRoutePresets) {
-        delete item;
-    }
-    // Clear the outer list
-    m_midiRoutePresets.clear();
-    emit midiRoutePresetsChanged();
-}
+
 
 QJsonObject UserDataConfig::getJson(){
     UserConfigGenJson userConfigGenJson;
@@ -52,7 +44,7 @@ UserDataConfig::UserDataConfig(QObject *parent)
     clearDropdownlists();
     m_virtualInPorts = {};
 
-    clearMidiRoutePreset();
+    clearMidiRoutePresets();
     addPreset();
     setActivePreset(0);
 }

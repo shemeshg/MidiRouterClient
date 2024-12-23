@@ -117,7 +117,8 @@ void setIsEnabled(const bool newIsEnabled)
     QList<MidiRouteInput *> midiRouteInputs() const{return m_midiRouteInputs;} 
     
 
-
+    
+    
 signals:
     void nameChanged();
     void uuidChanged();

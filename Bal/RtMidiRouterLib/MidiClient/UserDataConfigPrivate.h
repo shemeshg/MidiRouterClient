@@ -94,7 +94,34 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
     MidiRoutePreset * activePreset() const{return m_activePreset;} 
     
 
+    
+        void delMidiRoutePresets(int id)
+        {
+            if (id < m_midiRoutePresets.size())
+            {
+                delete m_midiRoutePresets.at(id);
+                m_midiRoutePresets.removeAt(id);
+                emit midiRoutePresetsChanged();
+            }
+        }
 
+        void addMidiRoutePresets(MidiRoutePreset * item)
+        {
+            m_midiRoutePresets.push_back(item);
+            emit midiRoutePresetsChanged();
+        }
+
+        void clearMidiRoutePresets()
+        {
+            for (const MidiRoutePreset * item : m_midiRoutePresets) {
+                delete item;
+            }
+            // Clear the outer list
+            m_midiRoutePresets.clear();
+            emit midiRoutePresetsChanged();
+        }
+        
+    
 signals:
     void activePresetIDChanged();
     void dropdownlistsChanged();

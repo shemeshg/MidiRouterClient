@@ -197,7 +197,8 @@ void setDropdownListId(const int newDropdownListId)
     }
 
 
-
+    
+    
 signals:
     void eventTypeChanged();
     void descriptionChanged();

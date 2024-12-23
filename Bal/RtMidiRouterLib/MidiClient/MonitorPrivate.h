@@ -37,7 +37,8 @@ void setIsMonitored(const bool newIsMonitored)
     }
 
 
-
+    
+    
 signals:
     void isMonitoredChanged();
     

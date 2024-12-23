@@ -8,7 +8,7 @@ ary = [
     create_prpt("QList<Dropdownlist *>", 'dropdownlists', is_writable=False),
     create_prpt("QString", 'uniqueId', is_writable=False),
     create_prpt("QStringList", 'virtualInPorts', is_writable=False),
-    create_prpt("QList<MidiRoutePreset *>", 'midiRoutePresets', is_writable=False),
+    create_prpt("QList<MidiRoutePreset *>", 'midiRoutePresets', is_list=True),
     create_prpt("QStringList", 'connectedInPorts'),
     create_prpt("QStringList", 'connectedOutPorts'),
     create_prpt("MidiRoutePreset *", 'activePreset', is_writable=False)

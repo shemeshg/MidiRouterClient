@@ -39,14 +39,9 @@ public:
         emit dropdownlistsChanged();
     }
 
-    void addMidiRoutePreset(MidiRoutePreset *preset)
-    {
-        m_midiRoutePresets.push_back(preset);
-        emit midiRoutePresetsChanged();
-    }
 
     void clearDropdownlists();
-    void clearMidiRoutePreset();
+
 
 public slots:
     QJsonObject getJson();
@@ -70,17 +65,12 @@ public slots:
     {
         MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
         p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
-        addMidiRoutePreset(p);
+        addMidiRoutePresets(p);
     }
 
     void deletePreset(int id)
     {
-        if (id < m_midiRoutePresets.size())
-        {
-            delete m_midiRoutePresets.at(id);
-            m_midiRoutePresets.removeAt(id);
-            emit midiRoutePresetsChanged();
-        }
+        delMidiRoutePresets(id);
     }
 
 private:

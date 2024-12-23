@@ -68,7 +68,8 @@ void setIsRunForPresetOnAndOff(const bool newIsRunForPresetOnAndOff)
     QList<QVariant> midiRoutersFilters() const{return m_midiRoutersFilters;} 
     
 
-
+    
+    
 signals:
     void nameChanged();
     void isEasyConfigChanged();

@@ -95,7 +95,8 @@ void setFilterData2(const QString &newFilterData2)
     }
 
 
-
+    
+    
 signals:
     void conditionActionChanged();
     void filterChannelChanged();

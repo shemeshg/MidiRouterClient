@@ -55,7 +55,8 @@ void setUserdata(const QString &newUserdata)
     }
 
 
-
+    
+    
 signals:
     void logToChanged();
     void userdataChanged();

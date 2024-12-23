@@ -60,7 +60,8 @@ void setServerStatus(const ServerStatus &newServerStatus)
     UserDataConfig * userDataConfig() const{return m_userDataConfig;} 
     
 
-
+    
+    
 signals:
     void serverStatusTextChanged();
     void serverStatusChanged();

@@ -49,7 +49,8 @@ void setCc(const int newCc)
     }
 
 
-
+    
+    
 signals:
     void channelChanged();
     void ccChanged();

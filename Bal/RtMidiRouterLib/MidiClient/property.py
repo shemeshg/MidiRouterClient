@@ -3,11 +3,14 @@ from string import Template
 def initCapital(s):
     return s[0].upper() + s[1:]
 
-def create_prpt(type_name, name, is_writable=True, is_notify=True):
+def create_prpt(type_name, name, is_writable=True, is_notify=True, is_list = False):
     p = Prpt(type_name, name)
     p.is_bindable = False
     p.is_writable = is_writable
     p.is_notify = is_notify
+    p.is_list = is_list
+    if is_list:
+        p.is_writable = False        
     return p
 
 class EnumClass:
@@ -41,6 +44,7 @@ class Prpt:
     writable_declare_only = False
     readable_declare_only = False
     is_getter_ref = False
+    is_list = False
     
     writable_declare_only_template = Template(
 """
@@ -150,6 +154,39 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name )
 
 
+    def public_slots_h_file(self):
+        type_in_list = self.field_type.split("<")[1].split(">")[0]
+        t = Template(
+        """
+        void del${field_name_initCap}(int id)
+        {
+            if (id < m_${field_name}.size())
+            {
+                delete m_${field_name}.at(id);
+                m_${field_name}.removeAt(id);
+                emit ${field_name}Changed();
+            }
+        }
+
+        void add${field_name_initCap}(${type_in_list} item)
+        {
+            m_${field_name}.push_back(item);
+            emit ${field_name}Changed();
+        }
+
+        void clear${field_name_initCap}()
+        {
+            for (const ${type_in_list} item : m_${field_name}) {
+                delete item;
+            }
+            // Clear the outer list
+            m_${field_name}.clear();
+            emit ${field_name}Changed();
+        }
+        """)
+        return t.substitute(field_name = self.field_name,field_type=self.field_type,
+                            field_name_initCap=self.field_name_initCap,type_in_list=type_in_list )
+
 class PrptClass:
     class_name = ""
     inhirit_from = "QObject"
@@ -193,7 +230,8 @@ public:
     virtual ~${class_name}() = default;
 
     ${public_content}
-
+    ${public_pointer_list}
+    
 signals:
     ${signals_content}
 
@@ -213,6 +251,7 @@ private:
             signals_content=self.get_signals_content(),
             private_content=self.get_private_content(),
             protected_content = self.get_protected_content(),
+            public_pointer_list = self.get_public_pointer_list(),
             inhirit_from = self.inhirit_from)
 
     def get_q_object_content(self):
@@ -248,6 +287,13 @@ private:
             if row.is_writable == False:
                 private_content = private_content + row.private_h_file(self.class_name)
         return private_content
+    
+    def get_public_pointer_list(self):
+        private_content = ""
+        for row in self.prptAry:
+            if row.is_list:
+                private_content = private_content + row.public_slots_h_file()
+        return private_content
 
 """
 ary = []
@@ -256,7 +302,7 @@ p.is_bindable = False
 p.is_writable = True
 p.is_notify = True
 ary.append(p)
-c = PrptClass("Msg", ary)
+c = PrptClass("Msg", ary, [])
 print (c.getClassHeader())
 print ("#####################")
 print (c.getClassCpp())
@@ -285,6 +331,13 @@ p.is_writable = False
 p.is_notify = False
 p.is_new_in_contr = True
 ary.append(p)
+p = Prpt("MyListType *",'myList')
+p.is_bindable = False
+p.is_writable = False
+p.is_notify = False
+p.is_new_in_contr = False
+p.is_list = True
+ary.append(p)
 
 enumClasss = []
 e = EnumClass("InfoStatus",
@@ -300,6 +353,6 @@ c = PrptClass("MyType", ary, enumClasss)
 print (c.getClassHeader())
 print ("#####################")
 print (c.getClassCpp())
-"""
 
+"""
 

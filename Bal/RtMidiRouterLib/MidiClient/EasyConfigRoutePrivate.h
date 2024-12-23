@@ -192,7 +192,8 @@ void setToDestinationName(const QString &newToDestinationName)
     }
 
 
-
+    
+    
 signals:
     void splitRangeIdChanged();
     void fromSelectedMidiEventTypeIdChanged();

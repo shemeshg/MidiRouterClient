@@ -55,7 +55,7 @@ void UserConfigParseJson::updateDropdownlists(UserDataConfig *userDataConfig, co
 }
 
 void UserConfigParseJson::updateMidiRoutePresets(UserDataConfig *userDataConfig, const QJsonValue &midiRoutePresets){
-    userDataConfig->clearMidiRoutePreset();
+    userDataConfig->clearMidiRoutePresets();
     if (midiRoutePresets.isArray()){
         auto array = midiRoutePresets.toArray();
         for (const QJsonValue &value : array) {
@@ -65,7 +65,7 @@ void UserConfigParseJson::updateMidiRoutePresets(UserDataConfig *userDataConfig,
             if (easyConfig.isObject() && inputZonesAndRoutes.isObject()) {
                 updateEasyConfig(preset, inputZonesAndRoutes.toObject());
             }
-            userDataConfig->addMidiRoutePreset(preset);
+            userDataConfig->addMidiRoutePresets(preset);
         }
 
     }

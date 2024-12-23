@@ -54,7 +54,8 @@ void setName(const QString &newName)
     }
 
 
-
+    
+    
 signals:
     void filterTypeChanged();
     void nameChanged();

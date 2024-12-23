@@ -145,7 +145,8 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     Monitor * monitor() const{return m_monitor;} 
     
 
-
+    
+    
 signals:
     void midiInputNameChanged();
     void ignoreTypesMidiSysexChanged();

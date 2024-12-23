@@ -68,7 +68,8 @@ void setZoneNames(const QStringList &newZoneNames)
     QList<EasyConfigRoute *> easyConfigRoutes() const{return m_easyConfigRoutes;} 
     
 
-
+    
+    
 signals:
     void midiInputNameChanged();
     void keyboardSplitsChanged();
