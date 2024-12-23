@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from MidiClientConnectionPrivate import classMidiClientConnectionPrivate
+from MidiClientConnectionPrivate import prptClass
 
 
-cog.outl(classMidiClientConnectionPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

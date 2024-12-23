@@ -12,5 +12,5 @@ enumClasss = [
 
 ]
 
-classFilterNetworkDestinationPrivate = PrptClass("FilterNetworkDestinationPrivate", ary, enumClasss)
-classFilterNetworkDestinationPrivate.inhirit_from = "MidiRoutersFilter"
+prptClass = PrptClass("FilterNetworkDestinationPrivate", ary, enumClasss)
+prptClass.inhirit_from = "MidiRoutersFilter"

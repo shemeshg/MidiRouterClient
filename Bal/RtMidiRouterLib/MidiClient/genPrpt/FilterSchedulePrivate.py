@@ -15,5 +15,5 @@ enumClasss = [
         "QUANTIZE_BAR"])
 ]
 
-classFilterSchedulePrivate = PrptClass("FilterSchedulePrivate", ary, enumClasss)
-classFilterSchedulePrivate.inhirit_from = "MidiRoutersFilter"
+prptClass = PrptClass("FilterSchedulePrivate", ary, enumClasss)
+prptClass.inhirit_from = "MidiRoutersFilter"

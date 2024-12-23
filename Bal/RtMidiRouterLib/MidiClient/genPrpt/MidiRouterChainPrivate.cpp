@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from MidiRouterChainPrivate import classMidiRouterChainPrivate
+from MidiRouterChainPrivate import prptClass
 
 
-cog.outl(classMidiRouterChainPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

@@ -6,10 +6,10 @@
 
 /*[[[cog
 import cog
-from EasyConfigRoutePrivate import classEasyConfigRoutePrivate
+from EasyConfigRoutePrivate import prptClass
 
 
-cog.outl(classEasyConfigRoutePrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

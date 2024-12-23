@@ -16,4 +16,4 @@ enumClasss = [
     EnumClass("PresetMidiType", ["PRESET_OFF", "PRESET_ON"])
 ]
 
-classPresetMidiControlPrivate = PrptClass("PresetMidiControlPrivate", ary, enumClasss)
+prptClass = PrptClass("PresetMidiControlPrivate", ary, enumClasss)

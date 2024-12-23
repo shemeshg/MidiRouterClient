@@ -11,5 +11,5 @@ enumClasss = [
     EnumClass("LogTo", ["CLIENT", "SERVER"])
 ]
 
-classFilterToConslePrivate = PrptClass("FilterToConslePrivate", ary, enumClasss)
-classFilterToConslePrivate.inhirit_from = "MidiRoutersFilter"
+prptClass = PrptClass("FilterToConslePrivate", ary, enumClasss)
+prptClass.inhirit_from = "MidiRoutersFilter"

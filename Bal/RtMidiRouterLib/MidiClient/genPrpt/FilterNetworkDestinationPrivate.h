@@ -7,10 +7,10 @@
 
 /*[[[cog
 import cog
-from FilterNetworkDestinationPrivate import classFilterNetworkDestinationPrivate
+from FilterNetworkDestinationPrivate import prptClass
 
 
-cog.outl(classFilterNetworkDestinationPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

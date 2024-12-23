@@ -22,4 +22,4 @@ enumClasss = [
     EnumClass("EventType", ["CC", "PROGRAM_CHANGE","NRPN"])
 ]
 
-classUserControlPrivate = PrptClass("UserControlPrivate", ary, enumClasss)
+prptClass = PrptClass("UserControlPrivate", ary, enumClasss)

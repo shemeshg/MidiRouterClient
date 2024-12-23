@@ -7,10 +7,10 @@
 
 /*[[[cog
 import cog
-from EasyConfigPrivate import classEasyConfigPrivate
+from EasyConfigPrivate import prptClass
 
 
-cog.outl(classEasyConfigPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

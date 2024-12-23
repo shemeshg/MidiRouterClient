@@ -15,5 +15,5 @@ enumClasss = [    EnumClass("ConditionAction",
             "DELETE_IF_MET_CONDITION"
         ])]
 
-classFilterAndTransformPrivate = PrptClass("FilterAndTransformPrivate", ary, enumClasss)
-classFilterAndTransformPrivate.inhirit_from = "MidiRoutersFilter"
+prptClass = PrptClass("FilterAndTransformPrivate", ary, enumClasss)
+prptClass.inhirit_from = "MidiRoutersFilter"

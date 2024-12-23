@@ -20,4 +20,4 @@ ary = [
 
 enumClasss = []
 
-classMidiRouteInputPrivate = PrptClass("MidiRouteInputPrivate", ary, enumClasss)
+prptClass = PrptClass("MidiRouteInputPrivate", ary, enumClasss)

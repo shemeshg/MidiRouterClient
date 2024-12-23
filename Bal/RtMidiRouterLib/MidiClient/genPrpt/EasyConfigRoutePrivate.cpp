@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from EasyConfigRoutePrivate import classEasyConfigRoutePrivate
+from EasyConfigRoutePrivate import prptClass
 
 
-cog.outl(classEasyConfigRoutePrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

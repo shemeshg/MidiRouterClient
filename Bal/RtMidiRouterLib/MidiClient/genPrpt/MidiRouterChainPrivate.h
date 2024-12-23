@@ -7,10 +7,10 @@
 
 /*[[[cog
 import cog
-from MidiRouterChainPrivate import classMidiRouterChainPrivate
+from MidiRouterChainPrivate import prptClass
 
 
-cog.outl(classMidiRouterChainPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

@@ -12,4 +12,4 @@ enumClasss = [
     EnumClass("ServerStatus", ["STOPPED", "STARTING", "RUNNING", "FAILED"])
 ]
 
-classMidiClientConnectionPrivate = PrptClass("MidiClientConnectionPrivate", ary, enumClasss)
+prptClass = PrptClass("MidiClientConnectionPrivate", ary, enumClasss)

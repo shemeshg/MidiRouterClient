@@ -13,4 +13,4 @@ ary = [
 enumClasss = [
 ]
 
-classEasyConfigPrivate = PrptClass("EasyConfigPrivate", ary, enumClasss)
+prptClass = PrptClass("EasyConfigPrivate", ary, enumClasss)

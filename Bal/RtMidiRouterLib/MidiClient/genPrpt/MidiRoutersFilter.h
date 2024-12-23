@@ -6,10 +6,10 @@
 
 /*[[[cog
 import cog
-from MidiRoutersFilter import classMidiRoutersFilter
+from MidiRoutersFilter import prptClass
 
 
-cog.outl(classMidiRoutersFilter.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

@@ -14,4 +14,4 @@ ary = [
 enumClasss = [
 ]
 
-classMidiRouterChainPrivate = PrptClass("MidiRouterChainPrivate", ary, enumClasss)
+prptClass = PrptClass("MidiRouterChainPrivate", ary, enumClasss)

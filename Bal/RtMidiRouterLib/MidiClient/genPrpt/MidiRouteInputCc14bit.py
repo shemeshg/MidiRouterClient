@@ -8,4 +8,4 @@ ary = [
 
 enumClasss = []
 
-classMidiRouteInputCc14bit = PrptClass("MidiRouteInputCc14bit", ary, enumClasss)
+prptClass = PrptClass("MidiRouteInputCc14bit", ary, enumClasss)

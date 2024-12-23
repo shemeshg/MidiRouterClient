@@ -10,10 +10,10 @@
 
 /*[[[cog
 import cog
-from MidiRoutePresetPrivate import classMidiRoutePresetPrivate
+from MidiRoutePresetPrivate import prptClass
 
 
-cog.outl(classMidiRoutePresetPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

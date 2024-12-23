@@ -9,4 +9,4 @@ ary = [
 enumClasss = [
 ]
 
-classMonitorPrivate = PrptClass("MonitorPrivate", ary, enumClasss)
+prptClass = PrptClass("MonitorPrivate", ary, enumClasss)

@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from MidiRouteInputPrivate import classMidiRouteInputPrivate
+from MidiRouteInputPrivate import prptClass
 
 
-cog.outl(classMidiRouteInputPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

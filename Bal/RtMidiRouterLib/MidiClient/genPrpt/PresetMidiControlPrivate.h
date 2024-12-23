@@ -6,10 +6,10 @@
 
 /*[[[cog
 import cog
-from PresetMidiControlPrivate import classPresetMidiControlPrivate
+from PresetMidiControlPrivate import prptClass
 
 
-cog.outl(classPresetMidiControlPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

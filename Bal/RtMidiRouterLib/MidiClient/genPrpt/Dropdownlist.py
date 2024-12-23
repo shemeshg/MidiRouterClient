@@ -8,4 +8,4 @@ ary = [
 
 enumClasss = []
 
-classDropdownlist = PrptClass("Dropdownlist", ary, enumClasss)
+prptClass = PrptClass("Dropdownlist", ary, enumClasss)

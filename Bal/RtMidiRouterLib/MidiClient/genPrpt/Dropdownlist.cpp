@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from Dropdownlist import classDropdownlist
+from Dropdownlist import prptClass
 
 
-cog.outl(classDropdownlist.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

@@ -7,10 +7,10 @@
 
 /*[[[cog
 import cog
-from MidiClientConnectionPrivate import classMidiClientConnectionPrivate
+from MidiClientConnectionPrivate import prptClass
 
 
-cog.outl(classMidiClientConnectionPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

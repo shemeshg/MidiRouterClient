@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from FilterMidiDestinationPrivate import classFilterMidiDestinationPrivate
+from FilterMidiDestinationPrivate import prptClass
 
 
-cog.outl(classFilterMidiDestinationPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

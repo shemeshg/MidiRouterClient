@@ -7,10 +7,10 @@
 
 /*[[[cog
 import cog
-from MonitorPrivate import classMonitorPrivate
+from MonitorPrivate import prptClass
 
 
-cog.outl(classMonitorPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

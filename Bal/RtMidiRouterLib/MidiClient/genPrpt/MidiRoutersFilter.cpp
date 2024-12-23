@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from MidiRoutersFilter import classMidiRoutersFilter
+from MidiRoutersFilter import prptClass
 
 
-cog.outl(classMidiRoutersFilter.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

@@ -6,10 +6,10 @@
 
 /*[[[cog
 import cog
-from Dropdownlist import classDropdownlist
+from Dropdownlist import prptClass
 
 
-cog.outl(classDropdownlist.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

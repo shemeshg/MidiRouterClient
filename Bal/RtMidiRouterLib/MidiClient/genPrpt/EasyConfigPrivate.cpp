@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from EasyConfigPrivate import classEasyConfigPrivate
+from EasyConfigPrivate import prptClass
 
 
-cog.outl(classEasyConfigPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

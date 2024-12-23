@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from MonitorPrivate import classMonitorPrivate
+from MonitorPrivate import prptClass
 
 
-cog.outl(classMonitorPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

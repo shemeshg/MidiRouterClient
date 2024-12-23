@@ -8,10 +8,10 @@
 #include "../MidiRoutePreset.h"
 /*[[[cog
 import cog
-from UserDataConfigPrivate import classUserDataConfigPrivate
+from UserDataConfigPrivate import prptClass
 
 
-cog.outl(classUserDataConfigPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

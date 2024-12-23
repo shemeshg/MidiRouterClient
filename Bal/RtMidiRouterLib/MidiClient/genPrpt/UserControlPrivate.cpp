@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from UserControlPrivate import classUserControlPrivate
+from UserControlPrivate import prptClass
 
 
-cog.outl(classUserControlPrivate.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 

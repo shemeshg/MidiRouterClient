@@ -6,10 +6,10 @@
 
 /*[[[cog
 import cog
-from UserControlPrivate import classUserControlPrivate
+from UserControlPrivate import prptClass
 
 
-cog.outl(classUserControlPrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

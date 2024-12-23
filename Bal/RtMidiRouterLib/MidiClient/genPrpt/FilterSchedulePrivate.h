@@ -8,10 +8,10 @@
 
 /*[[[cog
 import cog
-from FilterSchedulePrivate import classFilterSchedulePrivate
+from FilterSchedulePrivate import prptClass
 
 
-cog.outl(classFilterSchedulePrivate.getClassHeader(),
+cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */

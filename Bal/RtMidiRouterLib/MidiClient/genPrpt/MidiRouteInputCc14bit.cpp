@@ -2,10 +2,10 @@
 
 /*[[[cog
 import cog
-from MidiRouteInputCc14bit import classMidiRouteInputCc14bit
+from MidiRouteInputCc14bit import prptClass
 
 
-cog.outl(classMidiRouteInputCc14bit.getClassCpp(),
+cog.outl(prptClass.getClassCpp(),
         dedent=True, trimblanklines=True)
 
 
