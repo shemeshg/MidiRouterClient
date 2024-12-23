@@ -36,7 +36,7 @@ public:
 
         for (EasyConfig *easyConfig: m_easyConfig){
             auto const midiInputName = easyConfig->midiInputName();
-            std::optional<MidiRouteInput*> input  = getInputForEasyConfig(midiInputName);
+            std::optional<MidiRouteInput*> input  = getInputByName(midiInputName);
             if (!input){
                 input = new MidiRouteInput();
                 input.value()->setMidiInputName(midiInputName);
@@ -58,7 +58,7 @@ signals:
 
 
 private:
-    std::optional<MidiRouteInput *> getInputForEasyConfig(QString midiInputName) {
+    std::optional<MidiRouteInput *> getInputByName(QString midiInputName) {
         for (MidiRouteInput *input : m_midiRouteInputs) {
             if (input->midiInputName() == midiInputName) {
                 return input;
