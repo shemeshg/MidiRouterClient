@@ -15,15 +15,7 @@ void UserDataConfig::loadComputerUuid()
     m_computerUuid = s;
 }
 
-void UserDataConfig::clearDropdownlists()
-{
-    for (const Dropdownlist *item : m_dropdownlists) {
-        delete item;
-    }
-    // Clear the outer list
-    m_dropdownlists.clear();
-    emit dropdownlistsChanged();
-}
+
 
 
 

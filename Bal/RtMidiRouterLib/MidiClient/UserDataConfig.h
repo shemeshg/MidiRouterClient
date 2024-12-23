@@ -35,12 +35,11 @@ public:
         Dropdownlist *d = new Dropdownlist();
         d->setName(name);
         d->setData(data);
-        m_dropdownlists.push_back(d);
-        emit dropdownlistsChanged();
+        addDropdownlists(d);
     }
 
 
-    void clearDropdownlists();
+
 
 
 public slots:

@@ -95,6 +95,32 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
     
 
     
+        void delDropdownlists(int id)
+        {
+            if (id < m_dropdownlists.size())
+            {
+                delete m_dropdownlists.at(id);
+                m_dropdownlists.removeAt(id);
+                emit dropdownlistsChanged();
+            }
+        }
+
+        void addDropdownlists(Dropdownlist * item)
+        {
+            m_dropdownlists.push_back(item);
+            emit dropdownlistsChanged();
+        }
+
+        void clearDropdownlists()
+        {
+            for (const Dropdownlist * item : m_dropdownlists) {
+                delete item;
+            }
+            // Clear the outer list
+            m_dropdownlists.clear();
+            emit dropdownlistsChanged();
+        }
+        
         void delMidiRoutePresets(int id)
         {
             if (id < m_midiRoutePresets.size())
