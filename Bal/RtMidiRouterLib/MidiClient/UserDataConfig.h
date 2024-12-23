@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UserDataConfigPrivate.h"
+#include "genPrpt/UserDataConfigPrivate.h"
 #include <QJsonValue>
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "MidiRouteInputCc14bit.h"
-#include "MidiRouterChain.h"
-#include "Monitor.h"
+#include "../MidiRouterChain.h"
+#include "../Monitor.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>

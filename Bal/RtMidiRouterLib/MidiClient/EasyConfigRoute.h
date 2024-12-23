@@ -1,7 +1,7 @@
 
 
 #pragma once
-#include "EasyConfigRoutePrivate.h"
+#include "genPrpt/EasyConfigRoutePrivate.h"
 
 
 struct EasyConfigRouteFilter{

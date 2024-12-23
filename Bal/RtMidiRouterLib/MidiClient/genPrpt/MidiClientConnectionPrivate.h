@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UserDataConfig.h"
+#include "../UserDataConfig.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>

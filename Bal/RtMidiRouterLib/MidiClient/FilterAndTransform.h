@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FilterAndTransformPrivate.h"
+#include "genPrpt/FilterAndTransformPrivate.h"
 
 class FilterAndTransform : public FilterAndTransformPrivate
 

@@ -1,7 +1,7 @@
 #ifndef APPLYCONFIG_H
 #define APPLYCONFIG_H
-#include "WcMidiIn.h"
-#include "WcMidiOut.h"
+#include "wcmidiin.h"
+#include "wcmidiout.h"
 class ApplyConfig
 {
 public:

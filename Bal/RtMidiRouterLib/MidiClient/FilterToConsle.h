@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FilterToConslePrivate.h"
+#include "genPrpt/FilterToConslePrivate.h"
 
 class FilterToConsole : public FilterToConslePrivate
 

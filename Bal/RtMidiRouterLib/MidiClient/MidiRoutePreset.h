@@ -1,7 +1,7 @@
 #pragma once
 #include "EasyConfig.h"
 #include "MidiClientUtil.h"
-#include "MidiRoutePresetPrivate.h"
+#include "genPrpt/MidiRoutePresetPrivate.h"
 #include "MidiPresetControlEasyConfig.h"
 
 class MidiRoutePreset : public MidiRoutePresetPrivate

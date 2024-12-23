@@ -6,8 +6,8 @@
 #include "FilterSchedule.h"
 #include "FilterToConsle.h"
 #include "MidiPresetControlEasyConfig.h"
-#include "MidiRouterChainPrivate.h"
-#include "MidiRoutersFilter.h"
+#include "genPrpt/MidiRouterChainPrivate.h"
+#include "genPrpt/MidiRoutersFilter.h"
 #include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
 

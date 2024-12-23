@@ -1,7 +1,5 @@
-
-
 #pragma once
-#include "EasyConfigPrivate.h"
+#include "genPrpt/EasyConfigPrivate.h"
 #include "EasyConfigRoute.h"
 
 class EasyConfig : public EasyConfigPrivate
@@ -12,12 +10,6 @@ class EasyConfig : public EasyConfigPrivate
 public:
     explicit EasyConfig(QObject *parent = nullptr)
         : EasyConfigPrivate{parent} {};
-
-
-
-
-
-
 
 public slots:
 

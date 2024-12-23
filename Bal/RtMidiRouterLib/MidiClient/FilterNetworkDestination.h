@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FilterNetworkDestinationPrivate.h"
+#include "genPrpt/FilterNetworkDestinationPrivate.h"
 
 class FilterNetworkDestination : public FilterNetworkDestinationPrivate
 

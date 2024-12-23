@@ -1,7 +1,7 @@
 
 
 #pragma once
-#include "UserControlPrivate.h"
+#include "genPrpt/UserControlPrivate.h"
 
 class UserControl : public UserControlPrivate
 

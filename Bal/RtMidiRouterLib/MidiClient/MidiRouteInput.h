@@ -2,7 +2,7 @@
 
 #pragma once
 #include "EasyConfig.h"
-#include "MidiRouteInputPrivate.h"
+#include "genPrpt/MidiRouteInputPrivate.h"
 #include "MidiPresetControlEasyConfig.h"
 
 class MidiRouteInput : public MidiRouteInputPrivate

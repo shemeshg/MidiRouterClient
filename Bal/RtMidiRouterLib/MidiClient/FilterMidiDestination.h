@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FilterMidiDestinationPrivate.h"
+#include "genPrpt/FilterMidiDestinationPrivate.h"
 
 class FilterMidiDestination : public FilterMidiDestinationPrivate
 

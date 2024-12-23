@@ -3,8 +3,8 @@
 #include <QObject>
 #include <QVariant>
 #include <QJsonObject>
-#include "WcMidiIn.h"
-#include "WcMidiOut.h"
+#include "wcmidiin.h"
+#include "wcmidiout.h"
 #include "ApplyConfig.h"
 
 class WcUserData : public QObject

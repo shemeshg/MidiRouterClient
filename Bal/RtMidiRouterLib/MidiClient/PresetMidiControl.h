@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "PresetMidiControlPrivate.h"
+#include "genPrpt/PresetMidiControlPrivate.h"
 
 class PresetMidiControl : public PresetMidiControlPrivate
 

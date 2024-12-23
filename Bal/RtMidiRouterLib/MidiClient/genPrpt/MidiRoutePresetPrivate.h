@@ -3,10 +3,10 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-#include "EasyConfig.h"
-#include "MidiRouteInput.h"
-#include "PresetMidiControl.h"
-#include "UserControl.h"
+#include "../EasyConfig.h"
+#include "../MidiRouteInput.h"
+#include "../PresetMidiControl.h"
+#include "../UserControl.h"
 
 /*[[[cog
 import cog
