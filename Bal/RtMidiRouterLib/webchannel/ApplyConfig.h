@@ -2,23 +2,27 @@
 #define APPLYCONFIG_H
 #include "WcMidiIn.h"
 #include "WcMidiOut.h"
-class ApplyConfig {
+class ApplyConfig
+{
 public:
     ApplyConfig(Webchannel::WcMidiIn *wcmidiin, Webchannel::WcMidiOut *wcmidiout)
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
-    struct DisCnctInPort {
+    struct DisCnctInPort
+    {
         QString presetUuid;
         QString inPortName;
     };
 
-    struct DisCnctOutPort {
+    struct DisCnctOutPort
+    {
         QString presetUuid;
         QString outPortName;
         QString originedInPort;
     };
 
-    void applyConfig(const QJsonObject &json) {
+    QJsonObject applyConfig(const QJsonObject &json)
+    {
         qDebug() << "Server will applay a config of " << json;
         wcmidiin->restart();
         wcmidiout->restart();
@@ -34,6 +38,8 @@ public:
         disCnctOutPorts.clear();
 
         setMidiRoutePresets(json);
+
+        return createApplayConfigReturnObj();
     }
 
 private:
@@ -45,7 +51,8 @@ private:
     QList<DisCnctInPort> disCnctInPorts;
     QList<DisCnctOutPort> disCnctOutPorts;
 
-    enum class FilterType {
+    enum class FilterType
+    {
         TO_MIDI_DESTINATION,
         TO_CONSOLE,
         TO_NETWORK,
@@ -53,17 +60,21 @@ private:
         FILTER_AND_TRANSFORM
     };
 
-    QStringList getMapStringVal(QVariantMap map) {
+    QStringList getMapStringVal(QVariantMap map)
+    {
         QStringList list;
-        for (auto it = map.begin(); it != map.end(); ++it) {
+        for (auto it = map.begin(); it != map.end(); ++it)
+        {
             list.append(it.value().toString());
         }
         return list;
     }
 
-    QStringList getInHwPortNames(const QVariantMap &inPortsMap) {
+    QStringList getInHwPortNames(const QVariantMap &inPortsMap)
+    {
         QStringList inHwPortNames;
-        for (auto it = inPortsMap.begin(); it != inPortsMap.end(); ++it) {
+        for (auto it = inPortsMap.begin(); it != inPortsMap.end(); ++it)
+        {
             QString val = it.value().toString();
             inHwPortNames.append(val.mid(val.indexOf("_") + 1));
         }
@@ -71,29 +82,37 @@ private:
         return inHwPortNames;
     }
 
-    void setVirtualPorts(const QVariantMap &inPortsMap, const QJsonObject &json) {
+    void setVirtualPorts(const QVariantMap &inPortsMap, const QJsonObject &json)
+    {
         QStringList inHwPortNames = getInHwPortNames(inPortsMap);
 
         QJsonArray virtualInPorts;
-        if (json["virtualInPorts"].isArray()) {
+        if (json["virtualInPorts"].isArray())
+        {
             virtualInPorts = json["virtualInPorts"].toArray();
         }
 
-        for (const auto &itm : virtualInPorts) {
+        for (const auto &itm : virtualInPorts)
+        {
             QString str = itm.toString();
-            if (!inHwPortNames.contains(str)) {
+            if (!inHwPortNames.contains(str))
+            {
                 wcmidiin->openVirtualInOutPort(str);
             }
         }
     }
 
-    void setMidiRoutePresets(const QJsonObject &json) {
+    void setMidiRoutePresets(const QJsonObject &json)
+    {
         auto midiRoutePresets = json["midiRoutePresets"];
-        if (midiRoutePresets.isArray()) {
+        if (midiRoutePresets.isArray())
+        {
             auto midiRoutePresetsObj = midiRoutePresets.toArray();
 
-            for (auto const &midiRoutePreset : midiRoutePresetsObj) {
-                if (midiRoutePreset.isObject()) {
+            for (auto const &midiRoutePreset : midiRoutePresetsObj)
+            {
+                if (midiRoutePreset.isObject())
+                {
                     auto midiRoutePresetObj = midiRoutePreset.toObject();
                     bool isEnabled = midiRoutePresetObj["isEnabled"].toBool();
                     setMidiRouteInputs(midiRoutePresetObj, isEnabled);
@@ -102,53 +121,61 @@ private:
         }
     }
 
-    bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name) {
+    bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name)
+    {
         return midiRouteInputObj["ignoreTypes"].toObject()["name"].toBool();
     }
 
-    double getDoubleTimeSig(QJsonObject &midiRouteInputObj, QString name) {
+    double getDoubleTimeSig(QJsonObject &midiRouteInputObj, QString name)
+    {
         return midiRouteInputObj["midiRouteClock"].toObject()["name"].toBool();
     }
 
-    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled) {
+    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled)
+    {
         auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
 
-        if (midiRouteInputs.isObject()) {
+        if (midiRouteInputs.isObject())
+        {
             auto midiRouteInputsObj = midiRouteInputs.toObject();
 
             for (auto it = midiRouteInputsObj.begin(); it != midiRouteInputsObj.end();
-                 ++it) {
+                 ++it)
+            {
                 auto midiRouteInputObj = it.value().toObject();
                 auto midiInputName = midiRouteInputObj["midiInputName"].toString();
-                
+
                 QString presetUuid = midiRoutePresetObj["uuid"].toString();
-                if (inPorts.contains(midiInputName)) {                    
+                if (inPorts.contains(midiInputName))
+                {
                     setInportSettings(midiRouteInputObj, midiInputName, isEnabled,
                                       presetUuid);
-
-                } 
+                }
                 else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
-                         [&midiInputName](const DisCnctInPort& port) { 
-                             return port.inPortName == midiInputName; 
-                         })) {
+                                      [&midiInputName](const DisCnctInPort &port)
+                                      {
+                                          return port.inPortName == midiInputName;
+                                      }))
+                {
                     DisCnctInPort port;
                     port.presetUuid = presetUuid;
                     port.inPortName = midiInputName;
                     disCnctInPorts.append(port);
                 }
-                
             }
         }
     }
 
     void setInportSettings(QJsonObject &midiRouteInputObj,
-                           QString &midiInputName, bool isEnabled, QString presetUuid) {
+                           QString &midiInputName, bool isEnabled, QString presetUuid)
+    {
         qDebug() << "TODO Applay input to " << midiRouteInputObj;
         int portNumber = wcmidiin->getPortNumber(midiInputName);
 
         wcmidiin->openPort(portNumber);
 
-        if (isEnabled){
+        if (isEnabled)
+        {
             wcmidiin->ignoreTypes(portNumber,
                                   getBoolIgnoreTypes(midiRouteInputObj, "midiSysex"),
                                   getBoolIgnoreTypes(midiRouteInputObj, "midiTime"),
@@ -163,12 +190,16 @@ private:
             auto propegateInputs =
                 midiRouteInputObj["midiRouteClock"].toObject()["propegateInputs"];
             auto propegateInputsAry = propegateInputs.toArray();
-            for (const auto &propegateInput : propegateInputsAry) {
+            for (const auto &propegateInput : propegateInputsAry)
+            {
                 auto outPortName = propegateInput.toObject()["midiInputName"].toString();
-                if (outPorts.contains(outPortName)) {
+                if (outPorts.contains(outPortName))
+                {
                     int outPortId = wcmidiout->getPortNumber(outPortName);
                     wcmidiin->addPropegateClockPort(portNumber, outPortId);
-                } else {
+                }
+                else
+                {
                     DisCnctOutPort port;
                     port.presetUuid = presetUuid;
                     port.originedInPort = midiInputName;
@@ -179,7 +210,8 @@ private:
 
             auto cc14bitAry = midiRouteInputObj["cc14bitAry"].toArray();
             wcmidiin->clearCc14Bit(portNumber);
-            for (const auto &cc14 : cc14bitAry) {
+            for (const auto &cc14 : cc14bitAry)
+            {
                 auto cc14Obj = cc14.toObject();
                 qDebug() << "CHANNEL CC " << cc14Obj;
                 wcmidiin->addCc14Bit(portNumber, cc14Obj["channel"].toInt(),
@@ -187,75 +219,107 @@ private:
             }
         }
 
-
         qDebug() << "TODO Inports chains and routes";
         auto midiRouterChains = midiRouteInputObj["midiRouterChains"].toArray();
-        for (const auto &midiRouterChain : midiRouterChains) {
+        for (const auto &midiRouterChain : midiRouterChains)
+        {
 
             //
             auto midiRouterChainObj = midiRouterChain.toObject();
-            if (isEnabled || midiRouterChainObj["isRunForPresetOnAndOff"].toBool()){
+            if (isEnabled || midiRouterChainObj["isRunForPresetOnAndOff"].toBool())
+            {
 
                 auto midiRoutersFilters =
                     midiRouterChainObj["midiRoutersFilters"].toArray();
-                if (midiRoutersFilters.size() > 0) {
+                if (midiRoutersFilters.size() > 0)
+                {
                     qDebug() << "TODO CREATE CHAIN AND PARSE FILTER " << midiInputName
                              << midiRouterChainObj["name"].toString();
                     int chainId = wcmidiin->routingMidiChainsAaddChain(portNumber);
-                    for (const auto &midiRoutersFilter : midiRoutersFilters) {
+                    for (const auto &midiRoutersFilter : midiRoutersFilters)
+                    {
                         auto filter = midiRoutersFilter.toObject();
                         qDebug() << "Add to chain " << chainId << filter;
                         if (filter["filterType"].toInt() ==
-                            static_cast<int>(FilterType::TO_MIDI_DESTINATION)) {
-                            qDebug()<<"** SENDING "<< filter["baseMidiRouteInput"]
-                                                             .toObject()["midiInputName"]
-                                                             .toString();
-                            int outPortNumber = wcmidiout->getPortNumber(                            filter["baseMidiRouteInput"]
+                            static_cast<int>(FilterType::TO_MIDI_DESTINATION))
+                        {
+                            qDebug() << "** SENDING " << filter["baseMidiRouteInput"].toObject()["midiInputName"].toString();
+                            int outPortNumber = wcmidiout->getPortNumber(filter["baseMidiRouteInput"]
                                                                              .toObject()["midiInputName"]
                                                                              .toString());
 
-
-                            qDebug()<<"** id "<< outPortNumber;
+                            qDebug() << "** id " << outPortNumber;
                             wcmidiin->routingActionAddSendPortByNumber(
                                 portNumber, chainId,
                                 outPortNumber);
-
-                        } else if (filter["filterType"].toInt() ==
-                                   static_cast<int>(FilterType::TO_CONSOLE)) {
+                        }
+                        else if (filter["filterType"].toInt() ==
+                                 static_cast<int>(FilterType::TO_CONSOLE))
+                        {
                             wcmidiin->routingActionAddLogData(portNumber, chainId,
                                                               filter["logTo"].toInt(),
                                                               filter["userdata"].toString());
-                        }  else if (filter["filterType"].toInt() == static_cast<int>(FilterType::SCHEDULE_TO)){
-
+                        }
+                        else if (filter["filterType"].toInt() == static_cast<int>(FilterType::SCHEDULE_TO))
+                        {
 
                             wcmidiin->routingActionAddDeferedEvent(portNumber, chainId,
                                                                    filter["defferedType"].toInt(),
-                                                                   filter["defferedTo"].toDouble()
-                                                                   );
-                        } else if (filter["filterType"].toInt() == static_cast<int>(FilterType::TO_NETWORK)){
+                                                                   filter["defferedTo"].toDouble());
+                        }
+                        else if (filter["filterType"].toInt() == static_cast<int>(FilterType::TO_NETWORK))
+                        {
                             QString remotePortName = filter["baseMidiRouteInput"].toObject()["midiInputName"].toString();
                             wcmidiin->routingActionAddSendRemoteServerByRemotePortName(portNumber, chainId,
                                                                                        filter["serverName"].toString(),
                                                                                        filter["serverPort"].toInt(),
-                                                                                       remotePortName
-                                                                                       );
-                        } else if (filter["filterType"].toInt() == static_cast<int>(FilterType::FILTER_AND_TRANSFORM)) {
+                                                                                       remotePortName);
+                        }
+                        else if (filter["filterType"].toInt() == static_cast<int>(FilterType::FILTER_AND_TRANSFORM))
+                        {
                             wcmidiin->routingActionAddFilterMidiChannelMsg(portNumber, chainId,
                                                                            filter["filterChannel"].toArray(),
                                                                            filter["filterEvents"].toArray(),
                                                                            filter["filterData1"].toArray(),
                                                                            filter["filterData2"].toArray(),
-                                                                           filter["conditionAction"].toInt()
-                                                                           );
+                                                                           filter["conditionAction"].toInt());
                         }
                     }
                 }
             }
-
         }
 
-
         ////
+    }
+
+    QJsonObject createApplayConfigReturnObj()
+    {
+        QJsonObject json;
+
+        // Create JSON array for disCnctInPorts
+        QJsonArray inPortsArray;
+        for (const auto &inPort : disCnctInPorts)
+        {
+            QJsonObject inPortObj;
+            inPortObj["presetUuid"] = inPort.presetUuid;
+            inPortObj["inPortName"] = inPort.inPortName;
+            inPortsArray.append(inPortObj);
+        }
+        json["disCnctInPorts"] = inPortsArray;
+
+        // Create JSON array for disCnctOutPorts
+        QJsonArray outPortsArray;
+        for (const auto &outPort : disCnctOutPorts)
+        {
+            QJsonObject outPortObj;
+            outPortObj["presetUuid"] = outPort.presetUuid;
+            outPortObj["outPortName"] = outPort.outPortName;
+            outPortObj["originedInPort"] = outPort.originedInPort;
+            outPortsArray.append(outPortObj);
+        }
+        json["disCnctOutPorts"] = outPortsArray;
+
+        return json;
     }
 };
 
