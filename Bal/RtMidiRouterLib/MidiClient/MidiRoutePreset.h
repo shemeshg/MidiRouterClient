@@ -16,10 +16,10 @@ public:
         setUuid(getUuId());
         m_midiControlOn = new PresetMidiControl(
             PresetMidiControl::PresetMidiType::PRESET_ON,
-            uuid());
+            uuid(),this);
         m_midiControlOff = new PresetMidiControl(
             PresetMidiControl::PresetMidiType::PRESET_OFF,
-            uuid());
+            uuid(),this);
 
         clearEasyConfig();
         clearUserControls();
