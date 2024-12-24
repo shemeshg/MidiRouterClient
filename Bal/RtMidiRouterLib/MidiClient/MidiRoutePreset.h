@@ -1,6 +1,6 @@
 #pragma once
-#include "EasyConfig.h"
-#include "MidiClientUtil.h"
+#include "GenHpp/EasyConfig.h"
+#include "GenHpp/MidiClientUtil.h"
 #include "genPrpt/MidiRoutePresetPrivate.h"
 #include "MidiPresetControlEasyConfig.h"
 

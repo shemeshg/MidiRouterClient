@@ -1,7 +1,15 @@
+//-define-file body GenHpp/FilterSchedule.cpp
+//-define-file header GenHpp/FilterSchedule.h
+//-only-file header //-
+//-only-file body //-
+//- #include "FilterSchedule.h"
+//-only-file null
+//-only-file header
 #pragma once
 
-#include "genPrpt/FilterSchedulePrivate.h"
+#include "../genPrpt/FilterSchedulePrivate.h"
 
+//-var {PRE} "FilterSchedule::"
 class FilterSchedule : public FilterSchedulePrivate
 
 {
@@ -9,13 +17,19 @@ class FilterSchedule : public FilterSchedulePrivate
 
     QML_ELEMENT
 public:
-    explicit FilterSchedule(QObject *parent = nullptr){
-
+    //- {function} 1 1
+    explicit FilterSchedule(QObject *parent = nullptr)
+    //-only-file body
+    : FilterSchedulePrivate{parent}
+    {
     };
 
+    //-only-file header
 public slots:
-
-    void setFilter(DefferedType defferedType, int defferedTo ){
+    //- {function} 0 1
+    void setFilter(DefferedType defferedType, int defferedTo )
+    //-only-file body
+    {
         setDefferedType(defferedType);
         setDefferedTo(defferedTo);
 
@@ -32,7 +46,7 @@ public slots:
             );
     }
 
-
+    //-only-file header
 private:
 
 };

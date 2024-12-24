@@ -1,3 +1,26 @@
+SET(GEN_HPP TRUE)
+if(GEN_HPP)
+    file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/hpp/*.hpp")
+    add_custom_target(run_script ALL
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt ${HEADER_FILES}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Running parseHpp shell script")
+endif()
+
+# Run a shell script before everything else
+execute_process(
+    COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt ${HEADER_FILES}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    RESULT_VARIABLE result
+)
+
+# Check the result of the script execution
+if(NOT result EQUAL 0)
+    message(FATAL_ERROR "Script execution failed with result: ${result}")
+endif()
+
+# Continue with the rest of your CMake configuration
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets WebSockets WebChannel REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets WebSockets WebChannel REQUIRED)
 
@@ -39,42 +62,42 @@ genPrpt/MonitorPrivate.cpp
 genPrpt/PresetMidiControlPrivate.cpp
 genPrpt/UserControlPrivate.cpp
 genPrpt/UserDataConfigPrivate.cpp
-EasyConfig.h
-EasyConfigRoute.h
-FilterAndTransform.h
-FilterMidiDestination.h
-FilterNetworkDestination.h
-FilterSchedule.h
-FilterToConsle.h
+GenHpp/EasyConfig.h
+GenHpp/EasyConfigRoute.h
+GenHpp/FilterAndTransform.h
+GenHpp/FilterMidiDestination.h
+GenHpp/FilterNetworkDestination.h
+GenHpp/FilterSchedule.h
+GenHpp/FilterToConsle.h
 MidiClientConnection.h
-MidiClientUtil.h
+GenHpp/MidiClientUtil.h
 MidiPresetControlEasyConfig.h
 MidiRouteInput.h
 MidiRoutePreset.h
 MidiRouterChain.h
-Monitor.h
-PresetMidiControl.h
+GenHpp/Monitor.h
+GenHpp/PresetMidiControl.h
 UserConfigGenJson.h
 UserConfigParseJson.h
-UserControl.h
+GenHpp/UserControl.h
 UserDataConfig.h
-EasyConfig.cpp
-EasyConfigRoute.cpp
-FilterAndTransform.cpp
-FilterMidiDestination.cpp
-FilterNetworkDestination.cpp
-FilterSchedule.cpp
-FilterToConsle.cpp
+GenHpp/EasyConfig.cpp
+GenHpp/EasyConfigRoute.cpp
+GenHpp/FilterAndTransform.cpp
+GenHpp/FilterMidiDestination.cpp
+GenHpp/FilterNetworkDestination.cpp
+GenHpp/FilterSchedule.cpp
+GenHpp/FilterToConsle.cpp
 MidiClientConnection.cpp
-MidiClientUtil.cpp
+GenHpp/MidiClientUtil.cpp
 MidiRouteInput.cpp
 MidiRoutePreset.cpp
 MidiRouterChain.cpp
-Monitor.cpp
-PresetMidiControl.cpp
+GenHpp/Monitor.cpp
+GenHpp/PresetMidiControl.cpp
 UserConfigGenJson.cpp
 UserConfigParseJson.cpp
-UserControl.cpp
+GenHpp/UserControl.cpp
 UserDataConfig.cpp
 )
 
@@ -83,3 +106,6 @@ UserDataConfig.cpp
 
   target_compile_definitions(midiClient PRIVATE MIDICLIENT_LIBRARY)
 
+  if(GEN_HPP)
+      add_dependencies(midiClient run_script)
+  endif()

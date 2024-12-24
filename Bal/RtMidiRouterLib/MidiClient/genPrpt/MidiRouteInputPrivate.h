@@ -2,7 +2,7 @@
 
 #include "MidiRouteInputCc14bit.h"
 #include "../MidiRouterChain.h"
-#include "../Monitor.h"
+#include "../GenHpp/Monitor.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>

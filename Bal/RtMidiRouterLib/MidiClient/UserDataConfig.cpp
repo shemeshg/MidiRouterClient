@@ -1,6 +1,6 @@
 #include "UserDataConfig.h"
 #include <QSettings>
-#include "MidiClientUtil.h"
+#include "GenHpp/MidiClientUtil.h"
 #include "UserConfigGenJson.h"
 #include "UserConfigParseJson.h"
 

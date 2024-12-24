@@ -1,7 +1,7 @@
 
 
 #pragma once
-#include "EasyConfig.h"
+#include "GenHpp/EasyConfig.h"
 #include "genPrpt/MidiRouteInputPrivate.h"
 #include "MidiPresetControlEasyConfig.h"
 

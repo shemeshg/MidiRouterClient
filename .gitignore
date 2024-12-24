@@ -84,3 +84,4 @@ Design/qds.cmake
 Design-Debug/
 Design/App/autogen/
 .vscode/
+.cache/

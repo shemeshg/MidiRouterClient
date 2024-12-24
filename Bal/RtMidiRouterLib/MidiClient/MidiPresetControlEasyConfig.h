@@ -1,5 +1,5 @@
 #pragma once
-#include "PresetMidiControl.h"
+#include "GenHpp/PresetMidiControl.h"
 
 
 class MidiPresetControlEasyConfig {

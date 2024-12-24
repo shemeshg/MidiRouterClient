@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-#include "../EasyConfigRoute.h"
+#include "../GenHpp/EasyConfigRoute.h"
 
 /*[[[cog
 import cog
