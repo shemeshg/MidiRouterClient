@@ -4,7 +4,7 @@
 
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
-#include "UserDataConfig.h"
+#include "GenHpp/UserDataConfig.h"
 class UserConfigParseJson
 {
 public:

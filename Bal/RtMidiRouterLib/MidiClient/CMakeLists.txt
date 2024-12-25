@@ -80,7 +80,7 @@ GenHpp/PresetMidiControl.h
 UserConfigGenJson.h
 UserConfigParseJson.h
 GenHpp/UserControl.h
-UserDataConfig.h
+GenHpp/UserDataConfig.h
 GenHpp/EasyConfig.cpp
 GenHpp/EasyConfigRoute.cpp
 GenHpp/FilterAndTransform.cpp
@@ -98,7 +98,7 @@ GenHpp/PresetMidiControl.cpp
 UserConfigGenJson.cpp
 UserConfigParseJson.cpp
 GenHpp/UserControl.cpp
-UserDataConfig.cpp
+GenHpp/UserDataConfig.cpp
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel

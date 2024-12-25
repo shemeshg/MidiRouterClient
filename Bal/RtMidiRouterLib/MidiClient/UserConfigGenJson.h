@@ -1,7 +1,7 @@
 #ifndef USERCONFIGGENJSON_H
 #define USERCONFIGGENJSON_H
 
-#include "UserDataConfig.h"
+#include "GenHpp/UserDataConfig.h"
 
 #include <QtCore/qjsonobject.h>
 class UserConfigGenJson
