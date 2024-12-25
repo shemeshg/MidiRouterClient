@@ -55,7 +55,6 @@ def remove_default_assignment(declaration):
     pattern = re.compile(r'\s*=\s*".*?"|\s*=\s*\w+|\s*=\s*\(.*?\)\s*=>\s*\{.*?\}')
     # Replace the default assignments with an empty string
     result = re.sub(pattern, '', declaration)
-    result = result.replace("override","")
     return result
 
 def replace_next(template, NEXT):
@@ -75,10 +74,17 @@ def replace_next(template, NEXT):
     return result
 
 
-def get_string_parts(line):
-    pattern = re.compile(r'\"(.*?)\"|(\S+)')
-    matches = pattern.findall(line)
-    parts = [match[0] or match[1] for match in matches]
+def get_string_parts(line, with_quotes=False):
+    if with_quotes:
+        pattern = re.compile(r'(\".*?\"|\S+)')
+    else:
+        pattern = re.compile(r'\"(.*?)\"|(\S+)')
+    
+    matches = pattern.findall(line)    
+    if with_quotes:
+        parts = [match for match in matches]
+    else:
+        parts = [match[0] or match[1] for match in matches]    
     return parts
 
 def extract_next_value(string):
@@ -177,7 +183,7 @@ def parse_file(input_file):
                 else:  
                     for i in range(len(fileMap[next_only_file_id].file_content)):
                         template = fileMap[next_only_file_id].file_content[i]
-                        NEXT = get_string_parts(next_text)
+                        NEXT = get_string_parts(next_text, True)
 
                         if extract_next_value(template) is not None:                            
                             fileMap[next_only_file_id].file_content[i]  = replace_next(template, NEXT)

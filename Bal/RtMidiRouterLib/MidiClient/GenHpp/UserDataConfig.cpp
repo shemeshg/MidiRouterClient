@@ -18,49 +18,49 @@
         setActivePreset(0);
     }
 
-    void UserDataConfig::clearDropdownlists()  
+    void UserDataConfig::clearDropdownlists() override 
     {
         return UserDataConfigPrivate::clearDropdownlists();
     }
 
 
 
-    int UserDataConfig::activePresetID() const  
+    int UserDataConfig::activePresetID() const override 
     {
         return UserDataConfigPrivate::activePresetID(); // Call the parent class's function
     }
 
-    QString UserDataConfig::computerUuid() const  
+    QString UserDataConfig::computerUuid() const override 
     {
         return UserDataConfigPrivate::computerUuid();
     }
 
-    QList<MidiRoutePreset*> UserDataConfig::midiRoutePresets() const  
+    QList<MidiRoutePreset*> UserDataConfig::midiRoutePresets() const override 
     {
         return UserDataConfigPrivate::midiRoutePresets();
     }
 
-    void UserDataConfig::clearMidiRoutePresets()  
+    void UserDataConfig::clearMidiRoutePresets() override 
     {
         UserDataConfigPrivate::clearMidiRoutePresets();
     }
 
-    void UserDataConfig::addMidiRoutePresets(MidiRoutePreset * item)  
+    void UserDataConfig::addMidiRoutePresets(MidiRoutePreset * item) override 
     {
         UserDataConfigPrivate::addMidiRoutePresets(item);
     }
 
-    void UserDataConfig::setActivePresetID(const int newActivePresetID)  
+    void UserDataConfig::setActivePresetID(const int newActivePresetID) override 
     {
         UserDataConfigPrivate::setActivePresetID(newActivePresetID);
     }
 
-    void UserDataConfig::setConnectedInPorts(const QStringList &newConnectedInPorts)  
+    void UserDataConfig::setConnectedInPorts(const QStringList &newConnectedInPorts) override 
     {
         UserDataConfigPrivate::setConnectedInPorts(newConnectedInPorts);
     }
 
-    void UserDataConfig::setConnectedOutPorts(const QStringList &newConnectedOutPorts)  
+    void UserDataConfig::setConnectedOutPorts(const QStringList &newConnectedOutPorts) override 
     {
         UserDataConfigPrivate::setConnectedOutPorts(newConnectedOutPorts);
     }
@@ -89,19 +89,19 @@
 
     }
 
-    void UserDataConfig::clearVirtualPorts()  
+    void UserDataConfig::clearVirtualPorts() override 
     {
         m_virtualInPorts.clear();
         emit virtualInPortsChanged();
     }
 
-    void UserDataConfig::addVirtualPort(QString port)  
+    void UserDataConfig::addVirtualPort(QString port) override 
     {
         m_virtualInPorts.append(port);
         emit virtualInPortsChanged();
     }
 
-    void UserDataConfig::addDropdownList(QString name, QString data)  
+    void UserDataConfig::addDropdownList(QString name, QString data) override 
     {
         Dropdownlist *d = new Dropdownlist();
         d->setName(name);
@@ -122,7 +122,7 @@
                 midiRoutePresets());
     }
 
-    void UserDataConfig::setActivePreset(int id)  
+    void UserDataConfig::setActivePreset(int id) override 
     {
         setActivePresetID(id);        
         m_activePreset = m_midiRoutePresets.at(id);        
@@ -138,7 +138,7 @@
         emit activePresetChanged();
     }
 
-    void UserDataConfig::addPreset()  
+    void UserDataConfig::addPreset() override 
     {
         MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
         p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
