@@ -7,10 +7,11 @@
 #include <QSettings>
 //- #include "MidiClientUtil.h"
 //- #include "UserConfigGenJson.h"
-#include "../UserConfigParseJson.h"
+//- #include "UserConfigParseJson.h"
 //-only-file null
 #include "MidiClientUtil.hpp"
 #include "UserConfigGenJson.hpp"
+#include "UserConfigParseJson.hpp"
 //-only-file header
 #include "../genPrpt/UserDataConfigPrivate.h"
 #include <QJsonValue>
