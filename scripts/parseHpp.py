@@ -55,6 +55,7 @@ def remove_default_assignment(declaration):
     pattern = re.compile(r'\s*=\s*".*?"|\s*=\s*\w+|\s*=\s*\(.*?\)\s*=>\s*\{.*?\}')
     # Replace the default assignments with an empty string
     result = re.sub(pattern, '', declaration)
+    result = result.replace("override","")
     return result
 
 def replace_next(template, NEXT):
