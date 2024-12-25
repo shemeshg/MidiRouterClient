@@ -73,8 +73,8 @@ GenHpp/MidiClientConnection.h
 GenHpp/MidiClientUtil.h
 GenHpp/MidiPresetControlEasyConfig.h
 GenHpp/MidiRouteInput.h
-MidiRoutePreset.h
-MidiRouterChain.h
+GenHpp/MidiRoutePreset.h
+GenHpp/MidiRouterChain.h
 GenHpp/Monitor.h
 GenHpp/PresetMidiControl.h
 UserConfigGenJson.h
@@ -91,8 +91,8 @@ GenHpp/FilterToConsle.cpp
 GenHpp/MidiClientConnection.cpp
 GenHpp/MidiClientUtil.cpp
 GenHpp/MidiRouteInput.cpp
-MidiRoutePreset.cpp
-MidiRouterChain.cpp
+GenHpp/MidiRoutePreset.cpp
+GenHpp/MidiRouterChain.cpp
 GenHpp/Monitor.cpp
 GenHpp/PresetMidiControl.cpp
 UserConfigGenJson.cpp

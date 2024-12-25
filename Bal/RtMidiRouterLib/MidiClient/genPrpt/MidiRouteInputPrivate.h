@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MidiRouteInputCc14bit.h"
-#include "../MidiRouterChain.h"
+#include "../GenHpp/MidiRouterChain.h"
 #include "../GenHpp/Monitor.h"
 #include <QObject>
 #include <QObjectComputedProperty>

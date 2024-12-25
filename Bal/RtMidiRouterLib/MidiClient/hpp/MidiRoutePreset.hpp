@@ -1,16 +1,25 @@
+//-define-file body GenHpp/MidiRoutePreset.cpp
+//-define-file header GenHpp/MidiRoutePreset.h
+//-only-file header //-
 #pragma once
-#include "GenHpp/EasyConfig.h"
-#include "GenHpp/MidiClientUtil.h"
-#include "genPrpt/MidiRoutePresetPrivate.h"
-#include "GenHpp/MidiPresetControlEasyConfig.h"
+//- #include "MidiClientUtil.h"
+//-only-file body //-
+//- #include "MidiRoutePreset.h"
+//-only-file null
+#include "MidiClientUtil.hpp"
+//-only-file header
+#include "../genPrpt/MidiRoutePresetPrivate.h"
 
+//-var {PRE} "MidiRoutePreset::"
 class MidiRoutePreset : public MidiRoutePresetPrivate
 
 {
     Q_OBJECT
     QML_ELEMENT
 public:
+    //- {function} 1 1
     explicit MidiRoutePreset(QString computerUuid, QObject *parent = nullptr)
+        //-only-file body
         : MidiRoutePresetPrivate{parent}{
         setComputerUuid(computerUuid);
         setUuid(getUuId());
@@ -26,8 +35,10 @@ public:
 
     };
 
-
-    void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs){
+    //- {function} 0 1
+    void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs)
+    //-only-file body
+    {
         for ( MidiRouteInput *input: m_midiRouteInputs){
             input->clearEasyConfigMidiRouterChains();
             input->addMonitorEasyConfigIfRequired();
@@ -51,7 +62,7 @@ public:
 
 
 
-
+    //-only-file header
 public slots:
 
 signals:
