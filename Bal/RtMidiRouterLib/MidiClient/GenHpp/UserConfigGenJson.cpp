@@ -1,5 +1,4 @@
 #include "UserConfigGenJson.h"
-#include "UserConfigGenJson.h"
 #include "GenHpp/MidiPresetControlEasyConfig.h"
     QJsonObject UserConfigGenJson::getJson( int activePresetID, QList<Dropdownlist *> dropdownlists, QList<QString> virtualInPorts, QList<MidiRoutePreset *> midiRoutePresets) 
     {
