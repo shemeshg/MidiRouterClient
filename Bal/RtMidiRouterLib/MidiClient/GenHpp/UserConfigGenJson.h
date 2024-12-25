@@ -1,9 +1,12 @@
 #pragma once
-#include "UserDataConfig.h"
 #include <QJsonValue>
+#include <QtCore/qjsonarray.h>
+#include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
 #include "../genPrpt/Dropdownlist.h"
 #include "../GenHpp/MidiRoutePreset.h"
+
+
 
 class UserConfigGenJson
 {

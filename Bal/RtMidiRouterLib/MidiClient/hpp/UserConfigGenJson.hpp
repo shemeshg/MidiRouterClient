@@ -2,19 +2,21 @@
 //-define-file header GenHpp/UserConfigGenJson.h
 //-only-file header //-
 #pragma once
-//- #include "UserDataConfig.h"
+#include <QJsonValue>
+#include <QtCore/qjsonarray.h>
+#include <QtCore/qjsondocument.h>
+#include <QtCore/qjsonobject.h>
+#include "../genPrpt/Dropdownlist.h"
+#include "../GenHpp/MidiRoutePreset.h"
+
 //-only-file null
 //-only-file body //-
 //- #include "UserConfigGenJson.h"
 //- #include "UserConfigGenJson.h"
 //- #include "GenHpp/MidiPresetControlEasyConfig.h"
 //-only-file null
-#include "UserDataConfig.hpp"
 //-only-file header
-#include <QJsonValue>
-#include <QtCore/qjsonobject.h>
-#include "../genPrpt/Dropdownlist.h"
-#include "../GenHpp/MidiRoutePreset.h"
+
 
 //-var {PRE} "UserConfigGenJson::"
 class UserConfigGenJson
