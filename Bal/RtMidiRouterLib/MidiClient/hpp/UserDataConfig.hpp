@@ -2,6 +2,7 @@
 //-define-file header GenHpp/UserDataConfig.h
 //-only-file header //-
 #pragma once
+//- #include "UserDataConfigItf.h"
 //-only-file body //-
 //- #include "UserDataConfig.h"
 #include <QSettings>
@@ -12,6 +13,7 @@
 #include "MidiClientUtil.hpp"
 #include "UserConfigGenJson.hpp"
 #include "UserConfigParseJson.hpp"
+#include "UserDataConfigItf.hpp"
 //-only-file header
 #include "../genPrpt/UserDataConfigPrivate.h"
 #include <QJsonValue>
@@ -20,7 +22,7 @@
 #include <QtCore/qjsonobject.h>
 
 //-var {PRE} "UserDataConfig::"
-class UserDataConfig : public UserDataConfigPrivate
+class UserDataConfig : public UserDataConfigPrivate, public UserDataConfigItf
 
 {
     Q_OBJECT
@@ -41,6 +43,71 @@ public:
         clearMidiRoutePresets();
         addPreset();
         setActivePreset(0);
+    }
+
+    //- {function} 0 1
+    void clearDropdownlists()  override  
+    //-only-file body
+    {
+        return UserDataConfigPrivate::clearDropdownlists();
+    }
+
+
+
+    //- {function} 0 1
+    int activePresetID() const override
+    //-only-file body
+    {
+        return UserDataConfigPrivate::activePresetID(); // Call the parent class's function
+    }
+
+    //- {function} 0 1
+    QString computerUuid() const override
+    //-only-file body
+    {
+        return UserDataConfigPrivate::computerUuid();
+    }
+
+    //- {function} 0 1
+    QList<MidiRoutePreset*> midiRoutePresets() const override
+    //-only-file body
+    {
+        return UserDataConfigPrivate::midiRoutePresets();
+    }
+
+    //- {function} 0 1
+    void clearMidiRoutePresets() override
+    //-only-file body
+    {
+        UserDataConfigPrivate::clearMidiRoutePresets();
+    }
+
+    //- {function} 0 1
+    void addMidiRoutePresets(MidiRoutePreset * item) override
+    //-only-file body
+    {
+        UserDataConfigPrivate::addMidiRoutePresets(item);
+    }
+
+    //- {function} 0 1
+    void setActivePresetID(const int newActivePresetID) override
+    //-only-file body
+    {
+        UserDataConfigPrivate::setActivePresetID(newActivePresetID);
+    }
+
+    //- {function} 0 1
+    void setConnectedInPorts(const QStringList &newConnectedInPorts) override
+    //-only-file body
+    {
+        UserDataConfigPrivate::setConnectedInPorts(newConnectedInPorts);
+    }
+
+    //- {function} 0 1
+    void setConnectedOutPorts(const QStringList &newConnectedOutPorts) override
+    //-only-file body
+    {
+        UserDataConfigPrivate::setConnectedOutPorts(newConnectedOutPorts);
     }
 
     //- {function} 1 1
@@ -72,7 +139,7 @@ public:
     }
 
     //- {function} 0 1
-    void clearVirtualPorts()
+    void clearVirtualPorts() override
     //-only-file body
     {
         m_virtualInPorts.clear();
@@ -80,7 +147,7 @@ public:
     }
 
     //- {function} 0 1
-    void addVirtualPort(QString port)
+    void addVirtualPort(QString port) override
     //-only-file body
     {
         m_virtualInPorts.append(port);
@@ -88,7 +155,7 @@ public:
     }
 
     //- {function} 0 1
-    void addDropdownList(QString name, QString data)
+    void addDropdownList(QString name, QString data) override
     //-only-file body
     {
         Dropdownlist *d = new Dropdownlist();
@@ -115,7 +182,7 @@ public slots:
     }
 
     //- {function} 0 1
-    void setActivePreset(int id)
+    void setActivePreset(int id) override
     //-only-file body
     {
         setActivePresetID(id);        
@@ -133,7 +200,7 @@ public slots:
     }
 
     //- {function} 0 1
-    void addPreset()
+    void addPreset() override
     //-only-file body
     {
         MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);

@@ -1,7 +1,7 @@
 #pragma once
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
-#include "UserDataConfig.h"
+#include "UserDataConfigItf.h"
 
 class UserConfigParseJson
 {
@@ -9,12 +9,12 @@ public:
     UserConfigParseJson(){
     }
 
-    void setChanges(UserDataConfig *userDataConfig, QJsonObject &jsonDoc);
+    void setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc);
 private:
-    void updateVirtualInPorts(UserDataConfig *userDataConfig, const QJsonValue &virtualInPorts);
-    void updateDropdownlists(UserDataConfig *userDataConfig, const QJsonValue &dropdownlists);
-    void updateMidiRoutePresets(UserDataConfig *userDataConfig, const QJsonValue &midiRoutePresets);
-    MidiRoutePreset* createMidiRoutePreset(UserDataConfig *userDataConfig, const QJsonValue &value);
+    void updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QJsonValue &virtualInPorts);
+    void updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValue &dropdownlists);
+    void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValue &midiRoutePresets);
+    MidiRoutePreset* createMidiRoutePreset(UserDataConfigItf *userDataConfig, const QJsonValue &value);
     void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type);
     UserControl* createUserControl(const QJsonValue &userControlValue);
     void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs);

@@ -1,23 +1,23 @@
 #include "UserConfigParseJson.h"
-    void UserConfigParseJson::setChanges(UserDataConfig *userDataConfig, QJsonObject &jsonDoc) 
+    void UserConfigParseJson::setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc) 
     {
 
-        updateVirtualInPorts(userDataConfig,jsonDoc["virtualInPorts"]);
+        updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
 
         if (jsonDoc["_activePresetID"].isDouble()) {
-            userDataConfig->setActivePresetID(jsonDoc["_activePresetID"].toInt());
+            userDataConfigItf->setActivePresetID(jsonDoc["_activePresetID"].toInt());
         }
 
 
-        userDataConfig->setConnectedInPorts(stringListFromJsonAry(jsonDoc["connectedInPorts"]));
-        userDataConfig->setConnectedOutPorts(stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
+        userDataConfigItf->setConnectedInPorts(stringListFromJsonAry(jsonDoc["connectedInPorts"]));
+        userDataConfigItf->setConnectedOutPorts(stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
 
-        updateDropdownlists(userDataConfig, jsonDoc["dropdownlists"]);
+        updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
-        updateMidiRoutePresets(userDataConfig, jsonDoc["midiRoutePresets"]);
+        updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
     }
 
-    void UserConfigParseJson::updateVirtualInPorts(UserDataConfig *userDataConfig, const QJsonValue &virtualInPorts) 
+    void UserConfigParseJson::updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QJsonValue &virtualInPorts) 
     {
         if (virtualInPorts.isArray()){
             auto array = virtualInPorts.toArray();
@@ -29,7 +29,7 @@
         }
     }
 
-    void UserConfigParseJson::updateDropdownlists(UserDataConfig *userDataConfig, const QJsonValue &dropdownlists) 
+    void UserConfigParseJson::updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValue &dropdownlists) 
     {
         userDataConfig->clearDropdownlists();
         if (dropdownlists.isArray()) {
@@ -40,7 +40,7 @@
         }
     }
 
-    void UserConfigParseJson::updateMidiRoutePresets(UserDataConfig *userDataConfig, const QJsonValue &midiRoutePresets) 
+    void UserConfigParseJson::updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValue &midiRoutePresets) 
     {
         userDataConfig->clearMidiRoutePresets();
         if (midiRoutePresets.isArray()){
@@ -62,7 +62,7 @@
         }
     }
 
-    MidiRoutePreset* UserConfigParseJson::createMidiRoutePreset(UserDataConfig *userDataConfig, const QJsonValue &value) 
+    MidiRoutePreset* UserConfigParseJson::createMidiRoutePreset(UserDataConfigItf *userDataConfig, const QJsonValue &value) 
     {
         auto preset = new MidiRoutePreset(userDataConfig->computerUuid());
         preset->setName(value["name"].toString());
