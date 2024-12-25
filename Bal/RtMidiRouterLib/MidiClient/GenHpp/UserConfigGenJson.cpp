@@ -1,13 +1,13 @@
 #include "UserConfigGenJson.h"
 #include "UserConfigGenJson.h"
 #include "GenHpp/MidiPresetControlEasyConfig.h"
-    QJsonObject UserConfigGenJson::getJson(UserDataConfig *userDataConfig, int activePresetID, QList<Dropdownlist *> dropdownlists, QList<QString> virtualInPorts) 
+    QJsonObject UserConfigGenJson::getJson( int activePresetID, QList<Dropdownlist *> dropdownlists, QList<QString> virtualInPorts, QList<MidiRoutePreset *> midiRoutePresets) 
     {
         QJsonObject objUserConfig;
         objUserConfig["_activePresetID"] = activePresetID;
         objUserConfig["dropdownlists"]= getDropdownList(dropdownlists);
         objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts);
-        objUserConfig["midiRoutePresets"] = getMidiRoutePresets(userDataConfig);
+        objUserConfig["midiRoutePresets"] = getMidiRoutePresets(midiRoutePresets);
 
         return objUserConfig;
     }
@@ -44,14 +44,14 @@
         return ary;
     }
 
-    QJsonArray UserConfigGenJson::getMidiRoutePresets(UserDataConfig *userDataConfig) 
+    QJsonArray UserConfigGenJson::getMidiRoutePresets(QList<MidiRoutePreset *> midiRoutePresets) 
     {
 
 
         QJsonArray ary;
-        for (const auto &itm: userDataConfig->midiRoutePresets()){
+        for (const auto &itm: midiRoutePresets){
             QJsonObject obj;
-            auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( userDataConfig);
+            auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( midiRoutePresets);
             itm->recreateEasyConfig(presetControlEasyConfigs);
             obj["name"] = itm->name();
             obj["uuid"] = itm->uuid();
@@ -312,10 +312,10 @@
     }
 
 
-    QList<MidiPresetControlEasyConfig> UserConfigGenJson::getMidiPresetControlEasyConfigs(UserDataConfig *userDataConfig) 
+    QList<MidiPresetControlEasyConfig> UserConfigGenJson::getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets) 
     {
         QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
-        for (const auto &itm: userDataConfig->midiRoutePresets()){
+        for (const auto &itm: midiRoutePresets){
             MidiPresetControlEasyConfig m;
             if (itm->isEnabled()){
                 m.pmc = itm->midiControlOff();

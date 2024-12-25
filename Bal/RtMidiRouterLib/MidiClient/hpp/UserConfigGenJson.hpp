@@ -3,7 +3,6 @@
 //-only-file header //-
 #pragma once
 //- #include "UserDataConfig.h"
-//- #include "../genPrpt/Dropdownlist.h"
 //-only-file null
 //-only-file body //-
 //- #include "UserConfigGenJson.h"
@@ -12,7 +11,10 @@
 //-only-file null
 #include "UserDataConfig.hpp"
 //-only-file header
+#include <QJsonValue>
 #include <QtCore/qjsonobject.h>
+#include "../genPrpt/Dropdownlist.h"
+#include "../GenHpp/MidiRoutePreset.h"
 
 //-var {PRE} "UserConfigGenJson::"
 class UserConfigGenJson
@@ -21,17 +23,18 @@ public:
     UserConfigGenJson(){}
 
     //- {function} 0 1
-    QJsonObject getJson(UserDataConfig *userDataConfig,
+    QJsonObject getJson(
                         int activePresetID,
                         QList<Dropdownlist *> dropdownlists,
-                        QList<QString> virtualInPorts)
+                        QList<QString> virtualInPorts,
+                        QList<MidiRoutePreset *> midiRoutePresets)
     //-only-file body
     {
         QJsonObject objUserConfig;
         objUserConfig["_activePresetID"] = activePresetID;
         objUserConfig["dropdownlists"]= getDropdownList(dropdownlists);
         objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts);
-        objUserConfig["midiRoutePresets"] = getMidiRoutePresets(userDataConfig);
+        objUserConfig["midiRoutePresets"] = getMidiRoutePresets(midiRoutePresets);
 
         return objUserConfig;
     }
@@ -78,15 +81,15 @@ private:
     }
 
     //- {function} 0 1
-    QJsonArray getMidiRoutePresets(UserDataConfig *userDataConfig)
+    QJsonArray getMidiRoutePresets(QList<MidiRoutePreset *> midiRoutePresets)
     //-only-file body
     {
 
 
         QJsonArray ary;
-        for (const auto &itm: userDataConfig->midiRoutePresets()){
+        for (const auto &itm: midiRoutePresets){
             QJsonObject obj;
-            auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( userDataConfig);
+            auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( midiRoutePresets);
             itm->recreateEasyConfig(presetControlEasyConfigs);
             obj["name"] = itm->name();
             obj["uuid"] = itm->uuid();
@@ -378,11 +381,11 @@ private:
 
 
     //- {function} 0 1
-    QList<MidiPresetControlEasyConfig> getMidiPresetControlEasyConfigs(UserDataConfig *userDataConfig)
+    QList<MidiPresetControlEasyConfig> getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets)
     //-only-file body
     {
         QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
-        for (const auto &itm: userDataConfig->midiRoutePresets()){
+        for (const auto &itm: midiRoutePresets){
             MidiPresetControlEasyConfig m;
             if (itm->isEnabled()){
                 m.pmc = itm->midiControlOff();

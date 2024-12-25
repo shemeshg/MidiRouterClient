@@ -106,10 +106,11 @@ public slots:
     //-only-file body
     {
         UserConfigGenJson userConfigGenJson;
-        return userConfigGenJson.getJson(this,
+        return userConfigGenJson.getJson(
                  activePresetID(),
                  dropdownlists(),
-                virtualInPorts());
+                virtualInPorts(),
+                midiRoutePresets());
     }
 
     //- {function} 0 1

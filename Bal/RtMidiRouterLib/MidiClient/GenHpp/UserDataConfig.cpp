@@ -68,10 +68,11 @@
     QJsonObject UserDataConfig::getJson() 
     {
         UserConfigGenJson userConfigGenJson;
-        return userConfigGenJson.getJson(this,
+        return userConfigGenJson.getJson(
                  activePresetID(),
                  dropdownlists(),
-                virtualInPorts());
+                virtualInPorts(),
+                midiRoutePresets());
     }
 
     void UserDataConfig::setActivePreset(int id) 
