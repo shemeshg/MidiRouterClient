@@ -1,5 +1,5 @@
 #include "UserConfigGenJson.h"
-#include "MidiPresetControlEasyConfig.h"
+#include "GenHpp/MidiPresetControlEasyConfig.h"
 
 
 QJsonObject UserConfigGenJson::getJson(UserDataConfig *userDataConfig){

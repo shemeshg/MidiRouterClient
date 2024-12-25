@@ -1,25 +1,13 @@
-
-
-#pragma once
-#include "GenHpp/EasyConfig.h"
-#include "genPrpt/MidiRouteInputPrivate.h"
-#include "MidiPresetControlEasyConfig.h"
-
-class MidiRouteInput : public MidiRouteInputPrivate
-
-{
-    Q_OBJECT
-    QML_ELEMENT
-public:
-    explicit MidiRouteInput(QObject *parent = nullptr)
+#include "MidiRouteInput.h"
+     MidiRouteInput::MidiRouteInput(QObject *parent) 
         : MidiRouteInputPrivate{parent} {
         clearMidiRouteInputCc14bit();
         clearMidiRouterChains();
     };
 
 
-
-    void clearEasyConfigMidiRouterChains() {
+    void MidiRouteInput::clearEasyConfigMidiRouterChains() 
+    {
         for (int i = m_midiRouterChains.size() - 1; i >= 0; --i) {
             if (m_midiRouterChains[i]->isEasyConfig()) {
                 delMidiRouterChains(i);
@@ -27,7 +15,8 @@ public:
         }
     }
 
-    void createEasyConfigChains(EasyConfig *easyConfig) {
+    void MidiRouteInput::createEasyConfigChains(EasyConfig *easyConfig) 
+    {
         for (auto easyConfigRoute : easyConfig->easyConfigRoutes()) {
             MidiRouterChain *midiRouterChain = new MidiRouterChain();
             midiRouterChain->setEasyConfigChain(easyConfig, easyConfigRoute);
@@ -37,7 +26,8 @@ public:
         }
     }
 
-    void addMonitorEasyConfigIfRequired(){
+    void MidiRouteInput::addMonitorEasyConfigIfRequired() 
+    {
         if (monitor()->isMonitored()){
             MidiRouterChain *midiRouterChain = new MidiRouterChain();
             midiRouterChain->addEasyConfigMonitor();
@@ -45,7 +35,8 @@ public:
         }
     }
 
-    void addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs){
+    void MidiRouteInput::addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs) 
+    {
         qDebug()<<"midiPresetControlEasyConfigs";
         for (const auto &m: midiPresetControlEasyConfigs){
             if (m.pmc->portName() == midiInputName()){
@@ -57,7 +48,8 @@ public:
         }
     }
 
-    void clearMidiRouterChains() {
+    void MidiRouteInput::clearMidiRouterChains() 
+    {
         for (MidiRouterChain *item : m_midiRouterChains) {
             delete item;
         }
@@ -67,8 +59,3 @@ public:
         emit midiRouterChainsChanged();
     }
 
-public slots:
-
-private:
-
-};

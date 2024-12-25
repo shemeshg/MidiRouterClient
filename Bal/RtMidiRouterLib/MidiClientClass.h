@@ -1,7 +1,7 @@
 #pragma once
 #include <QJSValue>
 #include <QString>
-#include "MidiClient/MidiClientConnection.h"
+#include "MidiClient/GenHpp/MidiClientConnection.h"
 #include "QtWebSockets/qwebsocket.h"
 #include "QtWebSockets/qwebsocketserver.h"
 #include "libs/QWebchannelCppClient/WebChannelClient.h"

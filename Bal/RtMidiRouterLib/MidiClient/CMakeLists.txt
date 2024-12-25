@@ -69,10 +69,10 @@ GenHpp/FilterMidiDestination.h
 GenHpp/FilterNetworkDestination.h
 GenHpp/FilterSchedule.h
 GenHpp/FilterToConsle.h
-MidiClientConnection.h
+GenHpp/MidiClientConnection.h
 GenHpp/MidiClientUtil.h
-MidiPresetControlEasyConfig.h
-MidiRouteInput.h
+GenHpp/MidiPresetControlEasyConfig.h
+GenHpp/MidiRouteInput.h
 MidiRoutePreset.h
 MidiRouterChain.h
 GenHpp/Monitor.h
@@ -88,9 +88,9 @@ GenHpp/FilterMidiDestination.cpp
 GenHpp/FilterNetworkDestination.cpp
 GenHpp/FilterSchedule.cpp
 GenHpp/FilterToConsle.cpp
-MidiClientConnection.cpp
+GenHpp/MidiClientConnection.cpp
 GenHpp/MidiClientUtil.cpp
-MidiRouteInput.cpp
+GenHpp/MidiRouteInput.cpp
 MidiRoutePreset.cpp
 MidiRouterChain.cpp
 GenHpp/Monitor.cpp

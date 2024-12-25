@@ -4,7 +4,7 @@
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 #include "../GenHpp/EasyConfig.h"
-#include "../MidiRouteInput.h"
+#include "../GenHpp/MidiRouteInput.h"
 #include "../GenHpp/PresetMidiControl.h"
 #include "../GenHpp/UserControl.h"
 

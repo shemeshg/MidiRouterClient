@@ -5,7 +5,7 @@
 #include "GenHpp/FilterNetworkDestination.h"
 #include "GenHpp/FilterSchedule.h"
 #include "GenHpp/FilterToConsle.h"
-#include "MidiPresetControlEasyConfig.h"
+#include "GenHpp/MidiPresetControlEasyConfig.h"
 #include "genPrpt/MidiRouterChainPrivate.h"
 #include "genPrpt/MidiRoutersFilter.h"
 #include <QtCore/qjsondocument.h>

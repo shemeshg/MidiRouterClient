@@ -1,6 +1,6 @@
 #pragma once
 
-#include "genPrpt/MidiClientConnectionPrivate.h"
+#include "../genPrpt/MidiClientConnectionPrivate.h"
 
 class MidiClientConnection : public MidiClientConnectionPrivate
 
@@ -10,10 +10,8 @@ class MidiClientConnection : public MidiClientConnectionPrivate
     QML_ELEMENT
 public:
     explicit MidiClientConnection(QObject *parent = nullptr);
-
 public slots:
     void setServerStatusAndText(const ServerStatus &newServerStatus);
-
 private:        
 
 };
