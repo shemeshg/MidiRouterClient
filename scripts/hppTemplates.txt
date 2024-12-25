@@ -4,10 +4,3 @@
 //-     {NEXT[{PRM_0}:{PRM_1}]} {PRE}{NEXT[{PRM_1}:]} 
 //-only-file header ;
 //-end-template
-
-//-template {link_back}
-//-only-file body 
-// See file:///./{PRM_0} 
-//-only-file header 
-// See file:///./{PRM_0} 
-//-end-template
