@@ -77,7 +77,7 @@ GenHpp/MidiRoutePreset.h
 GenHpp/MidiRouterChain.h
 GenHpp/Monitor.h
 GenHpp/PresetMidiControl.h
-UserConfigGenJson.h
+GenHpp/UserConfigGenJson.h
 UserConfigParseJson.h
 GenHpp/UserControl.h
 GenHpp/UserDataConfig.h
@@ -95,7 +95,7 @@ GenHpp/MidiRoutePreset.cpp
 GenHpp/MidiRouterChain.cpp
 GenHpp/Monitor.cpp
 GenHpp/PresetMidiControl.cpp
-UserConfigGenJson.cpp
+GenHpp/UserConfigGenJson.cpp
 UserConfigParseJson.cpp
 GenHpp/UserControl.cpp
 GenHpp/UserDataConfig.cpp

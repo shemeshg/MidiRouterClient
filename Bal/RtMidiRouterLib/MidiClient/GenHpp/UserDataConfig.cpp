@@ -1,7 +1,7 @@
 #include "UserDataConfig.h"
 #include <QSettings>
 #include "MidiClientUtil.h"
-#include "../UserConfigGenJson.h"
+#include "UserConfigGenJson.h"
 #include "../UserConfigParseJson.h"
      UserDataConfig::UserDataConfig(QObject *parent) 
         : UserDataConfigPrivate{parent}
