@@ -1,21 +1,21 @@
 #include "UserConfigGenJson.h"
 #include "UserConfigGenJson.h"
 #include "GenHpp/MidiPresetControlEasyConfig.h"
-    QJsonObject UserConfigGenJson::getJson(UserDataConfig *userDataConfig) 
+    QJsonObject UserConfigGenJson::getJson(UserDataConfig *userDataConfig, int activePresetID, QList<Dropdownlist *> dropdownlists, QList<QString> virtualInPorts) 
     {
         QJsonObject objUserConfig;
-        objUserConfig["_activePresetID"] = userDataConfig->activePresetID();
-        objUserConfig["dropdownlists"]= getDropdownList(userDataConfig);
-        objUserConfig["virtualInPorts"] = getListToJsonAry(userDataConfig->virtualInPorts());
+        objUserConfig["_activePresetID"] = activePresetID;
+        objUserConfig["dropdownlists"]= getDropdownList(dropdownlists);
+        objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts);
         objUserConfig["midiRoutePresets"] = getMidiRoutePresets(userDataConfig);
 
         return objUserConfig;
     }
 
-    QJsonArray UserConfigGenJson::getDropdownList(UserDataConfig *userDataConfig) 
+    QJsonArray UserConfigGenJson::getDropdownList(QList<Dropdownlist *> dropdownlists) 
     {
         QJsonArray ary;
-        for (const auto itm: userDataConfig->dropdownlists()){
+        for (const auto itm: dropdownlists){
             QJsonObject obj;
             obj["name"] = itm->name();
             obj["data"] = itm->data();

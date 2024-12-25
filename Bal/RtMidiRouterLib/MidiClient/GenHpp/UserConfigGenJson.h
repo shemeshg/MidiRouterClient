@@ -1,5 +1,6 @@
 #pragma once
 #include "UserDataConfig.h"
+#include "../genPrpt/Dropdownlist.h"
 #include <QtCore/qjsonobject.h>
 
 class UserConfigGenJson
@@ -7,10 +8,13 @@ class UserConfigGenJson
 public:    
     UserConfigGenJson(){}
 
-    QJsonObject getJson(UserDataConfig *userDataConfig);
+    QJsonObject getJson(UserDataConfig *userDataConfig,
+                        int activePresetID,
+                        QList<Dropdownlist *> dropdownlists,
+                        QList<QString> virtualInPorts);
 private:
 
-    QJsonArray getDropdownList(UserDataConfig *userDataConfig);
+    QJsonArray getDropdownList(QList<Dropdownlist *> dropdownlists);
     QJsonArray getListToJsonAry(const QStringList &sl);
     QJsonArray getListToJMidiInsonAry(const QStringList &sl);
     QJsonArray getMidiRoutePresets(UserDataConfig *userDataConfig);

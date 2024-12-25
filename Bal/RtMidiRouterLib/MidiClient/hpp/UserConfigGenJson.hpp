@@ -3,6 +3,7 @@
 //-only-file header //-
 #pragma once
 //- #include "UserDataConfig.h"
+//- #include "../genPrpt/Dropdownlist.h"
 //-only-file null
 //-only-file body //-
 //- #include "UserConfigGenJson.h"
@@ -20,13 +21,16 @@ public:
     UserConfigGenJson(){}
 
     //- {function} 0 1
-    QJsonObject getJson(UserDataConfig *userDataConfig)
+    QJsonObject getJson(UserDataConfig *userDataConfig,
+                        int activePresetID,
+                        QList<Dropdownlist *> dropdownlists,
+                        QList<QString> virtualInPorts)
     //-only-file body
     {
         QJsonObject objUserConfig;
-        objUserConfig["_activePresetID"] = userDataConfig->activePresetID();
-        objUserConfig["dropdownlists"]= getDropdownList(userDataConfig);
-        objUserConfig["virtualInPorts"] = getListToJsonAry(userDataConfig->virtualInPorts());
+        objUserConfig["_activePresetID"] = activePresetID;
+        objUserConfig["dropdownlists"]= getDropdownList(dropdownlists);
+        objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts);
         objUserConfig["midiRoutePresets"] = getMidiRoutePresets(userDataConfig);
 
         return objUserConfig;
@@ -36,11 +40,11 @@ public:
 private:
 
     //- {function} 0 1
-    QJsonArray getDropdownList(UserDataConfig *userDataConfig)
+    QJsonArray getDropdownList(QList<Dropdownlist *> dropdownlists)
     //-only-file body
     {
         QJsonArray ary;
-        for (const auto itm: userDataConfig->dropdownlists()){
+        for (const auto itm: dropdownlists){
             QJsonObject obj;
             obj["name"] = itm->name();
             obj["data"] = itm->data();

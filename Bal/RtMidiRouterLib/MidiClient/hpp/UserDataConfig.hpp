@@ -106,7 +106,10 @@ public slots:
     //-only-file body
     {
         UserConfigGenJson userConfigGenJson;
-        return userConfigGenJson.getJson(this);
+        return userConfigGenJson.getJson(this,
+                 activePresetID(),
+                 dropdownlists(),
+                virtualInPorts());
     }
 
     //- {function} 0 1
