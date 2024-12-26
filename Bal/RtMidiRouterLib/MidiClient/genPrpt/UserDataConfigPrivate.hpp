@@ -1,10 +1,26 @@
+//-define-file header genPrpt/UserDataConfigPrivate.h
+//-only-file header //-
 #pragma once
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 #include "Dropdownlist.h"
-#include "../GenHpp/MidiRoutePreset.h"
+//- #include "../GenHpp/MidiRoutePreset.h"
+//-only-file null
+#include "../hpp/MidiRoutePreset.hpp"
+//-only-file header 
 
+//-only-file null
+/*[[[cog
+import cog
+from UserDataConfigPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class UserDataConfigPrivate : public QObject
 {
     Q_OBJECT
@@ -170,3 +186,6 @@ private:
     QStringList m_connectedOutPorts;
     
 };
+//-only-file null
+
+//[[[end]]]

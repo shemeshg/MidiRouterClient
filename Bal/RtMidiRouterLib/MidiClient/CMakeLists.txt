@@ -1,14 +1,19 @@
 SET(GEN_HPP TRUE)
 if(GEN_HPP)
-    file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/hpp/*.hpp")
+    file(GLOB HPP_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/hpp/*.hpp"  )
+    set(HPP_GEN_FILES 
+        ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt 
+        ${HPP_GEN_FILES} 
+        ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/UserDataConfigPrivate.hpp  
+    )
     add_custom_target(run_script ALL
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt ${HEADER_FILES}
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Running parseHpp shell script")
 
     # Run a shell script before everything else
     execute_process(
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt ${HEADER_FILES}
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         RESULT_VARIABLE result
     )
@@ -63,7 +68,6 @@ genPrpt/MidiRoutersFilter.cpp
 genPrpt/MonitorPrivate.cpp
 genPrpt/PresetMidiControlPrivate.cpp
 genPrpt/UserControlPrivate.cpp
-genPrpt/UserDataConfigPrivate.cpp
 GenHpp/EasyConfig.h
 GenHpp/EasyConfigRoute.h
 GenHpp/FilterAndTransform.h

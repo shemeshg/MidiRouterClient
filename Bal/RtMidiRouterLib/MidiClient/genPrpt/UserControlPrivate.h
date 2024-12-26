@@ -13,6 +13,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class UserControlPrivate : public QObject
 {
     Q_OBJECT
@@ -32,7 +33,8 @@ class UserControlPrivate : public QObject
     
     QML_ELEMENT
 public:
-    UserControlPrivate(QObject *parent = nullptr);
+        UserControlPrivate(QObject *parent = nullptr);
+
     virtual ~UserControlPrivate() {
         
     }
@@ -221,7 +223,8 @@ protected:
     
 
 private:
-    EventType m_eventType;
+    void ctorClass(); 
+EventType m_eventType;
     QString m_description;
     int m_inputVal;
     int m_minVal;
@@ -235,7 +238,7 @@ private:
     bool m_isShowDropdown;
     int m_dropdownListId;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

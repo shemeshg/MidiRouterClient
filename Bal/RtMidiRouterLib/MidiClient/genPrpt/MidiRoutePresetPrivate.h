@@ -17,6 +17,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class MidiRoutePresetPrivate : public QObject
 {
     Q_OBJECT
@@ -33,7 +34,8 @@ class MidiRoutePresetPrivate : public QObject
     
     QML_ELEMENT
 public:
-    MidiRoutePresetPrivate(QObject *parent = nullptr);
+        MidiRoutePresetPrivate(QObject *parent = nullptr);
+
     virtual ~MidiRoutePresetPrivate() {
         clearEasyConfig();
     clearUserControls();
@@ -224,13 +226,14 @@ protected:
     
 
 private:
-    QString m_name;
+    void ctorClass(); 
+QString m_name;
     QString m_uuid;
     QString m_computerUuid;
     bool m_isSendAllUserControls;
     bool m_isEnabled;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

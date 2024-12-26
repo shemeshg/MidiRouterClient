@@ -13,6 +13,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class PresetMidiControlPrivate : public QObject
 {
     Q_OBJECT
@@ -26,7 +27,8 @@ class PresetMidiControlPrivate : public QObject
     
     QML_ELEMENT
 public:
-    PresetMidiControlPrivate(QObject *parent = nullptr);
+        PresetMidiControlPrivate(QObject *parent = nullptr);
+
     virtual ~PresetMidiControlPrivate() {
         
     }
@@ -137,7 +139,8 @@ protected:
     
 
 private:
-    QString m_portName;
+    void ctorClass(); 
+QString m_portName;
     PresetMidiType m_presetMidiType;
     QString m_presetUuid;
     int m_eventTypeId;
@@ -145,7 +148,7 @@ private:
     int m_data1;
     int m_data2;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

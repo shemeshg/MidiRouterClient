@@ -14,6 +14,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class MonitorPrivate : public QObject
 {
     Q_OBJECT
@@ -21,7 +22,8 @@ class MonitorPrivate : public QObject
     
     QML_ELEMENT
 public:
-    MonitorPrivate(QObject *parent = nullptr);
+        MonitorPrivate(QObject *parent = nullptr);
+
     virtual ~MonitorPrivate() {
         
     }
@@ -49,9 +51,10 @@ protected:
     
 
 private:
-    bool m_isMonitored;
+    void ctorClass(); 
+bool m_isMonitored;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

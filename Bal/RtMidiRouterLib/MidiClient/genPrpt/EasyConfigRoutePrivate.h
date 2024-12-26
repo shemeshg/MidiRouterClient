@@ -13,6 +13,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class EasyConfigRoutePrivate : public QObject
 {
     Q_OBJECT
@@ -32,7 +33,8 @@ class EasyConfigRoutePrivate : public QObject
     
     QML_ELEMENT
 public:
-    EasyConfigRoutePrivate(QObject *parent = nullptr);
+        EasyConfigRoutePrivate(QObject *parent = nullptr);
+
     virtual ~EasyConfigRoutePrivate() {
         
     }
@@ -216,7 +218,8 @@ protected:
     
 
 private:
-    int m_splitRangeId;
+    void ctorClass(); 
+int m_splitRangeId;
     int m_fromSelectedMidiEventTypeId;
     int m_fromChannel;
     int m_fromData1;
@@ -230,7 +233,7 @@ private:
     int m_toData1;
     QString m_toDestinationName;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

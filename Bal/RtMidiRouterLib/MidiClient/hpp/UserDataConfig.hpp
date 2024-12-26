@@ -3,6 +3,7 @@
 //-only-file header //-
 #pragma once
 //- #include "UserDataConfigItf.h"
+//- #include "../genPrpt/UserDataConfigPrivate.h"
 //-only-file body //-
 //- #include "UserDataConfig.h"
 #include <QSettings>
@@ -14,9 +15,9 @@
 #include "UserConfigGenJson.hpp"
 #include "UserDataConfigItf.hpp"
 #include "UserConfigParseJson.hpp"
-
+#include "../genPrpt/UserDataConfigPrivate.hpp"
 //-only-file header
-#include "../genPrpt/UserDataConfigPrivate.h"
+
 #include <QJsonValue>
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>

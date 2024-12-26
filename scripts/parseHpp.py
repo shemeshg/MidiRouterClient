@@ -128,7 +128,7 @@ def parse_file(input_file):
     next_text_skip_only_files = 1
     next_only_file_id = ""
 
-    lines_without_templates = []
+    lines_without_templates = []   
     for line in lines:
         lstrip_line = line.lstrip()
         if lstrip_line.startswith("//-template"):
@@ -144,6 +144,8 @@ def parse_file(input_file):
                 templates_map[current_template] += line  
         else:
             lines_without_templates.append(line)
+
+
 
     lines = []
     for t in templates_map:
@@ -164,10 +166,13 @@ def parse_file(input_file):
                 lines.append(lines_without_templates[i])
         lines_without_templates = lines
 
+    if not templates_map:
+        lines = lines_without_templates
 
-    for line in lines:
+
+    for line in lines:        
         lstrip_line = line.lstrip()
-        if lstrip_line.startswith("//-define-file"):
+        if lstrip_line.startswith("//-define-file"):            
             parts = get_string_parts(lstrip_line)
             
             fileMap[parts[1]] = FileClass()
@@ -222,12 +227,11 @@ def parse_file(input_file):
 
     for file_id in fileMap:        
         if fileMap[file_id].file_content and file_id != "null":            
-            #print("Write file " + fileMap[file_id].file_path)
+            print("Write file " + fileMap[file_id].file_path)
             update_file_if_needed(fileMap[file_id].file_path, "".join(fileMap[file_id].file_content))
             #with open(fileMap[file_id].file_path, 'w') as file:
             #    file.writelines(fileMap[file_id].file_content)
 
 if __name__ == "__main__":
     for arg in sys.argv[1:]:
-        print("Read file " + arg)
         parse_file(arg)    

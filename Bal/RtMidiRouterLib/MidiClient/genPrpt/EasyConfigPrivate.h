@@ -14,6 +14,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class EasyConfigPrivate : public QObject
 {
     Q_OBJECT
@@ -24,7 +25,8 @@ class EasyConfigPrivate : public QObject
     
     QML_ELEMENT
 public:
-    EasyConfigPrivate(QObject *parent = nullptr);
+        EasyConfigPrivate(QObject *parent = nullptr);
+
     virtual ~EasyConfigPrivate() {
         clearEasyConfigRoutes();
     
@@ -111,11 +113,12 @@ protected:
     
 
 private:
-    QString m_midiInputName;
+    void ctorClass(); 
+QString m_midiInputName;
     QList<int> m_keyboardSplits;
     QStringList m_zoneNames;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

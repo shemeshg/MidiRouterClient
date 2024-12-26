@@ -13,6 +13,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class MidiRouteInputCc14bit : public QObject
 {
     Q_OBJECT
@@ -21,7 +22,8 @@ class MidiRouteInputCc14bit : public QObject
     
     QML_ELEMENT
 public:
-    MidiRouteInputCc14bit(QObject *parent = nullptr);
+        MidiRouteInputCc14bit(QObject *parent = nullptr);
+
     virtual ~MidiRouteInputCc14bit() {
         
     }
@@ -62,10 +64,11 @@ protected:
     
 
 private:
-    int m_channel;
+    void ctorClass(); 
+int m_channel;
     int m_cc;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

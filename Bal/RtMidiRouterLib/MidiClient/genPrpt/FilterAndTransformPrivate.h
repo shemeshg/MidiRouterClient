@@ -15,6 +15,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class FilterAndTransformPrivate : public MidiRoutersFilter
 {
     Q_OBJECT
@@ -26,7 +27,8 @@ class FilterAndTransformPrivate : public MidiRoutersFilter
     
     QML_ELEMENT
 public:
-    FilterAndTransformPrivate(QObject *parent = nullptr);
+        FilterAndTransformPrivate(QObject *parent = nullptr);
+
     virtual ~FilterAndTransformPrivate() {
         
     }
@@ -111,13 +113,14 @@ protected:
     
 
 private:
-    ConditionAction m_conditionAction;
+    void ctorClass(); 
+ConditionAction m_conditionAction;
     QString m_filterChannel;
     QString m_filterEvents;
     QString m_filterData1;
     QString m_filterData2;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

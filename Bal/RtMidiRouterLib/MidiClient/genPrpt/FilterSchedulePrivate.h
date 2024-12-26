@@ -15,6 +15,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class FilterSchedulePrivate : public MidiRoutersFilter
 {
     Q_OBJECT
@@ -23,7 +24,8 @@ class FilterSchedulePrivate : public MidiRoutersFilter
     
     QML_ELEMENT
 public:
-    FilterSchedulePrivate(QObject *parent = nullptr);
+        FilterSchedulePrivate(QObject *parent = nullptr);
+
     virtual ~FilterSchedulePrivate() {
         
     }
@@ -69,10 +71,11 @@ protected:
     
 
 private:
-    DefferedType m_defferedType;
+    void ctorClass(); 
+DefferedType m_defferedType;
     int m_defferedTo;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

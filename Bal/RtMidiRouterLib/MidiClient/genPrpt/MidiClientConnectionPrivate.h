@@ -14,6 +14,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class MidiClientConnectionPrivate : public QObject
 {
     Q_OBJECT
@@ -23,7 +24,8 @@ class MidiClientConnectionPrivate : public QObject
     
     QML_ELEMENT
 public:
-    MidiClientConnectionPrivate(QObject *parent = nullptr);
+        MidiClientConnectionPrivate(QObject *parent = nullptr);
+
     virtual ~MidiClientConnectionPrivate() {
         
     }
@@ -75,10 +77,11 @@ protected:
     
 
 private:
-    QString m_serverStatusText;
+    void ctorClass(); 
+QString m_serverStatusText;
     ServerStatus m_serverStatus;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

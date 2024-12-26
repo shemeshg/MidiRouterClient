@@ -16,6 +16,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class MidiRouteInputPrivate : public QObject
 {
     Q_OBJECT
@@ -33,7 +34,8 @@ class MidiRouteInputPrivate : public QObject
     
     QML_ELEMENT
 public:
-    MidiRouteInputPrivate(QObject *parent = nullptr);
+        MidiRouteInputPrivate(QObject *parent = nullptr);
+
     virtual ~MidiRouteInputPrivate() {
         clearMidiRouteInputCc14bit();
     clearMidiRouterChains();
@@ -224,7 +226,8 @@ protected:
     
 
 private:
-    QString m_midiInputName;
+    void ctorClass(); 
+QString m_midiInputName;
     bool m_ignoreTypesMidiSysex;
     bool m_ignoreTypesMidiTime;
     bool m_ignoreTypesMidiSense;
@@ -233,7 +236,7 @@ private:
     int m_midiRouteClockFromSppPos;
     QStringList m_midiRouteClockPropegateInputs;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

@@ -14,6 +14,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class MidiRouterChainPrivate : public QObject
 {
     Q_OBJECT
@@ -24,7 +25,8 @@ class MidiRouterChainPrivate : public QObject
     
     QML_ELEMENT
 public:
-    MidiRouterChainPrivate(QObject *parent = nullptr);
+        MidiRouterChainPrivate(QObject *parent = nullptr);
+
     virtual ~MidiRouterChainPrivate() {
         
     }
@@ -84,11 +86,12 @@ protected:
     
 
 private:
-    QString m_name;
+    void ctorClass(); 
+QString m_name;
     bool m_isEasyConfig;
     bool m_isRunForPresetOnAndOff;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

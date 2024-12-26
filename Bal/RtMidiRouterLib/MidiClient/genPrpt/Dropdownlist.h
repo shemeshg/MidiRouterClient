@@ -13,6 +13,7 @@ cog.outl(prptClass.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
+//-only-file header
 class Dropdownlist : public QObject
 {
     Q_OBJECT
@@ -21,7 +22,8 @@ class Dropdownlist : public QObject
     
     QML_ELEMENT
 public:
-    Dropdownlist(QObject *parent = nullptr);
+        Dropdownlist(QObject *parent = nullptr);
+
     virtual ~Dropdownlist() {
         
     }
@@ -62,10 +64,11 @@ protected:
     
 
 private:
-    QString m_name;
+    void ctorClass(); 
+QString m_name;
     QString m_data;
     
-    void ctorClass();
 };
+//-only-file null
 
 //[[[end]]]

@@ -196,10 +196,12 @@ class PrptClass:
     inhirit_from = "QObject"
     prptAry = []
     enumClassAry = []
-    def __init__(self, class_name, prptAry, enumClassAry):
+    is_hpp = False
+    def __init__(self, class_name, prptAry, enumClassAry, is_hpp = False):
         self.class_name = class_name
         self.prptAry = prptAry
         self.enumClassAry = enumClassAry
+        self.is_hpp = is_hpp
 
     def getClassCpp(self):
         contr_init = [self.inhirit_from + "(parent)"]
@@ -224,13 +226,14 @@ class PrptClass:
     def getClassHeader(self):
         t=Template(
 """
+//-only-file header
 class ${class_name} : public ${inhirit_from}
 {
     Q_OBJECT
     ${q_object_content}
     QML_ELEMENT
 public:
-    ${class_name}(QObject *parent = nullptr);
+    ${constructor_h_file}
     virtual ~${class_name}() {
         ${destructor_h_file}
     }
@@ -246,8 +249,8 @@ protected:
 
 private:
     ${private_content}
-    void ctorClass();
 };
+//-only-file null
 """            
         )
 
@@ -259,6 +262,7 @@ private:
             protected_content = self.get_protected_content(),
             public_pointer_list = self.get_public_pointer_list(),
             destructor_h_file = self.get_destructor_h_file(),
+            constructor_h_file = self.get_constructor_h_file(),
             inhirit_from = self.inhirit_from)
 
     def get_q_object_content(self):
@@ -282,7 +286,9 @@ private:
         return signals_content
 
     def get_private_content(self):
-        private_content = ""
+        private_content = "void ctorClass(); \n"
+        if self.is_hpp:
+            private_content = ""
         for row in self.prptAry:
             if row.is_writable == True:
                 private_content = private_content + row.private_h_file(self.class_name)
@@ -309,6 +315,17 @@ private:
                 private_content = private_content + row.destructot_h_file()
         return private_content
 
+    def get_constructor_h_file(self):        
+        t = Template("    ${class_name}(QObject *parent = nullptr);\n")
+        
+        if self.is_hpp:                      
+            t = Template("""
+    ${class_name}(QObject *parent = nullptr):${inhirit_from}(parent){}
+""")
+        return t.substitute(class_name = self.class_name, inhirit_from = self.inhirit_from)
+
+        
+            
 
 """
 ary = []
