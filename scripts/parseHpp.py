@@ -1,3 +1,4 @@
+# ver 1.0
 # //-define-file body MyLib.cpp 
 # //-define-file header MyLib.h
 # //-only-file body
