@@ -3,39 +3,43 @@ import Design
 import Core
 import QtQuick.Layouts
 
-
 ColumnLayout {
-    CoreLabel {
-        text: "In ports"
+    id: inPortsId
+    state: "InPortsList"
+    Loader {
+        id: inPortsLoaderId
+        property string inPortName: ""
+        Layout.fillWidth: true
+        sourceComponent: inPortsListId
     }
-    CoreButton{
-        onClicked: {
-            console.log(
-            JSON.stringify(
-            Constants.balData.midiClientConnection.userDataConfig.getJson())
-            )
-
-            dummy.text =             JSON.stringify(
-                        Constants.balData.midiClientConnection.userDataConfig.
-                            midiRoutePresets[0].midiRouteInputs
-                            )
+    Component {
+        id: inPortsListId
+        InPortsList {
         }
     }
 
-    CoreLabel {
-        text: "<h1>Connected in ports</h1>";
+    Component {
+        id: inPorSettingstId
+        InPortSettings {
+        }
     }
 
-    Repeater {
-        model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
-        RowLayout {
-            CoreLabel {
-                text: modelData
+    states: [
+        State {
+            name: "InPortsList"
+            when: inPortsId.state === "InPortsList"
+            PropertyChanges {
+                target: inPortsLoaderId
+                sourceComponent: inPortsListId
             }
+        },
+        State {
+            name: "InPortSettings"
+            when: inPortsId.state === "InPortSettings"
+            PropertyChanges {
+                target: inPortsLoaderId
+                sourceComponent: inPorSettingstId
+                }
         }
-    }
-    CoreTextArea {
-        id: dummy
-        wrapMode: Text.WordWrap
-    }
+    ]
 }

@@ -25,6 +25,8 @@ qt6_add_qml_module(DesignContent
         "MidiControlChannel.qml"
         "MidiControlData.qml"
         "EditPresetControl.qml"
+        "InPortsList.qml"
+        "InPortSettings.qml"
 )
 
 
