@@ -33,10 +33,18 @@ Column {
                     }
                 }
                 CoreButton {
-                    text: "Routes"                 
+                    text: "Routes"
+                    onClicked: {
+                        inPortsLoaderId.inPortName = modelData;
+                        inPortsId.state = "InPortRoutes";
+                    }
                 }
                 CoreButton {
                     text: "EasyConfig"
+                    onClicked: {
+                        inPortsLoaderId.inPortName = modelData;
+                        inPortsId.state = "InPortEasyConfig";
+                    }
                 }
             }
         }

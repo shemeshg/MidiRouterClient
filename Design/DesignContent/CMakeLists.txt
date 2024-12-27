@@ -27,6 +27,8 @@ qt6_add_qml_module(DesignContent
         "EditPresetControl.qml"
         "InPortsList.qml"
         "InPortSettings.qml"
+        "InPortRoutes.qml"
+        "InPortEasyConfig.qml"
 )
 
 

@@ -24,6 +24,17 @@ ColumnLayout {
         }
     }
 
+    Component {
+        id: inPortRoutesId
+        InPortRoutes {
+        }
+    }
+
+    Component {
+        id: inPortEasyConfigId
+        InPortEasyConfig {
+        }
+    }
     states: [
         State {
             name: "InPortsList"
@@ -40,6 +51,22 @@ ColumnLayout {
                 target: inPortsLoaderId
                 sourceComponent: inPorSettingstId
                 }
+        },
+        State {
+            name: "InPortRoutes"
+            when: inPortsId.state === "InPortRoutes"
+            PropertyChanges {
+                target: inPortsLoaderId
+                sourceComponent: inPortRoutesId
+            }
+        },
+        State {
+            name: "InPortEasyConfig"
+            when: inPortsId.state === "InPortEasyConfig"
+            PropertyChanges {
+                target: inPortsLoaderId
+                sourceComponent: inPortEasyConfigId
+            }
         }
     ]
 }
