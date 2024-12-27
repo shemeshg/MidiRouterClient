@@ -1,5 +1,5 @@
 #include "FilterAndTransform.h"
-     FilterAndTransform::FilterAndTransform(QObject *parent) 
+     FilterAndTransform::FilterAndTransform(QObject * parent) 
     : FilterAndTransformPrivate{parent}
     {
     };

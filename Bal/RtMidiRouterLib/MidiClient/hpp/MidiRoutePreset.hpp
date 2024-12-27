@@ -47,13 +47,7 @@ public:
 
         for (EasyConfig *easyConfig: m_easyConfig){
             auto const midiInputName = easyConfig->midiInputName();
-            std::optional<MidiRouteInput*> input  = getInputByName(midiInputName);
-            if (!input){
-                input = new MidiRouteInput();
-                input.value()->setMidiInputName(midiInputName);
-                addMidiRouteInputs(input.value());
-            }
-            input.value()->createEasyConfigChains(easyConfig);
+            getInputOrCreateByName(midiInputName)->createEasyConfigChains(easyConfig);
 
         }
     }
@@ -64,12 +58,31 @@ public:
 
     //-only-file header
 public slots:
+     //- {function} 0 1
+     MidiRouteInput* getInputOrCreateByName(QString midiInputName)
+     //-only-file body
+     {
+        std::optional<MidiRouteInput *> input = getInputByName(midiInputName);
+         if (input){
+             return input.value();
+         }
+         MidiRouteInput *newInput = new MidiRouteInput();
+         newInput->setMidiInputName(midiInputName);
+         addMidiRouteInputs(newInput);
+         return newInput;
+     }
 
+    //-only-file header
 signals:
 
 
 private:
-    std::optional<MidiRouteInput *> getInputByName(QString midiInputName) {
+
+
+    //- {function} 0 1
+    std::optional<MidiRouteInput *> getInputByName(QString midiInputName) 
+    //-only-file body
+    {
         for (MidiRouteInput *input : m_midiRouteInputs) {
             if (input->midiInputName() == midiInputName) {
                 return input;
@@ -78,4 +91,6 @@ private:
 
         return std::nullopt;
     }
+
+    //-only-file header
 };

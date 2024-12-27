@@ -1,5 +1,5 @@
 #include "UserConfigParseJson.h"
-    void UserConfigParseJson::setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc) 
+    void UserConfigParseJson::setChanges(UserDataConfigItf * userDataConfigItf, QJsonObject &jsonDoc) 
     {
 
         updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
@@ -17,7 +17,7 @@
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
     }
 
-    void UserConfigParseJson::updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QJsonValue &virtualInPorts) 
+    void UserConfigParseJson::updateVirtualInPorts(UserDataConfigItf * userDataConfig, const QJsonValue &virtualInPorts) 
     {
         if (virtualInPorts.isArray()){
             auto array = virtualInPorts.toArray();
@@ -29,7 +29,7 @@
         }
     }
 
-    void UserConfigParseJson::updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValue &dropdownlists) 
+    void UserConfigParseJson::updateDropdownlists(UserDataConfigItf * userDataConfig, const QJsonValue &dropdownlists) 
     {
         userDataConfig->clearDropdownlists();
         if (dropdownlists.isArray()) {
@@ -40,7 +40,7 @@
         }
     }
 
-    void UserConfigParseJson::updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValue &midiRoutePresets) 
+    void UserConfigParseJson::updateMidiRoutePresets(UserDataConfigItf * userDataConfig, const QJsonValue &midiRoutePresets) 
     {
         userDataConfig->clearMidiRoutePresets();
         if (midiRoutePresets.isArray()){
@@ -62,7 +62,7 @@
         }
     }
 
-    MidiRoutePreset* UserConfigParseJson::createMidiRoutePreset(UserDataConfigItf *userDataConfig, const QJsonValue &value) 
+    MidiRoutePreset*  UserConfigParseJson::createMidiRoutePreset(UserDataConfigItf * userDataConfig, const QJsonValue &value) 
     {
         auto preset = new MidiRoutePreset(userDataConfig->computerUuid());
         preset->setName(value["name"].toString());
@@ -88,7 +88,7 @@
         return preset;
     }
 
-    void UserConfigParseJson::updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) 
+    void UserConfigParseJson::updateMidiControl(PresetMidiControl * control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) 
     {
         control->setChannel(value["channel"].toInt());
         control->setData1(value["data1"].toInt());
@@ -99,7 +99,7 @@
         control->setPresetUuid(value["presetUuid"].toString());
     }
 
-    UserControl* UserConfigParseJson::createUserControl(const QJsonValue &userControlValue) 
+    UserControl*  UserConfigParseJson::createUserControl(const QJsonValue &userControlValue) 
     {
         auto userControl = new UserControl();
         userControl->setEventType(static_cast<UserControl::EventType>(userControlValue["eventType"].toInt()));
@@ -118,7 +118,7 @@
         return userControl;
     }
 
-    void UserConfigParseJson::updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs) 
+    void UserConfigParseJson::updateMidiRouteInputs(MidiRoutePreset * preset, const QJsonObject &midiRouteInputs) 
     {
         preset->clearMidiRouteInputs();
         for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
@@ -127,7 +127,7 @@
         }
     }
 
-    MidiRouteInput* UserConfigParseJson::createMidiRouteInputEntry(const QJsonObject &value) 
+    MidiRouteInput*  UserConfigParseJson::createMidiRouteInputEntry(const QJsonObject &value) 
     {
         auto midiRouteInputEntry = new MidiRouteInput();
         midiRouteInputEntry->setMidiInputName(value["midiInputName"].toString());
@@ -186,7 +186,7 @@
         return midiRouteInputEntry;
     }
 
-    void UserConfigParseJson::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain *midiRouterChain) 
+    void UserConfigParseJson::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain * midiRouterChain) 
     {
         if (midiRoutersFilters.isArray()) {
             midiRouterChain->clearMidiRoutersFilters();
@@ -226,7 +226,7 @@
         }
     }
 
-    void UserConfigParseJson::updateEasyConfig(MidiRoutePreset *preset, const QJsonObject &easyConfig) 
+    void UserConfigParseJson::updateEasyConfig(MidiRoutePreset * preset, const QJsonObject &easyConfig) 
     {
         preset->clearEasyConfig();
         for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
@@ -235,7 +235,7 @@
         }
     }
 
-    EasyConfig* UserConfigParseJson::createEasyConfigEntry(const QString &key, const QJsonObject &value) 
+    EasyConfig*  UserConfigParseJson::createEasyConfigEntry(const QString &key, const QJsonObject &value) 
     {
         EasyConfig *easyConfigEntry = new EasyConfig();
         easyConfigEntry->setMidiInputName(key);
@@ -281,7 +281,7 @@
         return stringList;
     }
 
-    EasyConfigRoute* UserConfigParseJson::createEasyConfigRoute(const QJsonObject &value) 
+    EasyConfigRoute*  UserConfigParseJson::createEasyConfigRoute(const QJsonObject &value) 
     {
         EasyConfigRoute *easyConfigRoute = new EasyConfigRoute();
         easyConfigRoute->setFromCcOrNrpnEnd(value["fromCcOrNrpnEnd"].toInt());

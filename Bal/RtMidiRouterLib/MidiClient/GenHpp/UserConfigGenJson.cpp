@@ -139,7 +139,7 @@
         return ary;
     }
 
-    QJsonObject UserConfigGenJson::getModiControlOnOff(PresetMidiControl *presetMidiControl) 
+    QJsonObject UserConfigGenJson::getModiControlOnOff(PresetMidiControl * presetMidiControl) 
     {
         QJsonObject obj;
         obj["presetUuid"] = presetMidiControl->presetUuid();
@@ -161,7 +161,7 @@
         return obj;
     }
 
-    QJsonArray UserConfigGenJson::getCc14bitAry(MidiRouteInput *midiRouteInput) 
+    QJsonArray UserConfigGenJson::getCc14bitAry(MidiRouteInput * midiRouteInput) 
     {
         QJsonArray cc14bitAry;
         for (const auto &cc14bit: midiRouteInput->midiRouteInputCc14bit()){
@@ -174,7 +174,7 @@
         return cc14bitAry;
     }
 
-    QJsonObject UserConfigGenJson::getMidiRouteClock(MidiRouteInput *midiRouteInput) 
+    QJsonObject UserConfigGenJson::getMidiRouteClock(MidiRouteInput * midiRouteInput) 
     {
         QJsonObject midiRouteClock;
         midiRouteClock["timeSig"] = midiRouteInput->midiRouteClockTimeSig();
@@ -185,7 +185,7 @@
         return midiRouteClock;
     }
 
-    QJsonObject UserConfigGenJson::getIgnoreTypes(MidiRouteInput *midiRouteInput) 
+    QJsonObject UserConfigGenJson::getIgnoreTypes(MidiRouteInput * midiRouteInput) 
     {
         QJsonObject ignoreTypes;
         ignoreTypes["midiSysex"] = midiRouteInput->ignoreTypesMidiSysex();
@@ -195,14 +195,14 @@
         return ignoreTypes;
     }
 
-    QJsonObject UserConfigGenJson::getMonitor(MidiRouteInput *midiRouteInput) 
+    QJsonObject UserConfigGenJson::getMonitor(MidiRouteInput * midiRouteInput) 
     {
         QJsonObject monitor;
         monitor["isMonitored"] = midiRouteInput->monitor()->isMonitored();
         return monitor;
     }
 
-    QJsonArray UserConfigGenJson::getMidiRouterChains(MidiRouteInput *midiRouteInput) 
+    QJsonArray UserConfigGenJson::getMidiRouterChains(MidiRouteInput * midiRouteInput) 
     {
         QJsonArray midiRouterChains;
         for (const auto midiRouterChain: midiRouteInput->midiRouterChains()){
@@ -272,7 +272,7 @@
         return ary;
     }
 
-    QJsonObject UserConfigGenJson::getMidiRouteInput(MidiRouteInput *midiRouteInput) 
+    QJsonObject UserConfigGenJson::getMidiRouteInput(MidiRouteInput * midiRouteInput) 
     {
         QJsonObject obj;
         obj["midiInputName"] = midiRouteInput->midiInputName();

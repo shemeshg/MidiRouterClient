@@ -1,5 +1,5 @@
 #include "FilterToConsle.h"
-     FilterToConsole::FilterToConsole(QObject *parent) 
+     FilterToConsole::FilterToConsole(QObject * parent) 
     : FilterToConslePrivate{parent}
     {
     }

@@ -3,7 +3,7 @@
 #include "MidiClientUtil.h"
 #include "UserConfigGenJson.h"
 #include "UserConfigParseJson.h"
-     UserDataConfig::UserDataConfig(QObject *parent) 
+     UserDataConfig::UserDataConfig(QObject * parent) 
         : UserDataConfigPrivate{parent}
     {
 
@@ -45,7 +45,7 @@
         UserDataConfigPrivate::clearMidiRoutePresets();
     }
 
-    void UserDataConfig::addMidiRoutePresets(MidiRoutePreset * item)  
+    void UserDataConfig::addMidiRoutePresets(MidiRoutePreset *  item)  
     {
         UserDataConfigPrivate::addMidiRoutePresets(item);
     }

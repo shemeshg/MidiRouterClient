@@ -1,4 +1,4 @@
 #include "EasyConfig.h"
-     EasyConfig::EasyConfig(QObject *parent) 
+     EasyConfig::EasyConfig(QObject * parent) 
         : EasyConfigPrivate{parent} {};
 

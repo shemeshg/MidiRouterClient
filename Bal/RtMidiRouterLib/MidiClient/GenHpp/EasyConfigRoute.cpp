@@ -1,5 +1,5 @@
 #include "EasyConfigRoute.h"
-     EasyConfigRoute::EasyConfigRoute(QObject *parent) 
+     EasyConfigRoute::EasyConfigRoute(QObject * parent) 
         : EasyConfigRoutePrivate{parent}{};
 
 

@@ -1,5 +1,5 @@
 #include "MidiClientConnection.h"
-     MidiClientConnection::MidiClientConnection(QObject *parent) 
+     MidiClientConnection::MidiClientConnection(QObject * parent) 
     : MidiClientConnectionPrivate{parent}
     {
         setServerStatusAndText(ServerStatus::STOPPED);

@@ -11,18 +11,12 @@ public:
     explicit MidiRoutePreset(QString computerUuid, QObject *parent = nullptr);
     void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs);
 public slots:
-
+     MidiRouteInput* getInputOrCreateByName(QString midiInputName);
 signals:
 
 
 private:
-    std::optional<MidiRouteInput *> getInputByName(QString midiInputName) {
-        for (MidiRouteInput *input : m_midiRouteInputs) {
-            if (input->midiInputName() == midiInputName) {
-                return input;
-            }
-        }
 
-        return std::nullopt;
-    }
+
+    std::optional<MidiRouteInput *> getInputByName(QString midiInputName);
 };

@@ -1,5 +1,5 @@
 #include "FilterSchedule.h"
-     FilterSchedule::FilterSchedule(QObject *parent) 
+     FilterSchedule::FilterSchedule(QObject * parent) 
     : FilterSchedulePrivate{parent}
     {
     };

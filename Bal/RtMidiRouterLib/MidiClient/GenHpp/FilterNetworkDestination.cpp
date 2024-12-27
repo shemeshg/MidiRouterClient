@@ -1,5 +1,5 @@
 #include "FilterNetworkDestination.h"
-     FilterNetworkDestination::FilterNetworkDestination(QObject *parent) 
+     FilterNetworkDestination::FilterNetworkDestination(QObject * parent) 
     : FilterNetworkDestinationPrivate{parent}
     {
     };

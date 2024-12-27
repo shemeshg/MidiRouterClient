@@ -1,5 +1,5 @@
 #include "MidiRouterChain.h"
-     MidiRouterChain::MidiRouterChain(QObject *parent) 
+     MidiRouterChain::MidiRouterChain(QObject * parent) 
         : MidiRouterChainPrivate{parent}{
 
     };
@@ -108,7 +108,7 @@
         addFilterToConsole(FilterToConsole::LogTo::SERVER,doc.toJson());
     }
 
-    void MidiRouterChain::setEasyConfigChain(EasyConfig *easyConfig,EasyConfigRoute *easyConfigRoute) 
+    void MidiRouterChain::setEasyConfigChain(EasyConfig * easyConfig,EasyConfigRoute * easyConfigRoute) 
     {
         setName("EasyConfig");
         setIsEasyConfig(true);

@@ -1,5 +1,5 @@
 #include "MidiRouteInput.h"
-     MidiRouteInput::MidiRouteInput(QObject *parent) 
+     MidiRouteInput::MidiRouteInput(QObject * parent) 
         : MidiRouteInputPrivate{parent} {
         clearMidiRouteInputCc14bit();
         clearMidiRouterChains();
@@ -15,7 +15,7 @@
         }
     }
 
-    void MidiRouteInput::createEasyConfigChains(EasyConfig *easyConfig) 
+    void MidiRouteInput::createEasyConfigChains(EasyConfig * easyConfig) 
     {
         for (auto easyConfigRoute : easyConfig->easyConfigRoutes()) {
             MidiRouterChain *midiRouterChain = new MidiRouterChain();

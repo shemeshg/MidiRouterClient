@@ -1,5 +1,5 @@
 #include "FilterMidiDestination.h"
-     FilterMidiDestination::FilterMidiDestination(QObject *parent) 
+     FilterMidiDestination::FilterMidiDestination(QObject * parent) 
     : FilterMidiDestinationPrivate{parent}
     {
     };

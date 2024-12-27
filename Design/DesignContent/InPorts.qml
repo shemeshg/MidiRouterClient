@@ -9,6 +9,7 @@ ColumnLayout {
     Loader {
         id: inPortsLoaderId
         property string inPortName: ""
+
         Layout.fillWidth: true
         sourceComponent: inPortsListId
     }
