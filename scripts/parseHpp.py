@@ -1,4 +1,4 @@
-# ver 1.0
+# ver 1.1
 # //-define-file body MyLib.cpp 
 # //-define-file header MyLib.h
 # //-only-file body
@@ -78,15 +78,17 @@ def replace_next(template, NEXT):
 
 def get_string_parts(line, with_quotes=False):
     if with_quotes:
-        pattern = re.compile(r'(\".*?\"|\S+)')
+        pattern = re.compile(r'(\".*?\"|\S+|\".*?\"<.*?>)')
     else:
-        pattern = re.compile(r'\"(.*?)\"|(\S+)')
+        pattern = re.compile(r'\"(.*?)\"|(\S+|\".*?\"<.*?>)')
     
-    matches = pattern.findall(line)    
+    matches = pattern.findall(line)
+    
     if with_quotes:
         parts = [match for match in matches]
     else:
-        parts = [match[0] or match[1] for match in matches]    
+        parts = [match[0] or match[1] for match in matches]
+    
     return parts
 
 def extract_next_value(string):
