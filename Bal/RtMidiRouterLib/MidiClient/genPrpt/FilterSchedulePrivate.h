@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-
 class FilterSchedulePrivate : public MidiRoutersFilter
 {
     Q_OBJECT

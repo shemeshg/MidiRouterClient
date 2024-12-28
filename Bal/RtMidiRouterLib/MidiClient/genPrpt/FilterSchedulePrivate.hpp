@@ -8,8 +8,9 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-
 //-only-file null
+#include "MidiRoutersFilter.hpp"
+
 /*[[[cog
 import cog
 from FilterSchedulePrivate import prptClass

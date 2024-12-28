@@ -8,6 +8,7 @@
 #include <QQmlEngine>
 
 //-only-file null
+#include "MidiRoutersFilter.hpp"
 /*[[[cog
 import cog
 from FilterNetworkDestinationPrivate import prptClass

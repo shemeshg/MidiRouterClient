@@ -9,6 +9,10 @@
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 //-only-file null
+#include "MidiRouteInputCc14bit.hpp"
+#include "../hpp/MidiRouterChain.hpp"
+#include "../hpp/Monitor.hpp"
+
 
 /*[[[cog
 import cog

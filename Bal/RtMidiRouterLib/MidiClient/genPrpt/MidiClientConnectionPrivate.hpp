@@ -8,6 +8,7 @@
 #include <QQmlEngine>
 
 //-only-file null
+#include "../hpp/UserDataConfig.hpp"
 /*[[[cog
 import cog
 from MidiClientConnectionPrivate import prptClass
