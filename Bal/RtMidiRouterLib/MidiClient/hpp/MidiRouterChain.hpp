@@ -4,15 +4,15 @@
 #pragma once
 //- #include "EasyConfig.h"
 //- #include "FilterAndTransform.h"
-//- #include "FilterMidiDestination.h"
-//- #include "FilterNetworkDestination.h"
 //- #include "FilterSchedule.h"
 //- #include "FilterToConsle.h"
 //- #include "MidiPresetControlEasyConfig.h"
 //- #include "../genPrpt/MidiRouterChainPrivate.h"
-//- #include "../genPrpt/MidiRoutersFilter.h"
 //-only-file body //-
 //- #include "MidiRouterChain.h"
+//- #include "FilterMidiDestination.h"
+//- #include "FilterNetworkDestination.h"
+//- #include "../genPrpt/MidiRoutersFilter.h"
 //-only-file null
 #include "EasyConfig.hpp"
 #include "FilterAndTransform.hpp"

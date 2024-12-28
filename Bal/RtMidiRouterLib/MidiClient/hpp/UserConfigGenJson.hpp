@@ -15,6 +15,8 @@
 //-only-file body //-
 //- #include "UserConfigGenJson.h"
 //- #include "GenHpp/MidiPresetControlEasyConfig.h"
+//- #include "FilterMidiDestination.h"
+//- #include "FilterNetworkDestination.h"
 //-only-file header
 
 

@@ -1,4 +1,7 @@
 #include "MidiRouterChain.h"
+#include "FilterMidiDestination.h"
+#include "FilterNetworkDestination.h"
+#include "../genPrpt/MidiRoutersFilter.h"
      MidiRouterChain::MidiRouterChain(QObject * parent) 
         : MidiRouterChainPrivate{parent}{
 

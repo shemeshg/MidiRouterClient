@@ -1,13 +1,12 @@
 #pragma once
 #include "EasyConfig.h"
 #include "FilterAndTransform.h"
-#include "FilterMidiDestination.h"
-#include "FilterNetworkDestination.h"
+//
+
 #include "FilterSchedule.h"
 #include "FilterToConsle.h"
 #include "MidiPresetControlEasyConfig.h"
 #include "../genPrpt/MidiRouterChainPrivate.h"
-#include "../genPrpt/MidiRoutersFilter.h"
 #include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
 
