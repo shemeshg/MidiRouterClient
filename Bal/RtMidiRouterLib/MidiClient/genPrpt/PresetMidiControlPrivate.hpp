@@ -1,9 +1,24 @@
+//-define-file header genPrpt/PresetMidiControlPrivate.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+//-only-file header 
 
+//-only-file null
+
+/*[[[cog
+import cog
+from PresetMidiControlPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class PresetMidiControlPrivate : public QObject
 {
     Q_OBJECT
@@ -139,3 +154,6 @@ private:
     int m_data2;
     
 };
+//-only-file null
+
+//[[[end]]]

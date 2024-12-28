@@ -22,6 +22,7 @@ public:
     //-only-file body
     : FilterSchedulePrivate{parent}
     {
+        setFilterType( FilterType::SCHEDULE_TO);
     };
 
     //-only-file header

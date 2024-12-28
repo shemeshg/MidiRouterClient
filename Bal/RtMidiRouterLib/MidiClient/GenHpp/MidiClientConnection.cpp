@@ -3,6 +3,7 @@
     : MidiClientConnectionPrivate{parent}
     {
         setServerStatusAndText(ServerStatus::STOPPED);
+        m_userDataConfig = new UserDataConfig(this);
     }
 
     void MidiClientConnection::setServerStatusAndText(const ServerStatus &newServerStatus) 

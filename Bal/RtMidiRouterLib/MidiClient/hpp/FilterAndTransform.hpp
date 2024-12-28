@@ -22,6 +22,7 @@ public:
     //-only-file body
     : FilterAndTransformPrivate{parent}
     {
+         setFilterType( FilterType::FILTER_AND_TRANSFORM);
     };
 
     //-only-file header

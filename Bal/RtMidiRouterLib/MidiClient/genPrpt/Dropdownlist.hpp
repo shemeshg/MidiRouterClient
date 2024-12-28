@@ -1,9 +1,22 @@
+//-define-file header genPrpt/Dropdownlist.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+/*[[[cog
+import cog
+from Dropdownlist import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class Dropdownlist : public QObject
 {
     Q_OBJECT
@@ -59,3 +72,6 @@ private:
     QString m_data;
     
 };
+//-only-file null
+
+//[[[end]]]

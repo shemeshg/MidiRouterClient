@@ -4,6 +4,8 @@
         {
             setPresetUuid(presetUuid);
             setPresetMidiType(presetMidiType);
-
+            setChannel(-1);
+            setData1(-1);
+            setData2(-1);
         };
 

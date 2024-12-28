@@ -23,6 +23,7 @@ public:
     : MidiClientConnectionPrivate{parent}
     {
         setServerStatusAndText(ServerStatus::STOPPED);
+        m_userDataConfig = new UserDataConfig(this);
     }
 
     //-only-file header

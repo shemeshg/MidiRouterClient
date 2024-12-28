@@ -1,8 +1,23 @@
+//-define-file header genPrpt/MidiRouteInputCc14bit.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+//-only-file header 
+//-only-file null
+
+/*[[[cog
+import cog
+from MidiRouteInputCc14bit import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class MidiRouteInputCc14bit : public QObject
 {
     Q_OBJECT
@@ -58,3 +73,6 @@ private:
     int m_cc;
     
 };
+//-only-file null
+
+//[[[end]]]

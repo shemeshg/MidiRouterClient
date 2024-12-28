@@ -2,6 +2,7 @@
      FilterSchedule::FilterSchedule(QObject * parent) 
     : FilterSchedulePrivate{parent}
     {
+        setFilterType( FilterType::SCHEDULE_TO);
     };
 
     void FilterSchedule::setFilter(DefferedType defferedType, int defferedTo ) 

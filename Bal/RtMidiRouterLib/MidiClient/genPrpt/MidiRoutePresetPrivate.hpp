@@ -1,13 +1,32 @@
+//-define-file header genPrpt/MidiRoutePresetPrivate.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
-#include "../GenHpp/EasyConfig.h"
-#include "../GenHpp/MidiRouteInput.h"
-#include "../GenHpp/PresetMidiControl.h"
-#include "../GenHpp/UserControl.h"
+//- #include "../GenHpp/EasyConfig.h"
+//- #include "../GenHpp/MidiRouteInput.h"
+//- #include "../GenHpp/PresetMidiControl.h"
+//- #include "../GenHpp/UserControl.h"
+//-only-file null
+#include "../hpp/EasyConfig.hpp"
+#include "../hpp/MidiRouteInput.hpp"
+#include "../hpp/PresetMidiControl.hpp"
+#include "../hpp/UserControl.hpp"
+
+
+/*[[[cog
+import cog
+from MidiRoutePresetPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class MidiRoutePresetPrivate : public QObject
 {
     Q_OBJECT
@@ -224,3 +243,6 @@ private:
     bool m_isEnabled;
     
 };
+//-only-file null
+
+//[[[end]]]

@@ -1,12 +1,25 @@
+//-define-file header genPrpt/FilterSchedulePrivate.h
+//-only-file header //-
 
 #pragma once
 
 
-#include "MidiRoutersFilter.h"
+//- #include "MidiRoutersFilter.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+/*[[[cog
+import cog
+from FilterSchedulePrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class FilterSchedulePrivate : public MidiRoutersFilter
 {
     Q_OBJECT
@@ -67,3 +80,6 @@ private:
     int m_defferedTo;
     
 };
+//-only-file null
+
+//[[[end]]]

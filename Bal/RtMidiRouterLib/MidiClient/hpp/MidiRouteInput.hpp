@@ -23,6 +23,14 @@ public:
         : MidiRouteInputPrivate{parent} {
         clearMidiRouteInputCc14bit();
         clearMidiRouterChains();
+
+        setIgnoreTypesMidiSysex(true);
+        setIgnoreTypesMidiTime( true);
+        setIgnoreTypesMidiSense(true);
+        setMidiRouteClockTimeSig( 4);
+        setMidiRouteClockTimeSigDivBy(4);
+        setMidiRouteClockFromSppPos(0);
+        m_monitor = new Monitor(this);
     };
 
 

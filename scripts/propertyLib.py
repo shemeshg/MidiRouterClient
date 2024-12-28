@@ -197,8 +197,8 @@ class PrptClass:
     inhirit_from = "QObject"
     prptAry = []
     enumClassAry = []
-    is_hpp = False
-    def __init__(self, class_name, prptAry, enumClassAry, is_hpp = False):
+    is_hpp = True
+    def __init__(self, class_name, prptAry, enumClassAry, is_hpp = True):
         self.class_name = class_name
         self.prptAry = prptAry
         self.enumClassAry = enumClassAry

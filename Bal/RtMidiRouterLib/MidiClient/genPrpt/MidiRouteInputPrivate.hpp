@@ -1,11 +1,25 @@
+//-define-file header genPrpt/MidiRouteInputPrivate.h
+//-only-file header //-
 #pragma once
 
-#include "MidiRouteInputCc14bit.h"
-#include "../GenHpp/MidiRouterChain.h"
-#include "../GenHpp/Monitor.h"
+//- #include "MidiRouteInputCc14bit.h"
+//- #include "../GenHpp/MidiRouterChain.h"
+//- #include "../GenHpp/Monitor.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+//-only-file null
+
+/*[[[cog
+import cog
+from MidiRouteInputPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class MidiRouteInputPrivate : public QObject
 {
     Q_OBJECT
@@ -226,3 +240,6 @@ private:
     QStringList m_midiRouteClockPropegateInputs;
     
 };
+//-only-file null
+
+//[[[end]]]

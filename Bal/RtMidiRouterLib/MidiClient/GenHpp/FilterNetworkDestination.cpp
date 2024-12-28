@@ -2,6 +2,7 @@
      FilterNetworkDestination::FilterNetworkDestination(QObject * parent) 
     : FilterNetworkDestinationPrivate{parent}
     {
+        setFilterType( FilterType::TO_NETWORK);
     };
 
     void FilterNetworkDestination::setFilter(QString serverName, int serverPort, QString baseMidiRouteInput) 

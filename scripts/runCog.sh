@@ -10,4 +10,4 @@ else
 fi
 
 cd Bal/RtMidiRouterLib/MidiClient/genPrpt
-cog -r *.h *.cpp *.hpp
+cog -r *.hpp

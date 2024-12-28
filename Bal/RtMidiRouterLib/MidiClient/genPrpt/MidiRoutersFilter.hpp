@@ -1,9 +1,24 @@
+//-define-file header genPrpt/MidiRoutersFilter.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+//-only-file header 
 
+//-only-file null
+
+/*[[[cog
+import cog
+from MidiRoutersFilter import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class MidiRoutersFilter : public QObject
 {
     Q_OBJECT
@@ -64,3 +79,6 @@ private:
     QString m_name;
     
 };
+//-only-file null
+
+//[[[end]]]

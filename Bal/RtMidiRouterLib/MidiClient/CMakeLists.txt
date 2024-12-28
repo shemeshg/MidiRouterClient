@@ -1,10 +1,11 @@
 SET(GEN_HPP TRUE)
 if(GEN_HPP)
     file(GLOB HPP_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/hpp/*.hpp"  )
+    file(GLOB HPP_PRPT_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/*.hpp"  )
     set(HPP_GEN_FILES 
         ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt 
         ${HPP_GEN_FILES} 
-        ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/UserDataConfigPrivate.hpp  
+        ${HPP_PRPT_GEN_FILES}
     )
     add_custom_target(run_script ALL
         COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
@@ -51,23 +52,6 @@ genPrpt/MonitorPrivate.h
 genPrpt/PresetMidiControlPrivate.h
 genPrpt/UserControlPrivate.h
 genPrpt/UserDataConfigPrivate.h
-genPrpt/Dropdownlist.cpp
-genPrpt/EasyConfigPrivate.cpp
-genPrpt/EasyConfigRoutePrivate.cpp
-genPrpt/FilterAndTransformPrivate.cpp
-genPrpt/FilterMidiDestinationPrivate.cpp
-genPrpt/FilterNetworkDestinationPrivate.cpp
-genPrpt/FilterSchedulePrivate.cpp
-genPrpt/FilterToConslePrivate.cpp
-genPrpt/MidiClientConnectionPrivate.cpp
-genPrpt/MidiRouteInputCc14bit.cpp
-genPrpt/MidiRouteInputPrivate.cpp
-genPrpt/MidiRoutePresetPrivate.cpp
-genPrpt/MidiRouterChainPrivate.cpp
-genPrpt/MidiRoutersFilter.cpp
-genPrpt/MonitorPrivate.cpp
-genPrpt/PresetMidiControlPrivate.cpp
-genPrpt/UserControlPrivate.cpp
 GenHpp/EasyConfig.h
 GenHpp/EasyConfigRoute.h
 GenHpp/FilterAndTransform.h

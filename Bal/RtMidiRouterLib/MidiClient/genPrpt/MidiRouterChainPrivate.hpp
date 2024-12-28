@@ -1,10 +1,24 @@
+//-define-file header genPrpt/MidiRouterChainPrivate.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file header 
 
+//-only-file null
+/*[[[cog
+import cog
+from MidiRouterChainPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class MidiRouterChainPrivate : public QObject
 {
     Q_OBJECT
@@ -82,3 +96,6 @@ private:
     bool m_isRunForPresetOnAndOff;
     
 };
+//-only-file null
+
+//[[[end]]]

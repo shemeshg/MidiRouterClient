@@ -2,6 +2,7 @@
      FilterToConsole::FilterToConsole(QObject * parent) 
     : FilterToConslePrivate{parent}
     {
+         setFilterType( FilterType::TO_CONSOLE);
     }
 
     void FilterToConsole::setFilter(LogTo logTo, QString userData) 

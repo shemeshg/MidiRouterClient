@@ -1,10 +1,23 @@
+//-define-file header genPrpt/EasyConfigPrivate.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-#include "../GenHpp/EasyConfigRoute.h"
+//- #include "../GenHpp/EasyConfigRoute.h"
 
+//-only-file null
+/*[[[cog
+import cog
+from EasyConfigPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class EasyConfigPrivate : public QObject
 {
     Q_OBJECT
@@ -109,3 +122,6 @@ private:
     QStringList m_zoneNames;
     
 };
+//-only-file null
+
+//[[[end]]]

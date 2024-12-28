@@ -1,10 +1,23 @@
-#pragma once
+//-define-file header genPrpt/MidiClientConnectionPrivate.h
+//-only-file header //-
+//- #pragma once
 
-#include "../GenHpp/UserDataConfig.h"
+//- #include "../GenHpp/UserDataConfig.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+/*[[[cog
+import cog
+from MidiClientConnectionPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class MidiClientConnectionPrivate : public QObject
 {
     Q_OBJECT
@@ -72,3 +85,6 @@ private:
     ServerStatus m_serverStatus;
     
 };
+//-only-file null
+
+//[[[end]]]

@@ -21,6 +21,7 @@ public:
     //-only-file body
     : FilterNetworkDestinationPrivate{parent}
     {
+        setFilterType( FilterType::TO_NETWORK);
     };
 
     //-only-file header

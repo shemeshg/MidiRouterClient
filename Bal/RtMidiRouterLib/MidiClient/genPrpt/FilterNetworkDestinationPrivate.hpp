@@ -1,10 +1,23 @@
+//-define-file header genPrpt/FilterNetworkDestinationPrivate.h
+//-only-file header //-
 #pragma once
 
-#include "MidiRoutersFilter.h"
+//- #include "MidiRoutersFilter.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+/*[[[cog
+import cog
+from FilterNetworkDestinationPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class FilterNetworkDestinationPrivate : public MidiRoutersFilter
 {
     Q_OBJECT
@@ -75,3 +88,6 @@ private:
     int m_serverPort;
     
 };
+//-only-file null
+
+//[[[end]]]

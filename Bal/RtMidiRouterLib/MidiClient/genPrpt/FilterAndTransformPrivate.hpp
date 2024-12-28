@@ -1,11 +1,25 @@
+//-define-file header genPrpt/FilterAndTransformPrivate.h
+//-only-file header //-
 #pragma once
 
 
-#include "MidiRoutersFilter.h"
+//- #include "MidiRoutersFilter.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+
+/*[[[cog
+import cog
+from FilterAndTransformPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class FilterAndTransformPrivate : public MidiRoutersFilter
 {
     Q_OBJECT
@@ -111,3 +125,6 @@ private:
     QString m_filterData2;
     
 };
+//-only-file null
+
+//[[[end]]]

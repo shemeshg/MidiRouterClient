@@ -1,9 +1,22 @@
+//-define-file header genPrpt/UserControlPrivate.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+/*[[[cog
+import cog
+from UserControlPrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class UserControlPrivate : public QObject
 {
     Q_OBJECT
@@ -229,3 +242,6 @@ private:
     int m_dropdownListId;
     
 };
+//-only-file null
+
+//[[[end]]]

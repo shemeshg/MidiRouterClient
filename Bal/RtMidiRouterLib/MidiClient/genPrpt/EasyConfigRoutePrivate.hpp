@@ -1,9 +1,22 @@
+//-define-file header genPrpt/EasyConfigRoutePrivate.h
+//-only-file header //-
 #pragma once
 
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//-only-file null
+/*[[[cog
+import cog
+from EasyConfigRoutePrivate import prptClass
+
+
+cog.outl(prptClass.getClassHeader(),
+        dedent=True, trimblanklines=True)
+
+]]] */
+//-only-file header
 class EasyConfigRoutePrivate : public QObject
 {
     Q_OBJECT
@@ -224,3 +237,6 @@ private:
     QString m_toDestinationName;
     
 };
+//-only-file null
+
+//[[[end]]]

@@ -21,6 +21,7 @@ public:
     //-only-file body
     : FilterToConslePrivate{parent}
     {
+         setFilterType( FilterType::TO_CONSOLE);
     }
 
     //-only-file header

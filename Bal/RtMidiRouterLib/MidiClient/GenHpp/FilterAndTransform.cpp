@@ -2,6 +2,7 @@
      FilterAndTransform::FilterAndTransform(QObject * parent) 
     : FilterAndTransformPrivate{parent}
     {
+         setFilterType( FilterType::FILTER_AND_TRANSFORM);
     };
 
     void FilterAndTransform::setFilter(QString name, ConditionAction conditionAction, QString filterChannel, QString filterEvents, QString filterData1, QString filterData2) 
