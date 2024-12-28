@@ -69,18 +69,18 @@ ColumnLayout {
             model: selectedItems
             RowLayout {
                 CoreLabel {
-                    text: `${modelData.channel} ${modelData.cc}`
+                    text: `channel ${modelData.channel} cc ${modelData.cc}`
                 }
                 CoreButton {
                     text: "Del"
                     onClicked: {
-                        selectedItems.splice(index,1)
-                        selectedItems = [...selectedItems]
-
+                        selectedItems = selectedItems.filter(item => {return !(item.cc === modelData.cc
+                                                                 && item.channel === modelData.channel)} );
                     }
-                }
-
-
+                }                
             }
+        }
+        CoreLabel {
+            text: JSON.stringify(selectedItems)
         }
     }

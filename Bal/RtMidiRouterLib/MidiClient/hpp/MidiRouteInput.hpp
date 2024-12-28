@@ -105,14 +105,20 @@ public:
     //-only-file header
 public slots:
     //- {function} 0 1
+    void clear14BitCc()
+    //-only-file body
+    {
+        clearMidiRouteInputCc14bit();
+    }
+
+    //- {function} 0 1
     void add14BitCc(int channel, int cc)
     //-only-file body
     {
         MidiRouteInputCc14bit *item = new MidiRouteInputCc14bit();
         item->setChannel(channel);
         item->setCc(cc);
-        m_midiRouteInputCc14bit.push_back(item);
-        emit midiRouteInputCc14bitChanged();
+        addMidiRouteInputCc14bit(item);
     }
 
     //-only-file header

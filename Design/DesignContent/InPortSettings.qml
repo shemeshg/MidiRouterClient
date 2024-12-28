@@ -12,6 +12,37 @@ ColumnLayout {
             inPortsId.state = "InPortsList";
         }
     }
+    CoreButton {
+        text: "save"
+        onClicked: {
+            midiRouteInput.ignoreTypesMidiSysex  = ignoreTypesMidiSysex.checked
+            midiRouteInput.ignoreTypesMidiTime  = ignoreTypesMidiTime.checked
+            midiRouteInput.ignoreTypesMidiSense  = ignoreTypesMidiSense.checked
+
+            midiRouteInput.midiRouteClockFromSppPos = midiRouteClockFromSppPos.text
+            midiRouteInput.midiRouteClockTimeSig = midiRouteClockTimeSig.text
+            midiRouteInput.midiRouteClockTimeSigDivBy = midiRouteClockTimeSigDivBy.text
+            midiRouteInput.midiRouteClockPropegateInputs = inPortsSettingsProperate.selectedItems
+
+
+            let itms = []
+            inPortsSettings14Bit.selectedItems.forEach(
+                        (element) => {
+                            itms.push({channel: element.channel, cc: element.cc})
+                        }
+                        );
+
+            midiRouteInput.clear14BitCc();
+
+            itms.forEach(
+                        (element) => {
+                            midiRouteInput.add14BitCc(element.channel, element.cc)
+                        }
+            );
+
+        }
+    }
+
     RowLayout {
         CoreLabel {
             text: "Settings InPort: " + midiRouteInput.midiInputName
@@ -22,14 +53,17 @@ ColumnLayout {
     }
     RowLayout {
         CoreCheckBox {
+            id: ignoreTypesMidiSysex
             text: "Sysex"
             checked: midiRouteInput.ignoreTypesMidiSysex
         }
         CoreCheckBox {
+            id: ignoreTypesMidiTime
             text: "Time"
             checked: midiRouteInput.ignoreTypesMidiTime
         }
         CoreCheckBox {
+            id: ignoreTypesMidiSense
             text: "Sence"
             checked: midiRouteInput.ignoreTypesMidiSense
         }
@@ -42,6 +76,7 @@ ColumnLayout {
             text: "Time signature from SPP"
         }
         CoreTextField {
+            id: midiRouteClockFromSppPos
             text: midiRouteInput.midiRouteClockFromSppPos
         }
     }
@@ -50,21 +85,25 @@ ColumnLayout {
             text: "Upper numeral"
         }
         CoreTextField {
+            id: midiRouteClockTimeSig
             text: midiRouteInput.midiRouteClockTimeSig
         }
         CoreLabel {
             text: "Lower numeral"
         }
         CoreTextField {
+            id: midiRouteClockTimeSigDivBy
             text: midiRouteInput.midiRouteClockTimeSigDivBy
         }
     }
     InPortsSettingsProperate {
-       selectedItems: midiRouteInput.midiRouteClockPropegateInputs
+        id: inPortsSettingsProperate
+        selectedItems: midiRouteInput.midiRouteClockPropegateInputs
         allItems: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
     }
 
     InPortsSettings14Bit {
+        id: inPortsSettings14Bit
         selectedItems: midiRouteInput.midiRouteInputCc14bit
     }
 }

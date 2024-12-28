@@ -70,12 +70,16 @@
         emit midiRouterChainsChanged();
     }
 
+    void MidiRouteInput::clear14BitCc() 
+    {
+        clearMidiRouteInputCc14bit();
+    }
+
     void MidiRouteInput::add14BitCc(int channel, int cc) 
     {
         MidiRouteInputCc14bit *item = new MidiRouteInputCc14bit();
         item->setChannel(channel);
         item->setCc(cc);
-        m_midiRouteInputCc14bit.push_back(item);
-        emit midiRouteInputCc14bitChanged();
+        addMidiRouteInputCc14bit(item);
     }
 
