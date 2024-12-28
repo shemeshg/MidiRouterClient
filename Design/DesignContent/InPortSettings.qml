@@ -59,25 +59,10 @@ ColumnLayout {
             text: midiRouteInput.midiRouteClockTimeSigDivBy
         }
     }
-    RowLayout {
-        CoreLabel {
-            text: "Propagate Inputes"
-        }
-        CoreComboBox {
-            model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-            Layout.fillWidth: true
-            Component.onCompleted: {
-                var index = model.indexOf(midiControl.portName);
-                if (index !== -1) {
-                    currentIndex = index;
-                }
-            }
-        }
-        CoreButton {
-            text: "add"
-        }
+    InPortsSettingsProperate {
+       selectedItems: midiRouteInput.midiRouteClockPropegateInputs
+        allItems: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
     }
-    CoreLabel {
-        text: JSON.stringify(midiRouteInput.midiRouteClockPropegateInputs)
-    }
+
+
 }

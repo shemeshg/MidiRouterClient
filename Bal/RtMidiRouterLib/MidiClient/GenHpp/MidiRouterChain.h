@@ -1,8 +1,6 @@
 #pragma once
 #include "EasyConfig.h"
 #include "FilterAndTransform.h"
-//
-
 #include "FilterSchedule.h"
 #include "FilterToConsle.h"
 #include "MidiPresetControlEasyConfig.h"
