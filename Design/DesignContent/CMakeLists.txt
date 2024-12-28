@@ -30,7 +30,10 @@ qt6_add_qml_module(DesignContent
         "InPortRoutes.qml"
         "InPortEasyConfig.qml"
         "InPortsSettingsProperate.qml"
+        "InPortsSettings14Bit.qml"
 )
+
+
 
 
 

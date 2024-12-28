@@ -64,59 +64,7 @@ ColumnLayout {
         allItems: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
     }
 
-    RowLayout {
-        CoreLabel {
-            text: "<h2>14Bit CC</h2>"
-        }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "Channel"
-        }
-        CoreTextField {
-           id: cc14bitChannel
-           text: "1"
-        }
-        CoreLabel {
-            text: "CC"
-        }
-        CoreTextField {
-            id: cc14bitCc
-            text: "0"
-        }
-        CoreButton{
-            text: "add"
-            onClicked: {
-                cc14bitErr.text = ""
-                if (
-                        Number(cc14bitChannel.text) < 1 ||
-                        Number(cc14bitChannel.text) > 16 ||
-                        Number(cc14bitCc.text) < 0 ||
-                        Number(cc14bitCc.text) > 17
-                      ) {
-                        cc14bitErr.text = "14bit requires Channel 1..16 cc 1..16"
-                        return;
-                      }
-                /* -- add value if not exists
-                      if (
-                        midiRouteInput.value.cc14bitAry.filter((row) => {
-                          return (
-                            row.channel === cc14bitChannel.value && row.cc === cc14bitCc.value
-                          );
-                        }).length > 0
-                      ) {
-                        return;
-                      }
-                      midiRouteInput.value.addCc14bitAry(cc14bitChannel.value, cc14bitCc.value);
-
-                      */
-            }
-        }
-    }
-
-    CoreLabel {
-        visible: text !==""
-        id: cc14bitErr
-        text: ""
+    InPortsSettings14Bit {
+        selectedItems: midiRouteInput.midiRouteInputCc14bit
     }
 }

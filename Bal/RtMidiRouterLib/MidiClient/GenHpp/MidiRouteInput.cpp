@@ -11,6 +11,9 @@
         setMidiRouteClockTimeSigDivBy(4);
         setMidiRouteClockFromSppPos(0);
         m_monitor = new Monitor(this);
+        // Dummy DELETE
+        clearMidiRouteInputCc14bit();
+        add14BitCc(2, 5);
     };
 
 
@@ -65,5 +68,14 @@
 
         m_midiRouterChains.clear();
         emit midiRouterChainsChanged();
+    }
+
+    void MidiRouteInput::add14BitCc(int channel, int cc) 
+    {
+        MidiRouteInputCc14bit *item = new MidiRouteInputCc14bit();
+        item->setChannel(channel);
+        item->setCc(cc);
+        m_midiRouteInputCc14bit.push_back(item);
+        emit midiRouteInputCc14bitChanged();
     }
 

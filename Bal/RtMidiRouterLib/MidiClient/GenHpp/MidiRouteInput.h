@@ -17,7 +17,7 @@ public:
     void addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs);
     void clearMidiRouterChains();
 public slots:
-
+    void add14BitCc(int channel, int cc);
 private:
 
 };
