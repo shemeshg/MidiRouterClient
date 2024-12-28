@@ -2,6 +2,7 @@
 #include "../genPrpt/FilterToConslePrivate.h"
 
 
+
 class FilterToConsole : public FilterToConslePrivate
 
 {

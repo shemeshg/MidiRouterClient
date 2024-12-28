@@ -1,6 +1,7 @@
 #pragma once
 #include "../genPrpt/PresetMidiControlPrivate.h"
 
+
 class PresetMidiControl : public PresetMidiControlPrivate
 
 {

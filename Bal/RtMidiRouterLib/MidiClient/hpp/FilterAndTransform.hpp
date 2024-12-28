@@ -1,13 +1,14 @@
 //-define-file body GenHpp/FilterAndTransform.cpp
 //-define-file header GenHpp/FilterAndTransform.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/FilterAndTransformPrivate.h"
 //-only-file body //-
 //- #include "FilterAndTransform.h"
 //-only-file null
+#include "../genPrpt/FilterAndTransformPrivate.hpp"
 //-only-file header
-#pragma once
 
-#include "../genPrpt/FilterAndTransformPrivate.h"
 
 //-var {PRE} "FilterAndTransform::"
 class FilterAndTransform : public FilterAndTransformPrivate

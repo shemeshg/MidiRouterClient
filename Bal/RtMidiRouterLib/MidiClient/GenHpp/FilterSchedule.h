@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../genPrpt/FilterSchedulePrivate.h"
 
 class FilterSchedule : public FilterSchedulePrivate

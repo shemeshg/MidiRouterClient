@@ -1,12 +1,14 @@
 //-define-file body GenHpp/FilterToConsle.cpp
 //-define-file header GenHpp/FilterToConsle.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/FilterToConslePrivate.h"
 //-only-file body //-
 //- #include "FilterToConsle.h"
 //-only-file null
+#include "../genPrpt/FilterToConslePrivate.hpp"
 //-only-file header
-#pragma once
-#include "../genPrpt/FilterToConslePrivate.h"
+
 
 
 //-var {PRE} "FilterToConsole::"

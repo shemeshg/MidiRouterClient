@@ -1,13 +1,13 @@
 //-define-file body GenHpp/MidiClientConnection.cpp
 //-define-file header GenHpp/MidiClientConnection.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/MidiClientConnectionPrivate.h"
 //-only-file body //-
 //- #include "MidiClientConnection.h"
 //-only-file null
+#include "../genPrpt/MidiClientConnectionPrivate.hpp"
 //-only-file header
-#pragma once
-
-#include "../genPrpt/MidiClientConnectionPrivate.h"
 
 //-var {PRE} "MidiClientConnection::"
 class MidiClientConnection : public MidiClientConnectionPrivate

@@ -1,12 +1,14 @@
 //-define-file body GenHpp/Monitor.cpp
 //-define-file header GenHpp/Monitor.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/MonitorPrivate.h"
 //-only-file body //-
 //- #include "Monitor.h"
 //-only-file null
+#include "../genPrpt/MonitorPrivate.hpp"
 //-only-file header
-#pragma once
-#include "../genPrpt/MonitorPrivate.h"
+
 
 //-var {PRE} "Monitor::"
 class Monitor : public MonitorPrivate

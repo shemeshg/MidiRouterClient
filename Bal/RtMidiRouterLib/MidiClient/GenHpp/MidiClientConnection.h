@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../genPrpt/MidiClientConnectionPrivate.h"
 
 class MidiClientConnection : public MidiClientConnectionPrivate

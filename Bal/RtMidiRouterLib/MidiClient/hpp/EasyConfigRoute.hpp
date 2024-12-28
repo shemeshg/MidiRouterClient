@@ -1,13 +1,15 @@
 //-define-file body GenHpp/EasyConfigRoute.cpp
 //-define-file header GenHpp/EasyConfigRoute.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/EasyConfigRoutePrivate.h"
 //-only-file body //-
 //- #include "EasyConfigRoute.h"
 //-only-file null
+#include "../genPrpt/EasyConfigRoutePrivate.hpp"
 //-only-file header
 
-#pragma once
-#include "../genPrpt/EasyConfigRoutePrivate.h"
+
 
 
 struct EasyConfigRouteFilter{

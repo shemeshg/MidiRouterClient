@@ -1,6 +1,6 @@
 #pragma once
-
 #include "../genPrpt/UserControlPrivate.h"
+
 
 class UserControl : public UserControlPrivate
 {

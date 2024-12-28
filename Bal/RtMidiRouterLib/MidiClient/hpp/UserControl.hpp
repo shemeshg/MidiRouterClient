@@ -1,13 +1,14 @@
 //-define-file body GenHpp/UserControl.cpp
 //-define-file header GenHpp/UserControl.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/UserControlPrivate.h"
 //-only-file body //-
 //- #include "UserControl.h"
 //-only-file null
+#include "../genPrpt/UserControlPrivate.hpp"
 //-only-file header
-#pragma once
 
-#include "../genPrpt/UserControlPrivate.h"
 
 //-var {PRE} "UserControl::"
 class UserControl : public UserControlPrivate

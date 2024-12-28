@@ -1,12 +1,14 @@
 //-define-file body GenHpp/FilterNetworkDestination.cpp
 //-define-file header GenHpp/FilterNetworkDestination.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/FilterNetworkDestinationPrivate.h"
 //-only-file body //-
 //- #include "FilterNetworkDestination.h"
 //-only-file null
+#include "../genPrpt/FilterNetworkDestinationPrivate.hpp"
 //-only-file header
-#pragma once
-#include "../genPrpt/FilterNetworkDestinationPrivate.h"
+
 
 //-var {PRE} "FilterNetworkDestination::"
 class FilterNetworkDestination : public FilterNetworkDestinationPrivate

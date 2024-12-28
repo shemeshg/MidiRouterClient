@@ -1,6 +1,7 @@
 #pragma once
 #include "../genPrpt/MonitorPrivate.h"
 
+
 class Monitor : public MonitorPrivate
 
 {

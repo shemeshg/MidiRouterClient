@@ -1,13 +1,13 @@
 //-define-file body GenHpp/FilterSchedule.cpp
 //-define-file header GenHpp/FilterSchedule.h
 //-only-file header //-
+#pragma once
+//- #include "../genPrpt/FilterSchedulePrivate.h"
 //-only-file body //-
 //- #include "FilterSchedule.h"
 //-only-file null
+#include "../genPrpt/FilterSchedulePrivate.hpp"
 //-only-file header
-#pragma once
-
-#include "../genPrpt/FilterSchedulePrivate.h"
 
 //-var {PRE} "FilterSchedule::"
 class FilterSchedule : public FilterSchedulePrivate

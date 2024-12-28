@@ -1,6 +1,7 @@
 #pragma once
 #include "../genPrpt/EasyConfigPrivate.h"
 
+
 class EasyConfig : public EasyConfigPrivate
 
 {

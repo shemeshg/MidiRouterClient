@@ -2,13 +2,15 @@
 //-define-file header GenHpp/MidiRoutePreset.h
 //-only-file header //-
 #pragma once
+//- #include "../genPrpt/MidiRoutePresetPrivate.h"
 //- #include "MidiClientUtil.h"
 //-only-file body //-
 //- #include "MidiRoutePreset.h"
 //-only-file null
 #include "MidiClientUtil.hpp"
+#include "../genPrpt/MidiRoutePresetPrivate.hpp"
 //-only-file header
-#include "../genPrpt/MidiRoutePresetPrivate.h"
+
 
 //-var {PRE} "MidiRoutePreset::"
 class MidiRoutePreset : public MidiRoutePresetPrivate

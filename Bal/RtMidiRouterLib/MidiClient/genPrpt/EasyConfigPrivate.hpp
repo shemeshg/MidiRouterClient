@@ -8,6 +8,7 @@
 //- #include "../GenHpp/EasyConfigRoute.h"
 
 //-only-file null
+#include "../hpp/EasyConfigRoute.hpp"
 /*[[[cog
 import cog
 from EasyConfigPrivate import prptClass

@@ -9,6 +9,8 @@
 //- #include "FilterSchedule.h"
 //- #include "FilterToConsle.h"
 //- #include "MidiPresetControlEasyConfig.h"
+//- #include "../genPrpt/MidiRouterChainPrivate.h"
+//- #include "../genPrpt/MidiRoutersFilter.h"
 //-only-file body //-
 //- #include "MidiRouterChain.h"
 //-only-file null
@@ -19,9 +21,9 @@
 #include "FilterSchedule.hpp"
 #include "FilterToConsle.hpp"
 #include "MidiPresetControlEasyConfig.hpp"
+#include "../genPrpt/MidiRouterChainPrivate.hpp"
+#include "../genPrpt/MidiRoutersFilter.hpp"
 //-only-file header
-#include "../genPrpt/MidiRouterChainPrivate.h"
-#include "../genPrpt/MidiRoutersFilter.h"
 #include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
 
