@@ -22,7 +22,6 @@ cog.outl(prptClass.getClassHeader(),
 class EasyConfigPrivate : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString midiInputName READ midiInputName WRITE setMidiInputName NOTIFY midiInputNameChanged )
     Q_PROPERTY(QList<int> keyboardSplits READ keyboardSplits WRITE setKeyboardSplits NOTIFY keyboardSplitsChanged )
     Q_PROPERTY(QStringList zoneNames READ zoneNames WRITE setZoneNames NOTIFY zoneNamesChanged )
     Q_PROPERTY(QList<EasyConfigRoute *> easyConfigRoutes READ easyConfigRoutes  NOTIFY easyConfigRoutesChanged )
@@ -38,18 +37,6 @@ public:
     }
 
     
-    
-    QString midiInputName() const{return m_midiInputName;} 
-    
-void setMidiInputName(const QString &newMidiInputName)
-    {
-        if (m_midiInputName == newMidiInputName)
-            return;
-        m_midiInputName = newMidiInputName;
-        emit midiInputNameChanged();
-    }
-
-
     
     QList<int> keyboardSplits() const{return m_keyboardSplits;} 
     
@@ -107,7 +94,6 @@ void setZoneNames(const QStringList &newZoneNames)
         
     
 signals:
-    void midiInputNameChanged();
     void keyboardSplitsChanged();
     void zoneNamesChanged();
     void easyConfigRoutesChanged();
@@ -118,7 +104,6 @@ protected:
     
 
 private:
-    QString m_midiInputName;
     QList<int> m_keyboardSplits;
     QStringList m_zoneNames;
     

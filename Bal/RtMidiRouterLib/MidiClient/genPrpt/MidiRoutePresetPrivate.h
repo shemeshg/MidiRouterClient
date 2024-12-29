@@ -18,7 +18,6 @@ class MidiRoutePresetPrivate : public QObject
     Q_PROPERTY(bool isEnabled READ isEnabled WRITE setIsEnabled NOTIFY isEnabledChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOn READ midiControlOn  NOTIFY midiControlOnChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOff READ midiControlOff  NOTIFY midiControlOffChanged )
-    Q_PROPERTY(QList<EasyConfig *> easyConfig READ easyConfig  NOTIFY easyConfigChanged )
     Q_PROPERTY(QList<UserControl *> userControls READ userControls  NOTIFY userControlsChanged )
     Q_PROPERTY(QList<MidiRouteInput *> midiRouteInputs READ midiRouteInputs  NOTIFY midiRouteInputsChanged )
     
@@ -28,8 +27,7 @@ public:
     MidiRoutePresetPrivate(QObject *parent = nullptr):QObject(parent){}
 
     virtual ~MidiRoutePresetPrivate() {
-        clearEasyConfig();
-    clearUserControls();
+        clearUserControls();
     clearMidiRouteInputs();
     
     }
@@ -104,10 +102,6 @@ void setIsEnabled(const bool newIsEnabled)
     
 
     
-    QList<EasyConfig *> easyConfig() const{return m_easyConfig;} 
-    
-
-    
     QList<UserControl *> userControls() const{return m_userControls;} 
     
 
@@ -116,32 +110,6 @@ void setIsEnabled(const bool newIsEnabled)
     
 
     
-        void delEasyConfig(int id)
-        {
-            if (id < m_easyConfig.size())
-            {
-                delete m_easyConfig.at(id);
-                m_easyConfig.removeAt(id);
-                emit easyConfigChanged();
-            }
-        }
-
-        void addEasyConfig(EasyConfig * item)
-        {
-            m_easyConfig.push_back(item);
-            emit easyConfigChanged();
-        }
-
-        void clearEasyConfig()
-        {
-            for (const EasyConfig * item : m_easyConfig) {
-                delete item;
-            }
-            // Clear the outer list
-            m_easyConfig.clear();
-            emit easyConfigChanged();
-        }
-        
         void delUserControls(int id)
         {
             if (id < m_userControls.size())
@@ -203,7 +171,6 @@ signals:
     void isEnabledChanged();
     void midiControlOnChanged();
     void midiControlOffChanged();
-    void easyConfigChanged();
     void userControlsChanged();
     void midiRouteInputsChanged();
     
@@ -211,7 +178,6 @@ signals:
 protected:
     PresetMidiControl * m_midiControlOn;
     PresetMidiControl * m_midiControlOff;
-    QList<EasyConfig *> m_easyConfig;
     QList<UserControl *> m_userControls;
     QList<MidiRouteInput *> m_midiRouteInputs;
     

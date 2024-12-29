@@ -20,6 +20,7 @@ class MidiRouteInputPrivate : public QObject
     Q_PROPERTY(QList<MidiRouteInputCc14bit *> midiRouteInputCc14bit READ midiRouteInputCc14bit  NOTIFY midiRouteInputCc14bitChanged )
     Q_PROPERTY(QList<MidiRouterChain *> midiRouterChains READ midiRouterChains  NOTIFY midiRouterChainsChanged )
     Q_PROPERTY(Monitor * monitor READ monitor  NOTIFY monitorChanged )
+    Q_PROPERTY(QList<EasyConfig *> easyConfig READ easyConfig  NOTIFY easyConfigChanged )
     
     QML_ELEMENT
 public:
@@ -29,6 +30,7 @@ public:
     virtual ~MidiRouteInputPrivate() {
         clearMidiRouteInputCc14bit();
     clearMidiRouterChains();
+    clearEasyConfig();
     
     }
 
@@ -142,6 +144,10 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     
 
     
+    QList<EasyConfig *> easyConfig() const{return m_easyConfig;} 
+    
+
+    
         void delMidiRouteInputCc14bit(int id)
         {
             if (id < m_midiRouteInputCc14bit.size())
@@ -194,6 +200,32 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
             emit midiRouterChainsChanged();
         }
         
+        void delEasyConfig(int id)
+        {
+            if (id < m_easyConfig.size())
+            {
+                delete m_easyConfig.at(id);
+                m_easyConfig.removeAt(id);
+                emit easyConfigChanged();
+            }
+        }
+
+        void addEasyConfig(EasyConfig * item)
+        {
+            m_easyConfig.push_back(item);
+            emit easyConfigChanged();
+        }
+
+        void clearEasyConfig()
+        {
+            for (const EasyConfig * item : m_easyConfig) {
+                delete item;
+            }
+            // Clear the outer list
+            m_easyConfig.clear();
+            emit easyConfigChanged();
+        }
+        
     
 signals:
     void midiInputNameChanged();
@@ -207,12 +239,14 @@ signals:
     void midiRouteInputCc14bitChanged();
     void midiRouterChainsChanged();
     void monitorChanged();
+    void easyConfigChanged();
     
 
 protected:
     QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit;
     QList<MidiRouterChain *> m_midiRouterChains;
     Monitor * m_monitor;
+    QList<EasyConfig *> m_easyConfig;
     
 
 private:

@@ -62,7 +62,7 @@
             obj["midiControlOff"] = getModiControlOnOff(itm->midiControlOff());
             obj["midiRouteInputs"] = getMidiRouteInputs(itm->midiRouteInputs());
             obj["userControls"] = getUserControls(itm->userControls());
-            obj["easyConfig"] = getEasyConfig(itm->easyConfig());
+
             //DUMMY DELETE
             QJsonArray dummyAry;
             QJsonObject dummyObj;
@@ -79,28 +79,26 @@
         QJsonObject obj;
         //auto inputZonesAndRoutes = obj["inputZonesAndRoutes"].toObject();
 
-        QJsonObject inputZonesAndRoutes;
+        QJsonArray inputZonesAndRoutes;
         for (const auto &easyConfig: easyConfigList){
 
             QJsonObject  easyConfigInput;
-            auto midiInputName = easyConfig->midiInputName();
-            easyConfigInput["midiInputName"] = midiInputName;
             easyConfigInput["keyboardSplits"] = getKeyboardSplits(easyConfig->keyboardSplits());
             easyConfigInput["zoneNames"] = getStringListToJsonAry(easyConfig->zoneNames());
-            easyConfigInput["easyConfigRoutes"] = getEasyConfigRoutes(easyConfig->easyConfigRoutes(),midiInputName);
+            easyConfigInput["easyConfigRoutes"] = getEasyConfigRoutes(easyConfig->easyConfigRoutes());
 
-            inputZonesAndRoutes[midiInputName] = easyConfigInput;
+            inputZonesAndRoutes.append(easyConfigInput);
         }
         obj["inputZonesAndRoutes"] = inputZonesAndRoutes;
         return obj;
     }
 
-    QJsonArray UserConfigGenJson::getEasyConfigRoutes(QList<EasyConfigRoute *> easyConfigRoutes, QString midiInputName) 
+    QJsonArray UserConfigGenJson::getEasyConfigRoutes(QList<EasyConfigRoute *> easyConfigRoutes) 
     {
         QJsonArray ary;
         for (const auto &easyConfigRoute: easyConfigRoutes){
             QJsonObject obj;
-            obj["midiInputName"] = midiInputName;
+
             obj["splitRangeId"] = easyConfigRoute->splitRangeId();
             obj["fromSelectedMidiEventTypeId"] = easyConfigRoute->fromSelectedMidiEventTypeId();
             obj["fromChannel"] = easyConfigRoute->fromChannel();
@@ -282,6 +280,7 @@
         obj["midiRouteClock"] = getMidiRouteClock(midiRouteInput);
         obj["cc14bitAry"] = getCc14bitAry(midiRouteInput);
         obj["monitor"] = getMonitor(midiRouteInput);
+        obj["easyConfig"] = getEasyConfig(midiRouteInput->easyConfig());
 
         obj["midiRouterChains"] = getMidiRouterChains(midiRouteInput);
 

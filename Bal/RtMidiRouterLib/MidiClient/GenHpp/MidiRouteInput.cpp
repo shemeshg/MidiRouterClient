@@ -3,6 +3,7 @@
         : MidiRouteInputPrivate{parent} {
         clearMidiRouteInputCc14bit();
         clearMidiRouterChains();
+        clearEasyConfig();
 
         setIgnoreTypesMidiSysex(true);
         setIgnoreTypesMidiTime( true);

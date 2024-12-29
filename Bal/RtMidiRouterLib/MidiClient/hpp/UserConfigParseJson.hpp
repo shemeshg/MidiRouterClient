@@ -76,11 +76,7 @@ private:
             auto array = midiRoutePresets.toArray();
             for (const QJsonValue &value : array) {
                 MidiRoutePreset *preset = createMidiRoutePreset(userDataConfig,value);
-                auto easyConfig = value["easyConfig"];
-                auto inputZonesAndRoutes = easyConfig["inputZonesAndRoutes"];
-                if (easyConfig.isObject() && inputZonesAndRoutes.isObject()) {
-                    updateEasyConfig(preset, inputZonesAndRoutes.toObject());
-                }
+
                 userDataConfig->addMidiRoutePresets(preset);
             }
 
@@ -161,6 +157,11 @@ private:
         for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
             MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntry( it.value().toObject());
             preset->addMidiRouteInputs(midiRouteInputEntry);
+            auto easyConfig = it.value().toObject()["easyConfig"];
+            auto inputZonesAndRoutes = easyConfig.toObject()["inputZonesAndRoutes"];
+            if (easyConfig.isObject() && inputZonesAndRoutes.isObject()) {
+                updateEasyConfig(midiRouteInputEntry, inputZonesAndRoutes.toObject());
+            }
         }
     }
 
@@ -268,13 +269,13 @@ private:
     }
 
     //- {function} 0 1
-    void updateEasyConfig(MidiRoutePreset *preset, const QJsonObject &easyConfig)
+    void updateEasyConfig(MidiRouteInput *input, const QJsonObject &easyConfig)
     //-only-file body
     {
-        preset->clearEasyConfig();
+        input->clearEasyConfig();
         for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
             EasyConfig *easyConfigEntry = createEasyConfigEntry(it.key(), it.value().toObject());
-            preset->addEasyConfig(easyConfigEntry);
+            input->addEasyConfig(easyConfigEntry);
         }
     }
 
@@ -283,7 +284,6 @@ private:
     //-only-file body
     {
         EasyConfig *easyConfigEntry = new EasyConfig();
-        easyConfigEntry->setMidiInputName(key);
 
         if (value["keyboardSplits"].isArray()) {
             QList<int> keyboardSplits = extractKeyboardSplits(value["keyboardSplits"].toArray());

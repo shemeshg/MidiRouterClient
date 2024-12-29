@@ -32,7 +32,6 @@ public:
             PresetMidiControl::PresetMidiType::PRESET_OFF,
             uuid(),this);
 
-        clearEasyConfig();
         clearUserControls();
 
     };
@@ -42,16 +41,16 @@ public:
     //-only-file body
     {
         for ( MidiRouteInput *input: m_midiRouteInputs){
+            input->clearEasyConfig();
             input->clearEasyConfigMidiRouterChains();
             input->addMonitorEasyConfigIfRequired();
             input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs);
+
+            for (EasyConfig *easyConfig: input->easyConfig()){
+                getInputOrCreateByName(input->midiInputName())->createEasyConfigChains(easyConfig);
+            }
         }
 
-        for (EasyConfig *easyConfig: m_easyConfig){
-            auto const midiInputName = easyConfig->midiInputName();
-            getInputOrCreateByName(midiInputName)->createEasyConfigChains(easyConfig);
-
-        }
     }
 
 
