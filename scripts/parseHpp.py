@@ -17,6 +17,7 @@
 import os
 import re
 import sys
+import concurrent.futures
 
 class FileClass:
     file_path = ""
@@ -241,6 +242,16 @@ def parse_file(input_file):
             #with open(fileMap[file_id].file_path, 'w') as file:
             #    file.writelines(fileMap[file_id].file_content)
 
+
+
+
+
 if __name__ == "__main__":
-    for arg in sys.argv[1:]:
-        parse_file(arg)    
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        futures = []
+        for arg in sys.argv[1:]:
+            futures.append( executor.submit(parse_file, arg) )
+
+        for future in concurrent.futures.as_completed(futures):
+            future.result()
+
