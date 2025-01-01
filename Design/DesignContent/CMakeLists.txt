@@ -10,7 +10,7 @@ qt6_add_qml_module(DesignContent
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         "HeaderBar.qml"
-        "EasyConfig.qml"
+
         "Login.qml"
         "VirtualPorts.qml"
         "Presets.qml"

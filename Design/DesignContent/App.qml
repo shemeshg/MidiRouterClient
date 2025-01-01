@@ -73,11 +73,6 @@ Window {
             }
         }
 
-        Component {
-            id: easyConfigId
-            EasyConfig {
-            }
-        }
 
         Component {
             id: inPortsId
@@ -119,11 +114,6 @@ Window {
                 name: "UserControls"
                 when: headerBarId.state === "UserControls"
                 PropertyChanges { target: loaderId; sourceComponent: userControlsId }
-            },
-            State {
-                name: "EasyConfig"
-                when: headerBarId.state === "EasyConfig"
-                PropertyChanges { target: loaderId; sourceComponent: easyConfigId }
             },
             State {
                 name: "InPorts"
