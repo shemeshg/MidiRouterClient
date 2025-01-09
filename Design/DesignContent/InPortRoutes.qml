@@ -27,7 +27,8 @@ ColumnLayout {
         model: midiRouteInput.midiRouterChains
         ColumnLayout {
             CoreLabel {
-                text: `${modelData.name}  ${modelData.isEasyConfig}  ${modelData.isRunForPresetOnAndOff}`
+                text: `${modelData.name}  ${modelData.isEasyConfig ? "auto EasyConfig" : ""}  ${modelData.isRunForPresetOnAndOff?
+                                                                     "auto Preset on/off": ""}`
             }
             CoreLabel {
                 text: "Filters : " + JSON.stringify(modelData.midiRoutersFilters)
