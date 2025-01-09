@@ -18,7 +18,6 @@ Column {
         CoreLabel {
             text: "<h1>Connected in ports</h1>"
         }
-
         Repeater {
             model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
             RowLayout {

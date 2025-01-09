@@ -71,6 +71,17 @@
         emit midiRouterChainsChanged();
     }
 
+    void MidiRouteInput::addMidiRouterChain(const QString name) 
+    {
+        MidiRouterChain *midiRouterChain = new MidiRouterChain();
+        midiRouterChain->setName(name);
+        addMidiRouterChains(midiRouterChain);
+    }
+
+    void MidiRouteInput::delMidiRouterChain(const int idx) 
+    {
+        delMidiRouterChains(idx);
+    }
     void MidiRouteInput::clear14BitCc() 
     {
         clearMidiRouteInputCc14bit();

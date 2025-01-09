@@ -106,6 +106,21 @@ public:
     //-only-file header
 public slots:
     //- {function} 0 1
+    void addMidiRouterChain(const QString name)
+    //-only-file body
+    {
+        MidiRouterChain *midiRouterChain = new MidiRouterChain();
+        midiRouterChain->setName(name);
+        addMidiRouterChains(midiRouterChain);
+    }
+
+    //- {function} 0 1
+    void delMidiRouterChain(const int idx)
+    //-only-file body
+    {
+        delMidiRouterChains(idx);
+    }
+    //- {function} 0 1
     void clear14BitCc()
     //-only-file body
     {

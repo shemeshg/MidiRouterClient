@@ -10,10 +10,33 @@ ColumnLayout {
         onClicked: {
             inPortsId.state = "InPortsList";
         }
-    }    
+    }
     RowLayout {
         CoreLabel {
             text: "Routes InPort: " + midiRouteInput.midiInputName
         }
+    }
+    CoreLabel {
+        text: "<H1>Chains</h1>"
+    }
+    CoreButton {
+        text: "add chain"
+        onClicked: midiRouteInput.addMidiRouterChain(`chain ${midiRouteInput.midiRouterChains.length + 1}`)
+    }
+    Repeater {
+        model: midiRouteInput.midiRouterChains
+        ColumnLayout {
+            CoreLabel {
+                text: `${modelData.name}  ${modelData.isEasyConfig}  ${modelData.isRunForPresetOnAndOff}`
+            }
+            CoreLabel {
+                text: "Filters : " + JSON.stringify(modelData.midiRoutersFilters)
+            }
+            CoreButton {
+                text: "Del"
+                onClicked: midiRouteInput.delMidiRouterChain(index);
+            }
+        }
+
     }
 }
