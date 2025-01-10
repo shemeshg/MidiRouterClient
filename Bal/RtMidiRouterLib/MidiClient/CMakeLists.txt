@@ -10,7 +10,6 @@ if(GEN_HPP)
     add_custom_target(run_script ALL
         COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DEPENDS genPrpt/EasyConfigPrivate.h
         COMMENT "Running parseHpp shell script")
 
     # Run a shell script before everything else

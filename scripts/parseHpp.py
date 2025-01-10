@@ -249,7 +249,9 @@ def parse_file(input_file):
 if __name__ == "__main__":
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         futures = []
-        for arg in sys.argv[1:]:
+        # Templates should be read none async
+        parse_file(sys.argv[1])
+        for arg in sys.argv[2:]:
             futures.append( executor.submit(parse_file, arg) )
 
         for future in concurrent.futures.as_completed(futures):
