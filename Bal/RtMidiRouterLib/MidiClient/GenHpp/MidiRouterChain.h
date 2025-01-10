@@ -18,6 +18,7 @@ public:
     explicit MidiRouterChain(QObject *parent = nullptr);
 public slots:
     void clearMidiRoutersFilters();
+    void delMidiRoutersFilter(const int id);
     void addFilterMidiDestination(QString midiDestination);
     void addFilterToConsole(FilterToConsole::LogTo logTo, QString userData);
     void addFilterNetworkDestination(QString serverName, int serverPort, QString baseMidiRouteInput);

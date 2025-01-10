@@ -21,6 +21,20 @@
         emit midiRoutersFiltersChanged();
     }
 
+    void MidiRouterChain::delMidiRoutersFilter(const int id) 
+    {
+        if (id < m_midiRoutersFilters.size())
+        {
+            auto var = m_midiRoutersFilters.at(id);
+            if (var.canConvert<MidiRoutersFilter*>()) {
+                delete var.value<MidiRoutersFilter*>();
+            }
+
+            m_midiRoutersFilters.removeAt(id);
+            emit midiRoutersFiltersChanged();
+        }
+    }
+
     void MidiRouterChain::addFilterMidiDestination(QString midiDestination) 
     {
         auto f = new FilterMidiDestination();

@@ -61,6 +61,22 @@ public slots:
     }
 
     //- {function} 0 1
+    void delMidiRoutersFilter(const int id)
+    //-only-file body
+    {
+        if (id < m_midiRoutersFilters.size())
+        {
+            auto var = m_midiRoutersFilters.at(id);
+            if (var.canConvert<MidiRoutersFilter*>()) {
+                delete var.value<MidiRoutersFilter*>();
+            }
+
+            m_midiRoutersFilters.removeAt(id);
+            emit midiRoutersFiltersChanged();
+        }
+    }
+
+    //- {function} 0 1
     void addFilterMidiDestination(QString midiDestination)
     //-only-file body
     {

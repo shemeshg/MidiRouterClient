@@ -6,6 +6,25 @@ import QtQuick.Controls
 
 ColumnLayout {
     property var midiRouteInput: Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inPortsLoaderId.inPortName)
+
+
+    function getFilterTypeString(filterType) {
+        switch (filterType) {
+            case 0:
+                return "TO_MIDI_DESTINATION";
+            case 1:
+                return "TO_CONSOLE";
+            case 2:
+                return "TO_NETWORK";
+            case 3:
+                return "SCHEDULE_TO";
+            case 4:
+                return "FILTER_AND_TRANSFORM";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
     CoreButton {
         text: "back"
         onClicked: {
@@ -27,6 +46,7 @@ ColumnLayout {
     Repeater {
         model: midiRouteInput.midiRouterChains
         ColumnLayout {
+            property var currentChain: modelData
             RowLayout {
 
                 CoreComboBox {
@@ -71,31 +91,10 @@ ColumnLayout {
                 text: "Filters : "
             }
             Repeater {
+
                 model: modelData.midiRoutersFilters
                 RowLayout {
-                    enum FilterType {
-                        TO_MIDI_DESTINATION,
-                        TO_CONSOLE,
-                        TO_NETWORK,
-                        SCHEDULE_TO,
-                        FILTER_AND_TRANSFORM
-                    }
-                    function getFilterTypeString(filterType) {
-                        switch (filterType) {
-                            case FilterType.TO_MIDI_DESTINATION:
-                                return "TO_MIDI_DESTINATION";
-                            case FilterType.TO_CONSOLE:
-                                return "TO_CONSOLE";
-                            case FilterType.TO_NETWORK:
-                                return "TO_NETWORK";
-                            case FilterType.SCHEDULE_TO:
-                                return "SCHEDULE_TO";
-                            case FilterType.FILTER_AND_TRANSFORM:
-                                return "FILTER_AND_TRANSFORM";
-                            default:
-                                return "UNKNOWN";
-                        }
-                    }
+
                     CoreLabel {
                         text: getFilterTypeString(modelData.filterType) + ": "
                     }
@@ -104,9 +103,18 @@ ColumnLayout {
                     }
                     CoreButton {
                         text: "edit"
+                        onClicked: {
+                            if (modelData.filterType === 0){
+                                console.log("Edit TO_MIDI_DESTINATION")
+                            }
+                        }
                     }
                     CoreButton {
                         text: "del"
+                        onClicked: {
+                            currentChain.delMidiRoutersFilter(index)
+                        }
+
                     }
                 }
             }
