@@ -17,7 +17,6 @@ QString getUuId()
     return QUuid::createUuid().toString().replace("{", "").replace("}", "");
 }
 
-//-only-file header
 //- {function} 0 1
 template<typename T>
 void moveItem(std::vector<T>& vec, int intFrom, int intTo)
