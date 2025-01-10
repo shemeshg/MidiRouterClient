@@ -28,7 +28,9 @@ ColumnLayout {
         model: midiRouteInput.midiRouterChains
         ColumnLayout {
             RowLayout {
+
                 CoreComboBox {
+                    id: addFilterCombo
                     Layout.fillWidth: true
                     textRole: "text"
                     valueRole: "value"
@@ -50,6 +52,13 @@ ColumnLayout {
                 }
                 CoreButton {
                     text: "Add Filter"
+                    onClicked: {
+                        if (addFilterCombo.currentValue === "midi"){
+                            modelData.addFilterMidiDestination("test 1")
+                            console.log("created midi")
+                        }
+
+                    }
                 }
             }
 
@@ -59,8 +68,49 @@ ColumnLayout {
                                                                      "auto Preset on/off": ""}`
             }
             CoreLabel {
-                text: "Filters : " + JSON.stringify(modelData.midiRoutersFilters)
+                text: "Filters : "
             }
+            Repeater {
+                model: modelData.midiRoutersFilters
+                RowLayout {
+                    enum FilterType {
+                        TO_MIDI_DESTINATION,
+                        TO_CONSOLE,
+                        TO_NETWORK,
+                        SCHEDULE_TO,
+                        FILTER_AND_TRANSFORM
+                    }
+                    function getFilterTypeString(filterType) {
+                        switch (filterType) {
+                            case FilterType.TO_MIDI_DESTINATION:
+                                return "TO_MIDI_DESTINATION";
+                            case FilterType.TO_CONSOLE:
+                                return "TO_CONSOLE";
+                            case FilterType.TO_NETWORK:
+                                return "TO_NETWORK";
+                            case FilterType.SCHEDULE_TO:
+                                return "SCHEDULE_TO";
+                            case FilterType.FILTER_AND_TRANSFORM:
+                                return "FILTER_AND_TRANSFORM";
+                            default:
+                                return "UNKNOWN";
+                        }
+                    }
+                    CoreLabel {
+                        text: getFilterTypeString(modelData.filterType) + ": "
+                    }
+                    CoreLabel {
+                        text: modelData.name
+                    }
+                    CoreButton {
+                        text: "edit"
+                    }
+                    CoreButton {
+                        text: "del"
+                    }
+                }
+            }
+
             CoreButton {
                 text: "Del"
                 onClicked: midiRouteInput.delMidiRouterChain(index);

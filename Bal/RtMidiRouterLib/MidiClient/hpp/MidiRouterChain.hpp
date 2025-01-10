@@ -67,6 +67,7 @@ public slots:
         auto f = new FilterMidiDestination();
         f->setFilter(midiDestination);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     //- {function} 0 1
@@ -76,6 +77,7 @@ public slots:
         auto f = new FilterToConsole();
         f->setFilter(logTo, userData);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     //- {function} 0 1
@@ -85,6 +87,7 @@ public slots:
         auto f = new FilterNetworkDestination();
         f->setFilter(serverName,  serverPort, baseMidiRouteInput);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     //- {function} 0 1
@@ -94,6 +97,7 @@ public slots:
         auto f = new FilterSchedule();
         f->setFilter(defferedType, defferedTo);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     //- {function} 0 1
@@ -105,6 +109,7 @@ public slots:
         f->setFilter( name,  conditionAction,  filterChannel,
                     filterEvents,  filterData1,  filterData2 );
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     //- {function} 0 1

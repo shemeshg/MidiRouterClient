@@ -26,6 +26,7 @@
         auto f = new FilterMidiDestination();
         f->setFilter(midiDestination);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     void MidiRouterChain::addFilterToConsole(FilterToConsole::LogTo logTo, QString userData) 
@@ -33,6 +34,7 @@
         auto f = new FilterToConsole();
         f->setFilter(logTo, userData);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     void MidiRouterChain::addFilterNetworkDestination(QString serverName, int serverPort, QString baseMidiRouteInput) 
@@ -40,6 +42,7 @@
         auto f = new FilterNetworkDestination();
         f->setFilter(serverName,  serverPort, baseMidiRouteInput);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     void MidiRouterChain::addFilterFilterSchedule(FilterSchedule::DefferedType defferedType, int defferedTo ) 
@@ -47,6 +50,7 @@
         auto f = new FilterSchedule();
         f->setFilter(defferedType, defferedTo);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     void MidiRouterChain::addFilterAndTransform(QString name, FilterAndTransform::ConditionAction conditionAction, QString filterChannel, QString filterEvents, QString filterData1, QString filterData2 ) 
@@ -55,6 +59,7 @@
         f->setFilter( name,  conditionAction,  filterChannel,
                     filterEvents,  filterData1,  filterData2 );
         m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
     }
 
     void MidiRouterChain::addEasyConfigMonitor() 
