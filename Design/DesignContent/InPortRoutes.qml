@@ -2,6 +2,7 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
+import QtQuick.Controls
 
 ColumnLayout {
     property var midiRouteInput: Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inPortsLoaderId.inPortName)
@@ -26,6 +27,33 @@ ColumnLayout {
     Repeater {
         model: midiRouteInput.midiRouterChains
         ColumnLayout {
+            RowLayout {
+                CoreComboBox {
+                    Layout.fillWidth: true
+                    textRole: "text"
+                    valueRole: "value"
+                    model: [
+                        { value: "", text: "" },
+                        { value: "",text: "- To output" },
+                        { value: "midi", text: "Midi" },
+                        { value: "console",text: "Console" },
+                         { value: "network",  text: "Network" },
+                         { text: "- Filter and modify" },
+                         { value: "filter" ,text: "Filter and transform" },
+                         { value: "Schedule" ,text: "Schedule" },
+                    ]
+
+                    delegate: ItemDelegate {
+                        text: modelData.text
+                        enabled: !modelData.text.startsWith("-")
+                    }
+                }
+                CoreButton {
+                    text: "Add Filter"
+                }
+            }
+
+
             CoreLabel {
                 text: `${modelData.name}  ${modelData.isEasyConfig ? "auto EasyConfig" : ""}  ${modelData.isRunForPresetOnAndOff?
                                                                      "auto Preset on/off": ""}`
