@@ -71,8 +71,7 @@ ColumnLayout {
                            text: "Add Filter"
                            onClicked: {
                                if (addFilterCombo.currentValue === "midi"){
-                                   modelData.addFilterMidiDestination("test 1")
-                                   console.log("created midi")
+                                   modelData.addFilterMidiDestination("")
                                }
 
                            }
@@ -103,6 +102,7 @@ ColumnLayout {
                                onClicked: {
                                    if (currentMidiRoutersFilter.filterType === 0){
                                        console.log("Edit TO_MIDI_DESTINATION")
+                                       inPortRoutesId.state = "InPortsRoutesFilterToMidi"
                                    }
                                }
                            }
