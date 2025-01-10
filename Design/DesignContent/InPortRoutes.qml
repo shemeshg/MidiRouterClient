@@ -94,7 +94,7 @@ ColumnLayout {
 
                 model: modelData.midiRoutersFilters
                 RowLayout {
-
+                    property var currentMidiRoutersFilter: modelData
                     CoreLabel {
                         text: getFilterTypeString(modelData.filterType) + ": "
                     }
@@ -104,7 +104,7 @@ ColumnLayout {
                     CoreButton {
                         text: "edit"
                         onClicked: {
-                            if (modelData.filterType === 0){
+                            if (currentMidiRoutersFilter.filterType === 0){
                                 console.log("Edit TO_MIDI_DESTINATION")
                             }
                         }
