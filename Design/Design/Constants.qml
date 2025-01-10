@@ -41,4 +41,13 @@ QtObject {
         FAILED
     }
 
+    enum FilterType {
+        TO_MIDI_DESTINATION,
+        TO_CONSOLE,
+        TO_NETWORK,
+        SCHEDULE_TO,
+        FILTER_AND_TRANSFORM
+    }
+
+
 }

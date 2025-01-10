@@ -5,25 +5,32 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 ColumnLayout {
+    id: inPortRoutesId
     property var midiRouteInput: Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inPortsLoaderId.inPortName)
 
 
     function getFilterTypeString(filterType) {
         switch (filterType) {
-            case 0:
+            case Constants.FilterType.TO_MIDI_DESTINATION:
                 return "TO_MIDI_DESTINATION";
-            case 1:
+            case Constants.FilterType.TO_CONSOLE:
                 return "TO_CONSOLE";
-            case 2:
+            case Constants.FilterType.TO_NETWORK:
                 return "TO_NETWORK";
-            case 3:
+            case Constants.FilterType.SCHEDULE_TO:
                 return "SCHEDULE_TO";
-            case 4:
+            case Constants.FilterType.FILTER_AND_TRANSFORM:
                 return "FILTER_AND_TRANSFORM";
             default:
                 return "UNKNOWN";
         }
     }
+
+
+
+
+
+
 
     CoreButton {
         text: "back"
