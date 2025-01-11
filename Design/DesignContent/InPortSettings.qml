@@ -6,14 +6,9 @@ import QtQuick.Layouts
 ColumnLayout {    
     property var midiRouteInput: Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inPortsLoaderId.inPortName)
 
+
     CoreButton {
         text: "back"
-        onClicked: {
-            inPortsId.state = "InPortsList";
-        }
-    }
-    CoreButton {
-        text: "save"
         onClicked: {
             midiRouteInput.ignoreTypesMidiSysex  = ignoreTypesMidiSysex.checked
             midiRouteInput.ignoreTypesMidiTime  = ignoreTypesMidiTime.checked
@@ -39,7 +34,7 @@ ColumnLayout {
                             midiRouteInput.add14BitCc(element.channel, element.cc)
                         }
             );
-
+            inPortsId.state = "InPortsList";
         }
     }
 

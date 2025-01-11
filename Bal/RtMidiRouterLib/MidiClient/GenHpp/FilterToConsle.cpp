@@ -3,6 +3,7 @@
     : FilterToConslePrivate{parent}
     {
          setFilterType( FilterType::TO_CONSOLE);
+         setUserdata("{}");
     }
 
     void FilterToConsole::setFilter(LogTo logTo, QString userData) 

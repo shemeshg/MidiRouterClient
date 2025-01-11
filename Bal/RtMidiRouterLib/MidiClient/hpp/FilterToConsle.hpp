@@ -24,6 +24,7 @@ public:
     : FilterToConslePrivate{parent}
     {
          setFilterType( FilterType::TO_CONSOLE);
+         setUserdata("{}");
     }
 
     //-only-file header

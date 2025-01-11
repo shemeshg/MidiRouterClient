@@ -72,7 +72,9 @@ ColumnLayout {
                            onClicked: {
                                if (addFilterCombo.currentValue === "midi"){
                                    modelData.addFilterMidiDestination("")
-                               }
+                               } else if (addFilterCombo.currentValue === "console"){
+                                   modelData.addFilterToConsole(Constants.LogTo.CLIENT,"{}")
+                                }
 
                            }
                        }
@@ -100,7 +102,7 @@ ColumnLayout {
                            CoreButton {
                                text: "edit"
                                onClicked: {
-                                   if (currentMidiRoutersFilter.filterType === 0){
+                                   if (currentMidiRoutersFilter.filterType === Constants.FilterType.TO_MIDI_DESTINATION){
                                        inPortsRoutesLoaderId.filterObj = modelData
                                        inPortRoutesId.state = "InPortsRoutesFilterToMidi"
                                    }

@@ -26,7 +26,6 @@ ColumnLayout {
         id: inPortsRoutesFilterToMidi
         InPortsRoutesFilterToMidi {
         }
-
     }
 
     states: [

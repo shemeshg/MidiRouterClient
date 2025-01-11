@@ -49,5 +49,9 @@ QtObject {
         FILTER_AND_TRANSFORM
     }
 
+    enum LogTo {
+        CLIENT,
+        SERVER
+    }
 
 }
