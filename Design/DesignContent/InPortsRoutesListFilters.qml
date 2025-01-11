@@ -101,7 +101,7 @@ ColumnLayout {
                                text: "edit"
                                onClicked: {
                                    if (currentMidiRoutersFilter.filterType === 0){
-                                       console.log("Edit TO_MIDI_DESTINATION")
+                                       inPortsRoutesLoaderId.filterObj = modelData
                                        inPortRoutesId.state = "InPortsRoutesFilterToMidi"
                                    }
                                }

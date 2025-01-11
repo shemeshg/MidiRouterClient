@@ -14,6 +14,7 @@ ColumnLayout {
         id: inPortsRoutesLoaderId
         Layout.fillWidth: true
         sourceComponent: inPortsRoutesListFiltersId
+        property var filterObj:({})
     }
     Component {
         id: inPortsRoutesListFiltersId
