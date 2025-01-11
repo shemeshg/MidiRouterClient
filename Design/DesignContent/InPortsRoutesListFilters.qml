@@ -102,9 +102,11 @@ ColumnLayout {
                            CoreButton {
                                text: "edit"
                                onClicked: {
+                                   inPortsRoutesLoaderId.filterObj = modelData;
                                    if (currentMidiRoutersFilter.filterType === Constants.FilterType.TO_MIDI_DESTINATION){
-                                       inPortsRoutesLoaderId.filterObj = modelData
                                        inPortRoutesId.state = "InPortsRoutesFilterToMidi"
+                                   } else if (currentMidiRoutersFilter.filterType === Constants.FilterType.TO_CONSOLE){
+                                       inPortRoutesId.state = "InPortsRoutesFilterToConsole"
                                    }
                                }
                            }

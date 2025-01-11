@@ -33,14 +33,5 @@ qt6_add_qml_module(DesignContent
         "InPortsSettings14Bit.qml"
         "InPortsRoutesListFilters.qml"
         "InPortsRoutesFilterToMidi.qml"
+        "InPortsRoutesFilterToConsole.qml"
 )
-
-
-
-
-
-
-
-
-
-
