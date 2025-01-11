@@ -34,4 +34,7 @@ qt6_add_qml_module(DesignContent
         "InPortsRoutesListFilters.qml"
         "InPortsRoutesFilterToMidi.qml"
         "InPortsRoutesFilterToConsole.qml"
+        "InPortsRoutesFilterToNetwork.qml"
 )
+
+

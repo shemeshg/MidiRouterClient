@@ -34,6 +34,13 @@ ColumnLayout {
         }
     }
 
+    Component {
+        id: inPortsRoutesFilterToNetwork
+        InPortsRoutesFilterToNetwork {
+        }
+    }
+
+
     states: [
         State {
             name: "InPortsRoutesListFilters"
@@ -58,7 +65,16 @@ ColumnLayout {
                 target: inPortsRoutesLoaderId
                 sourceComponent: inPortsRoutesFilterToConsole
             }
+        },
+        State {
+            name: "InPortsRoutesFilterToNetwork"
+            when: inPortRoutesId.state === "InPortsRoutesFilterToNetwork"
+            PropertyChanges {
+                target: inPortsRoutesLoaderId
+                sourceComponent: inPortsRoutesFilterToNetwork
+            }
         }
+
 
 
     ]
