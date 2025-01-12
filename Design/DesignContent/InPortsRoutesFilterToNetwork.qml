@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 ColumnLayout {
+    property var remotePorts: []
     CoreLabel {
         text: "inPortsRoutesFilterToNetwork"
     }
@@ -22,6 +23,7 @@ ColumnLayout {
         CoreTextField {
             id: serverName
             text: inPortsRoutesLoaderId.filterObj.serverName
+            Layout.fillWidth: true
         }
     }
     RowLayout {
@@ -31,6 +33,7 @@ ColumnLayout {
         CoreTextField {
             id: serverPort
             text: inPortsRoutesLoaderId.filterObj.serverPort
+            Layout.fillWidth: true
         }
     }
     RowLayout {
@@ -40,12 +43,36 @@ ColumnLayout {
         CoreTextField {
             id: baseMidiRouteInput
             text: inPortsRoutesLoaderId.filterObj.baseMidiRouteInput
+            Layout.fillWidth: true
         }
     }
-    CoreButton {
-        text: "Query remote midi ports"
-        onClicked: {
-
+    RowLayout {
+        CoreButton {
+            text: "Query remote midi ports: "
+            onClicked: {
+                Constants.balData.queryRemoteMidiPorts(serverName.text,serverPort.text, (result)=>{
+                              serverStatus.text = result.serverStatus;
+                             remotePorts = result.inPorts
+                        })
+            }
+        }
+        CoreLabel {
+            id: serverStatus
+            text: ""
+        }
+    }
+    Repeater {
+        model: remotePorts
+        RowLayout {
+            CoreLabel {
+                text: modelData
+            }
+            CoreButton {
+                text: "select"
+                onClicked: {
+                    baseMidiRouteInput.text = modelData
+                }
+            }
         }
     }
 }

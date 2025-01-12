@@ -15,6 +15,7 @@ public:
 
 public slots:
     QString qtVer() { return QT_VERSION_STR; }
+    void queryRemoteMidiPorts(QString serverName, QString serverPort, const QJSValue &callback);
    
 /*[[[cog
 import cog
@@ -87,6 +88,17 @@ void startClient(const QString &serverName, int portNumber);
 
 MidiServerClass msc{};
 MidiClientClass mcc{};
+MidiClientClass remoteMcc{};
 void updateServerStatus();
+
+
+QJsonArray getListToJsonAry(const QStringList &sl)
+{
+    QJsonArray ary;
+    for (const auto &itm: sl){
+        ary.append(itm);
+    }
+    return ary;
+}
 
 };

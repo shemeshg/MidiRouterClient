@@ -28,6 +28,27 @@ loadIsAutoConnectClient();
 //[[[end]]]
 }
 
+void BalData::queryRemoteMidiPorts(QString serverName, QString serverPort, const QJSValue &callback)
+{
+
+
+    remoteMcc.start(serverName, serverPort.toInt());
+
+    QJSValue cbCopy(callback);
+
+    QJsonObject s;
+
+    s["serverStatus"] = remoteMcc.midiClientConnection.serverStatusText();
+    QJsonArray ary;
+
+    if (remoteMcc.midiClientConnection.serverStatus() == MidiClientConnection::ServerStatus::RUNNING ){
+         ary =  getListToJsonAry(remoteMcc.midiClientConnection.userDataConfig()->connectedInPorts());
+    }
+    s["inPorts"] = ary;
+    cbCopy.call(QJSValueList{qjsEngine(this)->toScriptValue(s)});
+
+}
+
 
 /*[[[cog
 import cog
