@@ -75,7 +75,7 @@ ColumnLayout {
                         } else if (addFilterCombo.currentValue === "console"){
                             modelData.addFilterToConsole(Constants.LogTo.CLIENT,"{}")
                         } else if (addFilterCombo.currentValue === "network"){
-                            modelData.addFilterNetworkDestination("localhost",12345,"RemoteInput")
+                            modelData.addFilterNetworkDestination("localhost",12345,"")
                         }
 
                     }
