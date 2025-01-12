@@ -35,4 +35,7 @@ qt6_add_qml_module(DesignContent
         "InPortsRoutesFilterToConsole.qml"
         "InPortsRoutesFilterToNetwork.qml"
         "InPortsRoutesFilterSchedule.qml"
+        "InPortsRoutesFilterFnt.qml"
 )
+
+

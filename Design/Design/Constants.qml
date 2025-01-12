@@ -62,4 +62,11 @@ QtObject {
         QUANTIZE_SPP,
         QUANTIZE_BAR
     }
+
+    enum  ConditionAction {
+            DO_NOT_DELETE,
+            DELETE_IF_NOT_MET_CONDITION,
+            DELETE_IF_MET_CONDITION
+        }
+
 }

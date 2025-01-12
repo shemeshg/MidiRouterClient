@@ -47,7 +47,11 @@ ColumnLayout {
         }
     }
 
-
+    Component {
+        id: inPortsRoutesFilterFnt
+        InPortsRoutesFilterFnt {
+        }
+    }
     states: [
         State {
             name: "InPortsRoutesListFilters"
@@ -87,6 +91,14 @@ ColumnLayout {
             PropertyChanges {
                 target: inPortsRoutesLoaderId
                 sourceComponent: inPortsRoutesFilterSchedule
+            }
+        },
+        State {
+            name: "InPortsRoutesFilterFnt"
+            when: inPortRoutesId.state === "InPortsRoutesFilterFnt"
+            PropertyChanges {
+                target: inPortsRoutesLoaderId
+                sourceComponent: inPortsRoutesFilterFnt
             }
         }
 

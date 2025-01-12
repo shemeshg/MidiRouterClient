@@ -58,7 +58,7 @@ ColumnLayout {
                         { value: "console",text: "Console" },
                         { value: "network",  text: "Network" },
                         { text: "- Filter and modify" },
-                        { value: "filter" ,text: "Filter and transform" },
+                        { value: "fnt" ,text: "Filter and transform" },
                         { value: "schedule" ,text: "Schedule" },
                     ]
 
@@ -78,6 +78,13 @@ ColumnLayout {
                             modelData.addFilterNetworkDestination("localhost",12345,"")
                         } else if (addFilterCombo.currentValue === "schedule"){
                             modelData.addFilterFilterSchedule(Constants.DefferedType.IN_SPP ,0)
+                        } else if (addFilterCombo.currentValue === "fnt"){
+                            modelData.addFilterAndTransform("Filer",
+                                                            Constants.ConditionAction.DELETE_IF_NOT_MET_CONDITION,
+                                                            "[[0,16,0]]",
+                                                            "[[0,16,0]]",
+                                                            "[[0,127,0]]",
+                                                            "[[0,127,0]]" )
                         }
 
                     }
@@ -115,6 +122,8 @@ ColumnLayout {
                                 inPortRoutesId.state = "InPortsRoutesFilterToNetwork"
                             } else if (currentMidiRoutersFilter.filterType === Constants.FilterType.SCHEDULE_TO){
                                 inPortRoutesId.state = "InPortsRoutesFilterSchedule"
+                            } else if (currentMidiRoutersFilter.filterType === Constants.FilterType.FILTER_AND_TRANSFORM){
+                                inPortRoutesId.state = "InPortsRoutesFilterFnt"
                             }
                         }
                     }
