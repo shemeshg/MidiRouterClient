@@ -11,10 +11,8 @@
         setMidiRouteClockTimeSig( 4);
         setMidiRouteClockTimeSigDivBy(4);
         setMidiRouteClockFromSppPos(0);
-        m_monitor = new Monitor(this);
-        // Dummy DELETE
+        m_monitor = new Monitor(this);        
         clearMidiRouteInputCc14bit();
-        add14BitCc(2, 5);
     };
 
 
