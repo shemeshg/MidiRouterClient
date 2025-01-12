@@ -59,7 +59,7 @@ ColumnLayout {
                         { value: "network",  text: "Network" },
                         { text: "- Filter and modify" },
                         { value: "filter" ,text: "Filter and transform" },
-                        { value: "Schedule" ,text: "Schedule" },
+                        { value: "schedule" ,text: "Schedule" },
                     ]
 
                     delegate: ItemDelegate {
@@ -76,6 +76,8 @@ ColumnLayout {
                             modelData.addFilterToConsole(Constants.LogTo.CLIENT,"{}")
                         } else if (addFilterCombo.currentValue === "network"){
                             modelData.addFilterNetworkDestination("localhost",12345,"")
+                        } else if (addFilterCombo.currentValue === "schedule"){
+                            modelData.addFilterFilterSchedule(Constants.DefferedType.IN_SPP ,0)
                         }
 
                     }
@@ -111,6 +113,8 @@ ColumnLayout {
                                 inPortRoutesId.state = "InPortsRoutesFilterToConsole"
                             } else if (currentMidiRoutersFilter.filterType === Constants.FilterType.TO_NETWORK){
                                 inPortRoutesId.state = "InPortsRoutesFilterToNetwork"
+                            } else if (currentMidiRoutersFilter.filterType === Constants.FilterType.SCHEDULE_TO){
+                                inPortRoutesId.state = "InPortsRoutesFilterSchedule"
                             }
                         }
                     }

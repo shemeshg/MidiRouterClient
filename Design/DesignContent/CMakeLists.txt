@@ -10,7 +10,6 @@ qt6_add_qml_module(DesignContent
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         "HeaderBar.qml"
-
         "Login.qml"
         "VirtualPorts.qml"
         "Presets.qml"
@@ -35,6 +34,5 @@ qt6_add_qml_module(DesignContent
         "InPortsRoutesFilterToMidi.qml"
         "InPortsRoutesFilterToConsole.qml"
         "InPortsRoutesFilterToNetwork.qml"
+        "InPortsRoutesFilterSchedule.qml"
 )
-
-

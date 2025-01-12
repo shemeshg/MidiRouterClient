@@ -54,4 +54,12 @@ QtObject {
         SERVER
     }
 
+    enum DefferedType {
+        IN_SPP,
+        IN_BAR,
+        AT_SPP,
+        AT_BAR,
+        QUANTIZE_SPP,
+        QUANTIZE_BAR
+    }
 }

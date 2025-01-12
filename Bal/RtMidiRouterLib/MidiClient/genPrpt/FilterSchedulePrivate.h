@@ -23,7 +23,7 @@ public:
 
     
 enum class DefferedType {
-        IN_SPP, IN_BAR, AT_SPP_AT_BAR, QUANTIZE_SPP, QUANTIZE_BAR
+        IN_SPP, IN_BAR, AT_SPP, AT_BAR, QUANTIZE_SPP, QUANTIZE_BAR
     };
 Q_ENUM(DefferedType)
 

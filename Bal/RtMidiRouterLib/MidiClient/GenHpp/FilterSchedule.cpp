@@ -13,7 +13,8 @@
         QMap<DefferedType, QString> defferedTypeToString = {
             {DefferedType::IN_SPP, "IN_SPP"},
             {DefferedType::IN_BAR, "IN_BAR"},
-            {DefferedType::AT_SPP_AT_BAR, "AT_SPP_AT_BAR"},
+            {DefferedType::AT_SPP, "AT_SPP"},
+            {DefferedType::AT_BAR, "AT_BAR"},
             {DefferedType::QUANTIZE_SPP, "QUANTIZE_SPP"},
             {DefferedType::QUANTIZE_BAR, "QUANTIZE_BAR"}
         };
