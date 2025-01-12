@@ -105,11 +105,14 @@ void MidiClientClass::userDataChanges(const QJsonArray& message){
 
 void MidiClientClass::runUserDataChanges(){
 
-    auto resopnse1 = qwebsocketClient->invokeMethod("wcuserdata", "getJon", {});
+    auto resopnse1 = qwebsocketClient->invokeMethodBlocking("wcuserdata", "getJon", {});
+    /*
     resopnse1->connect(resopnse1, &CWebChannelResponse::result, [=](const QJsonValue& message)
             {
                 midiClientConnection.userDataConfig()->resetUserDataConfig(message);
             });
+    */
+   midiClientConnection.userDataConfig()->resetUserDataConfig(resopnse1);
 }
 
 
