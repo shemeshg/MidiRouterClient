@@ -123,7 +123,7 @@
             auto easyConfig = it.value().toObject()["easyConfig"];
             auto inputZonesAndRoutes = easyConfig.toObject()["inputZonesAndRoutes"];
             if (easyConfig.isObject() && inputZonesAndRoutes.isObject()) {
-                updateEasyConfig(midiRouteInputEntry, inputZonesAndRoutes.toObject());
+                createEasyConfigEntry(midiRouteInputEntry->easyConfig(),  inputZonesAndRoutes.toObject());
             }
         }
     }
@@ -227,18 +227,10 @@
         }
     }
 
-    void UserConfigParseJson::updateEasyConfig(MidiRouteInput * input, const QJsonObject &easyConfig) 
-    {
-        input->clearEasyConfig();
-        for (auto it = easyConfig.begin(); it != easyConfig.end(); ++it) {
-            EasyConfig *easyConfigEntry = createEasyConfigEntry(it.key(), it.value().toObject());
-            input->addEasyConfig(easyConfigEntry);
-        }
-    }
 
-    EasyConfig*  UserConfigParseJson::createEasyConfigEntry(const QString &key, const QJsonObject &value) 
+    void UserConfigParseJson::createEasyConfigEntry(EasyConfig * easyConfigEntry ,const QJsonObject &value) 
     {
-        EasyConfig *easyConfigEntry = new EasyConfig();
+
 
         if (value["keyboardSplits"].isArray()) {
             QList<int> keyboardSplits = extractKeyboardSplits(value["keyboardSplits"].toArray());
@@ -260,7 +252,6 @@
 
 
 
-        return easyConfigEntry;
     }
 
     QList<int> UserConfigParseJson::extractKeyboardSplits(const QJsonArray &array) 

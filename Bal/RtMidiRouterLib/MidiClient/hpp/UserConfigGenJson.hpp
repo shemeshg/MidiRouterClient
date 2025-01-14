@@ -116,22 +116,22 @@ private:
     }
 
     //- {function} 0 1
-    QJsonObject getEasyConfig(QList<EasyConfig *> easyConfigList)
+    QJsonObject getEasyConfig(EasyConfig * easyConfig)
     //-only-file body
     {
         QJsonObject obj;
         //auto inputZonesAndRoutes = obj["inputZonesAndRoutes"].toObject();
 
         QJsonArray inputZonesAndRoutes;
-        for (const auto &easyConfig: easyConfigList){
 
-            QJsonObject  easyConfigInput;
-            easyConfigInput["keyboardSplits"] = getKeyboardSplits(easyConfig->keyboardSplits());
-            easyConfigInput["zoneNames"] = getStringListToJsonAry(easyConfig->zoneNames());
-            easyConfigInput["easyConfigRoutes"] = getEasyConfigRoutes(easyConfig->easyConfigRoutes());
 
-            inputZonesAndRoutes.append(easyConfigInput);
-        }
+        QJsonObject  easyConfigInput;
+        easyConfigInput["keyboardSplits"] = getKeyboardSplits(easyConfig->keyboardSplits());
+        easyConfigInput["zoneNames"] = getStringListToJsonAry(easyConfig->zoneNames());
+        easyConfigInput["easyConfigRoutes"] = getEasyConfigRoutes(easyConfig->easyConfigRoutes());
+
+        inputZonesAndRoutes.append(easyConfigInput);
+
         obj["inputZonesAndRoutes"] = inputZonesAndRoutes;
         return obj;
     }

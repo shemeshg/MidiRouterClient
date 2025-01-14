@@ -20,8 +20,7 @@ private:
     void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs);
     MidiRouteInput* createMidiRouteInputEntry(const QJsonObject &value);
     void updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain *midiRouterChain);
-    void updateEasyConfig(MidiRouteInput *input, const QJsonObject &easyConfig);
-    EasyConfig* createEasyConfigEntry(const QString &key, const QJsonObject &value);
+    void createEasyConfigEntry(EasyConfig *easyConfigEntry ,const QJsonObject &value);
     QList<int> extractKeyboardSplits(const QJsonArray &array);
     QStringList convertToQStringList(const QJsonArray &array);
     EasyConfigRoute* createEasyConfigRoute(const QJsonObject &value);

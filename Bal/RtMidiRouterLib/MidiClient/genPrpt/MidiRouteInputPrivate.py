@@ -15,7 +15,7 @@ ary = [
     create_prpt("QList<MidiRouteInputCc14bit *>", 'midiRouteInputCc14bit', is_list=True),
     create_prpt("QList<MidiRouterChain *>", 'midiRouterChains', is_list=True),
     create_prpt("Monitor *", 'monitor', is_writable=False),
-    create_prpt("QList<EasyConfig *>", 'easyConfig', is_list=True)
+    create_prpt("EasyConfig *", 'easyConfig', is_writable=False)
 ]
 
 enumClasss = []

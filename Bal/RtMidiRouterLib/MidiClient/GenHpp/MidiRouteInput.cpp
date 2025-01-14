@@ -3,7 +3,6 @@
         : MidiRouteInputPrivate{parent} {
         clearMidiRouteInputCc14bit();
         clearMidiRouterChains();
-        clearEasyConfig();
 
         setIgnoreTypesMidiSysex(true);
         setIgnoreTypesMidiTime( true);
@@ -12,6 +11,7 @@
         setMidiRouteClockTimeSigDivBy(4);
         setMidiRouteClockFromSppPos(0);
         m_monitor = new Monitor(this);
+        m_easyConfig = new EasyConfig(this);
         // Dummy DELETE
         clearMidiRouteInputCc14bit();
         add14BitCc(2, 5);

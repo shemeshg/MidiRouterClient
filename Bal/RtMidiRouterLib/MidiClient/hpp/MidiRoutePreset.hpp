@@ -41,14 +41,14 @@ public:
     //-only-file body
     {
         for ( MidiRouteInput *input: m_midiRouteInputs){
-            input->clearEasyConfig();
+
             input->clearEasyConfigMidiRouterChains();
             input->addMonitorEasyConfigIfRequired();
             input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs);
 
-            for (EasyConfig *easyConfig: input->easyConfig()){
-                getInputOrCreateByName(input->midiInputName())->createEasyConfigChains(easyConfig);
-            }
+
+            getInputOrCreateByName(input->midiInputName())->createEasyConfigChains(input->easyConfig());
+
         }
 
     }

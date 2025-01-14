@@ -24,7 +24,7 @@ private:
     QJsonArray getListToJsonAry(const QStringList &sl);
     QJsonArray getListToJMidiInsonAry(const QStringList &sl);
     QJsonArray getMidiRoutePresets(QList<MidiRoutePreset *> midiRoutePresets);
-    QJsonObject getEasyConfig(QList<EasyConfig *> easyConfigList);
+    QJsonObject getEasyConfig(EasyConfig * easyConfig);
     QJsonArray getEasyConfigRoutes(QList<EasyConfigRoute *> easyConfigRoutes);
     QJsonArray getStringListToJsonAry(QStringList list );
     QJsonArray getKeyboardSplits(QList<int> keyboardSplits);
