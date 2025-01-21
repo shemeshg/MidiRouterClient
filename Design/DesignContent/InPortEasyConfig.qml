@@ -18,8 +18,17 @@ ColumnLayout {
         }
     }
 
+    CoreLabel {
+        text: "keyboardSplits: " + JSON.stringify(midiRouteInput.easyConfig.keyboardSplits)
+    }
+
+    CoreLabel {
+        text: "zoneNames: " + JSON.stringify(midiRouteInput.easyConfig.keyboardSplits)
+    }
+
     ComboSilder {
         val: 60
+        cmbModel: midiRouteInput.easyConfig.getComboNoesNamesandNumber()
     }
 
 

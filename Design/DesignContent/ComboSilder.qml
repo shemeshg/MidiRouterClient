@@ -6,12 +6,13 @@ import QtQuick.Controls
 
 ColumnLayout {
     property int val: 0
+    property var cmbModel: []
     CoreComboBox {
         id: cmb
         Layout.fillWidth: true
         textRole: "text"
         valueRole: "value"
-        model: midiRouteInput.easyConfig.getComboNoesNamesandNumber()
+        model: cmbModel
         onActivated: {
             slider.value = currentIndex
         }

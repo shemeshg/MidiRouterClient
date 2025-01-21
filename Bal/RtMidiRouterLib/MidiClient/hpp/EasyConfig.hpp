@@ -43,6 +43,23 @@ public slots:
     }
     //-only-file header
 
+    //- {function} 0 1
+    void appendSplit()
+    //-only-file body
+    {
+        qDebug()<<"Appended splt and split names";
+    }
+
+    //- {function} 0 1
+    void delSplit(int position)
+    //-only-file body
+    {
+        qDebug()<<"remove split at position "<<position;
+        qDebug()<<"remove split name "<<position;
+        // if liast splut do truncate since 2 items to delete
+    }
+
+    //-only-file header
 private:
     //- {function} 0 1
     std::string getPositionName(int n)
