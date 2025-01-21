@@ -2,6 +2,8 @@
 //-define-file header GenHpp/EasyConfig.h
 //-only-file header //-
 #pragma once
+#include <QJsonArray>
+#include <QJsonObject>
 //- #include "../genPrpt/EasyConfigPrivate.h"
 //-only-file body //-
 //- #include "EasyConfig.h"
@@ -25,5 +27,32 @@ public:
     //-only-file header
 public slots:
 
+    //- {function} 0 1
+    QJsonArray getComboNoesNamesandNumber()
+    //-only-file body
+    {
+        QJsonArray ret;
+        for (int i = 0; i <= 127; ++i) {
+            QJsonObject obj;
+            obj["text"] = QString{"%1 - %2"}.arg(i).arg(QString::fromStdString(getPositionName(i)));
+            obj["value"] = QString::number(i);
+            ret.append(obj);
+        }
+
+        return ret;
+    }
+    //-only-file header
+
 private:
+    //- {function} 0 1
+    std::string getPositionName(int n)
+    //-only-file body
+    {
+        std::vector<std::string> notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+        int inputVal = n;
+        std::string noteName = notes[inputVal % 12];
+        int octave = std::floor(inputVal / 12.0) - 1;
+        return std::to_string(octave) + " " + noteName;
+    }
+    //-only-file header
 };

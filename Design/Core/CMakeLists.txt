@@ -25,6 +25,7 @@ qt6_add_qml_module(Core
         "CoreComboBox.qml"
         "CoreSystemPalette.qml"
         "CoreLabel.qml"
+        "CoreSlider.qml"
 )
 
 
