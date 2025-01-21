@@ -41,26 +41,75 @@ public slots:
 
         return ret;
     }
-    //-only-file header
+
 
     //- {function} 0 1
-    void appendSplit()
+    void setKeyboardSplits(const QList<int> &newKeyboardSplits)
     //-only-file body
     {
-        qDebug()<<"Appended splt and split names";
+        if (m_keyboardSplits == newKeyboardSplits)
+            return;
+        m_keyboardSplits = newKeyboardSplits;
+        emit keyboardSplitsChanged();
+    }
+
+
+
+    //- {function} 0 1
+    void setSplitNoEmmit(int idx, int pos)
+    //-only-file body
+    {
+        m_keyboardSplits[idx] = pos;
+    }
+
+    //- {function} 0 1
+    void emitKeyboardSplitsChanged()
+    //-only-file body
+    {
+        emit keyboardSplitsChanged();
+    }
+
+    //- {function} 0 1
+    void appendSplit(int defaultPosition)
+    //-only-file body
+    {
+        auto zn = keyboardSplits();
+        zn.append(defaultPosition);
+        appendZoneName(zn.length());
+        setKeyboardSplits(zn);
     }
 
     //- {function} 0 1
     void delSplit(int position)
     //-only-file body
     {
-        qDebug()<<"remove split at position "<<position;
-        qDebug()<<"remove split name "<<position;
-        // if liast splut do truncate since 2 items to delete
+        auto ks = keyboardSplits();
+        auto kn = zoneNames();
+        if (ks.size() == 1){
+            ks.clear();
+            kn.clear();
+        } else {
+            ks.removeAt(position);
+            kn.removeAt(position + 1);
+        }
+        setKeyboardSplits(ks);
+        setZoneNames(kn);
     }
 
     //-only-file header
 private:
+    //- {function} 0 1
+    void appendZoneName(int position)
+    //-only-file body
+    {
+        auto s = zoneNames();
+        if (position == 1){
+            s.append("Split 0");
+        }
+        s.append( QString{"Split %1"}.arg(position));
+        setZoneNames(s);
+    }
+
     //- {function} 0 1
     std::string getPositionName(int n)
     //-only-file body

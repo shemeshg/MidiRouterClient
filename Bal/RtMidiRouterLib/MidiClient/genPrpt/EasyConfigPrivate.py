@@ -3,7 +3,7 @@ from property import create_prpt, PrptClass
 
 
 ary = [
-    create_prpt("QList<int>", 'keyboardSplits'),
+    create_prpt("QList<int>", 'keyboardSplits',False),
     create_prpt("QStringList", 'zoneNames'),
     create_prpt("QList<EasyConfigRoute *>", 'easyConfigRoutes', is_list=True)
 ]

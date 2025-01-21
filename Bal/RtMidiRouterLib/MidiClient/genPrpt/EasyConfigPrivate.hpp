@@ -22,7 +22,7 @@ cog.outl(prptClass.getClassHeader(),
 class EasyConfigPrivate : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QList<int> keyboardSplits READ keyboardSplits WRITE setKeyboardSplits NOTIFY keyboardSplitsChanged )
+    Q_PROPERTY(QList<int> keyboardSplits READ keyboardSplits  NOTIFY keyboardSplitsChanged )
     Q_PROPERTY(QStringList zoneNames READ zoneNames WRITE setZoneNames NOTIFY zoneNamesChanged )
     Q_PROPERTY(QList<EasyConfigRoute *> easyConfigRoutes READ easyConfigRoutes  NOTIFY easyConfigRoutesChanged )
     
@@ -40,14 +40,6 @@ public:
     
     QList<int> keyboardSplits() const{return m_keyboardSplits;} 
     
-void setKeyboardSplits(const QList<int> &newKeyboardSplits)
-    {
-        if (m_keyboardSplits == newKeyboardSplits)
-            return;
-        m_keyboardSplits = newKeyboardSplits;
-        emit keyboardSplitsChanged();
-    }
-
 
     
     QStringList zoneNames() const{return m_zoneNames;} 
@@ -100,11 +92,11 @@ signals:
     
 
 protected:
+    QList<int> m_keyboardSplits;
     QList<EasyConfigRoute *> m_easyConfigRoutes;
     
 
 private:
-    QList<int> m_keyboardSplits;
     QStringList m_zoneNames;
     
 };

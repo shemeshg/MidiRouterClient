@@ -6,30 +6,56 @@ import QtQuick.Controls
 
 ColumnLayout {
     property int val: 0
+    property string name: ""
     property var cmbModel: []
-    CoreComboBox {
-        id: cmb
-        Layout.fillWidth: true
-        textRole: "text"
-        valueRole: "value"
-        model: cmbModel
-        onActivated: {
-            slider.value = currentIndex
-        }
+    signal del()
+    signal setVal(int i);
+    signal setName(string s);
 
-        Component.onCompleted: {
-            currentIndex = val;
+
+
+    RowLayout {
+        CoreTextField {
+            text: name
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                              setName(text)
+                          }
+        }
+        CoreComboBox {
+            id: cmb
+            //Layout.fillWidth: true
+            textRole: "text"
+            valueRole: "value"
+            model: cmbModel
+            onActivated: {
+                slider.value = currentIndex
+                setVal(currentIndex)
+            }
+
+            Component.onCompleted: {
+                currentIndex = val;
+            }
         }
     }
 
-    CoreSlider {
-        id: slider
-        from: 0
-        value: val
-        to: 127
-        Layout.fillWidth: true
-        onMoved: {
-            cmb.currentIndex = value
+    RowLayout{
+        CoreSlider {
+            Layout.fillWidth: true
+            id: slider
+            from: 0
+            value: val
+            to: 127
+            onMoved: {
+                cmb.currentIndex = value
+                setVal(value)
+            }
+        }
+        CoreButton {
+            text: "del"
+            onClicked: {
+                del()
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ ColumnLayout {
     CoreButton {
         text: "back"
         onClicked: {
+            midiRouteInput.easyConfig.emitKeyboardSplitsChanged()
             inPortsId.state = "InPortsList";
         }
     }
@@ -19,17 +20,40 @@ ColumnLayout {
     }
 
     CoreLabel {
-        text: "keyboardSplits: " + JSON.stringify(midiRouteInput.easyConfig.keyboardSplits)
+        text: "<h1>Keyboard splits</h1>"
+    }
+
+
+    CoreButton {
+        text: "Add"
+        onClicked: {
+            midiRouteInput.easyConfig.appendSplit(60)
+        }
+    }
+
+    Repeater {
+        model: [...midiRouteInput.easyConfig.keyboardSplits]
+        RowLayout {
+            ComboSilder {
+                val: modelData
+
+                cmbModel: midiRouteInput.easyConfig.getComboNoesNamesandNumber()
+                onDel: {
+                    midiRouteInput.easyConfig.delSplit(index)
+                }
+                name: midiRouteInput.easyConfig.zoneNames[index + 1]
+                onSetVal: (i)=>{
+
+                            midiRouteInput.easyConfig.setSplitNoEmmit(index,i)
+                        }
+                onSetName: (s)=>{
+                               midiRouteInput.easyConfig.zoneNames[index + 1] = s;
+                         }
+            }
+        }
     }
 
     CoreLabel {
-        text: "zoneNames: " + JSON.stringify(midiRouteInput.easyConfig.keyboardSplits)
+        text: "<h1>Routes</h1>"
     }
-
-    ComboSilder {
-        val: 60
-        cmbModel: midiRouteInput.easyConfig.getComboNoesNamesandNumber()
-    }
-
-
 }
