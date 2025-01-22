@@ -14,46 +14,58 @@ ColumnLayout {
         }
     }
     RowLayout {
+        GroupBox {
+            RowLayout {
+                CoreButton {
+                    id: easyConfigRoutesId
+                    text: "Routes"
+                    hooverText: "Routes"
+                    autoExclusive: true
+                    checkable: true
+                    checked: true
+                }
+                CoreButton {
+                    id: easyConfigSplitsId
+                    text: "Splits"
+                    hooverText: "Keyboard Splits"
+                    autoExclusive: true
+                    checkable: true
+                    checked: false
+                }
+            }
+        }
+    }
+    RowLayout {
         CoreLabel {
             text: "Easy config InPort: " + midiRouteInput.midiInputName
         }
     }
 
-    CoreLabel {
-        text: "<h1>Keyboard splits</h1>"
+    Loader {
+        id: loaderId
+        Layout.fillWidth: true
     }
-
-
-    CoreButton {
-        text: "Add"
-        onClicked: {
-            midiRouteInput.easyConfig.appendSplit(60)
+    Component {
+        id: inPortEasyConfigSplits
+        InPortEasyConfigSplits {
         }
     }
 
-    Repeater {
-        model: [...midiRouteInput.easyConfig.keyboardSplits]
-        RowLayout {
-            ComboSilder {
-                val: modelData
-
-                cmbModel: midiRouteInput.easyConfig.getComboNoesNamesandNumber()
-                onDel: {
-                    midiRouteInput.easyConfig.delSplit(index)
-                }
-                name: midiRouteInput.easyConfig.zoneNames[index + 1]
-                onSetVal: (i)=>{
-
-                            midiRouteInput.easyConfig.setSplitNoEmmit(index,i)
-                        }
-                onSetName: (s)=>{
-                               midiRouteInput.easyConfig.zoneNames[index + 1] = s;
-                         }
-            }
+    Component {
+        id: inPortEasyConfigRoutes
+        InPortEasyConfigRoutes {
         }
     }
-
-    CoreLabel {
-        text: "<h1>Routes</h1>"
-    }
+    states: [
+        State {
+            name: "Routes"
+            when: easyConfigRoutesId.checked
+            PropertyChanges { target: loaderId; sourceComponent: inPortEasyConfigRoutes }
+        },
+        State {
+            name: "Splits"
+            when: easyConfigSplitsId.checked
+            PropertyChanges { target: loaderId; sourceComponent: inPortEasyConfigSplits }
+        }
+    ]
 }

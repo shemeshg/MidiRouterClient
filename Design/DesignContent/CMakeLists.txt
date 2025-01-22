@@ -37,4 +37,10 @@ qt6_add_qml_module(DesignContent
         "InPortsRoutesFilterSchedule.qml"
         "InPortsRoutesFilterFnt.qml"
         "ComboSilder.qml"
+        "InPortEasyConfigSplits.qml"
+        "InPortEasyConfigRoutes.qml"
 )
+
+
+
+
