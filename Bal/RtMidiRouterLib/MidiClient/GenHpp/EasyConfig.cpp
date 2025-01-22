@@ -29,7 +29,6 @@
     void EasyConfig::setSplitNoEmmit(int idx, int pos) 
     {
         m_keyboardSplits[idx] = pos;
-        qDebug()<<pos<<keyboardSplits();
     }
 
     void EasyConfig::emitKeyboardSplitsChanged() 

@@ -15,6 +15,7 @@ ColumnLayout {
 
 
     RowLayout {
+        id: row
         CoreTextField {
             text: name
             Layout.fillWidth: true
@@ -24,7 +25,8 @@ ColumnLayout {
         }
         CoreComboBox {
             id: cmb
-            //Layout.fillWidth: true
+            implicitWidth: Constants.font.pixelSize * 10
+
             textRole: "text"
             valueRole: "value"
             model: cmbModel
