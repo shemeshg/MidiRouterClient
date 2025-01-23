@@ -2,7 +2,7 @@
      EasyConfig::EasyConfig(QObject * parent) 
         : EasyConfigPrivate{parent} {};
 
-    QJsonArray EasyConfig::getComboNoesNamesandNumber() 
+    QJsonArray EasyConfig::getComboNoesNamesAndNumber() 
     {
         QJsonArray ret;
         for (int i = 0; i <= 127; ++i) {
@@ -15,6 +15,11 @@
         return ret;
     }
 
+    void EasyConfig::addEasyConfigRoute() 
+    {
+        auto itm = new EasyConfigRoute();
+        addEasyConfigRoutes(itm);
+    }
 
     void EasyConfig::setKeyboardSplits(const QList<int> &newKeyboardSplits) 
     {

@@ -37,13 +37,13 @@ ColumnLayout {
             visible: presetMidiControlOnPortNameId.currentText !== ""
             RowLayout {
                 CoreLabel {
-                    text: "Event"
+                    text: "From event"
                 }
                 MidiControlEventType {
                     id: presetMidiControlOnEventTypeId
                     Layout.fillWidth: true
                     Component.onCompleted: {
-                        currentIndex = midiControl.eventTypeId;
+                        currentIndex = midiControl.fromSelectedMidiEventTypeId;
                     }
                 }
             }

@@ -28,7 +28,7 @@ public:
 public slots:
 
     //- {function} 0 1
-    QJsonArray getComboNoesNamesandNumber()
+    QJsonArray getComboNoesNamesAndNumber()
     //-only-file body
     {
         QJsonArray ret;
@@ -42,6 +42,13 @@ public slots:
         return ret;
     }
 
+    //- {function} 0 1
+    void addEasyConfigRoute()
+    //-only-file body
+    {
+        auto itm = new EasyConfigRoute();
+        addEasyConfigRoutes(itm);
+    }
 
     //- {function} 0 1
     void setKeyboardSplits(const QList<int> &newKeyboardSplits)

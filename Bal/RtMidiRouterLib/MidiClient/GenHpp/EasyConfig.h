@@ -13,7 +13,8 @@ public:
     explicit EasyConfig(QObject *parent = nullptr);
 public slots:
 
-    QJsonArray getComboNoesNamesandNumber();
+    QJsonArray getComboNoesNamesAndNumber();
+    void addEasyConfigRoute();
     void setKeyboardSplits(const QList<int> &newKeyboardSplits);
     void setSplitNoEmmit(int idx, int pos);
     void emitKeyboardSplitsChanged();

@@ -24,7 +24,7 @@ ColumnLayout {
                 ComboSilder {
                     val: modelData
 
-                    cmbModel: midiRouteInput.easyConfig.getComboNoesNamesandNumber()
+                    cmbModel: midiRouteInput.easyConfig.getComboNoesNamesAndNumber()
                     onDel: {
                         midiRouteInput.easyConfig.delSplit(index)
                     }
