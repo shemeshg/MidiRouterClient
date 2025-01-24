@@ -58,12 +58,12 @@ ColumnLayout {
                         id: fromEvent
                         implicitWidth: Constants.font.pixelSize * 15
                         Component.onCompleted: {
-                            currentIndex = modelData.fromSelectedMidiEventTypeId;
+                            currentIndex = model.findIndex(item => item.value === modelData.fromSelectedMidiEventTypeId);
                         }
                         onActivated: {
-                            modelData.fromSelectedMidiEventTypeId = currentIndex
+                            modelData.fromSelectedMidiEventTypeId = currentValue
                             // auto the other
-                            modelData.toSelectedMidiEventTypeId = currentIndex
+                            modelData.toSelectedMidiEventTypeId = currentValue
                             toEvent.currentIndex = currentIndex
                         }
                     }
@@ -84,7 +84,7 @@ ColumnLayout {
                         }
                     }
                 }
-                ColumnLayout{
+                ColumnLayout {
                     visible: fromKeyOnOff
                     CoreLabel {
                         text: "From Zone"
@@ -109,6 +109,19 @@ ColumnLayout {
                         }
                     }
                 }
+                ColumnLayout {
+                    visible: [5,7].indexOf( fromEvent.currentValue) > -1
+                    CoreLabel {
+                        text: fromEvent.currentValue === 5 ? "CC -1==all" : "Nrpn Ctrl (-1 = all)"
+                    }
+                    CoreTextField {
+                        text: modelData.fromData1
+                        onTextEdited: ()=>{
+                                          modelData.fromData1 = Number(text)
+                                      }
+                    }
+
+                }
             }
 
             RowLayout {
@@ -120,7 +133,7 @@ ColumnLayout {
                         id: toEvent
                         implicitWidth: Constants.font.pixelSize * 15
                         Component.onCompleted: {
-                            currentIndex = modelData.toSelectedMidiEventTypeId;
+                            currentIndex = model.findIndex(item => item.value === modelData.toSelectedMidiEventTypeId);
                         }
                         onActivated: {
                             modelData.toSelectedMidiEventTypeId = currentValue
@@ -140,6 +153,19 @@ ColumnLayout {
                             modelData.toChannel = currentValue
                         }
                     }
+                }
+                ColumnLayout {
+                    visible: [5,7].indexOf( toEvent.currentValue) > -1
+                    CoreLabel {
+                        text: toEvent.currentValue === 5 ? "CC -1==all" : "Nrpn Ctrl (-1 = all)"
+                    }
+                    CoreTextField {
+                        text: modelData.toData1
+                        onTextEdited: ()=>{
+                                          modelData.toData1 = Number(text)
+                                      }
+                    }
+
                 }
             }
         }
