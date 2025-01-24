@@ -26,6 +26,8 @@ ColumnLayout {
         model: midiRouteInput.easyConfig.easyConfigRoutes
         ColumnLayout {
             property bool fromKeyOnOff: [1,2,3].indexOf( fromEvent.currentIndex) > -1
+            property bool fromEventIsCc: [5,7].indexOf( fromEvent.currentValue) > -1
+            property bool toEventIsCc: [5,7].indexOf( toEvent.currentValue) > -1
 
             RowLayout {
                 CoreLabel {
@@ -109,8 +111,22 @@ ColumnLayout {
                         }
                     }
                 }
+
                 ColumnLayout {
-                    visible: [5,7].indexOf( fromEvent.currentValue) > -1
+                    visible: fromKeyOnOff
+                    CoreLabel {
+                        text: "Transpose"
+                    }
+                    CoreTextField {
+                        text: modelData.transpose
+                        onTextEdited: ()=>{
+                                          modelData.transpose = Number(text)
+                                      }
+                    }
+                }
+
+                ColumnLayout {
+                    visible: fromEventIsCc
                     CoreLabel {
                         text: fromEvent.currentValue === 5 ? "CC -1==all" : "Nrpn Ctrl (-1 = all)"
                     }
@@ -122,9 +138,34 @@ ColumnLayout {
                     }
 
                 }
+                ColumnLayout {
+                    visible: fromEventIsCc
+                    CoreLabel {
+                        text: "From data"
+                    }
+                    CoreTextField {
+                        text: modelData.fromCcOrNrpnStart
+                        onTextEdited: ()=>{
+                                          modelData.fromCcOrNrpnStart = Number(text)
+                                      }
+                    }
+                }
+                ColumnLayout {
+                    visible: fromEventIsCc
+                    CoreLabel {
+                        text: "To data"
+                    }
+                    CoreTextField {
+                        text: modelData.fromCcOrNrpnEnd
+                        onTextEdited: ()=>{
+                                          modelData.fromCcOrNrpnEnd = Number(text)
+                                      }
+                    }
+                }
             }
 
             RowLayout {
+
                 ColumnLayout {
                     CoreLabel {
                         text: "To event"
@@ -155,7 +196,7 @@ ColumnLayout {
                     }
                 }
                 ColumnLayout {
-                    visible: [5,7].indexOf( toEvent.currentValue) > -1
+                    visible: toEventIsCc
                     CoreLabel {
                         text: toEvent.currentValue === 5 ? "CC -1==all" : "Nrpn Ctrl (-1 = all)"
                     }
@@ -165,8 +206,33 @@ ColumnLayout {
                                           modelData.toData1 = Number(text)
                                       }
                     }
+                }
+                ColumnLayout {
+                    visible: toEventIsCc
+                    CoreLabel {
+                        text: "From data"
+                    }
+                    CoreTextField {
+                        text: modelData.toCcOrNrpnStart
+                        onTextEdited: ()=>{
+                                          modelData.toCcOrNrpnStart = Number(text)
+                                      }
+                    }
+                }
+                ColumnLayout {
+                    visible: toEventIsCc
+                    CoreLabel {
+                        text: "To data"
+                    }
+                    CoreTextField {
+                        text: modelData.toCcOrNrpnEnd
+                        onTextEdited: ()=>{
+                                          modelData.toCcOrNrpnEnd = Number(text)
+                                      }
+                    }
 
                 }
+
             }
         }
     }
