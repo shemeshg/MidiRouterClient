@@ -56,6 +56,9 @@ ColumnLayout {
                             }
                             onActivated: {
                                 modelData.fromSelectedMidiEventTypeId = currentIndex
+                                // auto the other
+                                modelData.toSelectedMidiEventTypeId = currentIndex
+                                toEvent.currentIndex = currentIndex
                             }
                         }
 
@@ -63,12 +66,42 @@ ColumnLayout {
                             text: "To event"
                         }
                         MidiControlEventType {
+                            id: toEvent
                             implicitWidth: Constants.font.pixelSize * 15
                             Component.onCompleted: {
                                 currentIndex = modelData.toSelectedMidiEventTypeId;
                             }
                             onActivated: {
                                 modelData.toSelectedMidiEventTypeId = currentIndex
+                            }
+                        }
+                    }
+
+                    ColumnLayout {
+                        CoreLabel {
+                            text: "Channel"
+                        }
+                        MidiControlChannel {
+                            Component.onCompleted: {
+                                currentIndex = modelData.fromChannel;
+                            }
+                            onActivated: {
+                                modelData.fromChannel = currentIndex
+                                // auto the other
+                                modelData.toChannel = currentIndex
+                                toChannel.currentIndex = currentIndex
+                            }
+                        }
+                        CoreLabel {
+                            text: "Channel"
+                        }
+                        MidiControlChannel {
+                            id: toChannel
+                            Component.onCompleted: {
+                                currentIndex = modelData.toChannel;
+                            }
+                            onActivated: {
+                                modelData.toChannel = currentIndex
                             }
                         }
                     }
