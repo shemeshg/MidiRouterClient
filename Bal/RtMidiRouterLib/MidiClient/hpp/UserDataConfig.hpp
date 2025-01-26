@@ -48,12 +48,11 @@ public:
     }
 
     //- {function} 0 1
-    void clearDropdownlists()  override  
+    void clearDropdownlists()  override
     //-only-file body
     {
         return UserDataConfigPrivate::clearDropdownlists();
     }
-
 
 
     //- {function} 0 1
@@ -216,6 +215,22 @@ public slots:
     {
         delMidiRoutePresets(id);
     }
+
+    //- {function} 0 1
+    void addDropdownList()
+    //-only-file body
+    {
+        auto d = new Dropdownlist();
+        addDropdownlists(d);
+    }
+
+    //- {function} 0 1
+    void delDropdownList(int id)
+    //-only-file body
+    {
+        delDropdownlists(id);
+    }
+
 
     //-only-file header
 private:

@@ -24,7 +24,6 @@
     }
 
 
-
     int UserDataConfig::activePresetID() const  
     {
         return UserDataConfigPrivate::activePresetID(); // Call the parent class's function
@@ -149,6 +148,18 @@
     {
         delMidiRoutePresets(id);
     }
+
+    void UserDataConfig::addDropdownList() 
+    {
+        auto d = new Dropdownlist();
+        addDropdownlists(d);
+    }
+
+    void UserDataConfig::delDropdownList(int id) 
+    {
+        delDropdownlists(id);
+    }
+
 
     void UserDataConfig::loadComputerUuid() 
     {

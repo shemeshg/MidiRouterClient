@@ -33,6 +33,8 @@ public slots:
     void setActivePreset(int id) override;
     void addPreset() override;
     void deletePreset(int id);
+    void addDropdownList();
+    void delDropdownList(int id);
 private:
     void loadComputerUuid();
 };
