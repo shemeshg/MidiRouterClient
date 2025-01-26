@@ -39,7 +39,10 @@ qt6_add_qml_module(DesignContent
         "ComboSilder.qml"
         "InPortEasyConfigSplits.qml"
         "InPortEasyConfigRoutes.qml"
+        "UserControlsDropdowns.qml""
 )
+
+
 
 
 
