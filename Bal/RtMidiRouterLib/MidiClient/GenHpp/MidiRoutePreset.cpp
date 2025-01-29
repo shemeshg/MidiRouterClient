@@ -45,6 +45,18 @@
          return newInput;
      }
 
+    void MidiRoutePreset::addUserControl() 
+     {
+         auto uc  = new UserControl();
+         uc->setDescription("Description");
+         addUserControls(uc);
+     }
+
+    void MidiRoutePreset::sendAllUserControls() 
+     {
+         qDebug()<<"Not Implemented";
+     }
+
     std::optional<MidiRouteInput *> MidiRoutePreset::getInputByName(QString midiInputName) 
     {
         for (MidiRouteInput *input : m_midiRouteInputs) {

@@ -37,10 +37,8 @@ ColumnLayout {
     }
     Component {
         id: controls
-        ColumnLayout {
-            CoreLabel {
-                text:  "User Controls: " + JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.activePreset.userControls)
-            }
+        UserControlsList {
+            activePreset: Constants.balData.midiClientConnection.userDataConfig.activePreset
         }
     }
     Component {

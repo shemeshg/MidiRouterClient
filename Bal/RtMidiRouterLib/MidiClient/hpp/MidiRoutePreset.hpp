@@ -73,6 +73,22 @@ public slots:
          return newInput;
      }
 
+     //- {function} 0 1
+     void addUserControl()
+     //-only-file body
+     {
+         auto uc  = new UserControl();
+         uc->setDescription("Description");
+         addUserControls(uc);
+     }
+
+     //- {function} 0 1
+     void sendAllUserControls()
+     //-only-file body
+     {
+         qDebug()<<"Not Implemented";
+     }
+
     //-only-file header
 signals:
 

@@ -13,6 +13,8 @@ public:
     void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs);
 public slots:
      MidiRouteInput* getInputOrCreateByName(QString midiInputName);
+     void addUserControl();
+     void sendAllUserControls();
 signals:
 
 
