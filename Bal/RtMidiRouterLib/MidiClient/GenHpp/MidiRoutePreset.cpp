@@ -49,6 +49,7 @@
      {
          auto uc  = new UserControl();
          uc->setDescription("Description");
+         uc->setMaxVal(127);
          addUserControls(uc);
      }
 

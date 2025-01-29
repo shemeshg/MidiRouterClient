@@ -6,9 +6,13 @@ import QtQuick.Controls
 
 ColumnLayout {
     property int val: 0
+    property int fromVal: 0
+    property int toVal: 127
     property string name: ""
     property var cmbModel: []
+    property bool showEdit: false
     signal del()
+    signal edit()
     signal setVal(int i);
     signal setName(string s);
 
@@ -16,6 +20,9 @@ ColumnLayout {
 
     RowLayout {
         id: row
+
+
+
         CoreTextField {
             text: name
             Layout.fillWidth: true
@@ -24,8 +31,16 @@ ColumnLayout {
                           }
         }
         CoreComboBox {
+            function cmbLen(){
+                let a = cmbModel.reduce((max, item) => {
+                                            return item.text.length > max ? item.text.length : max;
+                                          }, 0);
+                a = a < 5 ? 5: a;
+                return Constants.font.pixelSize * a;
+
+            }
             id: cmb
-            implicitWidth: Constants.font.pixelSize * 10
+            implicitWidth: cmbLen();
 
             textRole: "text"
             valueRole: "value"
@@ -39,24 +54,32 @@ ColumnLayout {
                 currentIndex = val;
             }
         }
+        CoreButton {
+            text: "del"
+            onClicked: {
+                del()
+            }
+        }
+        CoreButton {
+            visible: showEdit
+            text: "edit"
+            onClicked: {
+                edit()
+            }
+        }
+
     }
 
     RowLayout{
         CoreSlider {
             Layout.fillWidth: true
             id: slider
-            from: 0
+            from: fromVal
             value: val
-            to: 127
+            to: toVal
             onMoved: {
                 cmb.currentIndex = value
                 setVal(value)
-            }
-        }
-        CoreButton {
-            text: "del"
-            onClicked: {
-                del()
             }
         }
     }
