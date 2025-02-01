@@ -7,6 +7,7 @@ import QtQuick.Controls
 
 ColumnLayout {
     property var activePreset: ({})
+    signal editControl(var s);
     CoreLabel {
         text:  "User Controls: "
     }
@@ -52,6 +53,7 @@ ColumnLayout {
                 console.log("deleting")
             }
             onEdit: {
+                editControl(modelData)
                 console.log("editing")
             }
         }

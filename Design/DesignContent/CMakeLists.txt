@@ -41,13 +41,6 @@ qt6_add_qml_module(DesignContent
         "InPortEasyConfigRoutes.qml"
         "UserControlsDropdowns.qml"
         "UserControlsList.qml"
+        "UserControlsEditControl.qml"
     )
-
-
-
-
-
-
-
-
 

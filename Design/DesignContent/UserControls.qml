@@ -7,7 +7,7 @@ import QtQuick.Controls
 
 ColumnLayout {            
     Layout.fillWidth: true
-
+    id: userControlsId
 
     RowLayout {
         GroupBox {
@@ -19,6 +19,10 @@ ColumnLayout {
                     autoExclusive: true
                     checkable: true
                     checked: true
+                    onClicked: {
+
+                        loaderId.sourceComponent = controls
+                    }
                 }
                 CoreButton {
                     id: editDropdownsId
@@ -27,18 +31,27 @@ ColumnLayout {
                     autoExclusive: true
                     checkable: true
                     checked: false
+                    onClicked: {
+                        state = "Dropdowns"
+                        loaderId.sourceComponent = dropdowns
+                    }
                 }
             }
         }
     }
     Loader {
-        id: loaderId
+        id: loaderId        
         Layout.fillWidth: true
+        sourceComponent: controls
     }
     Component {
         id: controls
         UserControlsList {
             activePreset: Constants.balData.midiClientConnection.userDataConfig.activePreset
+            onEditControl: (v)=>{
+                        loaderId.sourceComponent = userControls;
+                        loaderId.item.control  = v;
+                    }
         }
     }
     Component {
@@ -46,18 +59,17 @@ ColumnLayout {
         UserControlsDropdowns {
         }
     }
-    states: [
-        State {
-            name: "Controls"
-            when: editControlsId.checked
-            PropertyChanges { target: loaderId; sourceComponent: controls }
-        },
-        State {
-            name: "Dropdowns"
-            when: editDropdownsId.checked
-            PropertyChanges { target: loaderId; sourceComponent: dropdowns }
+
+    Component {
+        id: userControls
+        UserControlsEditControl {
+            onBack: {
+                loaderId.sourceComponent = controls
+            }
         }
-    ]
+    }
+
+
 
 
 
