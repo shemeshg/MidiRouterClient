@@ -23,9 +23,6 @@ ColumnLayout {
             text: "Add"
             onClicked: {
                 activePreset.addUserControl()
-                console.log(
-                            JSON.stringify(activePreset.userControls)
-                            )
             }
         }
     }
@@ -54,7 +51,6 @@ ColumnLayout {
             }
             onEdit: {
                 editControl(modelData)
-                console.log("editing")
             }
         }
     }

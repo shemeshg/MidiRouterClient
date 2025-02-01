@@ -43,14 +43,15 @@ ColumnLayout {
         id: loaderId        
         Layout.fillWidth: true
         sourceComponent: controls
+        property var editControlObj: ({})
     }
     Component {
         id: controls
         UserControlsList {
             activePreset: Constants.balData.midiClientConnection.userDataConfig.activePreset
             onEditControl: (v)=>{
+                        loaderId.editControlObj = v
                         loaderId.sourceComponent = userControls;
-                        loaderId.item.control  = v;
                     }
         }
     }
