@@ -17,13 +17,23 @@ ColumnLayout {
         }
     }
 
-    CoreLabel {
-        text: "editControl"
+
+    RowLayout {
+        CoreLabel {
+            text: "Description"
+        }
+        CoreTextField {
+            text: control.description
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                             control.description = text
+            }
+        }
     }
 
     RowLayout {
         CoreLabel {
-            text: "portName"
+            text: "Port name"
         }
         CoreComboBox {
             id: portName
@@ -42,10 +52,12 @@ ColumnLayout {
         }
     }
     RowLayout {
+
         CoreLabel {
             text: "Event type"
         }
         CoreComboBox {
+            id: eventTypeId
             editable: true
             textRole: "text"
             valueRole: "value"
@@ -62,8 +74,74 @@ ColumnLayout {
                 control.eventType = currentIndex
             }
         }
-
-
+    }
+    RowLayout {
+        CoreLabel {
+            text: "Min.Val"
+        }
+        CoreTextField {
+            text: control.minVal
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                             control.minVal = Number(text)
+            }
+        }
+    }
+    RowLayout {
+        CoreLabel {
+            text: "Max.Val"
+        }
+        CoreTextField {
+            text: control.minVal
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                             control.maxVal = Number(text)
+            }
+        }
+    }
+    CoreSwitch {
+        text: "64 +/- mode"
+        checked: control.is64Mode
+        onToggled: {
+            control.is64Mode = checked;
+        }
+    }
+    RowLayout {
+        CoreLabel {
+            text: "Channel"
+        }
+        CoreTextField {
+            text: control.channelId
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                             control.channelId = Number(text)
+            }
+        }
+    }
+    RowLayout {
+        CoreLabel {
+            text: "CC Number"
+        }
+        CoreTextField {
+            text: control.ccId
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                             control.ccId = Number(text)
+            }
+        }
     }
 
+    RowLayout {
+        visible: eventTypeId.currentIndex === 2
+        CoreLabel {
+            text: "NRPN Control (14bit)"
+        }
+        CoreTextField {
+            text: control.nrpnControl
+            Layout.fillWidth: true
+            onTextEdited: ()=>{
+                             control.nrpnControl = Number(text)
+            }
+        }
+    }
 }
