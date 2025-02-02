@@ -12,7 +12,7 @@ ColumnLayout {
     signal back();
     CoreButton {
         text: "back"
-        onClicked: {
+        onClicked: {            
             back();
         }
     }
@@ -50,15 +50,14 @@ ColumnLayout {
                 control.outputPortnName = currentText
             }
         }
-    }
+    }    
     RowLayout {
 
         CoreLabel {
             text: "Event type"
         }
         CoreComboBox {
-            id: eventTypeId
-            editable: true
+            id: eventTypeId            
             textRole: "text"
             valueRole: "value"
             model: [
@@ -141,6 +140,27 @@ ColumnLayout {
             Layout.fillWidth: true
             onTextEdited: ()=>{
                              control.nrpnControl = Number(text)
+            }
+        }
+    }
+    RowLayout {
+        CoreLabel {
+            text: "Dropdown"
+        }
+        CoreComboBox {
+            Layout.fillWidth: true
+            textRole: "text"
+            valueRole: "value"
+            model: [{value: -1, name: ""}, ...Constants.balData.midiClientConnection.userDataConfig.dropdownlists.map((item, index) => ({
+                                                                                                                                            value: index,
+                                                                                                                                            text: item.name
+                                                                                                                                        }))]
+            Component.onCompleted: {
+                currentIndex = control.dropdownListId
+            }
+
+            onActivated: {
+                control.dropdownListId = currentIndex
             }
         }
     }

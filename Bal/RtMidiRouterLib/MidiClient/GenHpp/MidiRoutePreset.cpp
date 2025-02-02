@@ -50,6 +50,7 @@
          auto uc  = new UserControl();
          uc->setDescription("Description");
          uc->setMaxVal(127);
+         uc->setDropdownListId(-1);
          addUserControls(uc);
      }
 
