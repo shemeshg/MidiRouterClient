@@ -14,6 +14,7 @@ public:
 public slots:
      MidiRouteInput* getInputOrCreateByName(QString midiInputName);
      void addUserControl();
+     void delUserControl(int id);
      void sendAllUserControls();
 signals:
 

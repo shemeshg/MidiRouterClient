@@ -54,6 +54,13 @@
          addUserControls(uc);
      }
 
+
+    void MidiRoutePreset::delUserControl(int id) 
+     {
+         delUserControls(id);
+     }
+
+
     void MidiRoutePreset::sendAllUserControls() 
      {
          qDebug()<<"Not Implemented";

@@ -69,7 +69,7 @@ ColumnLayout {
                 modelData.description = s;
                        }
             onDel: {
-                console.log("deleting")
+                activePreset.delUserControl(index)
             }
             onEdit: {
                 editControl(modelData)

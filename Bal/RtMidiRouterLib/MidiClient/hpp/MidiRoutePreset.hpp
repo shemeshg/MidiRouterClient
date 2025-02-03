@@ -84,6 +84,15 @@ public slots:
          addUserControls(uc);
      }
 
+
+     //- {function} 0 1
+     void delUserControl(int id)
+     //-only-file body
+     {
+         delUserControls(id);
+     }
+
+
      //- {function} 0 1
      void sendAllUserControls()
      //-only-file body
