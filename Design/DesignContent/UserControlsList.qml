@@ -29,12 +29,14 @@ ColumnLayout {
     Repeater {
         model: activePreset.userControls
         ComboSilder {
+            id: cmbSliderId
             showEdit: true
             val: modelData.inputVal
             fromVal: modelData.minVal
             toVal: modelData.maxVal
             name: modelData.description
             is64Mode: modelData.is64Mode
+            isShowLabel: cmbSliderId.cmbModel.length === 0
             cmbModel: [
                 /*
                   { text: "whatever", value: 2 },

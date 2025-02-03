@@ -12,6 +12,7 @@ ColumnLayout {
     property var cmbModel: []
     property bool showEdit: false
     property bool is64Mode: false
+    property bool isShowLabel: false
     signal del()
     signal edit()
     signal setVal(int i);
@@ -32,7 +33,7 @@ ColumnLayout {
                           }
         }
         CoreLabel {
-            visible: cmbModel.length === 0
+            visible: isShowLabel
             text: is64Mode ? val - Math.floor ((toVal + 1 )) / 2 : val
         }
 
