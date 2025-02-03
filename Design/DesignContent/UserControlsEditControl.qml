@@ -143,7 +143,15 @@ ColumnLayout {
             }
         }
     }
+    CoreSwitch {
+        text: "Show dropdown"
+        checked: control.isShowDropdown
+        onToggled: {
+            control.isShowDropdown = checked;
+        }
+    }
     RowLayout {
+        visible: control.isShowDropdown
         CoreLabel {
             text: "Dropdown"
         }
