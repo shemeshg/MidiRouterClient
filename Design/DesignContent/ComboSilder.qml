@@ -11,6 +11,7 @@ ColumnLayout {
     property string name: ""
     property var cmbModel: []
     property bool showEdit: false
+    property bool is64Mode: false
     signal del()
     signal edit()
     signal setVal(int i);
@@ -30,7 +31,13 @@ ColumnLayout {
                               setName(text)
                           }
         }
+        CoreLabel {
+            visible: cmbModel.length === 0
+            text: is64Mode ? val - Math.floor ((toVal + 1 )) / 2 : val
+        }
+
         CoreComboBox {
+            visible: cmbModel.length !== 0
             function cmbLen(){
                 let a = cmbModel.reduce((max, item) => {
                                             return item.text.length > max ? item.text.length : max;

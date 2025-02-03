@@ -34,10 +34,13 @@ ColumnLayout {
             fromVal: modelData.minVal
             toVal: modelData.maxVal
             name: modelData.description
+            is64Mode: modelData.is64Mode
             cmbModel: [
+                /*
                   { text: "whatever", value: 2 },
                   { text: "something", value: 3 },
                   { text: "more text", value: 1 },
+                  */
             ]
             onSetVal: (i)=>{
                 modelData.inputVal = i
