@@ -164,11 +164,11 @@ ColumnLayout {
                                                                                                                                             text: item.name
                                                                                                                                         }))]
             Component.onCompleted: {
-                currentIndex = control.dropdownListId
+                currentIndex = model.findIndex(item => item.value === control.dropdownListId);
             }
 
             onActivated: {
-                control.dropdownListId = currentIndex
+                control.dropdownListId = currentValue
             }
         }
     }

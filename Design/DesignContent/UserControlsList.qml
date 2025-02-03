@@ -29,6 +29,29 @@ ColumnLayout {
     Repeater {
         model: activePreset.userControls
         ComboSilder {
+            function getCmbModel(){
+
+                let ddlists = Constants.balData.
+                midiClientConnection.
+                userDataConfig.dropdownlists;
+
+                if (modelData.isShowDropdown &&
+                        modelData.dropdownListId >= 0 ) {
+
+                    return  ddlists[modelData.dropdownListId].data.trim().split("\n")
+                    .map((row,idx)=>{
+                            return {text: row, value: idx}
+                         });
+
+
+
+
+
+                }
+                return []
+            }
+
+
             id: cmbSliderId
             showEdit: true
             val: modelData.inputVal
@@ -36,14 +59,8 @@ ColumnLayout {
             toVal: modelData.maxVal
             name: modelData.description
             is64Mode: modelData.is64Mode
-            isShowLabel: cmbSliderId.cmbModel.length === 0
-            cmbModel: [
-                /*
-                  { text: "whatever", value: 2 },
-                  { text: "something", value: 3 },
-                  { text: "more text", value: 1 },
-                  */
-            ]
+            isShowLabel: true
+            cmbModel: getCmbModel()
             onSetVal: (i)=>{
                 modelData.inputVal = i
                 console.log("Missing implement send midi")
