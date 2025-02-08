@@ -236,6 +236,41 @@ void BalData::stopClient()
     mcc.stop();
 }
 
+void BalData::getPortNumber(const QString &midiPortName, const QJSValue &callback){
+    mcc.invokeMethod("wcmidiout", "getPortNumber", {midiPortName}, true, callback, qjsEngine(this));
+}
+
+void BalData::setNonRegisteredParameterInt(int portNumber, int parameter, int data, QStringList channels, const QJSValue &callback)
+{
+    QJsonArray a = {portNumber, parameter, data};
+    QJsonArray b = QJsonArray::fromStringList( channels);
+    if (!channels.isEmpty()){
+        a.append(b);
+    }
+    mcc.invokeMethod("wcmidiout", "setNonRegisteredParameterInt", a, false, callback, qjsEngine(this));
+}
+
+void BalData::sendControlChange(int portNumber, int controller, int value, QStringList channels, const QJSValue &callback)
+{
+    QJsonArray a = {portNumber, controller, value};
+    QJsonArray b = QJsonArray::fromStringList( channels);
+    if (!channels.isEmpty()){
+        a.append(b);
+    }
+
+    mcc.invokeMethod("wcmidiout", "sendControlChange", a, false, callback, qjsEngine(this));
+}
+
+void BalData::sendProgramChange(int portNumber, int program, QStringList channels, const QJSValue &callback)
+{
+    QJsonArray a = {portNumber, program};
+    QJsonArray b = QJsonArray::fromStringList( channels);
+    if (!channels.isEmpty()){
+        a.append(b);
+    }
+    mcc.invokeMethod("wcmidiout", "sendProgramChange", a, false, callback, qjsEngine(this));
+}
+
 void BalData::testDummyDelete(const QJSValue &callback)
 {
     mcc.invokeMethod("wcmidiout", "getPortCount", {}, true, callback, qjsEngine(this));

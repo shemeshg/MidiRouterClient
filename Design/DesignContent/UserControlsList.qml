@@ -51,6 +51,13 @@ ColumnLayout {
                 return []
             }
 
+            property int portNumber: -1
+            Component.onCompleted: {
+                Constants.balData.getPortNumber(modelData.outputPortnName,(i)=>{
+                                                 portNumber = i;
+                                                })
+
+            }
 
             id: cmbSliderId
             showEdit: true
@@ -62,8 +69,24 @@ ColumnLayout {
             isShowLabel: true
             cmbModel: getCmbModel()
             onSetVal: (i)=>{
-                modelData.inputVal = i
-                console.log("Missing implement send midi")
+                    if (i=== modelData.inputVal){return;}
+                    modelData.inputVal = i;
+                if (portNumber === -1){
+                              return;
+                          }
+                if (modelData.eventType === 0){
+                              console.log("HEHE 1")
+                    Constants.balData.sendControlChange(
+                       portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
+                } else if (modelData.eventType === 1){
+                    Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
+                } else if (modelData.eventType === 2){
+                    Constants.balData.setNonRegisteredParameterInt(
+                        portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
+
+                }
+
+
                       }
             onSetName: (s)=>{
                 modelData.description = s;
