@@ -1,14 +1,17 @@
+#line 12 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
 #include "MidiRouterChain.h"
 #include "FilterMidiDestination.h"
 #include "FilterNetworkDestination.h"
 #include "../genPrpt/MidiRoutersFilter.h"
      MidiRouterChain::MidiRouterChain(QObject * parent) 
+#line 41 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
         : MidiRouterChainPrivate{parent}{
 
     };
 
 
     void MidiRouterChain::clearMidiRoutersFilters() 
+#line 51 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         for (const QVariant &var : m_midiRoutersFilters) {
 
@@ -22,6 +25,7 @@
     }
 
     void MidiRouterChain::delMidiRoutersFilter(const int id) 
+#line 66 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         if (id < m_midiRoutersFilters.size())
         {
@@ -36,6 +40,7 @@
     }
 
     void MidiRouterChain::addFilterMidiDestination(QString midiDestination) 
+#line 82 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         auto f = new FilterMidiDestination();
         f->setFilter(midiDestination);
@@ -44,6 +49,7 @@
     }
 
     void MidiRouterChain::addFilterToConsole(FilterToConsole::LogTo logTo, QString userData) 
+#line 92 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         auto f = new FilterToConsole();
         f->setFilter(logTo, userData);
@@ -52,6 +58,7 @@
     }
 
     void MidiRouterChain::addFilterNetworkDestination(QString serverName, int serverPort, QString baseMidiRouteInput) 
+#line 102 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         auto f = new FilterNetworkDestination();
         f->setFilter(serverName,  serverPort, baseMidiRouteInput);
@@ -60,6 +67,7 @@
     }
 
     void MidiRouterChain::addFilterFilterSchedule(FilterSchedule::DefferedType defferedType, int defferedTo ) 
+#line 112 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         auto f = new FilterSchedule();
         f->setFilter(defferedType, defferedTo);
@@ -68,6 +76,7 @@
     }
 
     void MidiRouterChain::addFilterAndTransform(QString name, FilterAndTransform::ConditionAction conditionAction, QString filterChannel, QString filterEvents, QString filterData1, QString filterData2 ) 
+#line 123 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         auto f = new FilterAndTransform();
         f->setFilter( name,  conditionAction,  filterChannel,
@@ -77,6 +86,7 @@
     }
 
     void MidiRouterChain::addEasyConfigMonitor() 
+#line 134 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         setIsEasyConfig(true);
         QJsonObject obj;
@@ -86,6 +96,7 @@
     }
 
     void MidiRouterChain::addEasyConfigPresetFilter(const MidiPresetControlEasyConfig &m) 
+#line 145 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
 
         setName("EasyConfig");
@@ -119,6 +130,7 @@
     }
 
     void MidiRouterChain::addEasyConfigPresetLogOnOff(QString presetUuid, bool isMidiControlOn) 
+#line 180 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         setIsEasyConfig(true);
         setIsRunForPresetOnAndOff(true);
@@ -131,6 +143,7 @@
     }
 
     void MidiRouterChain::setEasyConfigChain(EasyConfig * easyConfig,EasyConfigRoute * easyConfigRoute) 
+#line 194 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRouterChain.hpp"
     {
         setName("EasyConfig");
         setIsEasyConfig(true);

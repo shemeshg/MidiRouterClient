@@ -1,5 +1,7 @@
+#line 8 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
 #include "MidiRoutePreset.h"
      MidiRoutePreset::MidiRoutePreset(QString computerUuid, QObject * parent) 
+#line 25 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
         : MidiRoutePresetPrivate{parent}{
         setComputerUuid(computerUuid);
         setUuid(getUuId());
@@ -15,6 +17,7 @@
     };
 
     void MidiRoutePreset::recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs) 
+#line 42 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
     {
         for ( MidiRouteInput *input: m_midiRouteInputs){
 
@@ -34,6 +37,7 @@
 
 
     MidiRouteInput*  MidiRoutePreset::getInputOrCreateByName(QString midiInputName) 
+#line 65 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
      {
         std::optional<MidiRouteInput *> input = getInputByName(midiInputName);
          if (input){
@@ -46,6 +50,7 @@
      }
 
     void MidiRoutePreset::addUserControl() 
+#line 79 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
      {
          auto uc  = new UserControl();
          uc->setDescription("Description");
@@ -56,17 +61,20 @@
 
 
     void MidiRoutePreset::delUserControl(int id) 
+#line 91 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
      {
          delUserControls(id);
      }
 
 
     void MidiRoutePreset::sendAllUserControls() 
+#line 99 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
      {
          qDebug()<<"Not Implemented";
      }
 
     std::optional<MidiRouteInput *> MidiRoutePreset::getInputByName(QString midiInputName) 
+#line 113 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiRoutePreset.hpp"
     {
         for (MidiRouteInput *input : m_midiRouteInputs) {
             if (input->midiInputName() == midiInputName) {

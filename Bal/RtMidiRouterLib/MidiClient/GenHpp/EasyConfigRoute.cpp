@@ -1,5 +1,7 @@
+#line 7 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
 #include "EasyConfigRoute.h"
      EasyConfigRoute::EasyConfigRoute(QObject * parent) 
+#line 30 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
         : EasyConfigRoutePrivate{parent}{
         setSplitRangeId(-1);
         setFromSelectedMidiEventTypeId(0);
@@ -22,6 +24,7 @@
 
 
     EasyConfigRouteFilter EasyConfigRoute::getEasyConfigRouteFilter(const QList<int> &keyboardSplits) 
+#line 93 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
     {
         EasyConfigRouteFilter ecf;
 
@@ -116,6 +119,7 @@
     }
 
     void EasyConfigRoute::sortUniq(QList<int> &list) 
+#line 193 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
     {
         QSet<int> set(list.begin(), list.end());
         list = QList<int>(set.begin(), set.end());

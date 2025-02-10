@@ -1,11 +1,14 @@
+#line 7 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/FilterSchedule.hpp"
 #include "FilterSchedule.h"
      FilterSchedule::FilterSchedule(QObject * parent) 
+#line 23 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/FilterSchedule.hpp"
     : FilterSchedulePrivate{parent}
     {
         setFilterType( FilterType::SCHEDULE_TO);
     };
 
     void FilterSchedule::setFilter(DefferedType defferedType, int defferedTo ) 
+#line 33 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/FilterSchedule.hpp"
     {
         setDefferedType(defferedType);
         setDefferedTo(defferedTo);

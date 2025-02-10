@@ -1,8 +1,10 @@
+#line 16 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
 #include "UserConfigGenJson.h"
 #include "GenHpp/MidiPresetControlEasyConfig.h"
 #include "FilterMidiDestination.h"
 #include "FilterNetworkDestination.h"
     QJsonObject UserConfigGenJson::getJson( int activePresetID, QList<Dropdownlist *> dropdownlists, QList<QString> virtualInPorts, QList<MidiRoutePreset *> midiRoutePresets) 
+#line 36 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject objUserConfig;
         objUserConfig["_activePresetID"] = activePresetID;
@@ -14,6 +16,7 @@
     }
 
     QJsonArray UserConfigGenJson::getDropdownList(QList<Dropdownlist *> dropdownlists) 
+#line 52 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto itm: dropdownlists){
@@ -26,6 +29,7 @@
     }
 
     QJsonArray UserConfigGenJson::getListToJsonAry(const QStringList &sl) 
+#line 66 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &itm: sl){
@@ -35,6 +39,7 @@
     }
 
     QJsonArray UserConfigGenJson::getListToJMidiInsonAry(const QStringList &sl) 
+#line 77 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &itm: sl){
@@ -46,6 +51,7 @@
     }
 
     QJsonArray UserConfigGenJson::getMidiRoutePresets(QList<MidiRoutePreset *> midiRoutePresets) 
+#line 90 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
 
 
@@ -75,6 +81,7 @@
     }
 
     QJsonObject UserConfigGenJson::getEasyConfig(EasyConfig *  easyConfig) 
+#line 121 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject obj;
         //auto inputZonesAndRoutes = obj["inputZonesAndRoutes"].toObject();
@@ -94,6 +101,7 @@
     }
 
     QJsonArray UserConfigGenJson::getEasyConfigRoutes(QList<EasyConfigRoute *> easyConfigRoutes) 
+#line 142 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &easyConfigRoute: easyConfigRoutes){
@@ -120,6 +128,7 @@
     }
 
     QJsonArray UserConfigGenJson::getStringListToJsonAry(QStringList list ) 
+#line 170 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &str: list){
@@ -129,6 +138,7 @@
     }
 
     QJsonArray UserConfigGenJson::getKeyboardSplits(QList<int> keyboardSplits) 
+#line 181 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &keyboardSplit: keyboardSplits){
@@ -140,6 +150,7 @@
     }
 
     QJsonObject UserConfigGenJson::getModiControlOnOff(PresetMidiControl * presetMidiControl) 
+#line 194 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject obj;
         obj["presetUuid"] = presetMidiControl->presetUuid();
@@ -153,6 +164,7 @@
     }
 
     QJsonObject UserConfigGenJson::getMidiRouteInputs(QList<MidiRouteInput *> midiRouteInputs) 
+#line 209 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject obj;
         for (const auto &itm: midiRouteInputs){
@@ -162,6 +174,7 @@
     }
 
     QJsonArray UserConfigGenJson::getCc14bitAry(MidiRouteInput * midiRouteInput) 
+#line 220 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray cc14bitAry;
         for (const auto &cc14bit: midiRouteInput->midiRouteInputCc14bit()){
@@ -175,6 +188,7 @@
     }
 
     QJsonObject UserConfigGenJson::getMidiRouteClock(MidiRouteInput * midiRouteInput) 
+#line 235 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject midiRouteClock;
         midiRouteClock["timeSig"] = midiRouteInput->midiRouteClockTimeSig();
@@ -186,6 +200,7 @@
     }
 
     QJsonObject UserConfigGenJson::getIgnoreTypes(MidiRouteInput * midiRouteInput) 
+#line 248 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject ignoreTypes;
         ignoreTypes["midiSysex"] = midiRouteInput->ignoreTypesMidiSysex();
@@ -196,6 +211,7 @@
     }
 
     QJsonObject UserConfigGenJson::getMonitor(MidiRouteInput * midiRouteInput) 
+#line 260 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject monitor;
         monitor["isMonitored"] = midiRouteInput->monitor()->isMonitored();
@@ -203,6 +219,7 @@
     }
 
     QJsonArray UserConfigGenJson::getMidiRouterChains(MidiRouteInput * midiRouteInput) 
+#line 269 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray midiRouterChains;
         for (const auto midiRouterChain: midiRouteInput->midiRouterChains()){
@@ -218,6 +235,7 @@
     }
 
     QJsonObject UserConfigGenJson::getBaseMidiRouteInput(QString strMidiInputName) 
+#line 286 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject obj;
         obj["midiInputName"] = strMidiInputName;
@@ -225,6 +243,7 @@
     }
 
     QJsonArray UserConfigGenJson::getMidiRoutersFilters(QList<QVariant> midiRoutersFilters) 
+#line 295 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &midiRoutersFilter: midiRoutersFilters ){
@@ -273,6 +292,7 @@
     }
 
     QJsonObject UserConfigGenJson::getMidiRouteInput(MidiRouteInput * midiRouteInput) 
+#line 345 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonObject obj;
         obj["midiInputName"] = midiRouteInput->midiInputName();
@@ -288,6 +308,7 @@
     }
 
     QJsonArray UserConfigGenJson::getUserControls(QList<UserControl *> userControls) 
+#line 362 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QJsonArray ary;
         for (const auto &userControl: userControls){
@@ -313,6 +334,7 @@
 
 
     QList<MidiPresetControlEasyConfig> UserConfigGenJson::getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets) 
+#line 389 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigGenJson.hpp"
     {
         QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
         for (const auto &itm: midiRoutePresets){

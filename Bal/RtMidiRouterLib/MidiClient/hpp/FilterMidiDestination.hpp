@@ -23,7 +23,7 @@ public:
     //-only-file body
     : FilterMidiDestinationPrivate{parent}
     {
-        setFilterType( FilterType::TO_MIDI_DESTINATION);
+        setFilterType( FilterType::TO_MIDI_DESTINATION); 
     };
 
     //-only-file header
@@ -32,8 +32,8 @@ public slots:
     void setFilter(QString input)
     //-only-file body
     {
-        setBaseMidiRouteInput(input);
-        setName("To midi " + input);
+        setBaseMidiRouteInput(input); 
+        setName("To midi " + input); 
     }
 
     //-only-file header
