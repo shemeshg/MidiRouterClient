@@ -27,7 +27,7 @@ public:
 
     //-only-file header
 public slots:
-    //- {function} 0 1
+    //- {fn}
     void setFilter(DefferedType defferedType, int defferedTo )
     //-only-file body
     {

@@ -27,7 +27,7 @@ public:
     //-only-file header
 public slots:
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getComboNoesNamesAndNumber()
     //-only-file body
     {
@@ -42,7 +42,7 @@ public slots:
         return ret;
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addEasyConfigRoute()
     //-only-file body
     {
@@ -50,7 +50,7 @@ public slots:
         addEasyConfigRoutes(itm);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setKeyboardSplits(const QList<int> &newKeyboardSplits)
     //-only-file body
     {
@@ -62,21 +62,21 @@ public slots:
 
 
 
-    //- {function} 0 1
+    //- {fn}
     void setSplitNoEmmit(int idx, int pos)
     //-only-file body
     {
         m_keyboardSplits[idx] = pos;
     }
 
-    //- {function} 0 1
+    //- {fn}
     void emitKeyboardSplitsChanged()
     //-only-file body
     {
         emit keyboardSplitsChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void appendSplit(int defaultPosition)
     //-only-file body
     {
@@ -86,7 +86,7 @@ public slots:
         setKeyboardSplits(zn);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void delSplit(int position)
     //-only-file body
     {
@@ -105,7 +105,7 @@ public slots:
 
     //-only-file header
 private:
-    //- {function} 0 1
+    //- {fn}
     void appendZoneName(int position)
     //-only-file body
     {
@@ -117,7 +117,7 @@ private:
         setZoneNames(s);
     }
 
-    //- {function} 0 1
+    //- {fn}
     std::string getPositionName(int n)
     //-only-file body
     {

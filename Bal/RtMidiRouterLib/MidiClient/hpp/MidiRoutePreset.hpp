@@ -36,7 +36,7 @@ public:
 
     };
 
-    //- {function} 0 1
+    //- {fn}
     void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs)
     //-only-file body
     {
@@ -59,7 +59,7 @@ public:
 
     //-only-file header
 public slots:
-     //- {function} 0 1
+     //- {fn}
      MidiRouteInput* getInputOrCreateByName(QString midiInputName)
      //-only-file body
      {
@@ -73,7 +73,7 @@ public slots:
          return newInput;
      }
 
-     //- {function} 0 1
+     //- {fn}
      void addUserControl()
      //-only-file body
      {
@@ -85,7 +85,7 @@ public slots:
      }
 
 
-     //- {function} 0 1
+     //- {fn}
      void delUserControl(int id)
      //-only-file body
      {
@@ -93,7 +93,7 @@ public slots:
      }
 
 
-     //- {function} 0 1
+     //- {fn}
      void sendAllUserControls()
      //-only-file body
      {
@@ -107,7 +107,7 @@ signals:
 private:
 
 
-    //- {function} 0 1
+    //- {fn}
     std::optional<MidiRouteInput *> getInputByName(QString midiInputName) 
     //-only-file body
     {

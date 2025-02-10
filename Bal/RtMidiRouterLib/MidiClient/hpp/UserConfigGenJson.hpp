@@ -26,7 +26,7 @@ class UserConfigGenJson
 public:    
     UserConfigGenJson(){}
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getJson(
                         int activePresetID,
                         QList<Dropdownlist *> dropdownlists,
@@ -46,7 +46,7 @@ public:
     //-only-file header
 private:
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getDropdownList(QList<Dropdownlist *> dropdownlists)
     //-only-file body
     {
@@ -60,7 +60,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getListToJsonAry(const QStringList &sl)
     //-only-file body
     {
@@ -71,7 +71,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getListToJMidiInsonAry(const QStringList &sl)
     //-only-file body
     {
@@ -84,7 +84,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getMidiRoutePresets(QList<MidiRoutePreset *> midiRoutePresets)
     //-only-file body
     {
@@ -115,7 +115,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getEasyConfig(EasyConfig * easyConfig)
     //-only-file body
     {
@@ -136,7 +136,7 @@ private:
         return obj;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getEasyConfigRoutes(QList<EasyConfigRoute *> easyConfigRoutes)
     //-only-file body
     {
@@ -164,7 +164,7 @@ private:
 
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getStringListToJsonAry(QStringList list )
     //-only-file body
     {
@@ -175,7 +175,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getKeyboardSplits(QList<int> keyboardSplits)
     //-only-file body
     {
@@ -188,7 +188,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getModiControlOnOff(PresetMidiControl *presetMidiControl)
     //-only-file body
     {
@@ -203,7 +203,7 @@ private:
         return obj;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getMidiRouteInputs(QList<MidiRouteInput *> midiRouteInputs)
     //-only-file body
     {
@@ -214,7 +214,7 @@ private:
         return obj;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getCc14bitAry(MidiRouteInput *midiRouteInput)
     //-only-file body
     {
@@ -229,7 +229,7 @@ private:
         return cc14bitAry;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getMidiRouteClock(MidiRouteInput *midiRouteInput)
     //-only-file body
     {
@@ -242,7 +242,7 @@ private:
         return midiRouteClock;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getIgnoreTypes(MidiRouteInput *midiRouteInput)
     //-only-file body
     {
@@ -254,7 +254,7 @@ private:
         return ignoreTypes;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getMonitor(MidiRouteInput *midiRouteInput)
     //-only-file body
     {
@@ -263,7 +263,7 @@ private:
         return monitor;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getMidiRouterChains(MidiRouteInput *midiRouteInput)
     //-only-file body
     {
@@ -280,7 +280,7 @@ private:
         return midiRouterChains;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getBaseMidiRouteInput(QString strMidiInputName)
     //-only-file body
     {
@@ -289,7 +289,7 @@ private:
         return obj;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getMidiRoutersFilters(QList<QVariant> midiRoutersFilters)
     //-only-file body
     {
@@ -339,7 +339,7 @@ private:
         return ary;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getMidiRouteInput(MidiRouteInput *midiRouteInput)
     //-only-file body
     {
@@ -356,7 +356,7 @@ private:
         return obj;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QJsonArray getUserControls(QList<UserControl *> userControls)
     //-only-file body
     {
@@ -383,7 +383,7 @@ private:
     }
 
 
-    //- {function} 0 1
+    //- {fn}
     QList<MidiPresetControlEasyConfig> getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets)
     //-only-file body
     {

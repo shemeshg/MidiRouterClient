@@ -28,7 +28,7 @@ public:
 
     //-only-file header
 public slots:
-    //- {function} 0 1
+    //- {fn}
     void setFilter(QString serverName, int serverPort, QString baseMidiRouteInput)
     //-only-file body
     {

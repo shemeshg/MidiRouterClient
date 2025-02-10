@@ -40,7 +40,7 @@ public:
     };
 
 
-    //- {function} 0 1
+    //- {fn}
     void clearEasyConfigMidiRouterChains()
     //-only-file body
     {
@@ -51,7 +51,7 @@ public:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void createEasyConfigChains(EasyConfig *easyConfig)
     //-only-file body
     {
@@ -64,7 +64,7 @@ public:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addMonitorEasyConfigIfRequired()
     //-only-file body
     {
@@ -75,7 +75,7 @@ public:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs)
     //-only-file body
     {
@@ -90,7 +90,7 @@ public:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void clearMidiRouterChains()
     //-only-file body
     {
@@ -105,7 +105,7 @@ public:
 
     //-only-file header
 public slots:
-    //- {function} 0 1
+    //- {fn}
     void addMidiRouterChain(const QString name)
     //-only-file body
     {
@@ -114,20 +114,20 @@ public slots:
         addMidiRouterChains(midiRouterChain);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void delMidiRouterChain(const int idx)
     //-only-file body
     {
         delMidiRouterChains(idx);
     }
-    //- {function} 0 1
+    //- {fn}
     void clear14BitCc()
     //-only-file body
     {
         clearMidiRouteInputCc14bit();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void add14BitCc(int channel, int cc)
     //-only-file body
     {

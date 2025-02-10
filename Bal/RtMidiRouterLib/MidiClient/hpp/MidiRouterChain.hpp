@@ -45,7 +45,7 @@ public:
 
     //-only-file header
 public slots:
-    //- {function} 0 1
+    //- {fn}
     void clearMidiRoutersFilters()
     //-only-file body
     {
@@ -60,7 +60,7 @@ public slots:
         emit midiRoutersFiltersChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void delMidiRoutersFilter(const int id)
     //-only-file body
     {
@@ -76,7 +76,7 @@ public slots:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addFilterMidiDestination(QString midiDestination)
     //-only-file body
     {
@@ -86,7 +86,7 @@ public slots:
         emit midiRoutersFiltersChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addFilterToConsole(FilterToConsole::LogTo logTo, QString userData)
     //-only-file body
     {
@@ -96,7 +96,7 @@ public slots:
         emit midiRoutersFiltersChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addFilterNetworkDestination(QString serverName, int serverPort, QString baseMidiRouteInput)
     //-only-file body
     {
@@ -106,7 +106,7 @@ public slots:
         emit midiRoutersFiltersChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addFilterFilterSchedule(FilterSchedule::DefferedType defferedType, int defferedTo )
     //-only-file body
     {
@@ -116,7 +116,7 @@ public slots:
         emit midiRoutersFiltersChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addFilterAndTransform(QString name, FilterAndTransform::ConditionAction conditionAction, QString filterChannel,
                                QString filterEvents, QString filterData1, QString filterData2 )
     //-only-file body
@@ -128,7 +128,7 @@ public slots:
         emit midiRoutersFiltersChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addEasyConfigMonitor()
     //-only-file body
     {
@@ -139,7 +139,7 @@ public slots:
         addFilterToConsole(FilterToConsole::LogTo::CLIENT,doc.toJson());
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addEasyConfigPresetFilter(const MidiPresetControlEasyConfig &m)
     //-only-file body
     {
@@ -174,7 +174,7 @@ public slots:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addEasyConfigPresetLogOnOff(QString presetUuid, bool isMidiControlOn)
     //-only-file body
     {
@@ -188,7 +188,7 @@ public slots:
         addFilterToConsole(FilterToConsole::LogTo::SERVER,doc.toJson());
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setEasyConfigChain(EasyConfig *easyConfig,EasyConfigRoute *easyConfigRoute)
     //-only-file body
     {

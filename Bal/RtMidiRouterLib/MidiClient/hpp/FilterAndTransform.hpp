@@ -28,7 +28,7 @@ public:
 
     //-only-file header
 public slots:
-    //- {function} 0 1
+    //- {fn}
     void setFilter(QString name, ConditionAction conditionAction, QString filterChannel,
                   QString filterEvents, QString filterData1, QString filterData2)
     //-only-file body

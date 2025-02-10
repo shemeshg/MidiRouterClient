@@ -87,7 +87,7 @@ public:
         {DropdownMidiEventTypeEnum::pitchbend, EventTypes::pitchbend}
     };
 
-     //- {function} 0 1
+     //- {fn}
     EasyConfigRouteFilter getEasyConfigRouteFilter(const QList<int> &keyboardSplits)
     //-only-file body
     {
@@ -187,7 +187,7 @@ public:
 public slots:
 
 private:
-    //- {function} 0 1
+    //- {fn}
     void sortUniq(QList<int> &list)
     //-only-file body
     {

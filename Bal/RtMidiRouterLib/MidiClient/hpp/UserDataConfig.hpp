@@ -30,7 +30,7 @@ class UserDataConfig : public UserDataConfigPrivate, public UserDataConfigItf
     Q_OBJECT
     QML_ELEMENT
 public:
-    //- {function} 1 1
+    //- {fn}
     explicit UserDataConfig(QObject *parent = nullptr)
     //-only-file body
         : UserDataConfigPrivate{parent}
@@ -47,7 +47,7 @@ public:
         setActivePreset(0);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void clearDropdownlists()  override
     //-only-file body
     {
@@ -55,70 +55,70 @@ public:
     }
 
 
-    //- {function} 0 1
+    //- {fn}
     int activePresetID() const override
     //-only-file body
     {
         return UserDataConfigPrivate::activePresetID(); // Call the parent class's function
     }
 
-    //- {function} 0 1
+    //- {fn}
     QString computerUuid() const override
     //-only-file body
     {
         return UserDataConfigPrivate::computerUuid();
     }
 
-    //- {function} 0 1
+    //- {fn}
     QList<MidiRoutePreset*> midiRoutePresets() const override
     //-only-file body
     {
         return UserDataConfigPrivate::midiRoutePresets();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void clearMidiRoutePresets() override
     //-only-file body
     {
         UserDataConfigPrivate::clearMidiRoutePresets();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addMidiRoutePresets(MidiRoutePreset * item) override
     //-only-file body
     {
         UserDataConfigPrivate::addMidiRoutePresets(item);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setActivePresetID(const int newActivePresetID) override
     //-only-file body
     {
         UserDataConfigPrivate::setActivePresetID(newActivePresetID);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setConnectedInPorts(const QStringList &newConnectedInPorts) override
     //-only-file body
     {
         UserDataConfigPrivate::setConnectedInPorts(newConnectedInPorts);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setConnectedOutPorts(const QStringList &newConnectedOutPorts) override
     //-only-file body
     {
         UserDataConfigPrivate::setConnectedOutPorts(newConnectedOutPorts);
     }
 
-    //- {function} 1 1
+    //- {fn}
     virtual ~UserDataConfig()
     //-only-file body
     {
         clearDropdownlists();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void resetUserDataConfig(const QJsonValue &jsonData)
     //-only-file body
     {
@@ -139,7 +139,7 @@ public:
 
     }
 
-    //- {function} 0 1
+    //- {fn}
     void clearVirtualPorts() override
     //-only-file body
     {
@@ -147,7 +147,7 @@ public:
         emit virtualInPortsChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addVirtualPort(QString port) override
     //-only-file body
     {
@@ -155,7 +155,7 @@ public:
         emit virtualInPortsChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addDropdownList(QString name, QString data) override
     //-only-file body
     {
@@ -170,7 +170,7 @@ public:
 
     //-only-file header
 public slots:
-    //- {function} 0 1
+    //- {fn}
     QJsonObject getJson()
     //-only-file body
     {
@@ -182,7 +182,7 @@ public slots:
                 midiRoutePresets());
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setActivePreset(int id) override
     //-only-file body
     {
@@ -200,7 +200,7 @@ public slots:
         emit activePresetChanged();
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addPreset() override
     //-only-file body
     {
@@ -209,14 +209,14 @@ public slots:
         addMidiRoutePresets(p);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void deletePreset(int id)
     //-only-file body
     {
         delMidiRoutePresets(id);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void addDropdownList()
     //-only-file body
     {
@@ -224,7 +224,7 @@ public slots:
         addDropdownlists(d);
     }
 
-    //- {function} 0 1
+    //- {fn}
     void delDropdownList(int id)
     //-only-file body
     {
@@ -234,7 +234,7 @@ public slots:
 
     //-only-file header
 private:
-    //- {function} 0 1
+    //- {fn}
     void loadComputerUuid()
     //-only-file body
     {

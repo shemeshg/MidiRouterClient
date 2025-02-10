@@ -4,7 +4,7 @@
 #include "MidiClientUtil.h"
 #include "UserConfigGenJson.h"
 #include "UserConfigParseJson.h"
-     UserDataConfig::UserDataConfig(QObject * parent) 
+   UserDataConfig::UserDataConfig(QObject * parent) 
 #line 36 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
         : UserDataConfigPrivate{parent}
     {
@@ -20,62 +20,62 @@
         setActivePreset(0);
     }
 
-    void UserDataConfig::clearDropdownlists()  
+    void UserDataConfig::clearDropdownlists()
 #line 53 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         return UserDataConfigPrivate::clearDropdownlists();
     }
 
 
-    int UserDataConfig::activePresetID() const  
+    int UserDataConfig::activePresetID() const
 #line 61 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         return UserDataConfigPrivate::activePresetID(); // Call the parent class's function
     }
 
-    QString UserDataConfig::computerUuid() const  
+    QString UserDataConfig::computerUuid() const
 #line 68 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         return UserDataConfigPrivate::computerUuid();
     }
 
-    QList<MidiRoutePreset*> UserDataConfig::midiRoutePresets() const  
+    QList<MidiRoutePreset*> UserDataConfig::midiRoutePresets() const
 #line 75 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         return UserDataConfigPrivate::midiRoutePresets();
     }
 
-    void UserDataConfig::clearMidiRoutePresets()  
+    void UserDataConfig::clearMidiRoutePresets()
 #line 82 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         UserDataConfigPrivate::clearMidiRoutePresets();
     }
 
-    void UserDataConfig::addMidiRoutePresets(MidiRoutePreset *  item)  
+    void UserDataConfig::addMidiRoutePresets(MidiRoutePreset *  item)
 #line 89 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         UserDataConfigPrivate::addMidiRoutePresets(item);
     }
 
-    void UserDataConfig::setActivePresetID(const int newActivePresetID)  
+    void UserDataConfig::setActivePresetID(const int newActivePresetID)
 #line 96 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         UserDataConfigPrivate::setActivePresetID(newActivePresetID);
     }
 
-    void UserDataConfig::setConnectedInPorts(const QStringList &newConnectedInPorts)  
+    void UserDataConfig::setConnectedInPorts(const QStringList &newConnectedInPorts)
 #line 103 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         UserDataConfigPrivate::setConnectedInPorts(newConnectedInPorts);
     }
 
-    void UserDataConfig::setConnectedOutPorts(const QStringList &newConnectedOutPorts)  
+    void UserDataConfig::setConnectedOutPorts(const QStringList &newConnectedOutPorts)
 #line 110 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         UserDataConfigPrivate::setConnectedOutPorts(newConnectedOutPorts);
     }
 
-     UserDataConfig::~UserDataConfig() 
+   UserDataConfig::~UserDataConfig() 
 #line 117 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         clearDropdownlists();
@@ -101,21 +101,21 @@
 
     }
 
-    void UserDataConfig::clearVirtualPorts()  
+    void UserDataConfig::clearVirtualPorts()
 #line 145 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         m_virtualInPorts.clear();
         emit virtualInPortsChanged();
     }
 
-    void UserDataConfig::addVirtualPort(QString port)  
+    void UserDataConfig::addVirtualPort(QString port)
 #line 153 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         m_virtualInPorts.append(port);
         emit virtualInPortsChanged();
     }
 
-    void UserDataConfig::addDropdownList(QString name, QString data)  
+    void UserDataConfig::addDropdownList(QString name, QString data)
 #line 161 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         Dropdownlist *d = new Dropdownlist();
@@ -138,7 +138,7 @@
                 midiRoutePresets());
     }
 
-    void UserDataConfig::setActivePreset(int id)  
+    void UserDataConfig::setActivePreset(int id)
 #line 188 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         setActivePresetID(id);        
@@ -155,7 +155,7 @@
         emit activePresetChanged();
     }
 
-    void UserDataConfig::addPreset()  
+    void UserDataConfig::addPreset()
 #line 206 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserDataConfig.hpp"
     {
         MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);

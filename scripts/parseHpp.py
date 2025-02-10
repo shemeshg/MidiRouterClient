@@ -57,7 +57,10 @@ def remove_default_assignment(declaration):
     pattern = re.compile(r'\s*=\s*".*?"|\s*=\s*\w+|\s*=\s*\(.*?\)\s*=>\s*\{.*?\}')
     # Replace the default assignments with an empty string
     result = re.sub(pattern, '', declaration)
-    result = result.replace("override","")
+    result = re.sub(r" override(\s|\n)", "", result)
+    result = re.sub(r" explicit(\s|\n)", "", result)
+    result = re.sub(r" virtual(\s|\n)", "", result) 
+    
     return result
 
 def replace_next(template, NEXT):
@@ -155,7 +158,7 @@ def parse_file(input_file):
             else:
                 templates_map[current_template] += line  
         else:
-            if lstrip_line.startswith("//- {function}"):
+            if lstrip_line.startswith("//- {function}") or lstrip_line.startswith("//- {fn}") :
                 lines_without_templates.append("//-only-file header \n")            
                 text = f"#line {line_number} " + '"' + input_file +  '"' + "\n"
                 lines_without_templates.append(text)            

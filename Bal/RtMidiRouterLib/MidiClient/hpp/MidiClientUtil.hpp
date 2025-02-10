@@ -10,14 +10,14 @@
 //-only-file header
 //-var {PRE} ""
 
-//- {function} 0 1
+//- {fn}
 QString getUuId()
 //-only-file body
 {
     return QUuid::createUuid().toString().replace("{", "").replace("}", "");
 }
 
-//- {function} 0 1
+//- {fn}
 template<typename T>
 void moveItem(std::vector<T>& vec, int intFrom, int intTo)
 //-only-file body

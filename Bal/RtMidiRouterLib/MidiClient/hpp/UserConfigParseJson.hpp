@@ -18,7 +18,7 @@ public:
     UserConfigParseJson(){
     }
 
-    //- {function} 0 1
+    //- {fn}
     void setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc)
     //-only-file body
     {
@@ -40,7 +40,7 @@ public:
 
     //-only-file header
 private:
-    //- {function} 0 1
+    //- {fn}
     void updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QJsonValue &virtualInPorts)
     //-only-file body
     {
@@ -54,7 +54,7 @@ private:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValue &dropdownlists)
     //-only-file body
     {
@@ -67,7 +67,7 @@ private:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValue &midiRoutePresets)
     //-only-file body
     {
@@ -87,7 +87,7 @@ private:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     MidiRoutePreset* createMidiRoutePreset(UserDataConfigItf *userDataConfig, const QJsonValue &value)
     //-only-file body
     {
@@ -115,7 +115,7 @@ private:
         return preset;
     }
 
-    //- {function} 0 1
+    //- {fn}
     void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type)
     //-only-file body
     {
@@ -128,7 +128,7 @@ private:
         control->setPresetUuid(value["presetUuid"].toString());
     }
 
-    //- {function} 0 1
+    //- {fn}
     UserControl* createUserControl(const QJsonValue &userControlValue)
     //-only-file body
     {
@@ -149,7 +149,7 @@ private:
         return userControl;
     }
 
-    //- {function} 0 1
+    //- {fn}
     void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs)
     //-only-file body
     {
@@ -165,7 +165,7 @@ private:
         }
     }
 
-    //- {function} 0 1
+    //- {fn}
     MidiRouteInput* createMidiRouteInputEntry(const QJsonObject &value)
     //-only-file body
     {
@@ -226,7 +226,7 @@ private:
         return midiRouteInputEntry;
     }
 
-    //- {function} 0 1
+    //- {fn}
     void updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain *midiRouterChain)
     //-only-file body
     {
@@ -269,7 +269,7 @@ private:
     }
 
 
-    //- {function} 0 1
+    //- {fn}
     void createEasyConfigEntry(EasyConfig *easyConfigEntry ,const QJsonObject &value)
     //-only-file body
     {
@@ -297,7 +297,7 @@ private:
 
     }
 
-    //- {function} 0 1
+    //- {fn}
     QList<int> extractKeyboardSplits(const QJsonArray &array)
     //-only-file body
     {
@@ -308,7 +308,7 @@ private:
         return keyboardSplits;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QStringList convertToQStringList(const QJsonArray &array)
     //-only-file body
     {
@@ -319,7 +319,7 @@ private:
         return stringList;
     }
 
-    //- {function} 0 1
+    //- {fn}
     EasyConfigRoute* createEasyConfigRoute(const QJsonObject &value)
     //-only-file body
     {
@@ -341,7 +341,7 @@ private:
         return easyConfigRoute;
     }
 
-    //- {function} 0 1
+    //- {fn}
     QStringList stringListFromJsonAry(const QJsonValue &j)
     //-only-file body
     {
