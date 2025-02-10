@@ -8,8 +8,10 @@ class MidiClientConnection : public MidiClientConnectionPrivate
 
     QML_ELEMENT
 public:
+#line 21 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiClientConnection.hpp"
     explicit MidiClientConnection(QObject *parent = nullptr);
 public slots:
+#line 32 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/MidiClientConnection.hpp"
     void setServerStatusAndText(const ServerStatus &newServerStatus);
 private:        
 

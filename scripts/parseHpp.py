@@ -155,6 +155,10 @@ def parse_file(input_file):
             else:
                 templates_map[current_template] += line  
         else:
+            if lstrip_line.startswith("//- {function}"):
+                lines_without_templates.append("//-only-file header \n")            
+                text = f"#line {line_number} " + '"' + input_file +  '"' + "\n"
+                lines_without_templates.append(text)            
             lines_without_templates.append(line)
             if lstrip_line.startswith("//-only-file body"):
                 text = f"#line {line_number} " + '"' + input_file +  '"' + "\n"

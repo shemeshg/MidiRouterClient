@@ -15,6 +15,7 @@ class EasyConfigRoute : public EasyConfigRoutePrivate
     Q_OBJECT
     QML_ELEMENT
 public:
+#line 28 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
     explicit EasyConfigRoute(QObject *parent = nullptr);
     enum class DropdownMidiEventTypeEnum {
         allEvents = 0,
@@ -54,9 +55,11 @@ public:
         {DropdownMidiEventTypeEnum::pitchbend, EventTypes::pitchbend}
     };
 
+#line 91 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
     EasyConfigRouteFilter getEasyConfigRouteFilter(const QList<int> &keyboardSplits);
 public slots:
 
 private:
+#line 191 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/EasyConfigRoute.hpp"
     void sortUniq(QList<int> &list);
 };
