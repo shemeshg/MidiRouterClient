@@ -18,7 +18,7 @@ public:
 public:
     Q_INVOKABLE void setJon(QVariant msg){
         userdata = msg;
-        emit userDataChanges(userdata);
+        emit userDataChanges(getJon());
     }
 
     Q_INVOKABLE QVariant getJon(){
