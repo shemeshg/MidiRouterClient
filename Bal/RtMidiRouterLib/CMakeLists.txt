@@ -60,3 +60,9 @@ target_link_libraries(RtMidiRouterLib PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt$
         RtMidiWrap midiClient)
 
 target_compile_definitions(RtMidiRouterLib PRIVATE RTMIDIROUTERLIB_LIBRARY)
+
+    # Specify here the include directories exported
+    # by this library
+    target_include_directories(RtMidiRouterLib PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}/MidiClient/GenHpp
+        )

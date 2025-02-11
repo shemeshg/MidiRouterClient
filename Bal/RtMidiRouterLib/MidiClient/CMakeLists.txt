@@ -1,5 +1,8 @@
 SET(GEN_HPP TRUE)
 if(GEN_HPP)
+    make_directory(${CMAKE_CURRENT_BINARY_DIR}/GenHpp)
+    make_directory(${CMAKE_CURRENT_BINARY_DIR}/genPrpt)
+    
     file(GLOB HPP_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/hpp/*.hpp"  )
     file(GLOB HPP_PRPT_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/*.hpp"  )
     set(HPP_GEN_FILES 
@@ -9,13 +12,13 @@ if(GEN_HPP)
     )
     add_custom_target(run_script ALL
         COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Running parseHpp shell script")
 
     # Run a shell script before everything else
     execute_process(
         COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         RESULT_VARIABLE result
     )
 
@@ -34,61 +37,61 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets WebSockets WebChannel REQU
 
 
 add_library(midiClient STATIC
-genPrpt/Dropdownlist.h
-genPrpt/EasyConfigPrivate.h
-genPrpt/EasyConfigRoutePrivate.h
-genPrpt/FilterAndTransformPrivate.h
-genPrpt/FilterMidiDestinationPrivate.h
-genPrpt/FilterNetworkDestinationPrivate.h
-genPrpt/FilterSchedulePrivate.h
-genPrpt/FilterToConslePrivate.h
-genPrpt/MidiClientConnectionPrivate.h
-genPrpt/MidiRouteInputCc14bit.h
-genPrpt/MidiRouteInputPrivate.h
-genPrpt/MidiRoutePresetPrivate.h
-genPrpt/MidiRouterChainPrivate.h
-genPrpt/MidiRoutersFilter.h
-genPrpt/MonitorPrivate.h
-genPrpt/PresetMidiControlPrivate.h
-genPrpt/UserControlPrivate.h
-genPrpt/UserDataConfigPrivate.h
-GenHpp/EasyConfig.h
-GenHpp/EasyConfigRoute.h
-GenHpp/FilterAndTransform.h
-GenHpp/FilterMidiDestination.h
-GenHpp/FilterNetworkDestination.h
-GenHpp/FilterSchedule.h
-GenHpp/FilterToConsle.h
-GenHpp/MidiClientConnection.h
-GenHpp/MidiClientUtil.h
-GenHpp/MidiPresetControlEasyConfig.h
-GenHpp/MidiRouteInput.h
-GenHpp/MidiRoutePreset.h
-GenHpp/MidiRouterChain.h
-GenHpp/Monitor.h
-GenHpp/PresetMidiControl.h
-GenHpp/UserConfigGenJson.h
-GenHpp/UserConfigParseJson.h
-GenHpp/UserControl.h
-GenHpp/UserDataConfig.h
-GenHpp/EasyConfig.cpp
-GenHpp/EasyConfigRoute.cpp
-GenHpp/FilterAndTransform.cpp
-GenHpp/FilterMidiDestination.cpp
-GenHpp/FilterNetworkDestination.cpp
-GenHpp/FilterSchedule.cpp
-GenHpp/FilterToConsle.cpp
-GenHpp/MidiClientConnection.cpp
-GenHpp/MidiClientUtil.cpp
-GenHpp/MidiRouteInput.cpp
-GenHpp/MidiRoutePreset.cpp
-GenHpp/MidiRouterChain.cpp
-GenHpp/Monitor.cpp
-GenHpp/PresetMidiControl.cpp
-GenHpp/UserConfigGenJson.cpp
-GenHpp/UserConfigParseJson.cpp
-GenHpp/UserControl.cpp
-GenHpp/UserDataConfig.cpp
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/Dropdownlist.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/EasyConfigPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/EasyConfigRoutePrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterAndTransformPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterMidiDestinationPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterNetworkDestinationPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterSchedulePrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterToConslePrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiClientConnectionPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouteInputCc14bit.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouteInputPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutePresetPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouterChainPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilter.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MonitorPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/PresetMidiControlPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/UserControlPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/UserDataConfigPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/EasyConfig.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/EasyConfigRoute.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterAndTransform.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterMidiDestination.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterNetworkDestination.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSchedule.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterToConsle.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientConnection.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientUtil.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiPresetControlEasyConfig.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouteInput.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRoutePreset.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouterChain.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/Monitor.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/PresetMidiControl.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigGenJson.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigParseJson.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserControl.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserDataConfig.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/EasyConfig.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/EasyConfigRoute.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterAndTransform.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterMidiDestination.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterNetworkDestination.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSchedule.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterToConsle.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientConnection.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientUtil.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouteInput.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRoutePreset.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouterChain.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/Monitor.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/PresetMidiControl.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigGenJson.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigParseJson.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserControl.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserDataConfig.cpp
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
@@ -97,5 +100,5 @@ GenHpp/UserDataConfig.cpp
   target_compile_definitions(midiClient PRIVATE MIDICLIENT_LIBRARY)
 
   if(GEN_HPP)
-      add_dependencies(midiClient run_script)
+    add_dependencies(midiClient run_script)
   endif()
