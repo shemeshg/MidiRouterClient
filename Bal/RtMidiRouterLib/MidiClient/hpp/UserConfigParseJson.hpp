@@ -95,6 +95,7 @@ private:
         preset->setName(value["name"].toString());
         preset->setIsSendAllUserControls(value["isSendAllUserControls"].toBool());
         preset->setUuid(value["uuid"].toString());
+        preset->setIsEnabled(value["isEnabled"].toBool());
 
         updateMidiControl(preset->midiControlOn(), value["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
         updateMidiControl(preset->midiControlOff(), value["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);

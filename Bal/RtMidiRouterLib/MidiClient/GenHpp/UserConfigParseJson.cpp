@@ -70,6 +70,7 @@
         preset->setName(value["name"].toString());
         preset->setIsSendAllUserControls(value["isSendAllUserControls"].toBool());
         preset->setUuid(value["uuid"].toString());
+        preset->setIsEnabled(value["isEnabled"].toBool());
 
         updateMidiControl(preset->midiControlOn(), value["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
         updateMidiControl(preset->midiControlOff(), value["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
@@ -91,7 +92,7 @@
     }
 
     void UserConfigParseJson::updateMidiControl(PresetMidiControl * control, const QJsonValue &value, PresetMidiControl::PresetMidiType type) 
-#line 121 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 122 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         control->setChannel(value["channel"].toInt());
         control->setData1(value["data1"].toInt());
@@ -103,7 +104,7 @@
     }
 
     UserControl*  UserConfigParseJson::createUserControl(const QJsonValue &userControlValue) 
-#line 134 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 135 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         auto userControl = new UserControl();
         userControl->setEventType(static_cast<UserControl::EventType>(userControlValue["eventType"].toInt()));
@@ -123,7 +124,7 @@
     }
 
     void UserConfigParseJson::updateMidiRouteInputs(MidiRoutePreset * preset, const QJsonObject &midiRouteInputs) 
-#line 155 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 156 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         preset->clearMidiRouteInputs();
         for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
@@ -138,7 +139,7 @@
     }
 
     MidiRouteInput*  UserConfigParseJson::createMidiRouteInputEntry(const QJsonObject &value) 
-#line 171 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 172 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         auto midiRouteInputEntry = new MidiRouteInput();
         midiRouteInputEntry->setMidiInputName(value["midiInputName"].toString());
@@ -198,7 +199,7 @@
     }
 
     void UserConfigParseJson::updateMidiRoutersFilters(const QJsonValueRef &midiRoutersFilters, MidiRouterChain * midiRouterChain) 
-#line 232 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 233 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         if (midiRoutersFilters.isArray()) {
             midiRouterChain->clearMidiRoutersFilters();
@@ -240,7 +241,7 @@
 
 
     void UserConfigParseJson::createEasyConfigEntry(EasyConfig * easyConfigEntry ,const QJsonObject &value) 
-#line 275 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 276 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
 
 
@@ -267,7 +268,7 @@
     }
 
     QList<int> UserConfigParseJson::extractKeyboardSplits(const QJsonArray &array) 
-#line 303 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 304 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         QList<int> keyboardSplits;
         for (const QJsonValue &value : array) {
@@ -277,7 +278,7 @@
     }
 
     QStringList UserConfigParseJson::convertToQStringList(const QJsonArray &array) 
-#line 314 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 315 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         QStringList stringList;
         for (const QJsonValue &value : array) {
@@ -287,7 +288,7 @@
     }
 
     EasyConfigRoute*  UserConfigParseJson::createEasyConfigRoute(const QJsonObject &value) 
-#line 325 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 326 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         EasyConfigRoute *easyConfigRoute = new EasyConfigRoute();
         easyConfigRoute->setFromCcOrNrpnEnd(value["fromCcOrNrpnEnd"].toInt());
@@ -308,7 +309,7 @@
     }
 
     QStringList UserConfigParseJson::stringListFromJsonAry(const QJsonValue &j) 
-#line 347 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
+#line 348 "/Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib/MidiClient/hpp/UserConfigParseJson.hpp"
     {
         QStringList s;
         if (j.isArray()){
