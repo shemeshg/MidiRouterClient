@@ -1,4 +1,4 @@
-# ver 1.3
+# ver 1.4
 # //-define-file body MyLib.cpp 
 # //-define-file header MyLib.h
 # //-only-file body
@@ -23,6 +23,13 @@ class FileClass:
     file_path = ""
     file_id = ""
     file_content = []
+    original_line_number = 0
+
+class LineClass:
+    filne_name = ""
+    line_number = 0
+    line_text = ""
+
 
 import os
 
@@ -157,22 +164,20 @@ def parse_file(input_file):
                 current_template = ""
             else:
                 templates_map[current_template] += line  
-        else:
-            if lstrip_line.startswith("//- {function}") or lstrip_line.startswith("//- {fn}") :
-                lines_without_templates.append("//-only-file header \n")            
-                text = f"#line {line_number} " + '"' + input_file +  '"' + "\n"
-                lines_without_templates.append(text)            
-            lines_without_templates.append(line)
-            if lstrip_line.startswith("//-only-file body"):
-                text = f"#line {line_number} " + '"' + input_file +  '"' + "\n"
-                lines_without_templates.append(text)
+        else:         
+            l = LineClass()
+            l.line_number = line_number
+            l.line_text = line
+            l.filne_name = input_file
+            lines_without_templates.append(l)
+
 
 
 
     lines = []
     for t in templates_map:
         for i in range(len(lines_without_templates)):
-            lstrip_line = lines_without_templates[i].lstrip()
+            lstrip_line = lines_without_templates[i].line_text.lstrip()
             parts = get_string_parts(lstrip_line)
             if len(parts) >= 2 and parts[0] == "//-" and parts[1] == t:    
                 str_template = templates_map[t]
@@ -183,7 +188,10 @@ def parse_file(input_file):
 
                 splited = str_template.splitlines()
                 splited = [line + "\n" for line in splited]
-                lines.extend(splited)
+                for r in splited:
+                    l = LineClass()
+                    l.line_text = r
+                    lines.append(l)                
             else:
                 lines.append(lines_without_templates[i])
         lines_without_templates = lines
@@ -193,7 +201,7 @@ def parse_file(input_file):
 
 
     for line in lines:        
-        lstrip_line = line.lstrip()
+        lstrip_line = line.line_text.lstrip()
         if lstrip_line.startswith("//-define-file"):            
             parts = get_string_parts(lstrip_line)
             
@@ -234,18 +242,23 @@ def parse_file(input_file):
     
         elif is_only_file:
             if remove_remark:
-                line = line.replace("//- ", "")
-                next_value = extract_next_value(line)
+                line.line_text = line.line_text.replace("//- ", "")
+                next_value = extract_next_value(line.line_text)
                 if next_value is not None:
                     is_next_text = True
                     next_text = ""
                     next_text_skip_only_files = 1
                     next_only_file_id = only_file_id               
                 for var in varsMap:
-                    line = line.replace(var, varsMap[var])
+                    line.line_text = line.line_text.replace(var, varsMap[var])
             elif is_next_text:
-                next_text += line
-            fileMap[only_file_id].file_content.append(line)
+                next_text += line.line_text            
+            if fileMap[only_file_id].original_line_number <  line.line_number:
+                fileMap[only_file_id].original_line_number = line.line_number
+                ref =  f"#line {fileMap[only_file_id].original_line_number - 1} " +  '"' + line.filne_name +  '"' +"\n"
+                fileMap[only_file_id].file_content.append(ref)
+            fileMap[only_file_id].file_content.append(line.line_text)
+            fileMap[only_file_id].original_line_number = fileMap[only_file_id].original_line_number + 1 
 
     for file_id in fileMap:        
         if fileMap[file_id].file_content and file_id != "null":            
@@ -258,7 +271,7 @@ def parse_file(input_file):
 
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         futures = []
         # Templates should be read none async
