@@ -25,17 +25,16 @@ public:
 
         updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
 
-        if (jsonDoc["_activePresetID"].isDouble()) {
-            userDataConfigItf->setActivePresetID(jsonDoc["_activePresetID"].toInt());
-        }
-
-
         userDataConfigItf->setConnectedInPorts(stringListFromJsonAry(jsonDoc["connectedInPorts"]));
         userDataConfigItf->setConnectedOutPorts(stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
 
         updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
+
+        if (jsonDoc["_activePresetID"].isDouble()) {
+            userDataConfigItf->setActivePreset(jsonDoc["_activePresetID"].toInt());
+        }
     }
 
     //-only-file header
