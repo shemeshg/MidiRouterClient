@@ -33,7 +33,7 @@ public:
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
 
         if (jsonDoc["_activePresetID"].isDouble()) {
-            userDataConfigItf->setActivePreset(jsonDoc["_activePresetID"].toInt());
+            userDataConfigItf->setActivePresetID(jsonDoc["_activePresetID"].toInt());
         }
     }
 

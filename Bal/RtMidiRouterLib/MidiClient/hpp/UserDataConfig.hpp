@@ -94,7 +94,9 @@ public:
     void setActivePresetID(const int newActivePresetID) override
     //-only-file body
     {
+        m_activePreset = m_midiRoutePresets.at(newActivePresetID);
         UserDataConfigPrivate::setActivePresetID(newActivePresetID);
+        emit activePresetChanged();
     }
 
     //- {fn}
@@ -186,8 +188,7 @@ public slots:
     void setActivePreset(int id) override
     //-only-file body
     {
-        setActivePresetID(id);        
-        m_activePreset = m_midiRoutePresets.at(id);        
+        setActivePresetID(id);              
         m_activePreset->setIsEnabled(true);
         
         for (int i = 0; i < m_midiRoutePresets.size(); i++)
@@ -196,8 +197,7 @@ public slots:
             {
                 m_midiRoutePresets.at(i)->setIsEnabled(false);
             }
-        }
-        emit activePresetChanged();
+        }        
     }
 
     //- {fn}
