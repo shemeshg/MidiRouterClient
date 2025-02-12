@@ -80,7 +80,4 @@ ColumnLayout {
                 }                
             }
         }
-        CoreLabel {
-            text: JSON.stringify(selectedItems)
-        }
     }
