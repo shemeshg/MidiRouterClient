@@ -43,7 +43,7 @@ ColumnLayout {
                     id: presetMidiControlOnEventTypeId
                     Layout.fillWidth: true
                     Component.onCompleted: {
-                        currentIndex = midiControl.fromSelectedMidiEventTypeId;
+                        currentIndex = midiControl.eventTypeId;
                     }
                 }
             }
