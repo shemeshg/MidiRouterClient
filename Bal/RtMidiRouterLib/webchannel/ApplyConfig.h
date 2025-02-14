@@ -229,9 +229,14 @@ private:
                                                                  .toString());
 
                 qDebug() << "** id " << outPortNumber;
-                wcmidiin->routingActionAddSendPortByNumber(
-                    portNumber, chainId,
-                    outPortNumber);
+                if (outPortNumber>=0) {
+                    wcmidiin->routingActionAddSendPortByNumber(
+                        portNumber, chainId,
+                        outPortNumber);
+                } else {
+                    qDebug() << "Could not find out port";
+                }
+
             }
             else if (filter["filterType"].toInt() ==
                      static_cast<int>(FilterType::TO_CONSOLE))

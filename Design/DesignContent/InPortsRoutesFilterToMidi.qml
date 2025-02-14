@@ -11,7 +11,7 @@ ColumnLayout {
             CoreButton {
                 text: "back"
                 onClicked: {
-                    inPortsRoutesLoaderId.filterObj.name = nameId.currentValue
+                    inPortsRoutesLoaderId.filterObj.setFilter( nameId.currentValue)
                     inPortRoutesId.state = "InPortsRoutesListFilters"
                 }
             }
@@ -27,7 +27,7 @@ ColumnLayout {
                     model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
 
                     Component.onCompleted: {
-                        var index = model.indexOf(inPortsRoutesLoaderId.filterObj.name);
+                        var index = model.indexOf(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
                         if (index !== -1) {
                             currentIndex = index;
                         }
