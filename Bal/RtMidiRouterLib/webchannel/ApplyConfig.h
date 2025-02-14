@@ -255,10 +255,13 @@ private:
             else if (filter["filterType"].toInt() == static_cast<int>(FilterType::TO_NETWORK))
             {
                 QString remotePortName = filter["baseMidiRouteInput"].toObject()["midiInputName"].toString();
-                wcmidiin->routingActionAddSendRemoteServerByRemotePortName(portNumber, chainId,
+                auto ok = wcmidiin->routingActionAddSendRemoteServerByRemotePortName(portNumber, chainId,
                                                                            filter["serverName"].toString(),
                                                                            filter["serverPort"].toInt(),
                                                                            remotePortName);
+                if (ok == -1){
+                    qDebug()<<"Could not add remote Port for some reason";
+                }
             }
             else if (filter["filterType"].toInt() == static_cast<int>(FilterType::FILTER_AND_TRANSFORM))
             {

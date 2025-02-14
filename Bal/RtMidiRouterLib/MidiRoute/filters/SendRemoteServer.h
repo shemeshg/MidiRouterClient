@@ -17,12 +17,18 @@ public:
     std::unique_ptr<SignalSlotClass> slotClass;
     std::unique_ptr<SignalClass> signalClass;
 
-    SendRemoteServer(Webchannel::EmitCommand &ec,std::string serverName, int serverPort, std::string remoteMidiPortName):
-        serverName{serverName},serverPort{serverPort},remoteMidiPortNumber{-1},ec{ec}  {
+    bool initConnectByPortName(std::string remoteMidiPortName){
 
         slotClass = std::unique_ptr<SignalSlotClass>(new SignalSlotClass()) ;
-        slotClass->openConnection(QString::fromStdString(serverName),serverPort,QString::fromStdString(remoteMidiPortName));
+        auto ok = slotClass->openConnection(QString::fromStdString(serverName),serverPort,QString::fromStdString(remoteMidiPortName));
+        if (!ok) {return false;}
         signalClass =  std::unique_ptr< SignalClass>( new SignalClass( *slotClass.get() ) );
+        return true;
+
+    }
+
+    SendRemoteServer(Webchannel::EmitCommand &ec,std::string serverName, int serverPort):
+        serverName{serverName},serverPort{serverPort},remoteMidiPortNumber{-1},ec{ec}  {
     };
 
     SendRemoteServer(Webchannel::EmitCommand &ec,std::string serverName, int serverPort, int remoteMidiPortNumber):

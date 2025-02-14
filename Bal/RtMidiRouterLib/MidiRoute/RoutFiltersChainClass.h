@@ -28,10 +28,16 @@ public:
          filterMidiChannelMsgAry.push_back(std::unique_ptr<SendRemoteServer>(new SendRemoteServer(ec, serverName, serverPort, remoteMidiPortNumber)));
     }
 
-    void addSendRemoteServerByRemotePortName(Webchannel::EmitCommand &ec, std::string serverName, int serverPort, std::string remoteMidiPortName)
+    bool addSendRemoteServerByRemotePortName(Webchannel::EmitCommand &ec, std::string serverName, int serverPort, std::string remoteMidiPortName)
     {
 
-        filterMidiChannelMsgAry.push_back(std::unique_ptr<SendRemoteServer>(new SendRemoteServer(ec, serverName, serverPort, remoteMidiPortName)));
+        auto srs = std::unique_ptr<SendRemoteServer>(new SendRemoteServer(ec, serverName, serverPort));
+        if (srs->initConnectByPortName(remoteMidiPortName)){
+            filterMidiChannelMsgAry.push_back(std::move(srs));
+            return true;
+        }
+        return false;
+
     }
 
     void addLogData(Webchannel::EmitCommand &ec, Webchannel::LOG_TO logto, string userdata){

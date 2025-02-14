@@ -117,12 +117,19 @@ public:
 
     Q_INVOKABLE int routingActionAddSendRemoteServerByRemotePortName(int portNumber, int chainId, QString serverName, int serverPort,
                                                                      QString remoteMidiPortName){
-        openedMidiInObj[portNumber]->getRouteFilterChains()->chains[chainId]->addSendRemoteServerByRemotePortName(*this,
-                                                                                                                  serverName.toStdString(),
-                                                                                                                  serverPort,
-                                                                                                                  remoteMidiPortName.toStdString());
-
-        return (int)openedMidiInObj[portNumber]->getRouteFilterChains()->chains.size() - 1;
+        bool success = openedMidiInObj[portNumber]->
+                       getRouteFilterChains()->
+                       chains[chainId]->
+                       addSendRemoteServerByRemotePortName(*this,
+                                                  serverName.toStdString(),
+                                                  serverPort,
+                                                  remoteMidiPortName.toStdString());
+        int ret = (int)openedMidiInObj[portNumber]->getRouteFilterChains()->chains.size() - 1;
+        if (success) {
+            return ret;
+        } else {
+            return -1;
+        }
     }
 
     Q_INVOKABLE int routingActionAddSendRemoteServer(int portNumber, int chainId, QString serverName, int serverPort, int remoteMidiPortNumber){
