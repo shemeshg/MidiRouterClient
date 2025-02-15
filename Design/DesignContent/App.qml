@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 import QtQuick
+import QtQuick.Controls
 import Design
 import Core
 import QtQuick.Layouts
@@ -38,10 +39,16 @@ Window {
             id: headerBarId
         }
 
-        Loader {
+        StackView  {
             id: loaderId
             Layout.fillWidth: true
-
+            initialItem: loginId
+            pushEnter: Transition {}
+            pushExit: Transition {}
+            popEnter: Transition {}
+            popExit: Transition {}
+            replaceEnter: Transition {}
+            replaceExit: Transition {}
 
         }
 
@@ -97,34 +104,46 @@ Window {
             State {
                 name: "Login"
                 when: headerBarId.state === "Login"
-                PropertyChanges { target: loaderId; sourceComponent: loginId }
+                StateChangeScript {
+                          script: loaderId.push(loginId)
+                 }
             },
             State {
                 name: "VirtualPorts"
                 when: headerBarId.state === "VirtualPorts"
-                PropertyChanges { target: loaderId; sourceComponent: virtualPortsId }
+                StateChangeScript {
+                          script: loaderId.push(virtualPortsId)
+                 }
             },
             State {
                 name: "Presets"
                 when: headerBarId.state === "Presets"
-                PropertyChanges { target: loaderId; sourceComponent: presetsId }
+                StateChangeScript {
+                          script: loaderId.push(presetsId)
+                 }
             }
             ,
             State {
                 name: "UserControls"
                 when: headerBarId.state === "UserControls"
-                PropertyChanges { target: loaderId; sourceComponent: userControlsId }
+                StateChangeScript {
+                          script: loaderId.push(userControlsId)
+                 }
             },
             State {
                 name: "InPorts"
                 when: headerBarId.state === "InPorts"
-                PropertyChanges { target: loaderId; sourceComponent: inPortsId }
+                StateChangeScript {
+                          script: loaderId.push(inPortsId)
+                 }
             }
             ,
             State {
                 name: "Monitor"
                 when: headerBarId.state === "Monitor"
-                PropertyChanges { target: loaderId; sourceComponent: monitorsId }
+                StateChangeScript {
+                          script: loaderId.push(monitorsId)
+                 }
             }
         ]
     }
