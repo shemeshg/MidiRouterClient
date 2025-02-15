@@ -181,9 +181,7 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
 
         void clear${field_name_initCap}()
         {
-            for (const ${type_in_list} item : m_${field_name}) {
-                delete item;
-            }
+            qDeleteAll(m_${field_name});
             // Clear the outer list
             m_${field_name}.clear();
             emit ${field_name}Changed();

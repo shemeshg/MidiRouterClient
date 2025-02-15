@@ -147,9 +147,7 @@ void setIsEnabled(const bool newIsEnabled)
 
         void clearUserControls()
         {
-            for (const UserControl * item : m_userControls) {
-                delete item;
-            }
+            qDeleteAll(m_userControls);
             // Clear the outer list
             m_userControls.clear();
             emit userControlsChanged();
@@ -173,9 +171,7 @@ void setIsEnabled(const bool newIsEnabled)
 
         void clearMidiRouteInputs()
         {
-            for (const MidiRouteInput * item : m_midiRouteInputs) {
-                delete item;
-            }
+            qDeleteAll(m_midiRouteInputs);
             // Clear the outer list
             m_midiRouteInputs.clear();
             emit midiRouteInputsChanged();

@@ -76,9 +76,7 @@ void setZoneNames(const QStringList &newZoneNames)
 
         void clearEasyConfigRoutes()
         {
-            for (const EasyConfigRoute * item : m_easyConfigRoutes) {
-                delete item;
-            }
+            qDeleteAll(m_easyConfigRoutes);
             // Clear the outer list
             m_easyConfigRoutes.clear();
             emit easyConfigRoutesChanged();

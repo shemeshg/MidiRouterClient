@@ -183,9 +183,7 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
 
         void clearMidiRouteInputCc14bit()
         {
-            for (const MidiRouteInputCc14bit * item : m_midiRouteInputCc14bit) {
-                delete item;
-            }
+            qDeleteAll(m_midiRouteInputCc14bit);
             // Clear the outer list
             m_midiRouteInputCc14bit.clear();
             emit midiRouteInputCc14bitChanged();
@@ -209,9 +207,7 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
 
         void clearMidiRouterChains()
         {
-            for (const MidiRouterChain * item : m_midiRouterChains) {
-                delete item;
-            }
+            qDeleteAll(m_midiRouterChains);
             // Clear the outer list
             m_midiRouterChains.clear();
             emit midiRouterChainsChanged();

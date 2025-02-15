@@ -126,9 +126,7 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
 
         void clearDropdownlists()
         {
-            for (const Dropdownlist * item : m_dropdownlists) {
-                delete item;
-            }
+            qDeleteAll(m_dropdownlists);
             // Clear the outer list
             m_dropdownlists.clear();
             emit dropdownlistsChanged();
@@ -152,9 +150,7 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
 
         void clearMidiRoutePresets()
         {
-            for (const MidiRoutePreset * item : m_midiRoutePresets) {
-                delete item;
-            }
+            qDeleteAll(m_midiRoutePresets);
             // Clear the outer list
             m_midiRoutePresets.clear();
             emit midiRoutePresetsChanged();
