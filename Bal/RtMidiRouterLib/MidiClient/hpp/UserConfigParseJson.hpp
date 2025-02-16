@@ -121,8 +121,13 @@ private:
         if (midiRoutePresets.isArray()){
             auto array = midiRoutePresets.toArray();
             for (const QJsonValue &value : array) {
+                //get preset by uuid
+                //update preset fields
+                //update preset updateMidiControl
+                //update userControls
+                //update midirouteInputs
+                //Delete these two lines
                 MidiRoutePreset *preset = createMidiRoutePreset(userDataConfig,value);
-
                 userDataConfig->addMidiRoutePresets(preset);
             }
 
