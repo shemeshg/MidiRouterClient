@@ -18,14 +18,6 @@ public:
     UserConfigParseJson(){
     }
 
-    QString getJsonString(QJsonValueRef obj){
-        if(obj.isString()){
-            return obj.toString();
-        } else {
-            throw std::runtime_error("Unexpected JSON format");
-        }
-    }
-
     //- {fn}
     void setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc)
     //-only-file body
@@ -38,14 +30,14 @@ public:
         if (isServerInitialConfig){
             return;
         }
-        updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
-
-
 
         if (userDataConfigItf->getUniqueId() == getJsonString(jsonDoc["uniqueId"])){
             qDebug()<<"Same session created the config, return;";
             //return;
         }
+
+        updateVirtualInPorts(userDataConfigItf,stringListFromJsonAry(jsonDoc["virtualInPorts"]));
+
         updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
@@ -58,30 +50,28 @@ public:
     //-only-file header
 private:
     //- {fn}
-    void updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QJsonValue &virtualInPorts)
+    void updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QStringList &virtualInPorts)
     //-only-file body
     {
-        if (virtualInPorts.isArray()){
-            auto array = virtualInPorts.toArray();
             userDataConfig->clearVirtualPorts();
-            for (const QJsonValue &value : array) {
-                userDataConfig->addVirtualPort(value.toString());
+            for (const auto &value : virtualInPorts) {
+                userDataConfig->addVirtualPort(value);
             }
-
-        }
     }
 
     //- {fn}
-    void updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValue &dropdownlists)
+    void updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValueRef &dropdownlists)
     //-only-file body
     {
         userDataConfig->clearDropdownlists();
-        if (dropdownlists.isArray()) {
-            auto array = dropdownlists.toArray();
-            for (const QJsonValue &value : array) {
-                userDataConfig->addDropdownList(value["name"].toString(),value["data"].toString());
+
+            auto array = getJsonArray(dropdownlists);
+            for (const auto &value : array) {
+                auto obj = value.toObject();
+                userDataConfig->addDropdownList(getJsonString(obj["name"]),
+                                                getJsonString(obj["data"])                                                );
             }
-        }
+
     }
 
     //- {fn}
@@ -383,18 +373,40 @@ private:
     }
 
     //- {fn}
-    QStringList stringListFromJsonAry(const QJsonValue &j)
+    QStringList stringListFromJsonAry(const QJsonValueRef &j)
     //-only-file body
     {
         QStringList s;
-        if (j.isArray()){
-            auto array = j.toArray();
-            for (const QJsonValue &value : array) {
-                s.append(value.toString());
-            }
+
+        for (const auto &value : getJsonArray(j)) {
+            s.append(getJsonString(value));
         }
+
         return s;
     }
+
+    //- {fn}
+    QJsonArray getJsonArray(QJsonValueRef obj)
+    //-only-file body
+    {
+        if (obj.isArray()){
+            return obj.toArray();
+        } else {
+            throw std::runtime_error("Unexpected JSON format");
+        }
+    }
+
+    //- {fn}
+    QString getJsonString(QJsonValueRef obj)
+    //-only-file body
+    {
+        if(obj.isString()){
+            return obj.toString();
+        } else {
+            throw std::runtime_error("Unexpected JSON format");
+        }
+    }
+
     //-only-file header
 };
 
