@@ -54,6 +54,12 @@ public:
         return UserDataConfigPrivate::clearDropdownlists();
     }
 
+    //- {fn}
+    QString getUniqueId() override
+    //-only-file body
+    {
+        return uniqueId();
+    }
 
     //- {fn}
     int activePresetID() const override
@@ -178,6 +184,7 @@ public slots:
     {
         UserConfigGenJson userConfigGenJson;
         return userConfigGenJson.getJson(
+                uniqueId(),
                  activePresetID(),
                  dropdownlists(),
                 virtualInPorts(),

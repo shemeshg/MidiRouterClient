@@ -28,6 +28,7 @@ public:
 
     //- {fn}
     QJsonObject getJson(
+                        QString uniqueId,
                         int activePresetID,
                         QList<Dropdownlist *> dropdownlists,
                         QList<QString> virtualInPorts,
@@ -35,6 +36,7 @@ public:
     //-only-file body
     {
         QJsonObject objUserConfig;
+        objUserConfig["uniqueId"] = uniqueId;
         objUserConfig["_activePresetID"] = activePresetID;
         objUserConfig["dropdownlists"]= getDropdownList(dropdownlists);
         objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts);

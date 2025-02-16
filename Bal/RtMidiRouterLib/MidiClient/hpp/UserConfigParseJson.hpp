@@ -23,11 +23,18 @@ public:
     //-only-file body
     {
 
-        updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
+
 
         userDataConfigItf->setConnectedInPorts(stringListFromJsonAry(jsonDoc["connectedInPorts"]));
         userDataConfigItf->setConnectedOutPorts(stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
 
+        updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
+
+
+        if (jsonDoc["uniqueId"].isString() && userDataConfigItf->getUniqueId() == jsonDoc["uniqueId"].toString()){
+            qDebug()<<"Same session created the config, return;";
+            return;
+        }
         updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);

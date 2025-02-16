@@ -24,9 +24,11 @@ public:
     virtual void clearMidiRoutePresets() = 0;
     virtual void addMidiRoutePresets(MidiRoutePreset * item) = 0;
     virtual void addPreset() = 0;
+    virtual QString getUniqueId() = 0;
     virtual void setActivePreset(int id)  = 0;
     virtual QString computerUuid() const = 0;
     virtual QList<MidiRoutePreset *> midiRoutePresets() const = 0;
+
 private:
     /* data */
 };
