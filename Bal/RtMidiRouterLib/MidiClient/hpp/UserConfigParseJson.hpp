@@ -75,33 +75,49 @@ private:
     }
 
     //- {fn}
-    void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValue &midiRoutePresets)
+    void purgeDeletedCreateMissingPresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
     //-only-file body
     {
-
         QStringList presetUuidInJson;
-        if (midiRoutePresets.isArray()){
-            auto array = midiRoutePresets.toArray();
-            for (const QJsonValue &value : array) {
-                presetUuidInJson.push_back( value["uuid"].toString());
-            }
-        } else {
-            qDebug()<<"BAD JSON FORMAT";
+
+        auto array = getJsonArray(midiRoutePresets);
+        for (const auto &value : array) {
+            auto valueObj = value.toObject();
+            presetUuidInJson.push_back( getJsonString(valueObj["uuid"]));
         }
 
-        for (auto const itm: userDataConfig->midiRoutePresets()){
-
-        }
+        QStringList uuidInPresets;
         for (auto it = userDataConfig->midiRoutePresets().size() - 1; it >= 0; --it) {
-            bool containsUuid =  presetUuidInJson.contains(userDataConfig->midiRoutePresets().at(it)->uuid());
-            if (!containsUuid){
+            QString uuid = userDataConfig->midiRoutePresets().at(it)->uuid();
+            bool containsUuid =  presetUuidInJson.contains(uuid);
+            if (containsUuid) {
+                uuidInPresets.append(uuid);
+            }
+            else {
                 userDataConfig->delMidiRoutePresets(it);
             }
         }
 
+        for (const auto &j: presetUuidInJson){
+            if (!uuidInPresets.contains(j)){
+                MidiRoutePreset *preset = new MidiRoutePreset(userDataConfig->computerUuid());
+
+                userDataConfig->addMidiRoutePresets(preset);
+                preset->setUuid(j);
+            }
+        }
+    }
+
+    //- {fn}
+    void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
+    //-only-file body
+    {
+
+        //userDataConfig->clearMidiRoutePresets(); //UNMARK TO TEST RECREATE
+        purgeDeletedCreateMissingPresets(userDataConfig,midiRoutePresets);
         return;
 
-        userDataConfig->clearMidiRoutePresets();
+
         if (midiRoutePresets.isArray()){
             auto array = midiRoutePresets.toArray();
             for (const QJsonValue &value : array) {
@@ -110,10 +126,6 @@ private:
                 userDataConfig->addMidiRoutePresets(preset);
             }
 
-        }
-        if (userDataConfig->midiRoutePresets().size() == 0) {
-            userDataConfig->addPreset();
-            userDataConfig->setActivePreset(0);
         }
     }
 
