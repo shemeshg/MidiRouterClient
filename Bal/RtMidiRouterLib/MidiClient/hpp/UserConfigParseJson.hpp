@@ -18,22 +18,33 @@ public:
     UserConfigParseJson(){
     }
 
+    QString getJsonString(QJsonValueRef obj){
+        if(obj.isString()){
+            return obj.toString();
+        } else {
+            throw std::runtime_error("Unexpected JSON format");
+        }
+    }
+
     //- {fn}
     void setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc)
     //-only-file body
     {
 
-
-
         userDataConfigItf->setConnectedInPorts(stringListFromJsonAry(jsonDoc["connectedInPorts"]));
         userDataConfigItf->setConnectedOutPorts(stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
 
+        bool isServerInitialConfig = !jsonDoc["uniqueId"].isString();
+        if (isServerInitialConfig){
+            return;
+        }
         updateVirtualInPorts(userDataConfigItf,jsonDoc["virtualInPorts"]);
 
 
-        if (jsonDoc["uniqueId"].isString() && userDataConfigItf->getUniqueId() == jsonDoc["uniqueId"].toString()){
+
+        if (userDataConfigItf->getUniqueId() == getJsonString(jsonDoc["uniqueId"])){
             qDebug()<<"Same session created the config, return;";
-            return;
+            //return;
         }
         updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
@@ -77,6 +88,29 @@ private:
     void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValue &midiRoutePresets)
     //-only-file body
     {
+
+        QStringList presetUuidInJson;
+        if (midiRoutePresets.isArray()){
+            auto array = midiRoutePresets.toArray();
+            for (const QJsonValue &value : array) {
+                presetUuidInJson.push_back( value["uuid"].toString());
+            }
+        } else {
+            qDebug()<<"BAD JSON FORMAT";
+        }
+
+        for (auto const itm: userDataConfig->midiRoutePresets()){
+
+        }
+        for (auto it = userDataConfig->midiRoutePresets().size() - 1; it >= 0; --it) {
+            bool containsUuid =  presetUuidInJson.contains(userDataConfig->midiRoutePresets().at(it)->uuid());
+            if (!containsUuid){
+                userDataConfig->delMidiRoutePresets(it);
+            }
+        }
+
+        return;
+
         userDataConfig->clearMidiRoutePresets();
         if (midiRoutePresets.isArray()){
             auto array = midiRoutePresets.toArray();

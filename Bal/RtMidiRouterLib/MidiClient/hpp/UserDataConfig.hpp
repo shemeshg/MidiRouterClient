@@ -90,6 +90,14 @@ public:
     }
 
     //- {fn}
+    void delMidiRoutePresets(int id)  override
+    //-only-file body
+    {
+        UserDataConfigPrivate::delMidiRoutePresets(id);
+    }
+
+
+    //- {fn}
     void addMidiRoutePresets(MidiRoutePreset * item) override
     //-only-file body
     {

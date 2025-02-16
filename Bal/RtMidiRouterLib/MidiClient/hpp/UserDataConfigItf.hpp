@@ -22,6 +22,7 @@ public:
     virtual void addVirtualPort(QString port) = 0;
 
     virtual void clearMidiRoutePresets() = 0;
+    virtual void delMidiRoutePresets(int id) =0;
     virtual void addMidiRoutePresets(MidiRoutePreset * item) = 0;
     virtual void addPreset() = 0;
     virtual QString getUniqueId() = 0;
