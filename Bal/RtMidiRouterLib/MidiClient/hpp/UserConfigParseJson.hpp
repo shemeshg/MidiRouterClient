@@ -42,9 +42,9 @@ public:
 
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
 
-        if (jsonDoc["_activePresetID"].isDouble()) {
-            userDataConfigItf->setActivePresetID(jsonDoc["_activePresetID"].toInt());
-        }
+
+        userDataConfigItf->setActivePresetID(getJsonDouble( jsonDoc["_activePresetID"]));
+
     }
 
     //-only-file header
@@ -67,7 +67,7 @@ private:
 
             auto array = getJsonArray(dropdownlists);
             for (const auto &value : array) {
-                auto obj = value.toObject();
+                auto obj = getJsonObject(value);
                 userDataConfig->addDropdownList(getJsonString(obj["name"]),
                                                 getJsonString(obj["data"])                                                );
             }
@@ -75,14 +75,14 @@ private:
     }
 
     //- {fn}
-    void purgeDeletedCreateMissingPresets(UserDataConfigItf *userDataConfig, const QJsonArray &midiRoutePresetsArray)
+    void purgeDeletedCreateMissingPresets(UserDataConfigItf *userDataConfig, QJsonArray &midiRoutePresetsArray)
     //-only-file body
     {
         QStringList presetUuidInJson;
 
 
         for (const auto &value : midiRoutePresetsArray) {
-            auto valueObj = value.toObject();
+            auto valueObj = getJsonObject(value);
             presetUuidInJson.push_back( getJsonString(valueObj["uuid"]));
         }
 
@@ -131,13 +131,20 @@ private:
 
 
         for (const auto &value : midiRoutePresetsArray) {
-            auto valueObj = value.toObject();
+            auto valueObj = getJsonObject(value);
             QString uuid = getJsonString(valueObj["uuid"]);
             auto preset = getPresetByUuid(userDataConfig->midiRoutePresets(),uuid);
             if (preset == nullptr) {
                 throw std::runtime_error("Unexpected JSON format");
             }
+            preset->setIsEnabled(getJsonBool( valueObj["isEnabled"]));
             preset->setName(getJsonString(valueObj["name"]));
+            preset->setIsSendAllUserControls(getJsonBool(valueObj["isSendAllUserControls"]));
+
+
+            updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
+            updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
+
             //update preset fields
             //update preset updateMidiControl
             //update userControls
@@ -150,11 +157,12 @@ private:
 
     }
 
-    //- {fn}
-    MidiRoutePreset* createMidiRoutePreset(UserDataConfigItf *userDataConfig, const QJsonValue &value)
-    //-only-file body
-    {
+    //-only-file header
+    /*
+    MidiRoutePreset* createMidiRoutePreset(UserDataConfigItf *userDataConfig, const QJsonValueRef &value)
+    {        
         auto preset = new MidiRoutePreset(userDataConfig->computerUuid());
+
         preset->setName(value["name"].toString());
         preset->setIsSendAllUserControls(value["isSendAllUserControls"].toBool());
         preset->setUuid(value["uuid"].toString());
@@ -178,18 +186,20 @@ private:
 
         return preset;
     }
+    */
 
     //- {fn}
-    void updateMidiControl(PresetMidiControl *control, const QJsonValue &value, PresetMidiControl::PresetMidiType type)
+    void updateMidiControl(PresetMidiControl *control,  const QJsonValueRef &value, PresetMidiControl::PresetMidiType type)
     //-only-file body
     {
-        control->setChannel(value["channel"].toInt());
-        control->setData1(value["data1"].toInt());
-        control->setData2(value["data2"].toInt());
-        control->setEventTypeId(value["eventTypeId"].toInt());
+        auto valueObj = getJsonObject(value);
+        control->setChannel(getJsonDouble( valueObj["channel"]));
+        control->setData1(getJsonDouble(valueObj["data1"]));
+        control->setData2(getJsonDouble(valueObj["data2"]));
+        control->setEventTypeId(getJsonDouble(valueObj["eventTypeId"]));
         control->setPresetMidiType(type);
-        control->setPortName(value["portName"].toString());
-        control->setPresetUuid(value["presetUuid"].toString());
+        control->setPortName(getJsonString(valueObj["portName"]));
+        control->setPresetUuid(getJsonString(valueObj["presetUuid"]));
     }
 
     //- {fn}
@@ -430,11 +440,44 @@ private:
     }
 
     //- {fn}
+    QJsonObject getJsonObject(QJsonValueRef obj)
+    //-only-file body
+    {
+        if (obj.isObject()){
+            return obj.toObject();
+        } else {
+            throw std::runtime_error("Unexpected JSON format");
+        }
+    }
+
+    //- {fn}
     QString getJsonString(QJsonValueRef obj)
     //-only-file body
     {
         if(obj.isString()){
             return obj.toString();
+        } else {
+            throw std::runtime_error("Unexpected JSON format");
+        }
+    }
+
+    //- {fn}
+    bool getJsonBool(QJsonValueRef obj)
+    //-only-file body
+    {
+        if(obj.isBool()){
+            return obj.toBool();
+        } else {
+            throw std::runtime_error("Unexpected JSON format");
+        }
+    }
+
+    //- {fn}
+    double getJsonDouble(QJsonValueRef obj)
+    //-only-file body
+    {
+        if(obj.isDouble()){
+            return obj.toDouble();
         } else {
             throw std::runtime_error("Unexpected JSON format");
         }
