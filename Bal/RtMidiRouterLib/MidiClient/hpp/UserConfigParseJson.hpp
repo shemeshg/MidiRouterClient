@@ -145,8 +145,7 @@ private:
             updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
             updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
 
-            //update preset fields
-            //update preset updateMidiControl
+
             //update userControls
             //update midirouteInputs
             //Delete these two lines
