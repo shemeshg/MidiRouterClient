@@ -75,13 +75,13 @@ private:
     }
 
     //- {fn}
-    void purgeDeletedCreateMissingPresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
+    void purgeDeletedCreateMissingPresets(UserDataConfigItf *userDataConfig, const QJsonArray &midiRoutePresetsArray)
     //-only-file body
     {
         QStringList presetUuidInJson;
 
-        auto array = getJsonArray(midiRoutePresets);
-        for (const auto &value : array) {
+
+        for (const auto &value : midiRoutePresetsArray) {
             auto valueObj = value.toObject();
             presetUuidInJson.push_back( getJsonString(valueObj["uuid"]));
         }
@@ -109,29 +109,45 @@ private:
     }
 
     //- {fn}
+    MidiRoutePreset *getPresetByUuid(const QList<MidiRoutePreset*> &presets,QString &uuid)
+    //-only-file body
+    {
+        for (auto const &preset : presets) {
+            if (preset->uuid() == uuid) {
+                return preset;
+            }
+        }
+        return nullptr;
+    }
+
+    //- {fn}
     void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
     //-only-file body
     {
 
-        //userDataConfig->clearMidiRoutePresets(); //UNMARK TO TEST RECREATE
-        purgeDeletedCreateMissingPresets(userDataConfig,midiRoutePresets);
-        return;
+        userDataConfig->clearMidiRoutePresets(); //UNMARK TO TEST RECREATE
+        auto midiRoutePresetsArray = getJsonArray(midiRoutePresets);
+        purgeDeletedCreateMissingPresets(userDataConfig,midiRoutePresetsArray);
 
 
-        if (midiRoutePresets.isArray()){
-            auto array = midiRoutePresets.toArray();
-            for (const QJsonValue &value : array) {
-                //get preset by uuid
-                //update preset fields
-                //update preset updateMidiControl
-                //update userControls
-                //update midirouteInputs
-                //Delete these two lines
-                MidiRoutePreset *preset = createMidiRoutePreset(userDataConfig,value);
-                userDataConfig->addMidiRoutePresets(preset);
+        for (const auto &value : midiRoutePresetsArray) {
+            auto valueObj = value.toObject();
+            QString uuid = getJsonString(valueObj["uuid"]);
+            auto preset = getPresetByUuid(userDataConfig->midiRoutePresets(),uuid);
+            if (preset == nullptr) {
+                throw std::runtime_error("Unexpected JSON format");
             }
+            preset->setName(getJsonString(valueObj["name"]));
+            //update preset fields
+            //update preset updateMidiControl
+            //update userControls
+            //update midirouteInputs
+            //Delete these two lines
+
 
         }
+
+
     }
 
     //- {fn}
