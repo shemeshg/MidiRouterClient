@@ -3,6 +3,7 @@ from property import create_prpt, PrptClass, EnumClass
 
 
 ary = [
+    create_prpt("QString", 'uuid'),
     create_prpt("EventType", 'eventType'),
     create_prpt("QString", 'description'),
     create_prpt("int", 'inputVal'),

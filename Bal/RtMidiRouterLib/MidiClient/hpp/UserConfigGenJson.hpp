@@ -365,6 +365,7 @@ private:
         QJsonArray ary;
         for (const auto &userControl: userControls){
             QJsonObject userControlObj;
+            userControlObj["uuid"] = userControl->uuid();
             userControlObj["eventType"] = static_cast<int>(userControl->eventType());
             userControlObj["description"] = userControl->description();
             userControlObj["inputVal"] = userControl->inputVal();

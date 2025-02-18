@@ -3,9 +3,11 @@
 //-only-file header //-
 #pragma once
 //- #include "../genPrpt/UserControlPrivate.h"
+//- #include "MidiClientUtil.h"
 //-only-file body //-
 //- #include "UserControl.h"
 //-only-file null
+#include "MidiClientUtil.hpp"
 #include "../genPrpt/UserControlPrivate.hpp"
 //-only-file header
 
@@ -21,6 +23,7 @@ public:
     //-only-file body
     : UserControlPrivate{parent}
     {
+        setUuid(getUuId());
     };
 
      //-only-file header

@@ -20,6 +20,7 @@ cog.outl(prptClass.getClassHeader(),
 class UserControlPrivate : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(EventType eventType READ eventType WRITE setEventType NOTIFY eventTypeChanged )
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged )
     Q_PROPERTY(int inputVal READ inputVal WRITE setInputVal NOTIFY inputValChanged )
@@ -48,6 +49,18 @@ enum class EventType {
         CC, PROGRAM_CHANGE, NRPN
     };
 Q_ENUM(EventType)
+
+    
+    QString uuid() const{return m_uuid;} 
+    
+void setUuid(const QString &newUuid)
+    {
+        if (m_uuid == newUuid)
+            return;
+        m_uuid = newUuid;
+        emit uuidChanged();
+    }
+
 
     
     EventType eventType() const{return m_eventType;} 
@@ -208,6 +221,7 @@ void setDropdownListId(const int newDropdownListId)
     
     
 signals:
+    void uuidChanged();
     void eventTypeChanged();
     void descriptionChanged();
     void inputValChanged();
@@ -227,6 +241,7 @@ protected:
     
 
 private:
+    QString m_uuid;
     EventType m_eventType;
     QString m_description;
     int m_inputVal;

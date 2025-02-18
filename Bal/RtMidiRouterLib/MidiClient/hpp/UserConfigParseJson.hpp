@@ -109,23 +109,24 @@ private:
         }
     }
 
-    //- {fn}
-    MidiRoutePreset *getPresetByUuid(const QList<MidiRoutePreset*> &presets,QString &uuid)
-    //-only-file body
-    {
-        for (auto const &preset : presets) {
+    //-only-file header
+    template<typename T>
+    T* getObjByUuid(const QList<T*>& presets, const QString& uuid) {
+        for (auto const& preset : presets) {
             if (preset->uuid() == uuid) {
                 return preset;
             }
         }
-        return nullptr;
+        return nullptr; // Return nullptr if no match is found
     }
+
+
 
     //- {fn}
     void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
     //-only-file body
     {        
-        userDataConfig->clearMidiRoutePresets(); //UNMARK TO TEST RECREATE
+        userDataConfig->clearMidiRoutePresets(); //TEMPORARY TO TEST RECREATE
         auto midiRoutePresetsArray = getJsonArray(midiRoutePresets);
         purgeDeletedCreateMissing
             ([&userDataConfig](int idx){
@@ -146,7 +147,7 @@ private:
         for (const auto &value : midiRoutePresetsArray) {
             auto valueObj = getJsonObject(value);
             QString uuid = getJsonString(valueObj["uuid"]);
-            auto preset = getPresetByUuid(userDataConfig->midiRoutePresets(),uuid);
+            auto preset = getObjByUuid(userDataConfig->midiRoutePresets(),uuid);
             if (preset == nullptr) {
                 throw std::runtime_error("Unexpected JSON format");
             }
@@ -158,15 +159,58 @@ private:
             updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
             updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
 
-
             //update userControls
+            updateUserControls(preset, valueObj);
             //update midirouteInputs
             //Delete these two lines
 
 
         }
+    }
 
+    //- {fn}
+    void updateUserControls(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
+    //-only-file body
+    {
+        preset->clearUserControls(); //TEMPORARY TO TEST RECREATE
+        auto userControlsArray = getJsonArray(presetJsonObj["userControls"]);
+        purgeDeletedCreateMissing
+            ([&preset](int idx){
+                return preset->userControls().at(idx)->uuid();
+            },
+             [&preset](QString uuid){
+                 UserControl *userControl = new UserControl();
+                 preset->addUserControls(userControl);
+                 userControl->setUuid(uuid);
+             },
+             preset->userControls().size(),
+             [&preset](int idx){
+                 preset->delUserControls(idx);
+             },
+             userControlsArray);
 
+        for (const auto &value : userControlsArray) {
+            auto userControlJsonObj = getJsonObject(value);
+            QString uuid = getJsonString(userControlJsonObj["uuid"]);
+            auto userControl = getObjByUuid(preset->userControls(),uuid);
+            if (userControl == nullptr) {
+                throw std::runtime_error("Unexpected JSON format");
+            }
+
+            userControl->setEventType(static_cast<UserControl::EventType>(getJsonDouble(userControlJsonObj["eventType"])));
+            userControl->setDescription(getJsonString( userControlJsonObj["description"]));
+            userControl->setInputVal(getJsonDouble(userControlJsonObj["inputVal"]));
+            userControl->setMinVal(getJsonDouble(userControlJsonObj["minVal"]));
+            userControl->setMaxVal(getJsonDouble(userControlJsonObj["maxVal"]));
+            userControl->setIs64Mode(getJsonBool(userControlJsonObj["is64Mode"]));
+            userControl->setIsEditMode(getJsonBool(userControlJsonObj["isEditMode"]));
+            userControl->setChannelId(getJsonDouble(userControlJsonObj["channelId"]));
+            userControl->setCcId(getJsonDouble(userControlJsonObj["ccId"]));
+            userControl->setNrpnControl(getJsonDouble(userControlJsonObj["nrpnControl"]));
+            userControl->setOutputPortnName(getJsonString(userControlJsonObj["outputPortnName"]));
+            userControl->setIsShowDropdown(getJsonBool(userControlJsonObj["isShowDropdown"]));
+            userControl->setDropdownListId(getJsonDouble(userControlJsonObj["dropdownListId"]));
+        }
     }
 
     //-only-file header
@@ -214,26 +258,7 @@ private:
         control->setPresetUuid(getJsonString(valueObj["presetUuid"]));
     }
 
-    //- {fn}
-    UserControl* createUserControl(const QJsonValue &userControlValue)
-    //-only-file body
-    {
-        auto userControl = new UserControl();
-        userControl->setEventType(static_cast<UserControl::EventType>(userControlValue["eventType"].toInt()));
-        userControl->setDescription(userControlValue["description"].toString());
-        userControl->setInputVal(userControlValue["inputVal"].toInt());
-        userControl->setMinVal(userControlValue["minVal"].toInt());
-        userControl->setMaxVal(userControlValue["maxVal"].toInt());
-        userControl->setIs64Mode(userControlValue["is64Mode"].toBool());
-        userControl->setIsEditMode(userControlValue["isEditMode"].toBool());
-        userControl->setChannelId(userControlValue["channelId"].toInt());
-        userControl->setCcId(userControlValue["ccId"].toInt());
-        userControl->setNrpnControl(userControlValue["nrpnControl"].toInt());
-        userControl->setOutputPortnName(userControlValue["outputPortnName"].toString());
-        userControl->setIsShowDropdown(userControlValue["isShowDropdown"].toBool());
-        userControl->setDropdownListId(userControlValue["dropdownListId"].toInt());
-        return userControl;
-    }
+
 
     //- {fn}
     void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs)
