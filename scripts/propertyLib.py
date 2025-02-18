@@ -155,9 +155,10 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name )
 
     def destructot_h_file(self):
-        t = Template("""clear${field_name_initCap}();
+        type_in_list = self.field_type.split("<")[1].split(">")[0]
+        t = Template("""clearList<${type_in_list}>();
     """)
-        return t.substitute(field_name_initCap=self.field_name_initCap)    
+        return t.substitute(type_in_list=type_in_list)    
 
     def public_slots_h_file(self):
         type_in_list = self.field_type.split("<")[1].split(">")[0]

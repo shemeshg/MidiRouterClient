@@ -32,7 +32,7 @@ public:
     EasyConfigPrivate(QObject *parent = nullptr):QObject(parent){}
 
     virtual ~EasyConfigPrivate() {
-        clearEasyConfigRoutes();
+        clearList<EasyConfigRoute *>();
     
     }
 

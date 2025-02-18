@@ -41,8 +41,8 @@ public:
     UserDataConfigPrivate(QObject *parent = nullptr):QObject(parent){}
 
     virtual ~UserDataConfigPrivate() {
-        clearDropdownlists();
-    clearMidiRoutePresets();
+        clearList<Dropdownlist *>();
+    clearList<MidiRoutePreset *>();
     
     }
 

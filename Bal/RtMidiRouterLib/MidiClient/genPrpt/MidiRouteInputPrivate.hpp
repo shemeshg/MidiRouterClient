@@ -47,8 +47,8 @@ public:
     MidiRouteInputPrivate(QObject *parent = nullptr):QObject(parent){}
 
     virtual ~MidiRouteInputPrivate() {
-        clearMidiRouteInputCc14bit();
-    clearMidiRouterChains();
+        clearList<MidiRouteInputCc14bit *>();
+    clearList<MidiRouterChain *>();
     
     }
 

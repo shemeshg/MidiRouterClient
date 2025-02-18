@@ -46,8 +46,8 @@ public:
     MidiRoutePresetPrivate(QObject *parent = nullptr):QObject(parent){}
 
     virtual ~MidiRoutePresetPrivate() {
-        clearUserControls();
-    clearMidiRouteInputs();
+        clearList<UserControl *>();
+    clearList<MidiRouteInput *>();
     
     }
 
