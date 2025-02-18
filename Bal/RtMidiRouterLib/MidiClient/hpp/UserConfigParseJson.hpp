@@ -53,10 +53,10 @@ private:
     void updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QStringList &virtualInPorts)
     //-only-file body
     {
-            userDataConfig->clearVirtualPorts();
-            for (const auto &value : virtualInPorts) {
-                userDataConfig->addVirtualPort(value);
-            }
+        userDataConfig->clearVirtualPorts();
+        for (const auto &value : virtualInPorts) {
+            userDataConfig->addVirtualPort(value);
+        }
     }
 
     //- {fn}
@@ -65,17 +65,21 @@ private:
     {
         userDataConfig->clearDropdownlists();
 
-            auto array = getJsonArray(dropdownlists);
-            for (const auto &value : array) {
-                auto obj = getJsonObject(value);
-                userDataConfig->addDropdownList(getJsonString(obj["name"]),
-                                                getJsonString(obj["data"])                                                );
-            }
+        auto array = getJsonArray(dropdownlists);
+        for (const auto &value : array) {
+            auto obj = getJsonObject(value);
+            userDataConfig->addDropdownList(getJsonString(obj["name"]),
+                                            getJsonString(obj["data"])                                                );
+        }
 
     }
 
     //- {fn}
-    void purgeDeletedCreateMissingPresets(UserDataConfigItf *userDataConfig, QJsonArray &midiRoutePresetsArray)
+    void purgeDeletedCreateMissing(const std::function<QString(int)>& getUuid,
+                                   const std::function<void(QString)>& createNewObject,
+                                   const int qlistObjSize,
+                                   const std::function<void(int)>& qlistRemoveAt,
+                                   QJsonArray &midiRoutePresetsArray)
     //-only-file body
     {
         QStringList presetUuidInJson;
@@ -87,23 +91,20 @@ private:
         }
 
         QStringList uuidInPresets;
-        for (auto it = userDataConfig->midiRoutePresets().size() - 1; it >= 0; --it) {
-            QString uuid = userDataConfig->midiRoutePresets().at(it)->uuid();
+        for (auto it = qlistObjSize - 1; it >= 0; --it) {
+            QString uuid = getUuid(it);
             bool containsUuid =  presetUuidInJson.contains(uuid);
             if (containsUuid) {
                 uuidInPresets.append(uuid);
             }
             else {
-                userDataConfig->delMidiRoutePresets(it);
+                qlistRemoveAt(it);
             }
         }
 
         for (const auto &j: presetUuidInJson){
             if (!uuidInPresets.contains(j)){
-                MidiRoutePreset *preset = new MidiRoutePreset(userDataConfig->computerUuid());
-
-                userDataConfig->addMidiRoutePresets(preset);
-                preset->setUuid(j);
+                createNewObject(j);
             }
         }
     }
@@ -123,11 +124,23 @@ private:
     //- {fn}
     void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
     //-only-file body
-    {
-
+    {        
         userDataConfig->clearMidiRoutePresets(); //UNMARK TO TEST RECREATE
         auto midiRoutePresetsArray = getJsonArray(midiRoutePresets);
-        purgeDeletedCreateMissingPresets(userDataConfig,midiRoutePresetsArray);
+        purgeDeletedCreateMissing
+            ([&userDataConfig](int idx){
+                return userDataConfig->midiRoutePresets().at(idx)->uuid();
+            },
+             [&userDataConfig](QString uuid){
+                 MidiRoutePreset *preset = new MidiRoutePreset(userDataConfig->computerUuid());
+                 userDataConfig->addMidiRoutePresets(preset);
+                 preset->setUuid(uuid);
+             },
+             userDataConfig->midiRoutePresets().size(),
+             [&userDataConfig](int idx){
+                 userDataConfig->delMidiRoutePresets(idx);
+             },
+             midiRoutePresetsArray);
 
 
         for (const auto &value : midiRoutePresetsArray) {
