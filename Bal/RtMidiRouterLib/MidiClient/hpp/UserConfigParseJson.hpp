@@ -43,7 +43,7 @@ public:
         updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
 
 
-        userDataConfigItf->setActivePresetID(getJsonDouble( jsonDoc["_activePresetID"]));
+        userDataConfigItf->setActivePreset(getJsonDouble( jsonDoc["_activePresetID"]), false);
 
     }
 
@@ -120,7 +120,23 @@ private:
         return nullptr; // Return nullptr if no match is found
     }
 
-
+    template<typename T, typename S>
+    void purgeDeletedCreateMissingT(S *userDataConfig, QJsonArray &jsonAry){
+        purgeDeletedCreateMissing
+            ([&userDataConfig](int idx){
+                return userDataConfig->template listItems<T *>().at(idx)->uuid();
+            },
+             [&userDataConfig](QString uuid){
+                 T *preset = new T();
+                 userDataConfig->addListItem(preset);
+                 preset->setUuid(uuid);
+             },
+             userDataConfig->template listItems<T *>().size(),
+             [&userDataConfig](int idx){
+                 userDataConfig->template delListItem<T *>(idx);
+             },
+             jsonAry);
+    }
 
     //- {fn}
     void updateMidiRoutePresets(UserDataConfig *userDataConfig, const QJsonValueRef &midiRoutePresets)
@@ -128,20 +144,7 @@ private:
     {        
         userDataConfig->clearList<MidiRoutePreset *>(); //TEMPORARY TO TEST RECREATE
         auto midiRoutePresetsArray = getJsonArray(midiRoutePresets);
-        purgeDeletedCreateMissing
-            ([&userDataConfig](int idx){
-                return userDataConfig->midiRoutePresets().at(idx)->uuid();
-            },
-             [&userDataConfig](QString uuid){
-                 MidiRoutePreset *preset = new MidiRoutePreset(userDataConfig->computerUuid());
-                 userDataConfig->addListItem(preset);
-                 preset->setUuid(uuid);
-             },
-             userDataConfig->midiRoutePresets().size(),
-             [&userDataConfig](int idx){
-                 userDataConfig->delListItem<MidiRoutePreset *>(idx);
-             },
-             midiRoutePresetsArray);
+        purgeDeletedCreateMissingT<MidiRoutePreset>(userDataConfig,midiRoutePresetsArray);
 
 
         for (const auto &value : midiRoutePresetsArray) {
@@ -162,9 +165,8 @@ private:
             updateUserControls(preset, valueObj);
             updateMidirouteInputs(preset, valueObj);
             //Delete these two lines
-
-
         }
+
     }
     //- {fn}
     void updateMidirouteInputs(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
@@ -172,20 +174,8 @@ private:
     {
         preset->clearList<MidiRouteInput *>(); //TEMPORARY TO TEST RECREATE
         auto midirouteInputsArray = getJsonArray(presetJsonObj["midiRouteInputs"]);
-        purgeDeletedCreateMissing
-            ([&preset](int idx){
-                return preset->midiRouteInputs().at(idx)->uuid();
-            },
-             [&preset](QString uuid){
-                 MidiRouteInput *midiRouteInput = new MidiRouteInput();
-                 preset->addListItem(midiRouteInput);
-                 midiRouteInput->setUuid(uuid);
-             },
-             preset->midiRouteInputs().size(),
-             [&preset](int idx){
-                 preset->delListItem<MidiRouteInput *>(idx);
-             },
-             midirouteInputsArray);
+        purgeDeletedCreateMissingT<MidiRouteInput>(preset,midirouteInputsArray);
+
 
         for (const auto &value : midirouteInputsArray) {
             auto midirouteInputJsonObj = getJsonObject(value);
@@ -206,24 +196,11 @@ private:
     {
         preset->clearList<UserControl *>(); //TEMPORARY TO TEST RECREATE
         auto userControlsArray = getJsonArray(presetJsonObj["userControls"]);
-        purgeDeletedCreateMissing
-            ([&preset](int idx){
-                return preset->userControls().at(idx)->uuid();
-            },
-             [&preset](QString uuid){
-                 UserControl *userControl = new UserControl();
-                 preset->addListItem(userControl);
-                 userControl->setUuid(uuid);
-             },
-             preset->userControls().size(),
-             [&preset](int idx){
-                 preset->delListItem<UserControl *>(idx);
-             },
-             userControlsArray);
+        purgeDeletedCreateMissingT<UserControl>(preset,userControlsArray);
 
         for (const auto &value : userControlsArray) {
             auto userControlJsonObj = getJsonObject(value);
-            QString uuid = getJsonString(userControlJsonObj["uuid"]);
+            QString uuid = getJsonString(userControlJsonObj["uuid"]);            
             auto userControl = getObjByUuid(preset->userControls(),uuid);
             if (userControl == nullptr) {
                 throw std::runtime_error("Unexpected JSON format");
@@ -243,6 +220,7 @@ private:
             userControl->setIsShowDropdown(getJsonBool(userControlJsonObj["isShowDropdown"]));
             userControl->setDropdownListId(getJsonDouble(userControlJsonObj["dropdownListId"]));
         }
+
     }
 
     //-only-file header

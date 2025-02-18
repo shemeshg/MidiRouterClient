@@ -34,7 +34,7 @@ public:
         : UserDataConfigPrivate{parent}
     {
 
-        loadComputerUuid();
+
         m_uniqueId = getUuId();
 
         clearList<Dropdownlist *>();
@@ -42,17 +42,10 @@ public:
 
         clearList<MidiRoutePreset *>();
         addPreset();
-        setActivePreset(0);
+        setActivePreset(0, true);
     }
 
-    //- {fn}
-    void addPreset()
-    //-only-file body
-    {
-        MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
-        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
-        addListItem(p);
-    }
+
 
     //- {fn}
     void addDropdownList(QString name, QString data)
@@ -80,8 +73,10 @@ public:
         emit virtualInPortsChanged();
     }
 
+
+
     //- {fn}
-    void setActivePreset(int id)
+    void setActivePreset(int id, bool setEnable)
     //-only-file body
     {
         setActivePresetID(id);
@@ -92,13 +87,20 @@ public:
         {
             if (i != id)
             {
-                m_midiRoutePresets.at(i)->setIsEnabled(false);
+                if(setEnable){
+                    m_midiRoutePresets.at(i)->setIsEnabled(false);
+                }
             } else {
+
                 m_activePreset = m_midiRoutePresets.at(i);
-                m_midiRoutePresets.at(i)->setIsEnabled(true);
+                if(setEnable){
+                    m_midiRoutePresets.at(i)->setIsEnabled(true);
+                }
             }
 
         }
+
+        emit activePresetChanged();
 
     }
 
@@ -150,20 +152,17 @@ public slots:
     }
 
 
+    //- {fn}
+    void addPreset()
+    //-only-file body
+    {
+        MidiRoutePreset *p = new MidiRoutePreset();
+        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
+        addListItem(p);
+    }
 
     //-only-file header
 private:
-    //- {fn}
-    void loadComputerUuid()
-    //-only-file body
-    {
-        QSettings settings;
-        QString s = settings.value("computerUuid", "").toString();
-        if (s.isEmpty()) {
-            s = getUuId();
-            settings.setValue("computerUuid", s);
-        }
-        m_computerUuid = s;
-    }
+
     //-only-file header
 };

@@ -32,7 +32,6 @@ class MidiRoutePresetPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
     Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
-    Q_PROPERTY(QString computerUuid READ computerUuid WRITE setComputerUuid NOTIFY computerUuidChanged )
     Q_PROPERTY(bool isSendAllUserControls READ isSendAllUserControls WRITE setIsSendAllUserControls NOTIFY isSendAllUserControlsChanged )
     Q_PROPERTY(bool isEnabled READ isEnabled WRITE setIsEnabled NOTIFY isEnabledChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOn READ midiControlOn  NOTIFY midiControlOnChanged )
@@ -73,18 +72,6 @@ void setUuid(const QString &newUuid)
             return;
         m_uuid = newUuid;
         emit uuidChanged();
-    }
-
-
-    
-    QString computerUuid() const{return m_computerUuid;} 
-    
-void setComputerUuid(const QString &newComputerUuid)
-    {
-        if (m_computerUuid == newComputerUuid)
-            return;
-        m_computerUuid = newComputerUuid;
-        emit computerUuidChanged();
     }
 
 
@@ -201,7 +188,6 @@ void setIsEnabled(const bool newIsEnabled)
 signals:
     void nameChanged();
     void uuidChanged();
-    void computerUuidChanged();
     void isSendAllUserControlsChanged();
     void isEnabledChanged();
     void midiControlOnChanged();
@@ -220,7 +206,6 @@ protected:
 private:
     QString m_name;
     QString m_uuid;
-    QString m_computerUuid;
     bool m_isSendAllUserControls;
     bool m_isEnabled;
     

@@ -8,6 +8,8 @@ import QtQuick.Controls
 ColumnLayout {
     property var activePreset: ({})
     signal editControl(var s);
+
+
     CoreLabel {
         text:  "User Controls: "
     }
@@ -26,7 +28,7 @@ ColumnLayout {
             }
         }
     }
-    Repeater {
+    Repeater {        
         model: activePreset.userControls
         ComboSilder {
             function getCmbModel(){

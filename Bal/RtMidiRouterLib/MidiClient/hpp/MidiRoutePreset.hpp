@@ -20,10 +20,10 @@ class MidiRoutePreset : public MidiRoutePresetPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit MidiRoutePreset(QString computerUuid, QObject *parent = nullptr)
+    explicit MidiRoutePreset(QObject *parent = nullptr)
         //-only-file body
         : MidiRoutePresetPrivate{parent}{
-        setComputerUuid(computerUuid);
+
         setUuid(getUuId());
         m_midiControlOn = new PresetMidiControl(
             PresetMidiControl::PresetMidiType::PRESET_ON,
