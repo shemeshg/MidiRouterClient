@@ -25,7 +25,7 @@ public:
     explicit MidiRouteInput(QObject *parent = nullptr)
         //-only-file body
         : MidiRouteInputPrivate{parent} {
-        clearMidiRouteInputCc14bit();
+        clearList<MidiRouteInputCc14bit *>();
         clearMidiRouterChains();
 
         setIgnoreTypesMidiSysex(true);
@@ -36,8 +36,6 @@ public:
         setMidiRouteClockFromSppPos(0);
         m_monitor = new Monitor(this);
         m_easyConfig = new EasyConfig(this);
-        // Dummy DELETE
-        clearMidiRouteInputCc14bit();
         setUuid(getUuId());
     };
 
@@ -48,7 +46,7 @@ public:
     {
         for (int i = m_midiRouterChains.size() - 1; i >= 0; --i) {
             if (m_midiRouterChains[i]->isEasyConfig()) {
-                delMidiRouterChains(i);
+                delListItem<MidiRouterChain *>(i);
             }
         }
     }
@@ -62,7 +60,7 @@ public:
             midiRouterChain->setEasyConfigChain(easyConfig, easyConfigRoute);
 
 
-            addMidiRouterChains(midiRouterChain);
+            addListItem(midiRouterChain);
         }
     }
 
@@ -73,7 +71,7 @@ public:
         if (monitor()->isMonitored()){
             MidiRouterChain *midiRouterChain = new MidiRouterChain();
             midiRouterChain->addEasyConfigMonitor();
-            addMidiRouterChains(midiRouterChain);
+            addListItem(midiRouterChain);
         }
     }
 
@@ -87,7 +85,7 @@ public:
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();
                 midiRouterChain->addEasyConfigPresetFilter(m);
                 midiRouterChain->addEasyConfigPresetLogOnOff(m.pmc->presetUuid(), m.isMidiControlOn);
-                addMidiRouterChains(midiRouterChain);
+                addListItem(midiRouterChain);
             }
         }
     }
@@ -113,20 +111,20 @@ public slots:
     {
         MidiRouterChain *midiRouterChain = new MidiRouterChain();
         midiRouterChain->setName(name);
-        addMidiRouterChains(midiRouterChain);
+        addListItem(midiRouterChain);
     }
 
     //- {fn}
     void delMidiRouterChain(const int idx)
     //-only-file body
     {
-        delMidiRouterChains(idx);
+        delListItem<MidiRouterChain *>(idx);
     }
     //- {fn}
     void clear14BitCc()
     //-only-file body
     {
-        clearMidiRouteInputCc14bit();
+        clearList<MidiRouteInputCc14bit *>();
     }
 
     //- {fn}
@@ -136,7 +134,7 @@ public slots:
         MidiRouteInputCc14bit *item = new MidiRouteInputCc14bit();
         item->setChannel(channel);
         item->setCc(cc);
-        addMidiRouteInputCc14bit(item);
+        addListItem(item);
     }
 
     //-only-file header

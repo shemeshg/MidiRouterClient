@@ -65,29 +65,6 @@ void setZoneNames(const QStringList &newZoneNames)
     void delListItem(int id);
 
     
-        void delEasyConfigRoutes(int id)
-        {
-            if (id < m_easyConfigRoutes.size())
-            {
-                delete m_easyConfigRoutes.at(id);
-                m_easyConfigRoutes.removeAt(id);
-                emit easyConfigRoutesChanged();
-            }
-        }
-
-        void addEasyConfigRoutes(EasyConfigRoute * item)
-        {
-            m_easyConfigRoutes.push_back(item);
-            emit easyConfigRoutesChanged();
-        }
-
-        void clearEasyConfigRoutes()
-        {
-            qDeleteAll(m_easyConfigRoutes);
-            m_easyConfigRoutes.clear();
-            emit easyConfigRoutesChanged();
-        }
-
         template<>
         void delListItem<EasyConfigRoute *>(int id){
             if (id < m_easyConfigRoutes.size())

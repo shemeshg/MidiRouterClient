@@ -32,7 +32,7 @@ public:
             PresetMidiControl::PresetMidiType::PRESET_OFF,
             uuid(),this);
 
-        clearUserControls();
+        clearList<UserControl *>();
 
     };
 
@@ -69,7 +69,7 @@ public slots:
          }
          MidiRouteInput *newInput = new MidiRouteInput();
          newInput->setMidiInputName(midiInputName);
-         addMidiRouteInputs(newInput);
+         addListItem(newInput);
          return newInput;
      }
 
@@ -81,7 +81,7 @@ public slots:
          uc->setDescription("Description");
          uc->setMaxVal(127);
          uc->setDropdownListId(-1);
-         addUserControls(uc);
+         addListItem(uc);
      }
 
 
@@ -89,7 +89,7 @@ public slots:
      void delUserControl(int id)
      //-only-file body
      {
-         delUserControls(id);
+         delListItem<UserControl*>(id);
      }
 
 

@@ -163,29 +163,6 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         type_in_list = self.field_type.split("<")[1].split(">")[0]
         t = Template(
         """
-        void del${field_name_initCap}(int id)
-        {
-            if (id < m_${field_name}.size())
-            {
-                delete m_${field_name}.at(id);
-                m_${field_name}.removeAt(id);
-                emit ${field_name}Changed();
-            }
-        }
-
-        void add${field_name_initCap}(${type_in_list} item)
-        {
-            m_${field_name}.push_back(item);
-            emit ${field_name}Changed();
-        }
-
-        void clear${field_name_initCap}()
-        {
-            qDeleteAll(m_${field_name});
-            m_${field_name}.clear();
-            emit ${field_name}Changed();
-        }
-
         template<>
         void delListItem<${type_in_list}>(int id){
             if (id < m_${field_name}.size())

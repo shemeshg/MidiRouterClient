@@ -185,29 +185,6 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     void delListItem(int id);
 
     
-        void delMidiRouteInputCc14bit(int id)
-        {
-            if (id < m_midiRouteInputCc14bit.size())
-            {
-                delete m_midiRouteInputCc14bit.at(id);
-                m_midiRouteInputCc14bit.removeAt(id);
-                emit midiRouteInputCc14bitChanged();
-            }
-        }
-
-        void addMidiRouteInputCc14bit(MidiRouteInputCc14bit * item)
-        {
-            m_midiRouteInputCc14bit.push_back(item);
-            emit midiRouteInputCc14bitChanged();
-        }
-
-        void clearMidiRouteInputCc14bit()
-        {
-            qDeleteAll(m_midiRouteInputCc14bit);
-            m_midiRouteInputCc14bit.clear();
-            emit midiRouteInputCc14bitChanged();
-        }
-
         template<>
         void delListItem<MidiRouteInputCc14bit *>(int id){
             if (id < m_midiRouteInputCc14bit.size())
@@ -231,29 +208,6 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
             emit midiRouteInputCc14bitChanged();
         }        
         
-        void delMidiRouterChains(int id)
-        {
-            if (id < m_midiRouterChains.size())
-            {
-                delete m_midiRouterChains.at(id);
-                m_midiRouterChains.removeAt(id);
-                emit midiRouterChainsChanged();
-            }
-        }
-
-        void addMidiRouterChains(MidiRouterChain * item)
-        {
-            m_midiRouterChains.push_back(item);
-            emit midiRouterChainsChanged();
-        }
-
-        void clearMidiRouterChains()
-        {
-            qDeleteAll(m_midiRouterChains);
-            m_midiRouterChains.clear();
-            emit midiRouterChainsChanged();
-        }
-
         template<>
         void delListItem<MidiRouterChain *>(int id){
             if (id < m_midiRouterChains.size())

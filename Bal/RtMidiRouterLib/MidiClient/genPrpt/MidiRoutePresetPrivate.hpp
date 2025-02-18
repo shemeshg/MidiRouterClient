@@ -136,29 +136,6 @@ void setIsEnabled(const bool newIsEnabled)
     void delListItem(int id);
 
     
-        void delUserControls(int id)
-        {
-            if (id < m_userControls.size())
-            {
-                delete m_userControls.at(id);
-                m_userControls.removeAt(id);
-                emit userControlsChanged();
-            }
-        }
-
-        void addUserControls(UserControl * item)
-        {
-            m_userControls.push_back(item);
-            emit userControlsChanged();
-        }
-
-        void clearUserControls()
-        {
-            qDeleteAll(m_userControls);
-            m_userControls.clear();
-            emit userControlsChanged();
-        }
-
         template<>
         void delListItem<UserControl *>(int id){
             if (id < m_userControls.size())
@@ -182,29 +159,6 @@ void setIsEnabled(const bool newIsEnabled)
             emit userControlsChanged();
         }        
         
-        void delMidiRouteInputs(int id)
-        {
-            if (id < m_midiRouteInputs.size())
-            {
-                delete m_midiRouteInputs.at(id);
-                m_midiRouteInputs.removeAt(id);
-                emit midiRouteInputsChanged();
-            }
-        }
-
-        void addMidiRouteInputs(MidiRouteInput * item)
-        {
-            m_midiRouteInputs.push_back(item);
-            emit midiRouteInputsChanged();
-        }
-
-        void clearMidiRouteInputs()
-        {
-            qDeleteAll(m_midiRouteInputs);
-            m_midiRouteInputs.clear();
-            emit midiRouteInputsChanged();
-        }
-
         template<>
         void delListItem<MidiRouteInput *>(int id){
             if (id < m_midiRouteInputs.size())

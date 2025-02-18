@@ -170,7 +170,7 @@ private:
     void updateMidirouteInputs(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
     //-only-file body
     {
-        preset->clearMidiRouteInputs(); //TEMPORARY TO TEST RECREATE
+        preset->clearList<MidiRouteInput *>(); //TEMPORARY TO TEST RECREATE
         auto midirouteInputsArray = getJsonArray(presetJsonObj["midiRouteInputs"]);
         purgeDeletedCreateMissing
             ([&preset](int idx){
@@ -178,12 +178,12 @@ private:
             },
              [&preset](QString uuid){
                  MidiRouteInput *midiRouteInput = new MidiRouteInput();
-                 preset->addMidiRouteInputs(midiRouteInput);
+                 preset->addListItem(midiRouteInput);
                  midiRouteInput->setUuid(uuid);
              },
              preset->midiRouteInputs().size(),
              [&preset](int idx){
-                 preset->delMidiRouteInputs(idx);
+                 preset->delListItem<MidiRouteInput *>(idx);
              },
              midirouteInputsArray);
 
@@ -204,7 +204,7 @@ private:
     void updateUserControls(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
     //-only-file body
     {
-        preset->clearUserControls(); //TEMPORARY TO TEST RECREATE
+        preset->clearList<UserControl *>(); //TEMPORARY TO TEST RECREATE
         auto userControlsArray = getJsonArray(presetJsonObj["userControls"]);
         purgeDeletedCreateMissing
             ([&preset](int idx){
@@ -212,12 +212,12 @@ private:
             },
              [&preset](QString uuid){
                  UserControl *userControl = new UserControl();
-                 preset->addUserControls(userControl);
+                 preset->addListItem(userControl);
                  userControl->setUuid(uuid);
              },
              preset->userControls().size(),
              [&preset](int idx){
-                 preset->delUserControls(idx);
+                 preset->delListItem<UserControl *>(idx);
              },
              userControlsArray);
 
@@ -296,10 +296,10 @@ private:
     void updateMidiRouteInputsDELETE(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs)
     //-only-file body
     {
-        preset->clearMidiRouteInputs();
+        preset->clearList<MidiRouteInput *>();
         for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
             MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntryDELTE( it.value().toObject());
-            preset->addMidiRouteInputs(midiRouteInputEntry);
+            preset->addListItem(midiRouteInputEntry);
             auto easyConfig = it.value().toObject()["easyConfig"];
             auto inputZonesAndRoutes = easyConfig.toObject()["inputZonesAndRoutes"];
             if (easyConfig.isObject() && inputZonesAndRoutes.isObject()) {
@@ -334,13 +334,13 @@ private:
 
 
         auto cc14bitAry = getJsonArray(midirouteInputJsonObj["cc14bitAry"]);
-        midiRouteInput->clearMidiRouteInputCc14bit();
+        midiRouteInput->clearList<MidiRouteInputCc14bit *>();
         for (const auto &cc14bit : cc14bitAry) {
             auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
             auto cc14bitObj = getJsonObject(cc14bit);
             midiRouteInputCc14bit->setChannel(getJsonDouble(cc14bitObj["channel"]));
             midiRouteInputCc14bit->setCc(getJsonDouble(cc14bitObj["cc"]));
-            midiRouteInput->addMidiRouteInputCc14bit(midiRouteInputCc14bit);
+            midiRouteInput->addListItem(midiRouteInputCc14bit);
         }
     }
 
@@ -372,13 +372,13 @@ private:
 
         auto cc14bitAry = value["cc14bitAry"];
         if (cc14bitAry.isArray()) {
-            midiRouteInputEntry->clearMidiRouteInputCc14bit();
+            midiRouteInputEntry->clearList<MidiRouteInputCc14bit *>();
             for (const auto &cc14bit : cc14bitAry.toArray()) {
                 auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
                 const auto cc14bitObj = cc14bit.toObject();
                 midiRouteInputCc14bit->setChannel(cc14bitObj["channel"].toInt());
                 midiRouteInputCc14bit->setCc(cc14bitObj["cc"].toInt());
-                midiRouteInputEntry->addMidiRouteInputCc14bit(midiRouteInputCc14bit);
+                midiRouteInputEntry->addListItem(midiRouteInputCc14bit);
             }
         }
 
@@ -398,7 +398,7 @@ private:
                 updateMidiRoutersFilters(val["midiRoutersFilters"],midiRouterChain);
 
 
-                midiRouteInputEntry->addMidiRouterChains(midiRouterChain);
+                midiRouteInputEntry->addListItem(midiRouterChain);
             }
 
         }
@@ -468,7 +468,7 @@ private:
             QJsonArray jsonArray = value["easyConfigRoutes"].toArray();
             for (const QJsonValue &routeValue : jsonArray) {
                 EasyConfigRoute *easyConfigRoute = createEasyConfigRoute(routeValue.toObject());
-                easyConfigEntry->addEasyConfigRoutes(easyConfigRoute);
+                easyConfigEntry->addListItem(easyConfigRoute);
             }
         }
 

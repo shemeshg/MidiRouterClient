@@ -115,29 +115,6 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
     void delListItem(int id);
 
     
-        void delDropdownlists(int id)
-        {
-            if (id < m_dropdownlists.size())
-            {
-                delete m_dropdownlists.at(id);
-                m_dropdownlists.removeAt(id);
-                emit dropdownlistsChanged();
-            }
-        }
-
-        void addDropdownlists(Dropdownlist * item)
-        {
-            m_dropdownlists.push_back(item);
-            emit dropdownlistsChanged();
-        }
-
-        void clearDropdownlists()
-        {
-            qDeleteAll(m_dropdownlists);
-            m_dropdownlists.clear();
-            emit dropdownlistsChanged();
-        }
-
         template<>
         void delListItem<Dropdownlist *>(int id){
             if (id < m_dropdownlists.size())
@@ -161,29 +138,6 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
             emit dropdownlistsChanged();
         }        
         
-        void delMidiRoutePresets(int id)
-        {
-            if (id < m_midiRoutePresets.size())
-            {
-                delete m_midiRoutePresets.at(id);
-                m_midiRoutePresets.removeAt(id);
-                emit midiRoutePresetsChanged();
-            }
-        }
-
-        void addMidiRoutePresets(MidiRoutePreset * item)
-        {
-            m_midiRoutePresets.push_back(item);
-            emit midiRoutePresetsChanged();
-        }
-
-        void clearMidiRoutePresets()
-        {
-            qDeleteAll(m_midiRoutePresets);
-            m_midiRoutePresets.clear();
-            emit midiRoutePresetsChanged();
-        }
-
         template<>
         void delListItem<MidiRoutePreset *>(int id){
             if (id < m_midiRoutePresets.size())

@@ -47,7 +47,7 @@ public slots:
     //-only-file body
     {
         auto itm = new EasyConfigRoute();
-        addEasyConfigRoutes(itm);
+        addListItem(itm);
     }
 
     //- {fn}

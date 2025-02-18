@@ -51,7 +51,7 @@ public:
     void clearDropdownlists()  override
     //-only-file body
     {
-        return UserDataConfigPrivate::clearDropdownlists();
+        return UserDataConfigPrivate::clearList<Dropdownlist *>();
     }
 
     //- {fn}
@@ -86,14 +86,14 @@ public:
     void clearMidiRoutePresets() override
     //-only-file body
     {
-        UserDataConfigPrivate::clearMidiRoutePresets();
+        UserDataConfigPrivate::clearList<MidiRoutePreset *>();
     }
 
     //- {fn}
     void delMidiRoutePresets(int id)  override
     //-only-file body
     {
-        UserDataConfigPrivate::delMidiRoutePresets(id);
+        UserDataConfigPrivate::delListItem<MidiRoutePreset *>(id);
     }
 
 
@@ -101,7 +101,7 @@ public:
     void addMidiRoutePresets(MidiRoutePreset * item) override
     //-only-file body
     {
-        UserDataConfigPrivate::addMidiRoutePresets(item);
+        UserDataConfigPrivate::addListItem(item);
     }
 
     //- {fn}
@@ -178,7 +178,7 @@ public:
         Dropdownlist *d = new Dropdownlist();
         d->setName(name);
         d->setData(data);
-        addDropdownlists(d);
+        addListItem(d);
     }
 
 
@@ -236,14 +236,14 @@ public slots:
     //-only-file body
     {
         auto d = new Dropdownlist();
-        addDropdownlists(d);
+        addListItem(d);
     }
 
     //- {fn}
     void delDropdownList(int id)
     //-only-file body
     {
-        delDropdownlists(id);
+        delListItem<Dropdownlist *>(id);
     }
 
 
