@@ -185,7 +185,13 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             qDeleteAll(m_${field_name});
             m_${field_name}.clear();
             emit ${field_name}Changed();
-        }        
+        }   
+
+        template<>
+        const QList<${type_in_list}> listItems<${type_in_list}>(){
+            return m_${field_name};
+        }
+
         """)
         return t.substitute(field_name = self.field_name,field_type=self.field_type,
                             field_name_initCap=self.field_name_initCap,type_in_list=type_in_list )
@@ -244,7 +250,10 @@ public:
     
     template<typename T>
     void delListItem(int id);
-
+    
+    template<typename T>
+    const QList<T> listItems();
+    
     ${public_pointer_list}
     
 signals:

@@ -134,7 +134,10 @@ void setIsEnabled(const bool newIsEnabled)
     
     template<typename T>
     void delListItem(int id);
-
+    
+    template<typename T>
+    const QList<T> listItems();
+    
     
         template<>
         void delListItem<UserControl *>(int id){
@@ -157,7 +160,13 @@ void setIsEnabled(const bool newIsEnabled)
             qDeleteAll(m_userControls);
             m_userControls.clear();
             emit userControlsChanged();
-        }        
+        }   
+
+        template<>
+        const QList<UserControl *> listItems<UserControl *>(){
+            return m_userControls;
+        }
+
         
         template<>
         void delListItem<MidiRouteInput *>(int id){
@@ -180,7 +189,13 @@ void setIsEnabled(const bool newIsEnabled)
             qDeleteAll(m_midiRouteInputs);
             m_midiRouteInputs.clear();
             emit midiRouteInputsChanged();
-        }        
+        }   
+
+        template<>
+        const QList<MidiRouteInput *> listItems<MidiRouteInput *>(){
+            return m_midiRouteInputs;
+        }
+
         
     
 signals:

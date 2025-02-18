@@ -183,7 +183,10 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     
     template<typename T>
     void delListItem(int id);
-
+    
+    template<typename T>
+    const QList<T> listItems();
+    
     
         template<>
         void delListItem<MidiRouteInputCc14bit *>(int id){
@@ -206,7 +209,13 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
             qDeleteAll(m_midiRouteInputCc14bit);
             m_midiRouteInputCc14bit.clear();
             emit midiRouteInputCc14bitChanged();
-        }        
+        }   
+
+        template<>
+        const QList<MidiRouteInputCc14bit *> listItems<MidiRouteInputCc14bit *>(){
+            return m_midiRouteInputCc14bit;
+        }
+
         
         template<>
         void delListItem<MidiRouterChain *>(int id){
@@ -229,7 +238,13 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
             qDeleteAll(m_midiRouterChains);
             m_midiRouterChains.clear();
             emit midiRouterChainsChanged();
-        }        
+        }   
+
+        template<>
+        const QList<MidiRouterChain *> listItems<MidiRouterChain *>(){
+            return m_midiRouterChains;
+        }
+
         
     
 signals:

@@ -206,7 +206,10 @@ void setToDestinationName(const QString &newToDestinationName)
     
     template<typename T>
     void delListItem(int id);
-
+    
+    template<typename T>
+    const QList<T> listItems();
+    
     
     
 signals:

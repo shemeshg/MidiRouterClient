@@ -113,7 +113,10 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
     
     template<typename T>
     void delListItem(int id);
-
+    
+    template<typename T>
+    const QList<T> listItems();
+    
     
         template<>
         void delListItem<Dropdownlist *>(int id){
@@ -136,7 +139,13 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
             qDeleteAll(m_dropdownlists);
             m_dropdownlists.clear();
             emit dropdownlistsChanged();
-        }        
+        }   
+
+        template<>
+        const QList<Dropdownlist *> listItems<Dropdownlist *>(){
+            return m_dropdownlists;
+        }
+
         
         template<>
         void delListItem<MidiRoutePreset *>(int id){
@@ -159,7 +168,13 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
             qDeleteAll(m_midiRoutePresets);
             m_midiRoutePresets.clear();
             emit midiRoutePresetsChanged();
-        }        
+        }   
+
+        template<>
+        const QList<MidiRoutePreset *> listItems<MidiRoutePreset *>(){
+            return m_midiRoutePresets;
+        }
+
         
     
 signals:
