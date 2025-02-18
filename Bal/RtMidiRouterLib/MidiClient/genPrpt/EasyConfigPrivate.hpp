@@ -57,6 +57,13 @@ void setZoneNames(const QStringList &newZoneNames)
     QList<EasyConfigRoute *> easyConfigRoutes() const{return m_easyConfigRoutes;} 
     
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
         void delEasyConfigRoutes(int id)
         {
@@ -77,10 +84,32 @@ void setZoneNames(const QStringList &newZoneNames)
         void clearEasyConfigRoutes()
         {
             qDeleteAll(m_easyConfigRoutes);
-            // Clear the outer list
             m_easyConfigRoutes.clear();
             emit easyConfigRoutesChanged();
         }
+
+        template<>
+        void delListItem<EasyConfigRoute *>(int id){
+            if (id < m_easyConfigRoutes.size())
+            {
+                delete m_easyConfigRoutes.at(id);
+                m_easyConfigRoutes.removeAt(id);
+                emit easyConfigRoutesChanged();
+            }
+        }
+        
+        void addListItem(EasyConfigRoute * item)
+        {
+            m_easyConfigRoutes.push_back(item);
+            emit easyConfigRoutesChanged();
+        }
+        
+        template<>
+        void clearList<EasyConfigRoute *>(){
+            qDeleteAll(m_easyConfigRoutes);
+            m_easyConfigRoutes.clear();
+            emit easyConfigRoutesChanged();
+        }        
         
     
 signals:

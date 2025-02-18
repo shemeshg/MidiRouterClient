@@ -77,6 +77,13 @@ void setIsRunForPresetOnAndOff(const bool newIsRunForPresetOnAndOff)
     QList<QVariant> midiRoutersFilters() const{return m_midiRoutersFilters;} 
     
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
     
 signals:

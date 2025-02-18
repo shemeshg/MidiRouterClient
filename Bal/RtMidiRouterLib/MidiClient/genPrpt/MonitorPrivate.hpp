@@ -46,6 +46,13 @@ void setIsMonitored(const bool newIsMonitored)
     }
 
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
     
 signals:

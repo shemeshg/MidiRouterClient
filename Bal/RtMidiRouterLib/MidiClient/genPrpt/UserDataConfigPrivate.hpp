@@ -107,6 +107,13 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
     MidiRoutePreset * activePreset() const{return m_activePreset;} 
     
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
         void delDropdownlists(int id)
         {
@@ -127,10 +134,32 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
         void clearDropdownlists()
         {
             qDeleteAll(m_dropdownlists);
-            // Clear the outer list
             m_dropdownlists.clear();
             emit dropdownlistsChanged();
         }
+
+        template<>
+        void delListItem<Dropdownlist *>(int id){
+            if (id < m_dropdownlists.size())
+            {
+                delete m_dropdownlists.at(id);
+                m_dropdownlists.removeAt(id);
+                emit dropdownlistsChanged();
+            }
+        }
+        
+        void addListItem(Dropdownlist * item)
+        {
+            m_dropdownlists.push_back(item);
+            emit dropdownlistsChanged();
+        }
+        
+        template<>
+        void clearList<Dropdownlist *>(){
+            qDeleteAll(m_dropdownlists);
+            m_dropdownlists.clear();
+            emit dropdownlistsChanged();
+        }        
         
         void delMidiRoutePresets(int id)
         {
@@ -151,10 +180,32 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
         void clearMidiRoutePresets()
         {
             qDeleteAll(m_midiRoutePresets);
-            // Clear the outer list
             m_midiRoutePresets.clear();
             emit midiRoutePresetsChanged();
         }
+
+        template<>
+        void delListItem<MidiRoutePreset *>(int id){
+            if (id < m_midiRoutePresets.size())
+            {
+                delete m_midiRoutePresets.at(id);
+                m_midiRoutePresets.removeAt(id);
+                emit midiRoutePresetsChanged();
+            }
+        }
+        
+        void addListItem(MidiRoutePreset * item)
+        {
+            m_midiRoutePresets.push_back(item);
+            emit midiRoutePresetsChanged();
+        }
+        
+        template<>
+        void clearList<MidiRoutePreset *>(){
+            qDeleteAll(m_midiRoutePresets);
+            m_midiRoutePresets.clear();
+            emit midiRoutePresetsChanged();
+        }        
         
     
 signals:

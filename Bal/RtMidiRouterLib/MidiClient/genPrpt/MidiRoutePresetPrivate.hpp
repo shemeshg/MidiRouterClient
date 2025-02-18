@@ -128,6 +128,13 @@ void setIsEnabled(const bool newIsEnabled)
     QList<MidiRouteInput *> midiRouteInputs() const{return m_midiRouteInputs;} 
     
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
         void delUserControls(int id)
         {
@@ -148,10 +155,32 @@ void setIsEnabled(const bool newIsEnabled)
         void clearUserControls()
         {
             qDeleteAll(m_userControls);
-            // Clear the outer list
             m_userControls.clear();
             emit userControlsChanged();
         }
+
+        template<>
+        void delListItem<UserControl *>(int id){
+            if (id < m_userControls.size())
+            {
+                delete m_userControls.at(id);
+                m_userControls.removeAt(id);
+                emit userControlsChanged();
+            }
+        }
+        
+        void addListItem(UserControl * item)
+        {
+            m_userControls.push_back(item);
+            emit userControlsChanged();
+        }
+        
+        template<>
+        void clearList<UserControl *>(){
+            qDeleteAll(m_userControls);
+            m_userControls.clear();
+            emit userControlsChanged();
+        }        
         
         void delMidiRouteInputs(int id)
         {
@@ -172,10 +201,32 @@ void setIsEnabled(const bool newIsEnabled)
         void clearMidiRouteInputs()
         {
             qDeleteAll(m_midiRouteInputs);
-            // Clear the outer list
             m_midiRouteInputs.clear();
             emit midiRouteInputsChanged();
         }
+
+        template<>
+        void delListItem<MidiRouteInput *>(int id){
+            if (id < m_midiRouteInputs.size())
+            {
+                delete m_midiRouteInputs.at(id);
+                m_midiRouteInputs.removeAt(id);
+                emit midiRouteInputsChanged();
+            }
+        }
+        
+        void addListItem(MidiRouteInput * item)
+        {
+            m_midiRouteInputs.push_back(item);
+            emit midiRouteInputsChanged();
+        }
+        
+        template<>
+        void clearList<MidiRouteInput *>(){
+            qDeleteAll(m_midiRouteInputs);
+            m_midiRouteInputs.clear();
+            emit midiRouteInputsChanged();
+        }        
         
     
 signals:

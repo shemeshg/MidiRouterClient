@@ -69,6 +69,13 @@ void setServerStatus(const ServerStatus &newServerStatus)
     UserDataConfig * userDataConfig() const{return m_userDataConfig;} 
     
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
     
 signals:

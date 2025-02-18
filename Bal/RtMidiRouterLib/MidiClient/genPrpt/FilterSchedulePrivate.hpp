@@ -66,6 +66,13 @@ void setDefferedTo(const int newDefferedTo)
     }
 
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
     
 signals:

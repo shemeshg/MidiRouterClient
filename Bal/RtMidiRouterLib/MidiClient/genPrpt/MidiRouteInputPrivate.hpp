@@ -177,6 +177,13 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     EasyConfig * easyConfig() const{return m_easyConfig;} 
     
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
         void delMidiRouteInputCc14bit(int id)
         {
@@ -197,10 +204,32 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         void clearMidiRouteInputCc14bit()
         {
             qDeleteAll(m_midiRouteInputCc14bit);
-            // Clear the outer list
             m_midiRouteInputCc14bit.clear();
             emit midiRouteInputCc14bitChanged();
         }
+
+        template<>
+        void delListItem<MidiRouteInputCc14bit *>(int id){
+            if (id < m_midiRouteInputCc14bit.size())
+            {
+                delete m_midiRouteInputCc14bit.at(id);
+                m_midiRouteInputCc14bit.removeAt(id);
+                emit midiRouteInputCc14bitChanged();
+            }
+        }
+        
+        void addListItem(MidiRouteInputCc14bit * item)
+        {
+            m_midiRouteInputCc14bit.push_back(item);
+            emit midiRouteInputCc14bitChanged();
+        }
+        
+        template<>
+        void clearList<MidiRouteInputCc14bit *>(){
+            qDeleteAll(m_midiRouteInputCc14bit);
+            m_midiRouteInputCc14bit.clear();
+            emit midiRouteInputCc14bitChanged();
+        }        
         
         void delMidiRouterChains(int id)
         {
@@ -221,10 +250,32 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         void clearMidiRouterChains()
         {
             qDeleteAll(m_midiRouterChains);
-            // Clear the outer list
             m_midiRouterChains.clear();
             emit midiRouterChainsChanged();
         }
+
+        template<>
+        void delListItem<MidiRouterChain *>(int id){
+            if (id < m_midiRouterChains.size())
+            {
+                delete m_midiRouterChains.at(id);
+                m_midiRouterChains.removeAt(id);
+                emit midiRouterChainsChanged();
+            }
+        }
+        
+        void addListItem(MidiRouterChain * item)
+        {
+            m_midiRouterChains.push_back(item);
+            emit midiRouterChainsChanged();
+        }
+        
+        template<>
+        void clearList<MidiRouterChain *>(){
+            qDeleteAll(m_midiRouterChains);
+            m_midiRouterChains.clear();
+            emit midiRouterChainsChanged();
+        }        
         
     
 signals:

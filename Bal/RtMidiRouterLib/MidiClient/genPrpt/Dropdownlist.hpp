@@ -57,6 +57,13 @@ void setData(const QString &newData)
     }
 
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
     
 signals:

@@ -129,6 +129,13 @@ void setData2(const int newData2)
     }
 
 
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     
     
 signals:

@@ -182,10 +182,32 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         void clear${field_name_initCap}()
         {
             qDeleteAll(m_${field_name});
-            // Clear the outer list
             m_${field_name}.clear();
             emit ${field_name}Changed();
         }
+
+        template<>
+        void delListItem<${type_in_list}>(int id){
+            if (id < m_${field_name}.size())
+            {
+                delete m_${field_name}.at(id);
+                m_${field_name}.removeAt(id);
+                emit ${field_name}Changed();
+            }
+        }
+        
+        void addListItem(${type_in_list} item)
+        {
+            m_${field_name}.push_back(item);
+            emit ${field_name}Changed();
+        }
+        
+        template<>
+        void clearList<${type_in_list}>(){
+            qDeleteAll(m_${field_name});
+            m_${field_name}.clear();
+            emit ${field_name}Changed();
+        }        
         """)
         return t.substitute(field_name = self.field_name,field_type=self.field_type,
                             field_name_initCap=self.field_name_initCap,type_in_list=type_in_list )
@@ -238,6 +260,13 @@ public:
     }
 
     ${public_content}
+
+    template<typename T>
+    void clearList();
+    
+    template<typename T>
+    void delListItem(int id);
+
     ${public_pointer_list}
     
 signals:
