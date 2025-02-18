@@ -4,9 +4,9 @@
 #pragma once
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
-//- #include "UserDataConfigItf.h"
+//- #include "UserDataConfig.h"
 //-only-file null
-#include "UserDataConfigItf.hpp"
+#include "UserDataConfig.hpp"
 //-only-file body //-
 //- #include "UserConfigParseJson.h"
 //-only-file header
@@ -19,7 +19,7 @@ public:
     }
 
     //- {fn}
-    void setChanges(UserDataConfigItf *userDataConfigItf, QJsonObject &jsonDoc)
+    void setChanges(UserDataConfig *userDataConfigItf, QJsonObject &jsonDoc)
     //-only-file body
     {
 
@@ -31,7 +31,7 @@ public:
             return;
         }
 
-        if (userDataConfigItf->getUniqueId() == getJsonString(jsonDoc["uniqueId"])){
+        if (userDataConfigItf->uniqueId() == getJsonString(jsonDoc["uniqueId"])){
             qDebug()<<"Same session created the config, return;";
             //return;
         }
@@ -50,7 +50,7 @@ public:
     //-only-file header
 private:
     //- {fn}
-    void updateVirtualInPorts(UserDataConfigItf *userDataConfig, const QStringList &virtualInPorts)
+    void updateVirtualInPorts(UserDataConfig *userDataConfig, const QStringList &virtualInPorts)
     //-only-file body
     {
         userDataConfig->clearVirtualPorts();
@@ -60,10 +60,10 @@ private:
     }
 
     //- {fn}
-    void updateDropdownlists(UserDataConfigItf *userDataConfig, const QJsonValueRef &dropdownlists)
+    void updateDropdownlists(UserDataConfig *userDataConfig, const QJsonValueRef &dropdownlists)
     //-only-file body
     {
-        userDataConfig->clearDropdownlists();
+        userDataConfig->clearList<Dropdownlist *>();
 
         auto array = getJsonArray(dropdownlists);
         for (const auto &value : array) {
@@ -123,10 +123,10 @@ private:
 
 
     //- {fn}
-    void updateMidiRoutePresets(UserDataConfigItf *userDataConfig, const QJsonValueRef &midiRoutePresets)
+    void updateMidiRoutePresets(UserDataConfig *userDataConfig, const QJsonValueRef &midiRoutePresets)
     //-only-file body
     {        
-        userDataConfig->clearMidiRoutePresets(); //TEMPORARY TO TEST RECREATE
+        userDataConfig->clearList<MidiRoutePreset *>(); //TEMPORARY TO TEST RECREATE
         auto midiRoutePresetsArray = getJsonArray(midiRoutePresets);
         purgeDeletedCreateMissing
             ([&userDataConfig](int idx){
@@ -134,12 +134,12 @@ private:
             },
              [&userDataConfig](QString uuid){
                  MidiRoutePreset *preset = new MidiRoutePreset(userDataConfig->computerUuid());
-                 userDataConfig->addMidiRoutePresets(preset);
+                 userDataConfig->addListItem(preset);
                  preset->setUuid(uuid);
              },
              userDataConfig->midiRoutePresets().size(),
              [&userDataConfig](int idx){
-                 userDataConfig->delMidiRoutePresets(idx);
+                 userDataConfig->delListItem<MidiRoutePreset *>(idx);
              },
              midiRoutePresetsArray);
 

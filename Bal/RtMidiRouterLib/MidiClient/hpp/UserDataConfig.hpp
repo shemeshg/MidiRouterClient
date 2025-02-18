@@ -2,7 +2,6 @@
 //-define-file header GenHpp/UserDataConfig.h
 //-only-file header //-
 #pragma once
-//- #include "UserDataConfigItf.h"
 //- #include "../genPrpt/UserDataConfigPrivate.h"
 //-only-file body //-
 //- #include "UserDataConfig.h"
@@ -13,7 +12,6 @@
 //-only-file null
 #include "MidiClientUtil.hpp"
 #include "UserConfigGenJson.hpp"
-#include "UserDataConfigItf.hpp"
 #include "UserConfigParseJson.hpp"
 #include "../genPrpt/UserDataConfigPrivate.hpp"
 //-only-file header
@@ -24,7 +22,7 @@
 #include <QtCore/qjsonobject.h>
 
 //-var {PRE} "UserDataConfig::"
-class UserDataConfig : public UserDataConfigPrivate, public UserDataConfigItf
+class UserDataConfig : public UserDataConfigPrivate
 
 {
     Q_OBJECT
@@ -32,106 +30,83 @@ class UserDataConfig : public UserDataConfigPrivate, public UserDataConfigItf
 public:
     //- {fn}
     explicit UserDataConfig(QObject *parent = nullptr)
-    //-only-file body
+        //-only-file body
         : UserDataConfigPrivate{parent}
     {
 
         loadComputerUuid();
         m_uniqueId = getUuId();
 
-        clearDropdownlists();
+        clearList<Dropdownlist *>();
         m_virtualInPorts = {};
 
-        clearMidiRoutePresets();
+        clearList<MidiRoutePreset *>();
         addPreset();
         setActivePreset(0);
     }
 
     //- {fn}
-    void clearDropdownlists()  override
+    void addPreset()
     //-only-file body
     {
-        return UserDataConfigPrivate::clearList<Dropdownlist *>();
+        MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
+        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
+        addListItem(p);
     }
 
     //- {fn}
-    QString getUniqueId() override
+    void addDropdownList(QString name, QString data)
     //-only-file body
     {
-        return uniqueId();
+        Dropdownlist *d = new Dropdownlist();
+        d->setName(name);
+        d->setData(data);
+        addListItem(d);
     }
 
     //- {fn}
-    int activePresetID() const override
+    void clearVirtualPorts()
     //-only-file body
     {
-        return UserDataConfigPrivate::activePresetID(); // Call the parent class's function
+        m_virtualInPorts.clear();
+        emit virtualInPortsChanged();
     }
 
     //- {fn}
-    QString computerUuid() const override
+    void addVirtualPort(QString port)
     //-only-file body
     {
-        return UserDataConfigPrivate::computerUuid();
+        m_virtualInPorts.append(port);
+        emit virtualInPortsChanged();
     }
 
     //- {fn}
-    QList<MidiRoutePreset*> midiRoutePresets() const override
+    void setActivePreset(int id)
     //-only-file body
     {
-        return UserDataConfigPrivate::midiRoutePresets();
-    }
-
-    //- {fn}
-    void clearMidiRoutePresets() override
-    //-only-file body
-    {
-        UserDataConfigPrivate::clearList<MidiRoutePreset *>();
-    }
-
-    //- {fn}
-    void delMidiRoutePresets(int id)  override
-    //-only-file body
-    {
-        UserDataConfigPrivate::delListItem<MidiRoutePreset *>(id);
-    }
+        setActivePresetID(id);
 
 
-    //- {fn}
-    void addMidiRoutePresets(MidiRoutePreset * item) override
-    //-only-file body
-    {
-        UserDataConfigPrivate::addListItem(item);
-    }
 
-    //- {fn}
-    void setActivePresetID(const int newActivePresetID) override
-    //-only-file body
-    {
-        m_activePreset = m_midiRoutePresets.at(newActivePresetID);
-        UserDataConfigPrivate::setActivePresetID(newActivePresetID);
-        emit activePresetChanged();
-    }
+        for (int i = 0; i < m_midiRoutePresets.size(); i++)
+        {
+            if (i != id)
+            {
+                m_midiRoutePresets.at(i)->setIsEnabled(false);
+            } else {
+                m_activePreset = m_midiRoutePresets.at(i);
+                m_midiRoutePresets.at(i)->setIsEnabled(true);
+            }
 
-    //- {fn}
-    void setConnectedInPorts(const QStringList &newConnectedInPorts) override
-    //-only-file body
-    {
-        UserDataConfigPrivate::setConnectedInPorts(newConnectedInPorts);
-    }
+        }
 
-    //- {fn}
-    void setConnectedOutPorts(const QStringList &newConnectedOutPorts) override
-    //-only-file body
-    {
-        UserDataConfigPrivate::setConnectedOutPorts(newConnectedOutPorts);
     }
 
     //- {fn}
     virtual ~UserDataConfig()
     //-only-file body
     {
-        clearDropdownlists();
+        clearList<Dropdownlist *>();
     }
 
     //- {fn}
@@ -139,8 +114,8 @@ public:
     //-only-file body
     {
 
-        //QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
-         //if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
+            //QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
+            //if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
 
         UserConfigParseJson userConfigParseJson;
         QJsonObject j;
@@ -155,31 +130,6 @@ public:
 
     }
 
-    //- {fn}
-    void clearVirtualPorts() override
-    //-only-file body
-    {
-        m_virtualInPorts.clear();
-        emit virtualInPortsChanged();
-    }
-
-    //- {fn}
-    void addVirtualPort(QString port) override
-    //-only-file body
-    {
-        m_virtualInPorts.append(port);
-        emit virtualInPortsChanged();
-    }
-
-    //- {fn}
-    void addDropdownList(QString name, QString data) override
-    //-only-file body
-    {
-        Dropdownlist *d = new Dropdownlist();
-        d->setName(name);
-        d->setData(data);
-        addListItem(d);
-    }
 
 
 
@@ -192,59 +142,13 @@ public slots:
     {
         UserConfigGenJson userConfigGenJson;
         return userConfigGenJson.getJson(
-                uniqueId(),
-                 activePresetID(),
-                 dropdownlists(),
-                virtualInPorts(),
-                midiRoutePresets());
+            uniqueId(),
+            activePresetID(),
+            dropdownlists(),
+            virtualInPorts(),
+            midiRoutePresets());
     }
 
-    //- {fn}
-    void setActivePreset(int id) override
-    //-only-file body
-    {
-        setActivePresetID(id);              
-        m_activePreset->setIsEnabled(true);
-        
-        for (int i = 0; i < m_midiRoutePresets.size(); i++)
-        {
-            if (i != id)
-            {
-                m_midiRoutePresets.at(i)->setIsEnabled(false);
-            }
-        }        
-    }
-
-    //- {fn}
-    void addPreset() override
-    //-only-file body
-    {
-        MidiRoutePreset *p = new MidiRoutePreset(m_computerUuid);
-        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
-        addMidiRoutePresets(p);
-    }
-
-    //- {fn}
-    void deletePreset(int id)
-    //-only-file body
-    {
-        delMidiRoutePresets(id);
-    }
-
-    //- {fn}
-    void addDropdownList()
-    //-only-file body
-    {
-        auto d = new Dropdownlist();
-        addListItem(d);
-    }
-
-    //- {fn}
-    void delDropdownList(int id)
-    //-only-file body
-    {
-        delListItem<Dropdownlist *>(id);
-    }
 
 
     //-only-file header
