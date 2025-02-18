@@ -3,10 +3,12 @@
 //-only-file header //-
 #pragma once
 //- #include "../genPrpt/MidiRouteInputPrivate.h"
+//- #include "MidiClientUtil.h"
 //-only-file body //-
 //- #include "MidiRouteInput.h"
 //-only-file null
 #include "../genPrpt/MidiRouteInputPrivate.hpp"
+#include "MidiClientUtil.hpp"
 //-only-file header
 
 
@@ -35,7 +37,8 @@ public:
         m_monitor = new Monitor(this);
         m_easyConfig = new EasyConfig(this);
         // Dummy DELETE
-        clearMidiRouteInputCc14bit();        
+        clearMidiRouteInputCc14bit();
+        setUuid(getUuId());
     };
 
 

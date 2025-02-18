@@ -3,6 +3,7 @@ from property import create_prpt, PrptClass
 
 
 ary = [
+    create_prpt("QString", 'uuid'),
     create_prpt("QString", 'midiInputName'),
     create_prpt("bool", 'ignoreTypesMidiSysex'),
     create_prpt("bool", 'ignoreTypesMidiTime'),

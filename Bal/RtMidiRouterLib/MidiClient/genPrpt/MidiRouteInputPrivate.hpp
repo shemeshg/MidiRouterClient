@@ -27,6 +27,7 @@ cog.outl(prptClass.getClassHeader(),
 class MidiRouteInputPrivate : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(QString midiInputName READ midiInputName WRITE setMidiInputName NOTIFY midiInputNameChanged )
     Q_PROPERTY(bool ignoreTypesMidiSysex READ ignoreTypesMidiSysex WRITE setIgnoreTypesMidiSysex NOTIFY ignoreTypesMidiSysexChanged )
     Q_PROPERTY(bool ignoreTypesMidiTime READ ignoreTypesMidiTime WRITE setIgnoreTypesMidiTime NOTIFY ignoreTypesMidiTimeChanged )
@@ -52,6 +53,18 @@ public:
     }
 
     
+    
+    QString uuid() const{return m_uuid;} 
+    
+void setUuid(const QString &newUuid)
+    {
+        if (m_uuid == newUuid)
+            return;
+        m_uuid = newUuid;
+        emit uuidChanged();
+    }
+
+
     
     QString midiInputName() const{return m_midiInputName;} 
     
@@ -215,6 +228,7 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         
     
 signals:
+    void uuidChanged();
     void midiInputNameChanged();
     void ignoreTypesMidiSysexChanged();
     void ignoreTypesMidiTimeChanged();
@@ -237,6 +251,7 @@ protected:
     
 
 private:
+    QString m_uuid;
     QString m_midiInputName;
     bool m_ignoreTypesMidiSysex;
     bool m_ignoreTypesMidiTime;

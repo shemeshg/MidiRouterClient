@@ -159,13 +159,45 @@ private:
             updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
             updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
 
-            //update userControls
             updateUserControls(preset, valueObj);
-            //update midirouteInputs
+            updateMidirouteInputs(preset, valueObj);
             //Delete these two lines
 
 
         }
+    }
+    //- {fn}
+    void updateMidirouteInputs(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
+    //-only-file body
+    {
+        preset->clearMidiRouteInputs(); //TEMPORARY TO TEST RECREATE
+        auto midirouteInputsArray = getJsonArray(presetJsonObj["midiRouteInputs"]);
+        purgeDeletedCreateMissing
+            ([&preset](int idx){
+                return preset->midiRouteInputs().at(idx)->uuid();
+            },
+             [&preset](QString uuid){
+                 MidiRouteInput *midiRouteInput = new MidiRouteInput();
+                 preset->addMidiRouteInputs(midiRouteInput);
+                 midiRouteInput->setUuid(uuid);
+             },
+             preset->midiRouteInputs().size(),
+             [&preset](int idx){
+                 preset->delMidiRouteInputs(idx);
+             },
+             midirouteInputsArray);
+
+        for (const auto &value : midirouteInputsArray) {
+            auto midirouteInputJsonObj = getJsonObject(value);
+            QString uuid = getJsonString(midirouteInputJsonObj["uuid"]);
+            auto midiRouteInput = getObjByUuid(preset->midiRouteInputs(),uuid);
+            if (midiRouteInput == nullptr) {
+                throw std::runtime_error("Unexpected JSON format");
+            }
+
+            setMidiRouteInputSettings(midiRouteInput, midirouteInputJsonObj);
+        }
+
     }
 
     //- {fn}
@@ -261,12 +293,12 @@ private:
 
 
     //- {fn}
-    void updateMidiRouteInputs(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs)
+    void updateMidiRouteInputsDELETE(MidiRoutePreset *preset, const QJsonObject &midiRouteInputs)
     //-only-file body
     {
         preset->clearMidiRouteInputs();
         for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
-            MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntry( it.value().toObject());
+            MidiRouteInput *midiRouteInputEntry = createMidiRouteInputEntryDELTE( it.value().toObject());
             preset->addMidiRouteInputs(midiRouteInputEntry);
             auto easyConfig = it.value().toObject()["easyConfig"];
             auto inputZonesAndRoutes = easyConfig.toObject()["inputZonesAndRoutes"];
@@ -277,7 +309,43 @@ private:
     }
 
     //- {fn}
-    MidiRouteInput* createMidiRouteInputEntry(const QJsonObject &value)
+    void setMidiRouteInputSettings(MidiRouteInput *midiRouteInput, QJsonObject &midirouteInputJsonObj)
+    //-only-file body
+    {
+        midiRouteInput->setMidiInputName(getJsonString( midirouteInputJsonObj["midiInputName"]));
+
+        auto ignoreTypes = getJsonObject(midirouteInputJsonObj["ignoreTypes"]);
+        midiRouteInput->setIgnoreTypesMidiSysex(getJsonBool( ignoreTypes["midiSysex"]));
+        midiRouteInput->setIgnoreTypesMidiTime(ignoreTypes["midiTime"].toBool());
+        midiRouteInput->setIgnoreTypesMidiSense(ignoreTypes["midiSense"].toBool());
+
+         auto midiRouteClock = getJsonObject(midirouteInputJsonObj["midiRouteClock"]);
+        midiRouteInput->setMidiRouteClockTimeSig(getJsonDouble( midiRouteClock["timeSig"]));
+        midiRouteInput->setMidiRouteClockTimeSigDivBy(getJsonDouble( midiRouteClock["timeSigDivBy"]));
+        midiRouteInput->setMidiRouteClockFromSppPos(getJsonDouble( midiRouteClock["fromSppPos"]));
+
+
+        auto propegateInputs = getJsonArray(midiRouteClock["propegateInputs"]);
+        QStringList propegateInputsList;
+        for (const auto &propegateVal : propegateInputs) {
+            propegateInputsList.push_back(propegateVal.toObject()["midiInputName"].toString());
+        }
+        midiRouteInput->setMidiRouteClockPropegateInputs(propegateInputsList);
+
+
+        auto cc14bitAry = getJsonArray(midirouteInputJsonObj["cc14bitAry"]);
+        midiRouteInput->clearMidiRouteInputCc14bit();
+        for (const auto &cc14bit : cc14bitAry) {
+            auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
+            auto cc14bitObj = getJsonObject(cc14bit);
+            midiRouteInputCc14bit->setChannel(getJsonDouble(cc14bitObj["channel"]));
+            midiRouteInputCc14bit->setCc(getJsonDouble(cc14bitObj["cc"]));
+            midiRouteInput->addMidiRouteInputCc14bit(midiRouteInputCc14bit);
+        }
+    }
+
+    //- {fn}
+    MidiRouteInput* createMidiRouteInputEntryDELTE(const QJsonObject &value)
     //-only-file body
     {
         auto midiRouteInputEntry = new MidiRouteInput();

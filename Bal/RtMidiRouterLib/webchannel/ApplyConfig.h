@@ -135,14 +135,14 @@ private:
     {
         auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
 
-        if (midiRouteInputs.isObject())
+        if (midiRouteInputs.isArray())
         {
-            auto midiRouteInputsObj = midiRouteInputs.toObject();
+            auto midiRouteInputsObj = midiRouteInputs.toArray();
 
             for (auto it = midiRouteInputsObj.begin(); it != midiRouteInputsObj.end();
                  ++it)
             {
-                auto midiRouteInputObj = it.value().toObject();
+                auto midiRouteInputObj = it->toObject();
                 auto midiInputName = midiRouteInputObj["midiInputName"].toString();
 
                 QString presetUuid = midiRoutePresetObj["uuid"].toString();

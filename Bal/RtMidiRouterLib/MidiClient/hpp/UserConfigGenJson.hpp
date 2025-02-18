@@ -206,12 +206,12 @@ private:
     }
 
     //- {fn}
-    QJsonObject getMidiRouteInputs(QList<MidiRouteInput *> midiRouteInputs)
+    QJsonArray getMidiRouteInputs(QList<MidiRouteInput *> midiRouteInputs)
     //-only-file body
     {
-        QJsonObject obj;
+        QJsonArray obj;
         for (const auto &itm: midiRouteInputs){
-            obj[itm->midiInputName()] = getMidiRouteInput(itm);
+            obj.append( getMidiRouteInput(itm));
         }
         return obj;
     }
@@ -346,6 +346,7 @@ private:
     //-only-file body
     {
         QJsonObject obj;
+        obj["uuid"] = midiRouteInput->uuid();
         obj["midiInputName"] = midiRouteInput->midiInputName();
         obj["ignoreTypes"] = getIgnoreTypes(midiRouteInput);
         obj["midiRouteClock"] = getMidiRouteClock(midiRouteInput);
