@@ -23,6 +23,7 @@ class MidiRouterChainPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
+    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(bool isEasyConfig READ isEasyConfig WRITE setIsEasyConfig NOTIFY isEasyConfigChanged )
     Q_PROPERTY(bool isRunForPresetOnAndOff READ isRunForPresetOnAndOff WRITE setIsRunForPresetOnAndOff NOTIFY isRunForPresetOnAndOffChanged )
     Q_PROPERTY(QList<QVariant> midiRoutersFilters READ midiRoutersFilters  NOTIFY midiRoutersFiltersChanged )
@@ -46,6 +47,18 @@ void setName(const QString &newName)
             return;
         m_name = newName;
         emit nameChanged();
+    }
+
+
+    
+    QString uuid() const{return m_uuid;} 
+    
+void setUuid(const QString &newUuid)
+    {
+        if (m_uuid == newUuid)
+            return;
+        m_uuid = newUuid;
+        emit uuidChanged();
     }
 
 
@@ -91,6 +104,7 @@ void setIsRunForPresetOnAndOff(const bool newIsRunForPresetOnAndOff)
     
 signals:
     void nameChanged();
+    void uuidChanged();
     void isEasyConfigChanged();
     void isRunForPresetOnAndOffChanged();
     void midiRoutersFiltersChanged();
@@ -102,6 +116,7 @@ protected:
 
 private:
     QString m_name;
+    QString m_uuid;
     bool m_isEasyConfig;
     bool m_isRunForPresetOnAndOff;
     

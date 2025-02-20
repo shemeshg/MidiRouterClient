@@ -186,8 +186,30 @@ private:
             }
 
             setMidiRouteInputSettings(midiRouteInput, midirouteInputJsonObj);
-        }
 
+            midiRouteInput->clearMidiRouterChains(); //TEMPORARY TO TEST RECREATE
+            auto midiRouterChainsArray = getJsonArray(midirouteInputJsonObj["midiRouterChains"]);
+            purgeDeletedCreateMissingT<MidiRouterChain>(midiRouteInput,midiRouterChainsArray);
+
+            for (const auto &value : midiRouterChainsArray) {
+                auto midiRouterChainsJsonObj = getJsonObject(value);
+                QString uuid = getJsonString(midirouteInputJsonObj["uuid"]);
+
+                auto midiRouterChain = getObjByUuid(midiRouteInput->listItems<MidiRouterChain *>(),uuid);
+                if (midiRouteInput == nullptr) {
+                    throw std::runtime_error("Unexpected JSON format");
+                }
+                setMidiRouterChainSetiings(midiRouterChain, midiRouterChainsJsonObj);
+            }
+        }
+    }
+
+    //- {fn}
+    void setMidiRouterChainSetiings(MidiRouterChain *midiRouterChain,QJsonObject &midiRouterChainsJsonObj)
+    //-only-file body
+    {
+        midiRouterChain->setName(getJsonString(midiRouterChainsJsonObj["name"]));
+        midiRouterChain->setIsEasyConfig(getJsonBool(midiRouterChainsJsonObj["isEasyConfig"]));
     }
 
     //- {fn}

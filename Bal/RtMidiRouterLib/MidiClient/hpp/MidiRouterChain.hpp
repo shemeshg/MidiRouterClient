@@ -13,6 +13,7 @@
 //- #include "FilterMidiDestination.h"
 //- #include "FilterNetworkDestination.h"
 //- #include "../genPrpt/MidiRoutersFilter.h"
+//- #include "MidiRoutePreset.h"
 //-only-file null
 #include "EasyConfig.hpp"
 #include "FilterAndTransform.hpp"
@@ -23,6 +24,7 @@
 #include "MidiPresetControlEasyConfig.hpp"
 #include "../genPrpt/MidiRouterChainPrivate.hpp"
 #include "../genPrpt/MidiRoutersFilter.hpp"
+#include "MidiClientUtil.hpp"
 //-only-file header
 #include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
@@ -39,7 +41,7 @@ public:
     explicit MidiRouterChain(QObject *parent = nullptr)
     //-only-file body
         : MidiRouterChainPrivate{parent}{
-
+        setUuid(getUuId());
     };
 
 

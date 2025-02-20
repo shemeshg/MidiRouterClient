@@ -272,6 +272,7 @@ private:
         QJsonArray midiRouterChains;
         for (const auto midiRouterChain: midiRouteInput->midiRouterChains()){
             QJsonObject midiRouterChainObj;
+            midiRouterChainObj["uuid"] = midiRouteInput->uuid();
             midiRouterChainObj["name"] = midiRouterChain->name();
             midiRouterChainObj["isEasyConfig"] = midiRouterChain->isEasyConfig();
             midiRouterChainObj["isRunForPresetOnAndOff"] = midiRouterChain->isRunForPresetOnAndOff();
