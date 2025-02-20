@@ -234,8 +234,9 @@ private:
     void setSettings(MidiRouterChain *midiRouterChain,QJsonObject &midiRouterChainsJsonObj)
     //-only-file body
     {
-        midiRouterChain->setName(getJson<QString>(midiRouterChainsJsonObj["name"]));
-        midiRouterChain->setIsEasyConfig(getJson<bool>(midiRouterChainsJsonObj["isEasyConfig"]));
+        FieldSetter fst(midiRouterChain,midiRouterChainsJsonObj);
+        fst.setField<QString>(&MidiRouterChain::setName,"name");
+        fst.setField<bool>(&MidiRouterChain::setIsEasyConfig,"isEasyConfig");
     }
 
     //- {fn}
@@ -281,13 +282,17 @@ private:
     //-only-file body
     {
         auto valueObj = getJson<QJsonObject>(value);
-        control->setChannel(getJson<double>( valueObj["channel"]));
-        control->setData1(getJson<double>(valueObj["data1"]));
-        control->setData2(getJson<double>(valueObj["data2"]));
-        control->setEventTypeId(getJson<double>(valueObj["eventTypeId"]));
+        FieldSetter fst(control, valueObj);
+        fst.setField<double>(&PresetMidiControl::setChannel,"channel");
+        fst.setField<double>(&PresetMidiControl::setData1,"data1");
+        fst.setField<double>(&PresetMidiControl::setData2,"data2");
+        fst.setField<double>(&PresetMidiControl::setEventTypeId,"eventTypeId");
+
         control->setPresetMidiType(type);
-        control->setPortName(getJson<QString>(valueObj["portName"]));
-        control->setPresetUuid(getJson<QString>(valueObj["presetUuid"]));
+
+        fst.setField<QString>(&PresetMidiControl::setPortName,"portName");
+
+
     }
 
 
@@ -312,17 +317,26 @@ private:
     void setSettings(MidiRouteInput *midiRouteInput, QJsonObject &midirouteInputJsonObj)
     //-only-file body
     {
-        midiRouteInput->setMidiInputName(getJson<QString>( midirouteInputJsonObj["midiInputName"]));
+        FieldSetter fst(midiRouteInput, midirouteInputJsonObj);
+        fst.setField<QString>(&MidiRouteInput::setMidiInputName,"midiInputName");
+
+
 
         auto ignoreTypes = getJson<QJsonObject>(midirouteInputJsonObj["ignoreTypes"]);
-        midiRouteInput->setIgnoreTypesMidiSysex(getJson<bool>( ignoreTypes["midiSysex"]));
-        midiRouteInput->setIgnoreTypesMidiTime(getJson<bool>( ignoreTypes["midiTime"]));
-        midiRouteInput->setIgnoreTypesMidiSense(getJson<bool>( ignoreTypes["midiSense"]));
+        FieldSetter fstIgnoreType(midiRouteInput, ignoreTypes);
+        fstIgnoreType.setField<bool>(&MidiRouteInput::setIgnoreTypesMidiSysex, "midiSysex");
+        fstIgnoreType.setField<bool>(&MidiRouteInput::setIgnoreTypesMidiTime, "midiTime");
+        fstIgnoreType.setField<bool>(&MidiRouteInput::setIgnoreTypesMidiSense, "midiSense");
 
-         auto midiRouteClock = getJson<QJsonObject>(midirouteInputJsonObj["midiRouteClock"]);
-        midiRouteInput->setMidiRouteClockTimeSig(getJson<double>( midiRouteClock["timeSig"]));
-        midiRouteInput->setMidiRouteClockTimeSigDivBy(getJson<double>( midiRouteClock["timeSigDivBy"]));
-        midiRouteInput->setMidiRouteClockFromSppPos(getJson<double>( midiRouteClock["fromSppPos"]));
+
+
+        auto midiRouteClock = getJson<QJsonObject>(midirouteInputJsonObj["midiRouteClock"]);
+        FieldSetter fstMidiRouteClock(midiRouteInput, midiRouteClock);
+        fstMidiRouteClock.setField<double>(&MidiRouteInput::setMidiRouteClockTimeSig, "timeSig");
+        fstMidiRouteClock.setField<double>(&MidiRouteInput::setMidiRouteClockTimeSigDivBy, "timeSigDivBy");
+        fstMidiRouteClock.setField<double>(&MidiRouteInput::setMidiRouteClockFromSppPos, "fromSppPos");
+
+
 
 
         auto propegateInputs = getJson<QJsonArray>(midiRouteClock["propegateInputs"]);
@@ -338,8 +352,10 @@ private:
         for (const auto &cc14bit : cc14bitAry) {
             auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
             auto cc14bitObj = getJson<QJsonObject>(cc14bit);
-            midiRouteInputCc14bit->setChannel(getJson<double>(cc14bitObj["channel"]));
-            midiRouteInputCc14bit->setCc(getJson<double>(cc14bitObj["cc"]));
+            FieldSetter fsCc14(midiRouteInputCc14bit, cc14bitObj);
+            fsCc14.setField<double>(&MidiRouteInputCc14bit::setChannel,"channel");
+            fsCc14.setField<double>(&MidiRouteInputCc14bit::setCc,"cc");
+
             midiRouteInput->addListItem(midiRouteInputCc14bit);
         }
         recreateSettings<MidiRouteInput, MidiRouterChain>(midiRouteInput,midirouteInputJsonObj, "midiRouterChains");

@@ -195,7 +195,6 @@ private:
     //-only-file body
     {
         QJsonObject obj;
-        obj["presetUuid"] = presetMidiControl->presetUuid();
         obj["presetMidiType"] = static_cast<int>(presetMidiControl->presetMidiType());
         obj["portName"] = presetMidiControl->portName();
         obj["eventTypeId"] = presetMidiControl->eventTypeId();

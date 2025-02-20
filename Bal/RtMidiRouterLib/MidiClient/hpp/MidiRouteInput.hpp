@@ -84,7 +84,7 @@ public:
             if (m.pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();
                 midiRouterChain->addEasyConfigPresetFilter(m);
-                midiRouterChain->addEasyConfigPresetLogOnOff(m.pmc->presetUuid(), m.isMidiControlOn);
+                midiRouterChain->addEasyConfigPresetLogOnOff(m.isMidiControlOn);
                 addListItem(midiRouterChain);
             }
         }

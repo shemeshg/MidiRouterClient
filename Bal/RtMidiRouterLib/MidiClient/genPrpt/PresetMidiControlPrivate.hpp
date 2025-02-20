@@ -24,7 +24,6 @@ class PresetMidiControlPrivate : public QObject
     Q_OBJECT
     Q_PROPERTY(QString portName READ portName WRITE setPortName NOTIFY portNameChanged )
     Q_PROPERTY(PresetMidiType presetMidiType READ presetMidiType WRITE setPresetMidiType NOTIFY presetMidiTypeChanged )
-    Q_PROPERTY(QString presetUuid READ presetUuid WRITE setPresetUuid NOTIFY presetUuidChanged )
     Q_PROPERTY(int eventTypeId READ eventTypeId WRITE setEventTypeId NOTIFY eventTypeIdChanged )
     Q_PROPERTY(int channel READ channel WRITE setChannel NOTIFY channelChanged )
     Q_PROPERTY(int data1 READ data1 WRITE setData1 NOTIFY data1Changed )
@@ -66,18 +65,6 @@ void setPresetMidiType(const PresetMidiType &newPresetMidiType)
             return;
         m_presetMidiType = newPresetMidiType;
         emit presetMidiTypeChanged();
-    }
-
-
-    
-    QString presetUuid() const{return m_presetUuid;} 
-    
-void setPresetUuid(const QString &newPresetUuid)
-    {
-        if (m_presetUuid == newPresetUuid)
-            return;
-        m_presetUuid = newPresetUuid;
-        emit presetUuidChanged();
     }
 
 
@@ -144,7 +131,6 @@ void setData2(const int newData2)
 signals:
     void portNameChanged();
     void presetMidiTypeChanged();
-    void presetUuidChanged();
     void eventTypeIdChanged();
     void channelChanged();
     void data1Changed();
@@ -157,7 +143,6 @@ protected:
 private:
     QString m_portName;
     PresetMidiType m_presetMidiType;
-    QString m_presetUuid;
     int m_eventTypeId;
     int m_channel;
     int m_data1;

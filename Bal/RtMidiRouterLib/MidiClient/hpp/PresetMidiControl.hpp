@@ -23,8 +23,7 @@ public:
                                QObject *parent = nullptr)
         //-only-file body
         : PresetMidiControlPrivate{parent}
-        {
-            setPresetUuid(presetUuid);
+        {            
             setPresetMidiType(presetMidiType);
             setChannel(-1);
             setData1(-1);
