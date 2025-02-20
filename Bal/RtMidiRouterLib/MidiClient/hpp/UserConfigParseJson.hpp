@@ -31,7 +31,7 @@ public:
             return;
         }
 
-        if (userDataConfigItf->uniqueId() == getJsonString(jsonDoc["uniqueId"])){
+        if (userDataConfigItf->uniqueId() == getJson<QString>(jsonDoc["uniqueId"])){
             qDebug()<<"Same session created the config, return;";
             //return;
         }
@@ -43,7 +43,7 @@ public:
         recreateSettings<UserDataConfig, MidiRoutePreset>(userDataConfigItf,jsonDoc,"midiRoutePresets");
 
 
-        userDataConfigItf->setActivePreset(getJsonDouble( jsonDoc["_activePresetID"]), false);
+        userDataConfigItf->setActivePreset(getJson<double>( jsonDoc["_activePresetID"]), false);
 
     }
 
@@ -67,9 +67,9 @@ private:
 
         auto array = getJsonArray(dropdownlists);
         for (const auto &value : array) {
-            auto obj = getJsonObject(value);
-            userDataConfig->addDropdownList(getJsonString(obj["name"]),
-                                            getJsonString(obj["data"])                                                );
+            auto obj = getJson<QJsonObject>(value);
+            userDataConfig->addDropdownList(getJson<QString>(obj["name"]),
+                                            getJson<QString>(obj["data"])                                                );
         }
 
     }
@@ -86,8 +86,8 @@ private:
 
 
         for (const auto &value : midiRoutePresetsArray) {
-            auto valueObj = getJsonObject(value);
-            presetUuidInJson.push_back( getJsonString(valueObj["uuid"]));
+            auto valueObj = getJson<QJsonObject>(value);
+            presetUuidInJson.push_back( getJson<QString>(valueObj["uuid"]));
         }
 
         QStringList uuidInPresets;
@@ -145,8 +145,8 @@ private:
         purgeDeletedCreateMissingT<ChildListType>(parent,midiRouterChainsArray);
 
         for (const auto &value : midiRouterChainsArray) {
-            auto midiRouterChainsJsonObj = getJsonObject(value);
-            QString uuid = getJsonString(midiRouterChainsJsonObj["uuid"]);
+            auto midiRouterChainsJsonObj = getJson<QJsonObject>(value);
+            QString uuid = getJson<QString>(midiRouterChainsJsonObj["uuid"]);
 
             auto midiRouterChain = getObjByUuid(parent->template listItems<ChildListType *>(),uuid);
             if (midiRouterChain == nullptr) {
@@ -170,9 +170,9 @@ private:
     void setSettings(MidiRoutePreset *preset,QJsonObject &valueObj)
     //-only-file body
     {
-        preset->setIsEnabled(getJsonBool( valueObj["isEnabled"]));
-        preset->setName(getJsonString(valueObj["name"]));
-        preset->setIsSendAllUserControls(getJsonBool(valueObj["isSendAllUserControls"]));
+        preset->setIsEnabled(getJson<bool>( valueObj["isEnabled"]));
+        preset->setName(getJson<QString>(valueObj["name"]));
+        preset->setIsSendAllUserControls(getJson<bool>(valueObj["isSendAllUserControls"]));
 
 
         updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
@@ -186,19 +186,19 @@ private:
     void setSettings(UserControl *userControl,QJsonObject &userControlJsonObj)
     //-only-file body
     {
-        userControl->setEventType(static_cast<UserControl::EventType>(getJsonDouble(userControlJsonObj["eventType"])));
-        userControl->setDescription(getJsonString( userControlJsonObj["description"]));
-        userControl->setInputVal(getJsonDouble(userControlJsonObj["inputVal"]));
-        userControl->setMinVal(getJsonDouble(userControlJsonObj["minVal"]));
-        userControl->setMaxVal(getJsonDouble(userControlJsonObj["maxVal"]));
-        userControl->setIs64Mode(getJsonBool(userControlJsonObj["is64Mode"]));
-        userControl->setIsEditMode(getJsonBool(userControlJsonObj["isEditMode"]));
-        userControl->setChannelId(getJsonDouble(userControlJsonObj["channelId"]));
-        userControl->setCcId(getJsonDouble(userControlJsonObj["ccId"]));
-        userControl->setNrpnControl(getJsonDouble(userControlJsonObj["nrpnControl"]));
-        userControl->setOutputPortnName(getJsonString(userControlJsonObj["outputPortnName"]));
-        userControl->setIsShowDropdown(getJsonBool(userControlJsonObj["isShowDropdown"]));
-        userControl->setDropdownListId(getJsonDouble(userControlJsonObj["dropdownListId"]));
+        userControl->setEventType(static_cast<UserControl::EventType>(getJson<double>(userControlJsonObj["eventType"])));
+        userControl->setDescription(getJson<QString>( userControlJsonObj["description"]));
+        userControl->setInputVal(getJson<double>(userControlJsonObj["inputVal"]));
+        userControl->setMinVal(getJson<double>(userControlJsonObj["minVal"]));
+        userControl->setMaxVal(getJson<double>(userControlJsonObj["maxVal"]));
+        userControl->setIs64Mode(getJson<bool>(userControlJsonObj["is64Mode"]));
+        userControl->setIsEditMode(getJson<bool>(userControlJsonObj["isEditMode"]));
+        userControl->setChannelId(getJson<double>(userControlJsonObj["channelId"]));
+        userControl->setCcId(getJson<double>(userControlJsonObj["ccId"]));
+        userControl->setNrpnControl(getJson<double>(userControlJsonObj["nrpnControl"]));
+        userControl->setOutputPortnName(getJson<QString>(userControlJsonObj["outputPortnName"]));
+        userControl->setIsShowDropdown(getJson<bool>(userControlJsonObj["isShowDropdown"]));
+        userControl->setDropdownListId(getJson<double>(userControlJsonObj["dropdownListId"]));
     }
 
 
@@ -206,8 +206,8 @@ private:
     void setSettings(MidiRouterChain *midiRouterChain,QJsonObject &midiRouterChainsJsonObj)
     //-only-file body
     {
-        midiRouterChain->setName(getJsonString(midiRouterChainsJsonObj["name"]));
-        midiRouterChain->setIsEasyConfig(getJsonBool(midiRouterChainsJsonObj["isEasyConfig"]));
+        midiRouterChain->setName(getJson<QString>(midiRouterChainsJsonObj["name"]));
+        midiRouterChain->setIsEasyConfig(getJson<bool>(midiRouterChainsJsonObj["isEasyConfig"]));
     }
 
     //- {fn}
@@ -252,14 +252,14 @@ private:
     void updateMidiControl(PresetMidiControl *control,  const QJsonValueRef &value, PresetMidiControl::PresetMidiType type)
     //-only-file body
     {
-        auto valueObj = getJsonObject(value);
-        control->setChannel(getJsonDouble( valueObj["channel"]));
-        control->setData1(getJsonDouble(valueObj["data1"]));
-        control->setData2(getJsonDouble(valueObj["data2"]));
-        control->setEventTypeId(getJsonDouble(valueObj["eventTypeId"]));
+        auto valueObj = getJson<QJsonObject>(value);
+        control->setChannel(getJson<double>( valueObj["channel"]));
+        control->setData1(getJson<double>(valueObj["data1"]));
+        control->setData2(getJson<double>(valueObj["data2"]));
+        control->setEventTypeId(getJson<double>(valueObj["eventTypeId"]));
         control->setPresetMidiType(type);
-        control->setPortName(getJsonString(valueObj["portName"]));
-        control->setPresetUuid(getJsonString(valueObj["presetUuid"]));
+        control->setPortName(getJson<QString>(valueObj["portName"]));
+        control->setPresetUuid(getJson<QString>(valueObj["presetUuid"]));
     }
 
 
@@ -284,17 +284,17 @@ private:
     void setSettings(MidiRouteInput *midiRouteInput, QJsonObject &midirouteInputJsonObj)
     //-only-file body
     {
-        midiRouteInput->setMidiInputName(getJsonString( midirouteInputJsonObj["midiInputName"]));
+        midiRouteInput->setMidiInputName(getJson<QString>( midirouteInputJsonObj["midiInputName"]));
 
-        auto ignoreTypes = getJsonObject(midirouteInputJsonObj["ignoreTypes"]);
-        midiRouteInput->setIgnoreTypesMidiSysex(getJsonBool( ignoreTypes["midiSysex"]));
-        midiRouteInput->setIgnoreTypesMidiTime(ignoreTypes["midiTime"].toBool());
-        midiRouteInput->setIgnoreTypesMidiSense(ignoreTypes["midiSense"].toBool());
+        auto ignoreTypes = getJson<QJsonObject>(midirouteInputJsonObj["ignoreTypes"]);
+        midiRouteInput->setIgnoreTypesMidiSysex(getJson<bool>( ignoreTypes["midiSysex"]));
+        midiRouteInput->setIgnoreTypesMidiTime(getJson<bool>( ignoreTypes["midiTime"]));
+        midiRouteInput->setIgnoreTypesMidiSense(getJson<bool>( ignoreTypes["midiSense"]));
 
-         auto midiRouteClock = getJsonObject(midirouteInputJsonObj["midiRouteClock"]);
-        midiRouteInput->setMidiRouteClockTimeSig(getJsonDouble( midiRouteClock["timeSig"]));
-        midiRouteInput->setMidiRouteClockTimeSigDivBy(getJsonDouble( midiRouteClock["timeSigDivBy"]));
-        midiRouteInput->setMidiRouteClockFromSppPos(getJsonDouble( midiRouteClock["fromSppPos"]));
+         auto midiRouteClock = getJson<QJsonObject>(midirouteInputJsonObj["midiRouteClock"]);
+        midiRouteInput->setMidiRouteClockTimeSig(getJson<double>( midiRouteClock["timeSig"]));
+        midiRouteInput->setMidiRouteClockTimeSigDivBy(getJson<double>( midiRouteClock["timeSigDivBy"]));
+        midiRouteInput->setMidiRouteClockFromSppPos(getJson<double>( midiRouteClock["fromSppPos"]));
 
 
         auto propegateInputs = getJsonArray(midiRouteClock["propegateInputs"]);
@@ -309,9 +309,9 @@ private:
         midiRouteInput->clearList<MidiRouteInputCc14bit *>();
         for (const auto &cc14bit : cc14bitAry) {
             auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
-            auto cc14bitObj = getJsonObject(cc14bit);
-            midiRouteInputCc14bit->setChannel(getJsonDouble(cc14bitObj["channel"]));
-            midiRouteInputCc14bit->setCc(getJsonDouble(cc14bitObj["cc"]));
+            auto cc14bitObj = getJson<QJsonObject>(cc14bit);
+            midiRouteInputCc14bit->setChannel(getJson<double>(cc14bitObj["channel"]));
+            midiRouteInputCc14bit->setCc(getJson<double>(cc14bitObj["cc"]));
             midiRouteInput->addListItem(midiRouteInputCc14bit);
         }
         recreateSettings<MidiRouteInput, MidiRouterChain>(midiRouteInput,midirouteInputJsonObj, "midiRouterChains");
@@ -500,11 +500,13 @@ private:
         QStringList s;
 
         for (const auto &value : getJsonArray(j)) {
-            s.append(getJsonString(value));
+            s.append(getJson<QString>(value));
         }
 
         return s;
     }
+
+
 
     //- {fn}
     QJsonArray getJsonArray(QJsonValueRef obj)
@@ -517,10 +519,12 @@ private:
         }
     }
 
-    //- {fn}
-    QJsonObject getJsonObject(QJsonValueRef obj)
-    //-only-file body
-    {
+    //-only-file header
+    template<typename T>
+    T getJson(QJsonValueRef obj);
+
+    template<>
+    QJsonObject getJson(QJsonValueRef obj){
         if (obj.isObject()){
             return obj.toObject();
         } else {
@@ -528,10 +532,8 @@ private:
         }
     }
 
-    //- {fn}
-    QString getJsonString(QJsonValueRef obj)
-    //-only-file body
-    {
+    template<>
+    QString  getJson(QJsonValueRef obj){
         if(obj.isString()){
             return obj.toString();
         } else {
@@ -539,10 +541,8 @@ private:
         }
     }
 
-    //- {fn}
-    bool getJsonBool(QJsonValueRef obj)
-    //-only-file body
-    {
+    template<>
+    bool  getJson(QJsonValueRef obj){
         if(obj.isBool()){
             return obj.toBool();
         } else {
@@ -550,16 +550,16 @@ private:
         }
     }
 
-    //- {fn}
-    double getJsonDouble(QJsonValueRef obj)
-    //-only-file body
-    {
+    template<>
+    double  getJson(QJsonValueRef obj){
         if(obj.isDouble()){
             return obj.toDouble();
         } else {
             throw std::runtime_error("Unexpected JSON format");
         }
     }
+
+
 
     //-only-file header
 };
