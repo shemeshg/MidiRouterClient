@@ -183,6 +183,26 @@ private:
     }
 
     //- {fn}
+    void setSettings(UserControl *userControl,QJsonObject &userControlJsonObj)
+    //-only-file body
+    {
+        userControl->setEventType(static_cast<UserControl::EventType>(getJsonDouble(userControlJsonObj["eventType"])));
+        userControl->setDescription(getJsonString( userControlJsonObj["description"]));
+        userControl->setInputVal(getJsonDouble(userControlJsonObj["inputVal"]));
+        userControl->setMinVal(getJsonDouble(userControlJsonObj["minVal"]));
+        userControl->setMaxVal(getJsonDouble(userControlJsonObj["maxVal"]));
+        userControl->setIs64Mode(getJsonBool(userControlJsonObj["is64Mode"]));
+        userControl->setIsEditMode(getJsonBool(userControlJsonObj["isEditMode"]));
+        userControl->setChannelId(getJsonDouble(userControlJsonObj["channelId"]));
+        userControl->setCcId(getJsonDouble(userControlJsonObj["ccId"]));
+        userControl->setNrpnControl(getJsonDouble(userControlJsonObj["nrpnControl"]));
+        userControl->setOutputPortnName(getJsonString(userControlJsonObj["outputPortnName"]));
+        userControl->setIsShowDropdown(getJsonBool(userControlJsonObj["isShowDropdown"]));
+        userControl->setDropdownListId(getJsonDouble(userControlJsonObj["dropdownListId"]));
+    }
+
+
+    //- {fn}
     void setSettings(MidiRouterChain *midiRouterChain,QJsonObject &midiRouterChainsJsonObj)
     //-only-file body
     {
@@ -194,33 +214,7 @@ private:
     void updateUserControls(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
     //-only-file body
     {
-        preset->clearList<UserControl *>(); //TEMPORARY TO TEST RECREATE
-        auto userControlsArray = getJsonArray(presetJsonObj["userControls"]);
-        purgeDeletedCreateMissingT<UserControl>(preset,userControlsArray);
-
-        for (const auto &value : userControlsArray) {
-            auto userControlJsonObj = getJsonObject(value);
-            QString uuid = getJsonString(userControlJsonObj["uuid"]);            
-            auto userControl = getObjByUuid(preset->userControls(),uuid);
-            if (userControl == nullptr) {
-                throw std::runtime_error("Unexpected JSON format");
-            }
-
-            userControl->setEventType(static_cast<UserControl::EventType>(getJsonDouble(userControlJsonObj["eventType"])));
-            userControl->setDescription(getJsonString( userControlJsonObj["description"]));
-            userControl->setInputVal(getJsonDouble(userControlJsonObj["inputVal"]));
-            userControl->setMinVal(getJsonDouble(userControlJsonObj["minVal"]));
-            userControl->setMaxVal(getJsonDouble(userControlJsonObj["maxVal"]));
-            userControl->setIs64Mode(getJsonBool(userControlJsonObj["is64Mode"]));
-            userControl->setIsEditMode(getJsonBool(userControlJsonObj["isEditMode"]));
-            userControl->setChannelId(getJsonDouble(userControlJsonObj["channelId"]));
-            userControl->setCcId(getJsonDouble(userControlJsonObj["ccId"]));
-            userControl->setNrpnControl(getJsonDouble(userControlJsonObj["nrpnControl"]));
-            userControl->setOutputPortnName(getJsonString(userControlJsonObj["outputPortnName"]));
-            userControl->setIsShowDropdown(getJsonBool(userControlJsonObj["isShowDropdown"]));
-            userControl->setDropdownListId(getJsonDouble(userControlJsonObj["dropdownListId"]));
-        }
-
+        recreateSettings<MidiRoutePreset, UserControl>(preset,presetJsonObj,"userControls");
     }
 
     //-only-file header
