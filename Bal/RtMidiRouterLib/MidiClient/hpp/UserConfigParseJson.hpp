@@ -40,7 +40,7 @@ public:
 
         updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
-        updateMidiRoutePresets(userDataConfigItf, jsonDoc["midiRoutePresets"]);
+        recreateSettings<UserDataConfig, MidiRoutePreset>(userDataConfigItf,jsonDoc,"midiRoutePresets");
 
 
         userDataConfigItf->setActivePreset(getJsonDouble( jsonDoc["_activePresetID"]), false);
@@ -138,74 +138,52 @@ private:
              jsonAry);
     }
 
-    //- {fn}
-    void updateMidiRoutePresets(UserDataConfig *userDataConfig, const QJsonValueRef &midiRoutePresets)
-    //-only-file body
-    {        
-        userDataConfig->clearList<MidiRoutePreset *>(); //TEMPORARY TO TEST RECREATE
-        auto midiRoutePresetsArray = getJsonArray(midiRoutePresets);
-        purgeDeletedCreateMissingT<MidiRoutePreset>(userDataConfig,midiRoutePresetsArray);
+    template<typename Parent, typename ChildListType>
+    void recreateSettings(Parent *parent, QJsonObject &midirouteInputJsonObj, QString arrayListKey){
+        parent->template clearList<ChildListType *>(); //TEMPORARY TO TEST RECREATE
+        auto midiRouterChainsArray = getJsonArray(midirouteInputJsonObj[arrayListKey]);
+        purgeDeletedCreateMissingT<ChildListType>(parent,midiRouterChainsArray);
 
+        for (const auto &value : midiRouterChainsArray) {
+            auto midiRouterChainsJsonObj = getJsonObject(value);
+            QString uuid = getJsonString(midiRouterChainsJsonObj["uuid"]);
 
-        for (const auto &value : midiRoutePresetsArray) {
-            auto valueObj = getJsonObject(value);
-            QString uuid = getJsonString(valueObj["uuid"]);
-            auto preset = getObjByUuid(userDataConfig->midiRoutePresets(),uuid);
-            if (preset == nullptr) {
+            auto midiRouterChain = getObjByUuid(parent->template listItems<ChildListType *>(),uuid);
+            if (midiRouterChain == nullptr) {
                 throw std::runtime_error("Unexpected JSON format");
             }
-            preset->setIsEnabled(getJsonBool( valueObj["isEnabled"]));
-            preset->setName(getJsonString(valueObj["name"]));
-            preset->setIsSendAllUserControls(getJsonBool(valueObj["isSendAllUserControls"]));
-
-
-            updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
-            updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
-
-            updateUserControls(preset, valueObj);
-            updateMidirouteInputs(preset, valueObj);
-            //Delete these two lines
+            setSettings(midiRouterChain, midiRouterChainsJsonObj);
         }
-
     }
+
+
     //- {fn}
     void updateMidirouteInputs(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
     //-only-file body
     {
-        preset->clearList<MidiRouteInput *>(); //TEMPORARY TO TEST RECREATE
-        auto midirouteInputsArray = getJsonArray(presetJsonObj["midiRouteInputs"]);
-        purgeDeletedCreateMissingT<MidiRouteInput>(preset,midirouteInputsArray);
 
+        recreateSettings<MidiRoutePreset, MidiRouteInput>(preset,presetJsonObj,"midiRouteInputs");
 
-        for (const auto &value : midirouteInputsArray) {
-            auto midirouteInputJsonObj = getJsonObject(value);
-            QString uuid = getJsonString(midirouteInputJsonObj["uuid"]);
-            auto midiRouteInput = getObjByUuid(preset->midiRouteInputs(),uuid);
-            if (midiRouteInput == nullptr) {
-                throw std::runtime_error("Unexpected JSON format");
-            }
-
-            setMidiRouteInputSettings(midiRouteInput, midirouteInputJsonObj);
-
-            midiRouteInput->clearMidiRouterChains(); //TEMPORARY TO TEST RECREATE
-            auto midiRouterChainsArray = getJsonArray(midirouteInputJsonObj["midiRouterChains"]);
-            purgeDeletedCreateMissingT<MidiRouterChain>(midiRouteInput,midiRouterChainsArray);
-
-            for (const auto &value : midiRouterChainsArray) {
-                auto midiRouterChainsJsonObj = getJsonObject(value);
-                QString uuid = getJsonString(midirouteInputJsonObj["uuid"]);
-
-                auto midiRouterChain = getObjByUuid(midiRouteInput->listItems<MidiRouterChain *>(),uuid);
-                if (midiRouteInput == nullptr) {
-                    throw std::runtime_error("Unexpected JSON format");
-                }
-                setMidiRouterChainSetiings(midiRouterChain, midiRouterChainsJsonObj);
-            }
-        }
     }
 
     //- {fn}
-    void setMidiRouterChainSetiings(MidiRouterChain *midiRouterChain,QJsonObject &midiRouterChainsJsonObj)
+    void setSettings(MidiRoutePreset *preset,QJsonObject &valueObj)
+    //-only-file body
+    {
+        preset->setIsEnabled(getJsonBool( valueObj["isEnabled"]));
+        preset->setName(getJsonString(valueObj["name"]));
+        preset->setIsSendAllUserControls(getJsonBool(valueObj["isSendAllUserControls"]));
+
+
+        updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"], PresetMidiControl::PresetMidiType::PRESET_ON);
+        updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"], PresetMidiControl::PresetMidiType::PRESET_OFF);
+
+        updateUserControls(preset, valueObj);
+        updateMidirouteInputs(preset, valueObj);
+    }
+
+    //- {fn}
+    void setSettings(MidiRouterChain *midiRouterChain,QJsonObject &midiRouterChainsJsonObj)
     //-only-file body
     {
         midiRouterChain->setName(getJsonString(midiRouterChainsJsonObj["name"]));
@@ -309,7 +287,7 @@ private:
     }
 
     //- {fn}
-    void setMidiRouteInputSettings(MidiRouteInput *midiRouteInput, QJsonObject &midirouteInputJsonObj)
+    void setSettings(MidiRouteInput *midiRouteInput, QJsonObject &midirouteInputJsonObj)
     //-only-file body
     {
         midiRouteInput->setMidiInputName(getJsonString( midirouteInputJsonObj["midiInputName"]));
@@ -342,6 +320,7 @@ private:
             midiRouteInputCc14bit->setCc(getJsonDouble(cc14bitObj["cc"]));
             midiRouteInput->addListItem(midiRouteInputCc14bit);
         }
+        recreateSettings<MidiRouteInput, MidiRouterChain>(midiRouteInput,midirouteInputJsonObj, "midiRouterChains");
     }
 
     //- {fn}
