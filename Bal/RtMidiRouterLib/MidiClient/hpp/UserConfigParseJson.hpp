@@ -4,9 +4,11 @@
 #pragma once
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
+//- #include "MidiClientUtil.h"
 //- #include "UserDataConfig.h"
 //-only-file null
 #include "UserDataConfig.hpp"
+#include "MidiClientUtil.hpp"
 //-only-file body //-
 //- #include "UserConfigParseJson.h"
 //-only-file header
@@ -65,7 +67,7 @@ private:
     {
         userDataConfig->clearList<Dropdownlist *>();
 
-        auto array = getJsonArray(dropdownlists);
+        auto array = getJson<QJsonArray>(dropdownlists);
         for (const auto &value : array) {
             auto obj = getJson<QJsonObject>(value);
             userDataConfig->addDropdownList(getJson<QString>(obj["name"]),
@@ -141,7 +143,7 @@ private:
     template<typename Parent, typename ChildListType>
     void recreateSettings(Parent *parent, QJsonObject &midirouteInputJsonObj, QString arrayListKey){
         parent->template clearList<ChildListType *>(); //TEMPORARY TO TEST RECREATE
-        auto midiRouterChainsArray = getJsonArray(midirouteInputJsonObj[arrayListKey]);
+        auto midiRouterChainsArray = getJson<QJsonArray>(midirouteInputJsonObj[arrayListKey]);
         purgeDeletedCreateMissingT<ChildListType>(parent,midiRouterChainsArray);
 
         for (const auto &value : midiRouterChainsArray) {
@@ -156,6 +158,28 @@ private:
         }
     }
 
+    template<typename ObjType>
+    class FieldSetter {
+    public:
+        FieldSetter(ObjType* obj, QJsonObject& jsonObj) : obj_(obj), jsonObj_(jsonObj) {}
+
+        template<typename FuncReturnType, typename Func>
+        void setField(Func func, const QString& tagName) {
+            std::function<void(FuncReturnType)> boundFunction = std::bind(func, obj_, std::placeholders::_1);
+            boundFunction(getJson<FuncReturnType>(jsonObj_[tagName]));
+        }
+
+    private:
+        ObjType* obj_;
+        QJsonObject &jsonObj_;
+    };
+
+    template<typename FuncReturnType, typename Func, typename Object>
+    void setField(Func func, QString tagName, Object *obj, QJsonObject &jsonObj) {
+        // Call the passed function with an example argument
+        std::function<void(FuncReturnType)>  boundFunction = std::bind(func, obj, std::placeholders::_1);
+        boundFunction(getJson<FuncReturnType>( jsonObj[tagName]));
+    }
 
     //- {fn}
     void updateMidirouteInputs(MidiRoutePreset *preset, QJsonObject &presetJsonObj)
@@ -186,19 +210,23 @@ private:
     void setSettings(UserControl *userControl,QJsonObject &userControlJsonObj)
     //-only-file body
     {
+
         userControl->setEventType(static_cast<UserControl::EventType>(getJson<double>(userControlJsonObj["eventType"])));
-        userControl->setDescription(getJson<QString>( userControlJsonObj["description"]));
-        userControl->setInputVal(getJson<double>(userControlJsonObj["inputVal"]));
-        userControl->setMinVal(getJson<double>(userControlJsonObj["minVal"]));
-        userControl->setMaxVal(getJson<double>(userControlJsonObj["maxVal"]));
-        userControl->setIs64Mode(getJson<bool>(userControlJsonObj["is64Mode"]));
-        userControl->setIsEditMode(getJson<bool>(userControlJsonObj["isEditMode"]));
-        userControl->setChannelId(getJson<double>(userControlJsonObj["channelId"]));
-        userControl->setCcId(getJson<double>(userControlJsonObj["ccId"]));
-        userControl->setNrpnControl(getJson<double>(userControlJsonObj["nrpnControl"]));
-        userControl->setOutputPortnName(getJson<QString>(userControlJsonObj["outputPortnName"]));
-        userControl->setIsShowDropdown(getJson<bool>(userControlJsonObj["isShowDropdown"]));
-        userControl->setDropdownListId(getJson<double>(userControlJsonObj["dropdownListId"]));
+
+        FieldSetter fst(userControl, userControlJsonObj);
+        fst.setField<QString>(&UserControl::setDescription,"description");
+        fst.setField<double>(&UserControl::setInputVal,"inputVal");
+        fst.setField<double>(&UserControl::setMinVal,"minVal");
+        fst.setField<double>(&UserControl::setMaxVal,"maxVal");
+        fst.setField<bool>(&UserControl::setIs64Mode,"is64Mode");
+        fst.setField<bool>(&UserControl::setIsEditMode,"isEditMode");
+        fst.setField<double>(&UserControl::setChannelId,"channelId");
+        fst.setField<double>(&UserControl::setCcId,"ccId");
+        fst.setField<double>(&UserControl::setNrpnControl,"nrpnControl");
+        fst.setField<QString>(&UserControl::setOutputPortnName,"outputPortnName");
+        fst.setField<bool>(&UserControl::setIsShowDropdown,"isShowDropdown");
+        fst.setField<double>(&UserControl::setDropdownListId,"dropdownListId");
+
     }
 
 
@@ -297,7 +325,7 @@ private:
         midiRouteInput->setMidiRouteClockFromSppPos(getJson<double>( midiRouteClock["fromSppPos"]));
 
 
-        auto propegateInputs = getJsonArray(midiRouteClock["propegateInputs"]);
+        auto propegateInputs = getJson<QJsonArray>(midiRouteClock["propegateInputs"]);
         QStringList propegateInputsList;
         for (const auto &propegateVal : propegateInputs) {
             propegateInputsList.push_back(propegateVal.toObject()["midiInputName"].toString());
@@ -305,7 +333,7 @@ private:
         midiRouteInput->setMidiRouteClockPropegateInputs(propegateInputsList);
 
 
-        auto cc14bitAry = getJsonArray(midirouteInputJsonObj["cc14bitAry"]);
+        auto cc14bitAry = getJson<QJsonArray>(midirouteInputJsonObj["cc14bitAry"]);
         midiRouteInput->clearList<MidiRouteInputCc14bit *>();
         for (const auto &cc14bit : cc14bitAry) {
             auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
@@ -493,71 +521,14 @@ private:
         return easyConfigRoute;
     }
 
-    //- {fn}
-    QStringList stringListFromJsonAry(const QJsonValueRef &j)
-    //-only-file body
-    {
-        QStringList s;
-
-        for (const auto &value : getJsonArray(j)) {
-            s.append(getJson<QString>(value));
-        }
-
-        return s;
-    }
 
 
 
-    //- {fn}
-    QJsonArray getJsonArray(QJsonValueRef obj)
-    //-only-file body
-    {
-        if (obj.isArray()){
-            return obj.toArray();
-        } else {
-            throw std::runtime_error("Unexpected JSON format");
-        }
-    }
 
-    //-only-file header
-    template<typename T>
-    T getJson(QJsonValueRef obj);
 
-    template<>
-    QJsonObject getJson(QJsonValueRef obj){
-        if (obj.isObject()){
-            return obj.toObject();
-        } else {
-            throw std::runtime_error("Unexpected JSON format");
-        }
-    }
 
-    template<>
-    QString  getJson(QJsonValueRef obj){
-        if(obj.isString()){
-            return obj.toString();
-        } else {
-            throw std::runtime_error("Unexpected JSON format");
-        }
-    }
 
-    template<>
-    bool  getJson(QJsonValueRef obj){
-        if(obj.isBool()){
-            return obj.toBool();
-        } else {
-            throw std::runtime_error("Unexpected JSON format");
-        }
-    }
 
-    template<>
-    double  getJson(QJsonValueRef obj){
-        if(obj.isDouble()){
-            return obj.toDouble();
-        } else {
-            throw std::runtime_error("Unexpected JSON format");
-        }
-    }
 
 
 

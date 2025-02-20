@@ -3,9 +3,13 @@
 //-only-file header //-
 #pragma once
 #include <QString>
+#include <QJsonValueRef>
+#include <QJsonObject>
+#include <QJsonArray>
 //-only-file body //-
 //- #include "MidiClientUtil.h"
 #include <QUuid>
+
 //-only-file null
 //-only-file header
 //-var {PRE} ""
@@ -38,5 +42,82 @@ void moveItem(std::vector<T>& vec, int intFrom, int intTo)
     } else {
         std::rotate(vec.begin() + intTo, vec.begin() + intFrom, vec.begin() + intFrom + 1);
     }
+}
+//-only-file header
+
+template<typename T>
+T getJson(QJsonValueRef obj);
+
+//- {fn}
+template<>
+QJsonArray getJson(QJsonValueRef obj)
+//-only-file body
+{
+    if (obj.isArray()){
+        return obj.toArray();
+    } else {
+        throw std::runtime_error("Unexpected JSON format");
+    }
+}
+
+//- {fn}
+template<>
+QJsonObject getJson(QJsonValueRef obj)
+//-only-file body
+{
+    if (obj.isObject()){
+        return obj.toObject();
+    } else {
+        throw std::runtime_error("Unexpected JSON format");
+    }
+}
+
+//- {fn}
+template<>
+QString  getJson(QJsonValueRef obj)
+//-only-file body
+{
+    if(obj.isString()){
+        return obj.toString();
+    } else {
+        throw std::runtime_error("Unexpected JSON format");
+    }
+}
+
+//- {fn}
+template<>
+bool  getJson(QJsonValueRef obj)
+//-only-file body
+{
+    if(obj.isBool()){
+        return obj.toBool();
+    } else {
+        throw std::runtime_error("Unexpected JSON format");
+    }
+}
+
+//- {fn}
+template<>
+double  getJson(QJsonValueRef obj)
+//-only-file body
+{
+    if(obj.isDouble()){
+        return obj.toDouble();
+    } else {
+        throw std::runtime_error("Unexpected JSON format");
+    }
+}
+
+//- {fn}
+QStringList stringListFromJsonAry(const QJsonValueRef &j)
+//-only-file body
+{
+    QStringList s;
+
+    for (const auto &value : getJson<QJsonArray>(j)) {
+        s.append(getJson<QString>(value));
+    }
+
+    return s;
 }
 //-only-file header
