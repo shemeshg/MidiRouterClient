@@ -242,15 +242,10 @@ private:
     }
 
     //- {fn}
-    void setSettings(MidiRouterChain *midiRouterChain,
-                     QJsonObject &midiRouterChainsJsonObj)
+    void setFilterSettings(MidiRouterChain *midiRouterChain,
+                           QJsonObject &midiRouterChainsJsonObj)
     //-only-file body
     {
-        FieldSetter fst(midiRouterChain, midiRouterChainsJsonObj);
-        fst.setField<QString>(&MidiRouterChain::setName, "name");
-        fst.setField<bool>(&MidiRouterChain::setIsEasyConfig, "isEasyConfig");
-
-
         midiRouterChain->clearMidiRoutersFilters(); // TEMPORARY TO TEST RECREATE
 
         auto midiRouterFiltersArray =
@@ -261,7 +256,7 @@ private:
                 auto itm = midiRouterChain->midiRoutersFilters().at(idx);
                 MidiRoutersFilter* filterPtr = nullptr;
                 if (itm.canConvert<MidiRoutersFilter*>()) {
-                   filterPtr  = qvariant_cast<MidiRoutersFilter*>(itm);
+                    filterPtr  = qvariant_cast<MidiRoutersFilter*>(itm);
                 }
                 if (filterPtr == nullptr){
                     throw std::runtime_error("Unexpected JSON format");
@@ -269,14 +264,14 @@ private:
 
 
                 return filterPtr->uuid();
-        },
+            },
             [&midiRouterChain](QString uuid, QJsonObject filterJsonObj) {
                 int filterType = getJson<double>(filterJsonObj["filterType"]);
 
                 if (filterType == static_cast<int>(MidiRoutersFilter::FilterType::TO_MIDI_DESTINATION)){
                     auto item = midiRouterChain->addFilterMidiDestination(
                         getJson<QString>(filterJsonObj["midiInputName"])
-                            );
+                        );
                     item->setUuid(uuid);
                 } else if (filterType == static_cast<int>(MidiRoutersFilter::FilterType::TO_CONSOLE)){
                     auto item = midiRouterChain->addFilterToConsole(
@@ -287,7 +282,7 @@ private:
                     auto item = midiRouterChain->addFilterFilterSchedule(
                         static_cast<FilterSchedule::DefferedType>(
                             getJson<double>(filterJsonObj["defferedType"])),
-                            getJson<double>(filterJsonObj["defferedTo"]));
+                        getJson<double>(filterJsonObj["defferedTo"]));
                     item->setUuid(uuid);
                 } else if (filterType == static_cast<int>(MidiRoutersFilter::FilterType::TO_NETWORK)){
                     auto item = midiRouterChain->addFilterNetworkDestination(
@@ -318,6 +313,19 @@ private:
             midiRouterFiltersArray);
 
 
+    }
+
+    //- {fn}
+    void setSettings(MidiRouterChain *midiRouterChain,
+                     QJsonObject &midiRouterChainsJsonObj)
+    //-only-file body
+    {
+        FieldSetter fst(midiRouterChain, midiRouterChainsJsonObj);
+        fst.setField<QString>(&MidiRouterChain::setName, "name");
+        fst.setField<bool>(&MidiRouterChain::setIsEasyConfig, "isEasyConfig");
+
+
+        setFilterSettings(midiRouterChain, midiRouterChainsJsonObj);
     }
 
     //- {fn}
