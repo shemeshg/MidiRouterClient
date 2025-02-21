@@ -282,14 +282,7 @@ private:
         return midiRouterChains;
     }
 
-    //- {fn}
-    QJsonObject getBaseMidiRouteInput(QString strMidiInputName)
-    //-only-file body
-    {
-        QJsonObject obj;
-        obj["midiInputName"] = strMidiInputName;
-        return obj;
-    }
+
 
     //- {fn}
     QJsonArray getMidiRoutersFilters(QList<QVariant> midiRoutersFilters)
@@ -303,7 +296,7 @@ private:
                 auto filter = midiRoutersFilter.value<FilterMidiDestination*>();
                 filterObj["uuid"] = filter->uuid();
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
-                filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->baseMidiRouteInput());
+                filterObj["midiInputName"]= filter->baseMidiRouteInput();
                 ary.append(filterObj);
             } else if (midiRoutersFilter.canConvert<FilterToConsole*>()) {
                 auto filter = midiRoutersFilter.value<FilterToConsole*>();
@@ -327,7 +320,7 @@ private:
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
                 filterObj["serverName"] = filter->serverName();
                 filterObj["serverPort"] = filter->serverPort();
-                filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->baseMidiRouteInput());
+                filterObj["midiInputName"]= filter->baseMidiRouteInput();
 
                 ary.append(filterObj);
             } else if (midiRoutersFilter.canConvert<FilterAndTransform*>()) {

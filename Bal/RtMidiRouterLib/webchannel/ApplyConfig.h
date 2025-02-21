@@ -223,9 +223,8 @@ private:
             if (filter["filterType"].toInt() ==
                 static_cast<int>(FilterType::TO_MIDI_DESTINATION))
             {
-                qDebug() << "** SENDING " << filter["baseMidiRouteInput"].toObject()["midiInputName"].toString();
-                int outPortNumber = wcmidiout->getPortNumber(filter["baseMidiRouteInput"]
-                                                                 .toObject()["midiInputName"]
+                qDebug() << "** SENDING " << filter["midiInputName"].toString();
+                int outPortNumber = wcmidiout->getPortNumber(filter["midiInputName"]
                                                                  .toString());
 
                 qDebug() << "** id " << outPortNumber;
@@ -254,7 +253,7 @@ private:
             }
             else if (filter["filterType"].toInt() == static_cast<int>(FilterType::TO_NETWORK))
             {
-                QString remotePortName = filter["baseMidiRouteInput"].toObject()["midiInputName"].toString();
+                QString remotePortName = filter["midiInputName"].toString();
                 auto ok = wcmidiin->routingActionAddSendRemoteServerByRemotePortName(portNumber, chainId,
                                                                            filter["serverName"].toString(),
                                                                            filter["serverPort"].toInt(),
