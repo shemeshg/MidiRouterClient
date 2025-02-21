@@ -5,7 +5,9 @@
 //- #include "../genPrpt/FilterNetworkDestinationPrivate.h"
 //-only-file body //-
 //- #include "FilterNetworkDestination.h"
+//- #include "MidiClientUtil.h"
 //-only-file null
+#include "MidiClientUtil.hpp"
 #include "../genPrpt/FilterNetworkDestinationPrivate.hpp"
 //-only-file header
 
@@ -24,6 +26,7 @@ public:
     : FilterNetworkDestinationPrivate{parent}
     {
         setFilterType( FilterType::TO_NETWORK);
+        setUuid(getUuId());
     };
 
     //-only-file header

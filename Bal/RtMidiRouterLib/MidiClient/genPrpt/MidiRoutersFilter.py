@@ -3,6 +3,7 @@ from property import create_prpt, PrptClass, EnumClass
 
 
 ary = [
+    create_prpt("QString", 'uuid'),
     create_prpt("FilterType", 'filterType'),
     create_prpt("QString", 'name'),
 ]

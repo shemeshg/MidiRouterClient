@@ -3,9 +3,11 @@
 //-only-file header //-
 #pragma once
 //- #include "../genPrpt/FilterAndTransformPrivate.h"
+//- #include "MidiClientUtil.h"
 //-only-file body //-
 //- #include "FilterAndTransform.h"
 //-only-file null
+#include "MidiClientUtil.hpp"
 #include "../genPrpt/FilterAndTransformPrivate.hpp"
 //-only-file header
 
@@ -24,6 +26,7 @@ public:
     : FilterAndTransformPrivate{parent}
     {
          setFilterType( FilterType::FILTER_AND_TRANSFORM);
+        setUuid(getUuId());
     };
 
     //-only-file header

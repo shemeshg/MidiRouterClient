@@ -22,6 +22,7 @@ cog.outl(prptClass.getClassHeader(),
 class MidiRoutersFilter : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(FilterType filterType READ filterType WRITE setFilterType NOTIFY filterTypeChanged )
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
     
@@ -39,6 +40,18 @@ enum class FilterType {
         TO_MIDI_DESTINATION, TO_CONSOLE, TO_NETWORK, SCHEDULE_TO, FILTER_AND_TRANSFORM
     };
 Q_ENUM(FilterType)
+
+    
+    QString uuid() const{return m_uuid;} 
+    
+void setUuid(const QString &newUuid)
+    {
+        if (m_uuid == newUuid)
+            return;
+        m_uuid = newUuid;
+        emit uuidChanged();
+    }
+
 
     
     FilterType filterType() const{return m_filterType;} 
@@ -77,6 +90,7 @@ void setName(const QString &newName)
     
     
 signals:
+    void uuidChanged();
     void filterTypeChanged();
     void nameChanged();
     
@@ -85,6 +99,7 @@ protected:
     
 
 private:
+    QString m_uuid;
     FilterType m_filterType;
     QString m_name;
     

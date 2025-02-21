@@ -5,7 +5,9 @@
 //- #include "../genPrpt/FilterSchedulePrivate.h"
 //-only-file body //-
 //- #include "FilterSchedule.h"
+//- #include "MidiClientUtil.h"
 //-only-file null
+#include "MidiClientUtil.hpp"
 #include "../genPrpt/FilterSchedulePrivate.hpp"
 //-only-file header
 
@@ -23,6 +25,7 @@ public:
     : FilterSchedulePrivate{parent}
     {
         setFilterType( FilterType::SCHEDULE_TO);
+        setUuid(getUuId());
     };
 
     //-only-file header

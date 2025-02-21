@@ -78,18 +78,20 @@ private:
 
     //- {fn}
     void purgeDeletedCreateMissing(const std::function<QString(int)>& getUuid,
-                                   const std::function<void(QString)>& createNewObject,
+                                   const std::function<void(QString, QJsonObject )>& createNewObject,
                                    const int qlistObjSize,
                                    const std::function<void(int)>& qlistRemoveAt,
                                    QJsonArray &midiRoutePresetsArray)
     //-only-file body
     {
         QStringList presetUuidInJson;
-
+        QMap<QString,QJsonObject> presetUuidInJsonMap;
 
         for (const auto &value : midiRoutePresetsArray) {
             auto valueObj = getJson<QJsonObject>(value);
-            presetUuidInJson.push_back( getJson<QString>(valueObj["uuid"]));
+            QString uuid =  getJson<QString>(valueObj["uuid"]);
+            presetUuidInJson.push_back(uuid);
+            presetUuidInJsonMap[uuid] = valueObj;
         }
 
         QStringList uuidInPresets;
@@ -105,8 +107,8 @@ private:
         }
 
         for (const auto &j: presetUuidInJson){
-            if (!uuidInPresets.contains(j)){
-                createNewObject(j);
+            if (!uuidInPresets.contains(j)){                
+                createNewObject(j, presetUuidInJsonMap[j]);
             }
         }
     }
@@ -128,7 +130,7 @@ private:
             ([&userDataConfig](int idx){
                 return userDataConfig->template listItems<T *>().at(idx)->uuid();
             },
-             [&userDataConfig](QString uuid){
+             [&userDataConfig](QString uuid, QJsonObject){
                  T *preset = new T();
                  userDataConfig->addListItem(preset);
                  preset->setUuid(uuid);

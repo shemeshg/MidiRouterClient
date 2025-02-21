@@ -5,7 +5,9 @@
 //- #include "../genPrpt/FilterToConslePrivate.h"
 //-only-file body //-
 //- #include "FilterToConsle.h"
+//- #include "MidiClientUtil.h"
 //-only-file null
+#include "MidiClientUtil.hpp"
 #include "../genPrpt/FilterToConslePrivate.hpp"
 //-only-file header
 
@@ -25,6 +27,7 @@ public:
     {
          setFilterType( FilterType::TO_CONSOLE);
          setUserdata("{}");
+         setUuid(getUuId());
     }
 
     //-only-file header

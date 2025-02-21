@@ -298,20 +298,24 @@ private:
         QJsonArray ary;
         for (const auto &midiRoutersFilter: midiRoutersFilters ){
             QJsonObject filterObj;
+
             if (midiRoutersFilter.canConvert<FilterMidiDestination*>()) {
                 auto filter = midiRoutersFilter.value<FilterMidiDestination*>();
+                filterObj["uuid"] = filter->uuid();
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
                 filterObj["baseMidiRouteInput"]= getBaseMidiRouteInput(filter->baseMidiRouteInput());
                 ary.append(filterObj);
             } else if (midiRoutersFilter.canConvert<FilterToConsole*>()) {
                 auto filter = midiRoutersFilter.value<FilterToConsole*>();
+                filterObj["uuid"] = filter->uuid();
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
                 filterObj["logTo"] = static_cast<int>(filter->logTo());
                 filterObj["userdata"] = filter->userdata();
 
                 ary.append(filterObj);
-            } else if (midiRoutersFilter.canConvert<FilterSchedule*>()) {
+            } else if (midiRoutersFilter.canConvert<FilterSchedule*>()) {                
                 auto filter = midiRoutersFilter.value<FilterSchedule*>();
+                filterObj["uuid"] = filter->uuid();
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
                 filterObj["defferedType"] = static_cast<int>(filter->defferedType());
                 filterObj["defferedTo"] = static_cast<int>(filter->defferedTo());
@@ -319,6 +323,7 @@ private:
                 ary.append(filterObj);
             } else if (midiRoutersFilter.canConvert<FilterNetworkDestination*>()) {
                 auto filter = midiRoutersFilter.value<FilterNetworkDestination*>();
+                filterObj["uuid"] = filter->uuid();
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
                 filterObj["serverName"] = filter->serverName();
                 filterObj["serverPort"] = filter->serverPort();
@@ -327,6 +332,7 @@ private:
                 ary.append(filterObj);
             } else if (midiRoutersFilter.canConvert<FilterAndTransform*>()) {
                 auto filter = midiRoutersFilter.value<FilterAndTransform*>();
+                filterObj["uuid"] = filter->uuid();
                 filterObj["filterType"] = static_cast<int>(filter->filterType());
                 filterObj["name"] = filter->name();
                 filterObj["conditionAction"] = static_cast<int>(filter->conditionAction());

@@ -6,7 +6,9 @@
 
 //-only-file body //-
 //- #include "FilterMidiDestination.h"
+//- #include "MidiClientUtil.h"
 //-only-file null
+#include "MidiClientUtil.hpp"
 #include "../genPrpt/FilterMidiDestinationPrivate.hpp"
 //-only-file header
 
@@ -24,6 +26,7 @@ public:
     : FilterMidiDestinationPrivate{parent}
     {
         setFilterType( FilterType::TO_MIDI_DESTINATION);
+        setUuid(getUuId());
     };
 
     //-only-file header
