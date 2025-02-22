@@ -24,9 +24,9 @@ public:
     {
 
         userDataConfigItf->setConnectedInPorts(
-            stringListFromJsonAry(jsonDoc["connectedInPorts"]));
+            convertJsonArrayToQList<QString>(jsonDoc["connectedInPorts"]));
         userDataConfigItf->setConnectedOutPorts(
-            stringListFromJsonAry(jsonDoc["connectedOutPorts"]));
+            convertJsonArrayToQList<QString>(jsonDoc["connectedOutPorts"]));
 
         bool isServerInitialConfig = !jsonDoc["uniqueId"].isString();
         if (isServerInitialConfig) {
@@ -40,7 +40,7 @@ public:
         }
 
         updateVirtualInPorts(userDataConfigItf,
-                             stringListFromJsonAry(jsonDoc["virtualInPorts"]));
+                             convertJsonArrayToQList<QString>(jsonDoc["virtualInPorts"]));
 
         updateDropdownlists(userDataConfigItf, jsonDoc["dropdownlists"]);
 
@@ -583,16 +583,16 @@ private:
     {
 
         if (value["keyboardSplits"].isArray()) {
-            QList<int> keyboardSplits =
-                convertJsonArrayToQList<int>(getJson<QJsonArray>(value["keyboardSplits"]));
-            easyConfigEntry->setKeyboardSplits(keyboardSplits);
+            //QList<int> keyboardSplits =
+            //    convertJsonArrayToQList<int>(getJson<QJsonArray>(value["keyboardSplits"]));
+            //easyConfigEntry->setKeyboardSplits(keyboardSplits);
         }
 
         if (value["zoneNames"].isArray()) {
 
-            QStringList zoneNames =
-                convertJsonArrayToQList<QString>(getJson<QJsonArray>(value["zoneNames"]));
-            easyConfigEntry->setZoneNames(zoneNames);
+            //QStringList zoneNames =
+            //    convertJsonArrayToQList<QString>(getJson<QJsonArray>(value["zoneNames"]));
+            //easyConfigEntry->setZoneNames(zoneNames);
         }
 
         if (value["easyConfigRoutes"].isArray()) {
