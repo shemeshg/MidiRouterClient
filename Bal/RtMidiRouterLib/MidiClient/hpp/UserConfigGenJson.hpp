@@ -6,20 +6,14 @@
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
-//- #include "../genPrpt/Dropdownlist.h"
-//- #include "MidiRoutePreset.h"
-
-//-only-file null
-#include "MidiRoutePreset.hpp"
-#include "../genPrpt/Dropdownlist.hpp"
+//- {include-body}
+#include "MidiRoutePreset.hpp" //- #include "MidiRoutePreset.h"
+//- {include-body}
+#include "../genPrpt/Dropdownlist.hpp" //- #include "../genPrpt/Dropdownlist.h"
 //-only-file body //-
 //- #include "UserConfigGenJson.h"
-//- #include "GenHpp/MidiPresetControlEasyConfig.h"
-//- #include "FilterMidiDestination.h"
-//- #include "FilterNetworkDestination.h"
+
 //-only-file header
-
-
 //-var {PRE} "UserConfigGenJson::"
 class UserConfigGenJson
 {
