@@ -2,16 +2,16 @@
 //-define-file header GenHpp/FilterMidiDestination.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/FilterMidiDestinationPrivate.h"
-
 //-only-file body //-
 //- #include "FilterMidiDestination.h"
-//- #include "MidiClientUtil.h"
-//-only-file null
-#include "MidiClientUtil.hpp"
-#include "../genPrpt/FilterMidiDestinationPrivate.hpp"
-//-only-file header
+//- {include-header}
+#include "../genPrpt/FilterMidiDestinationPrivate.hpp" //- #include "../genPrpt/FilterMidiDestinationPrivate.h"
+//- {include-body}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
 
+
+
+//-only-file header
 //-var {PRE} "FilterMidiDestination::"
 class FilterMidiDestination : public FilterMidiDestinationPrivate
 

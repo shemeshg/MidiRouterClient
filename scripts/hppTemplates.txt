@@ -10,3 +10,15 @@
 //-     {NEXT[0:1]} {PRE}{NEXT[1:]} 
 //-only-file header ;
 //-end-template
+
+//-template {include-header}
+//-only-file header  //-
+//- {NEXT[2:]}
+//-only-file null
+//-end-template
+
+//-template {include-body}
+//-only-file body  //-
+//- {NEXT[2:]}
+//-only-file null
+//-end-template

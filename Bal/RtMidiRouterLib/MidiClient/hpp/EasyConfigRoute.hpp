@@ -2,16 +2,13 @@
 //-define-file header GenHpp/EasyConfigRoute.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/EasyConfigRoutePrivate.h"
 //-only-file body //-
 //- #include "EasyConfigRoute.h"
-//-only-file null
-#include "../genPrpt/EasyConfigRoutePrivate.hpp"
+
+//- {include-header}
+#include "../genPrpt/EasyConfigRoutePrivate.hpp" //- #include "../genPrpt/EasyConfigRoutePrivate.h"
+
 //-only-file header
-
-
-
-
 struct EasyConfigRouteFilter{
     QString channelFilter, eventFilter, data1Filter, data2Filter;
     bool isAllDefault;

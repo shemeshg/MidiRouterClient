@@ -2,16 +2,16 @@
 //-define-file header GenHpp/FilterAndTransform.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/FilterAndTransformPrivate.h"
-//- #include "MidiClientUtil.h"
 //-only-file body //-
 //- #include "FilterAndTransform.h"
-//-only-file null
-#include "MidiClientUtil.hpp"
-#include "../genPrpt/FilterAndTransformPrivate.hpp"
+//- {include-header}
+#include "../genPrpt/FilterAndTransformPrivate.hpp" //- #include "../genPrpt/FilterAndTransformPrivate.h"
+//- {include-body}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+
+
+
 //-only-file header
-
-
 //-var {PRE} "FilterAndTransform::"
 class FilterAndTransform : public FilterAndTransformPrivate
 

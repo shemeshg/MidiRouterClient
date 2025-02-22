@@ -4,14 +4,12 @@
 #pragma once
 #include <QJsonArray>
 #include <QJsonObject>
-//- #include "../genPrpt/EasyConfigPrivate.h"
 //-only-file body //-
 //- #include "EasyConfig.h"
-//-only-file null
-#include "../genPrpt/EasyConfigPrivate.hpp"
+//- {include-header}
+#include "../genPrpt/EasyConfigPrivate.hpp" //- #include "../genPrpt/EasyConfigPrivate.h"
+
 //-only-file header
-
-
 //-var {PRE} "EasyConfig::"
 class EasyConfig : public EasyConfigPrivate
 
