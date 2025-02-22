@@ -132,12 +132,10 @@ public:
 
             QList<int> vKeyboardSplits = keyboardSplits;
             if (!vKeyboardSplits.contains(8)) {
-                vKeyboardSplits.append(8);
-                vSplitRangeId++;
+                vKeyboardSplits.append(8);                
             }
             if (!vKeyboardSplits.contains(98)) {
-                vKeyboardSplits.append(98);
-                vSplitRangeId++;
+                vKeyboardSplits.append(98);                
             }
             sortUniq(vKeyboardSplits);
             int fromKey = vKeyboardSplits.at(vSplitRangeId);
