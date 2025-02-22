@@ -48,6 +48,11 @@ void moveItem(std::vector<T>& vec, int intFrom, int intTo)
 template<typename T>
 T getJson(QJsonValueRef obj);
 
+template<typename T>
+T getJson(QJsonValue obg){
+    return getJson<T>(obg);
+}
+
 //- {fn}
 template<>
 QJsonArray getJson(QJsonValueRef obj)
@@ -120,4 +125,16 @@ QStringList stringListFromJsonAry(const QJsonValueRef &j)
 
     return s;
 }
+
 //-only-file header
+template<typename T>
+QList<T>  convertJsonArrayToQList(const QJsonArray &array)
+{
+    QList<T>  stringList;
+    for (const QJsonValue &value : array) {
+        stringList.append(getJson<T>(value));
+    }
+    return stringList;
+}
+
+

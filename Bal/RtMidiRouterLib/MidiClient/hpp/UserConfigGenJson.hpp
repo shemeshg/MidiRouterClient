@@ -171,9 +171,7 @@ private:
     {
         QJsonArray ary;
         for (const auto &keyboardSplit: keyboardSplits){
-            QJsonObject obj;
-            obj["splitPosition"] = keyboardSplit;
-            ary.append(obj);
+            ary.append(keyboardSplit);
         }
         return ary;
     }

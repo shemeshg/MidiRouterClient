@@ -584,13 +584,14 @@ private:
 
         if (value["keyboardSplits"].isArray()) {
             QList<int> keyboardSplits =
-                extractKeyboardSplits(value["keyboardSplits"].toArray());
+                convertJsonArrayToQList<int>(getJson<QJsonArray>(value["keyboardSplits"]));
             easyConfigEntry->setKeyboardSplits(keyboardSplits);
         }
 
         if (value["zoneNames"].isArray()) {
+
             QStringList zoneNames =
-                convertToQStringList(value["zoneNames"].toArray());
+                convertJsonArrayToQList<QString>(getJson<QJsonArray>(value["zoneNames"]));
             easyConfigEntry->setZoneNames(zoneNames);
         }
 
@@ -615,16 +616,7 @@ private:
         return keyboardSplits;
     }
 
-    //- {fn}
-    QStringList convertToQStringList(const QJsonArray &array)
-    //-only-file body
-    {
-        QStringList stringList;
-        for (const QJsonValue &value : array) {
-            stringList.append(value.toString());
-        }
-        return stringList;
-    }
+
 
     //- {fn}
     EasyConfigRoute *createEasyConfigRoute(const QJsonObject &value)
