@@ -115,10 +115,7 @@ private:
     QJsonObject getEasyConfig(EasyConfig * easyConfig)
     //-only-file body
     {
-        QJsonObject obj;
-        //auto inputZonesAndRoutes = obj["inputZonesAndRoutes"].toObject();
 
-        QJsonArray inputZonesAndRoutes;
 
 
         QJsonObject  easyConfigInput;
@@ -126,10 +123,7 @@ private:
         easyConfigInput["zoneNames"] = getStringListToJsonAry(easyConfig->zoneNames());
         easyConfigInput["easyConfigRoutes"] = getEasyConfigRoutes(easyConfig->easyConfigRoutes());
 
-        inputZonesAndRoutes.append(easyConfigInput);
-
-        obj["inputZonesAndRoutes"] = inputZonesAndRoutes;
-        return obj;
+        return easyConfigInput;
     }
 
     //- {fn}
