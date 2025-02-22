@@ -110,6 +110,17 @@ double  getJson(QJsonValueRef obj)
     }
 }
 
+//- {fn}
+template<>
+int  getJson(QJsonValueRef obj)
+//-only-file body
+{
+    if(obj.isDouble()){
+        return obj.toDouble();
+    } else {
+        throw std::runtime_error("Unexpected JSON format");
+    }
+}
 
 //-only-file header
 template<typename T>

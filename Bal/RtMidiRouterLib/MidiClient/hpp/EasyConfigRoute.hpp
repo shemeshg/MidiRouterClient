@@ -7,6 +7,8 @@
 
 //- {include-header}
 #include "../genPrpt/EasyConfigRoutePrivate.hpp" //- #include "../genPrpt/EasyConfigRoutePrivate.h"
+//- {include-header}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
 
 //-only-file header
 struct EasyConfigRouteFilter{
@@ -41,6 +43,7 @@ public:
         setToData1(-1);
 
         setToDestinationName("");
+        setUuid(getUuId());
 
     };
 

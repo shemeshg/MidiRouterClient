@@ -3,6 +3,7 @@ from property import create_prpt, PrptClass
 
 
 ary = [
+    create_prpt("QString", 'uuid'),
     create_prpt("int", 'splitRangeId'),
     create_prpt("int", 'fromSelectedMidiEventTypeId'),
     create_prpt("int", 'fromChannel'),

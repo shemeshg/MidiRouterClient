@@ -2,13 +2,13 @@
 //-define-file header GenHpp/MidiRouteInput.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/MidiRouteInputPrivate.h"
-//- #include "MidiClientUtil.h"
 //-only-file body //-
 //- #include "MidiRouteInput.h"
-//-only-file null
-#include "../genPrpt/MidiRouteInputPrivate.hpp"
-#include "MidiClientUtil.hpp"
+
+//- {include-header}
+#include "../genPrpt/MidiRouteInputPrivate.hpp" //- #include "../genPrpt/MidiRouteInputPrivate.h"
+//- {include-header}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
 //-only-file header
 
 

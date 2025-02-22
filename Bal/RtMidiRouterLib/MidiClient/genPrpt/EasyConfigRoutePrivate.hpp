@@ -20,6 +20,7 @@ cog.outl(prptClass.getClassHeader(),
 class EasyConfigRoutePrivate : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(int splitRangeId READ splitRangeId WRITE setSplitRangeId NOTIFY splitRangeIdChanged )
     Q_PROPERTY(int fromSelectedMidiEventTypeId READ fromSelectedMidiEventTypeId WRITE setFromSelectedMidiEventTypeId NOTIFY fromSelectedMidiEventTypeIdChanged )
     Q_PROPERTY(int fromChannel READ fromChannel WRITE setFromChannel NOTIFY fromChannelChanged )
@@ -44,6 +45,18 @@ public:
     }
 
     
+    
+    QString uuid() const{return m_uuid;} 
+    
+void setUuid(const QString &newUuid)
+    {
+        if (m_uuid == newUuid)
+            return;
+        m_uuid = newUuid;
+        emit uuidChanged();
+    }
+
+
     
     int splitRangeId() const{return m_splitRangeId;} 
     
@@ -213,6 +226,7 @@ void setToDestinationName(const QString &newToDestinationName)
     
     
 signals:
+    void uuidChanged();
     void splitRangeIdChanged();
     void fromSelectedMidiEventTypeIdChanged();
     void fromChannelChanged();
@@ -232,6 +246,7 @@ protected:
     
 
 private:
+    QString m_uuid;
     int m_splitRangeId;
     int m_fromSelectedMidiEventTypeId;
     int m_fromChannel;

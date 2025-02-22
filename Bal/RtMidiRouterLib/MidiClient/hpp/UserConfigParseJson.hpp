@@ -14,8 +14,6 @@
 //-only-file header
 
 
-
-
 //-var {PRE} "UserConfigParseJson::"
 class UserConfigParseJson {
 public:
@@ -222,6 +220,26 @@ private:
     }
 
     //- {fn}
+    void setSettings(EasyConfigRoute *easyConfigRoute, QJsonObject &easyConfigRouteJsonObj)
+    //-only-file body
+    {
+        FieldSetter fst(easyConfigRoute, easyConfigRouteJsonObj);
+        fst.setField<int>(&EasyConfigRoute::setFromCcOrNrpnEnd, "fromCcOrNrpnEnd");
+        fst.setField<int>(&EasyConfigRoute::setFromCcOrNrpnStart, "fromCcOrNrpnStart");
+        fst.setField<int>(&EasyConfigRoute::setFromChannel, "fromChannel");
+        fst.setField<int>(&EasyConfigRoute::setFromData1, "fromData1");
+        fst.setField<int>(&EasyConfigRoute::setFromSelectedMidiEventTypeId, "fromSelectedMidiEventTypeId");
+        fst.setField<int>(&EasyConfigRoute::setSplitRangeId, "splitRangeId");
+        fst.setField<int>(&EasyConfigRoute::setToCcOrNrpnEnd, "toCcOrNrpnEnd");
+        fst.setField<int>(&EasyConfigRoute::setToCcOrNrpnStart, "toCcOrNrpnStart");
+        fst.setField<int>(&EasyConfigRoute::setToChannel, "toChannel");
+        fst.setField<int>(&EasyConfigRoute::setToData1, "toData1");
+        fst.setField<QString>(&EasyConfigRoute::setToDestinationName, "toDestinationName");
+        fst.setField<int>(&EasyConfigRoute::setToSelectedMidiEventTypeId, "toSelectedMidiEventTypeId");
+        fst.setField<int>(&EasyConfigRoute::setTranspose, "transpose");
+    }
+
+    //- {fn}
     void setSettings(UserControl *userControl, QJsonObject &userControlJsonObj)
     //-only-file body
     {
@@ -329,6 +347,7 @@ private:
 
 
         setFilterSettings(midiRouterChain, midiRouterChainsJsonObj);
+
     }
 
     //- {fn}
@@ -339,39 +358,7 @@ private:
                                                        "userControls");
     }
 
-    //-only-file header
-    /*
-  MidiRoutePreset* createMidiRoutePreset(UserDataConfigItf *userDataConfig,
-  const QJsonValueRef &value)
-  {
-      auto preset = new MidiRoutePreset(userDataConfig->computerUuid());
 
-      preset->setName(value["name"].toString());
-      preset->setIsSendAllUserControls(value["isSendAllUserControls"].toBool());
-      preset->setUuid(value["uuid"].toString());
-      preset->setIsEnabled(value["isEnabled"].toBool());
-
-      updateMidiControl(preset->midiControlOn(), value["midiControlOn"],
-  PresetMidiControl::PresetMidiType::PRESET_ON);
-      updateMidiControl(preset->midiControlOff(), value["midiControlOff"],
-  PresetMidiControl::PresetMidiType::PRESET_OFF);
-
-      auto userControls = value["userControls"];
-      if (userControls.isArray()) {
-          for (const auto &userControlValue : userControls.toArray()) {
-              auto userControl = createUserControl(userControlValue);
-              preset->addUserControls(userControl);
-          }
-      }
-
-      auto midiRouteInputs = value["midiRouteInputs"];
-      if (midiRouteInputs.isObject()){
-          updateMidiRouteInputs(preset, midiRouteInputs.toObject());
-      }
-
-      return preset;
-  }
-  */
 
     //- {fn}
     void updateMidiControl(PresetMidiControl *control, const QJsonValueRef &value,
@@ -390,24 +377,7 @@ private:
         fst.setField<QString>(&PresetMidiControl::setPortName, "portName");
     }
 
-    //- {fn}
-    void updateMidiRouteInputsDELETE(MidiRoutePreset *preset,
-                                     const QJsonObject &midiRouteInputs)
-    //-only-file body
-    {
-        preset->clearList<MidiRouteInput *>();
-        for (auto it = midiRouteInputs.begin(); it != midiRouteInputs.end(); ++it) {
-            MidiRouteInput *midiRouteInputEntry =
-                createMidiRouteInputEntryDELTE(it.value().toObject());
-            preset->addListItem(midiRouteInputEntry);
-            auto easyConfig = it.value().toObject()["easyConfig"];
-            auto inputZonesAndRoutes = easyConfig.toObject()["inputZonesAndRoutes"];
-            if (easyConfig.isObject() && inputZonesAndRoutes.isObject()) {
-                createEasyConfigEntry(midiRouteInputEntry->easyConfig(),
-                                      inputZonesAndRoutes.toObject());
-            }
-        }
-    }
+
 
     //- {fn}
     void setSettings(MidiRouteInput *midiRouteInput,
@@ -459,6 +429,12 @@ private:
         }
         recreateSettings<MidiRouteInput, MidiRouterChain>(
             midiRouteInput, midirouteInputJsonObj, "midiRouterChains");
+
+        auto easyConfigObj = getJson<QJsonObject>(midirouteInputJsonObj["easyConfig"]);
+        midiRouteInput->easyConfig()->setKeyboardSplits(convertJsonArrayToQList<int>(easyConfigObj["keyboardSplits"]));
+        midiRouteInput->easyConfig()->setZoneNames(convertJsonArrayToQList<QString>(easyConfigObj["zoneNames"]));
+
+        recreateSettings<EasyConfig, EasyConfigRoute>(midiRouteInput->easyConfig(), easyConfigObj, "easyConfigRoutes");
     }
 
     //- {fn}
@@ -579,34 +555,7 @@ private:
         }
     }
 
-    //- {fn}
-    void createEasyConfigEntry(EasyConfig *easyConfigEntry,
-                               const QJsonObject &value)
-    //-only-file body
-    {
 
-        if (value["keyboardSplits"].isArray()) {
-            //QList<int> keyboardSplits =
-            //    convertJsonArrayToQList<int>(getJson<QJsonArray>(value["keyboardSplits"]));
-            //easyConfigEntry->setKeyboardSplits(keyboardSplits);
-        }
-
-        if (value["zoneNames"].isArray()) {
-
-            //QStringList zoneNames =
-            //    convertJsonArrayToQList<QString>(getJson<QJsonArray>(value["zoneNames"]));
-            //easyConfigEntry->setZoneNames(zoneNames);
-        }
-
-        if (value["easyConfigRoutes"].isArray()) {
-            QJsonArray jsonArray = value["easyConfigRoutes"].toArray();
-            for (const QJsonValue &routeValue : jsonArray) {
-                EasyConfigRoute *easyConfigRoute =
-                    createEasyConfigRoute(routeValue.toObject());
-                easyConfigEntry->addListItem(easyConfigRoute);
-            }
-        }
-    }
 
     //- {fn}
     QList<int> extractKeyboardSplits(const QJsonArray &array)
@@ -621,30 +570,7 @@ private:
 
 
 
-    //- {fn}
-    EasyConfigRoute *createEasyConfigRoute(const QJsonObject &value)
-    //-only-file body
-    {
-        EasyConfigRoute *easyConfigRoute = new EasyConfigRoute();
-        easyConfigRoute->setFromCcOrNrpnEnd(value["fromCcOrNrpnEnd"].toInt());
-        easyConfigRoute->setFromCcOrNrpnStart(value["fromCcOrNrpnStart"].toInt());
-        easyConfigRoute->setFromChannel(value["fromChannel"].toInt());
-        easyConfigRoute->setFromData1(value["fromData1"].toInt());
-        easyConfigRoute->setFromSelectedMidiEventTypeId(
-            value["fromSelectedMidiEventTypeId"].toInt());
-        easyConfigRoute->setSplitRangeId(value["splitRangeId"].toInt());
-        easyConfigRoute->setToCcOrNrpnEnd(value["toCcOrNrpnEnd"].toInt());
-        easyConfigRoute->setToCcOrNrpnStart(value["toCcOrNrpnStart"].toInt());
-        easyConfigRoute->setToChannel(value["toChannel"].toInt());
-        easyConfigRoute->setToData1(value["toData1"].toInt());
-        easyConfigRoute->setToDestinationName(
-            value["toDestinationName"].toString());
-        easyConfigRoute->setToSelectedMidiEventTypeId(
-            value["toSelectedMidiEventTypeId"].toInt());
-        easyConfigRoute->setTranspose(value["transpose"].toInt());
 
-        return easyConfigRoute;
-    }
 
     //-only-file header
 };

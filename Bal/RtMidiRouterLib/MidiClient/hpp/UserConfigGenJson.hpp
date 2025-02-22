@@ -133,7 +133,7 @@ private:
         QJsonArray ary;
         for (const auto &easyConfigRoute: easyConfigRoutes){
             QJsonObject obj;
-
+            obj["uuid"] = easyConfigRoute->uuid();
             obj["splitRangeId"] = easyConfigRoute->splitRangeId();
             obj["fromSelectedMidiEventTypeId"] = easyConfigRoute->fromSelectedMidiEventTypeId();
             obj["fromChannel"] = easyConfigRoute->fromChannel();
