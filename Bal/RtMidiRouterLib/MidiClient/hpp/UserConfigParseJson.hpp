@@ -4,14 +4,17 @@
 #pragma once
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
-//- #include "MidiClientUtil.h"
-//- #include "UserDataConfig.h"
-//-only-file null
-#include "MidiClientUtil.hpp"
-#include "UserDataConfig.hpp"
 //-only-file body //-
 //- #include "UserConfigParseJson.h"
+
+//- {include-header}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+//- {include-header}
+#include "UserDataConfig.hpp" //- #include "UserDataConfig.h"
 //-only-file header
+
+
+
 
 //-var {PRE} "UserConfigParseJson::"
 class UserConfigParseJson {
