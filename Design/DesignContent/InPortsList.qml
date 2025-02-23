@@ -45,6 +45,13 @@ Column {
                         inPortsId.state = "InPortEasyConfig";
                     }
                 }
+                CoreButton {
+                    text: "Monitor"
+                    onClicked: {
+                        inPortsLoaderId.inPortName = modelData;
+                        inPortsId.state = "InPortMonitor";
+                    }
+                }
             }
         }
         CoreTextArea {

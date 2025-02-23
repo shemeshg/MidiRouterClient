@@ -87,11 +87,6 @@ Window {
             }
         }
 
-        Component {
-            id: monitorsId
-            Monitor {
-            }
-        }
 
 
 
@@ -135,14 +130,6 @@ Window {
                 when: headerBarId.state === "InPorts"
                 StateChangeScript {
                           script: loaderId.push(inPortsId)
-                 }
-            }
-            ,
-            State {
-                name: "Monitor"
-                when: headerBarId.state === "Monitor"
-                StateChangeScript {
-                          script: loaderId.push(monitorsId)
                  }
             }
         ]

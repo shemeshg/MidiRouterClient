@@ -36,6 +36,12 @@ ColumnLayout {
         InPortEasyConfig {
         }
     }
+
+    Component {
+        id: inPortMonitorId
+        InPortMonitor {
+        }
+    }
     states: [
         State {
             name: "InPortsList"
@@ -67,6 +73,14 @@ ColumnLayout {
             PropertyChanges {
                 target: inPortsLoaderId
                 sourceComponent: inPortEasyConfigId
+            }
+        },
+        State {
+            name: "InPortMonitor"
+            when: inPortsId.state === "InPortMonitor"
+            PropertyChanges {
+                target: inPortsLoaderId
+                sourceComponent: inPortMonitorId
             }
         }
     ]

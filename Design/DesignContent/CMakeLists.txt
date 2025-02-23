@@ -14,7 +14,7 @@ qt6_add_qml_module(DesignContent
         "VirtualPorts.qml"
         "Presets.qml"
         "App.qml"
-        "Monitor.qml"
+        "InPortMonitor.qml"
         "InPorts.qml"
         "FormGroupBox.qml"
         "UserControls.qml"

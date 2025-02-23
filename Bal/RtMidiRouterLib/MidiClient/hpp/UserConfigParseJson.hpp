@@ -147,8 +147,7 @@ private:
 
     template <typename Parent, typename ChildListType>
     void recreateSettings(Parent *parent, QJsonObject &midirouteInputJsonObj,
-                          QString arrayListKey) {
-        parent->template clearList<ChildListType *>(); // TEMPORARY TO TEST RECREATE
+                          QString arrayListKey) {        
         auto midiRouterChainsArray =
             getJson<QJsonArray>(midirouteInputJsonObj[arrayListKey]);
         purgeDeletedCreateMissingT<ChildListType>(parent, midiRouterChainsArray);
@@ -266,9 +265,7 @@ private:
     void setFilterSettings(MidiRouterChain *midiRouterChain,
                            QJsonObject &midiRouterChainsJsonObj)
     //-only-file body
-    {
-        midiRouterChain->clearMidiRoutersFilters(); // TEMPORARY TO TEST RECREATE
-
+    {        
         auto midiRouterFiltersArray =
             getJson<QJsonArray>(midiRouterChainsJsonObj["midiRoutersFilters"]);
 

@@ -51,14 +51,7 @@ RowLayout {
                 checkable: true
                 checked: false
             }
-            CoreButton {
-                id: btnMonitorId
-                text: "Monitor"
-                hooverText: "Monitor"
-                autoExclusive: true
-                checkable: true
-                checked: false
-            }
+
 
         }
     }
@@ -86,10 +79,6 @@ RowLayout {
         State {
             name: "InPorts"
             when: btnInPortsId.checked
-        },
-        State {
-            name: "Monitor"
-            when: btnMonitorId.checked
         }
 
 
