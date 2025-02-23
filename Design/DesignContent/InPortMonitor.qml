@@ -24,16 +24,34 @@ Layout.fillWidth: true
     CoreLabel {
         text:"Monitoring " + midiRouteInput.midiInputName
     }
-
-    CoreSwitch {
-        text: "Monitored"
-        checked: midiRouteInput.monitor.isMonitored
-        onToggled: {
-            midiRouteInput.monitor.isMonitored = checked;
-            Constants.balData.applyConfig(() => {
-                console.log("client says we have finished applay config");
-                //midiRouteInput = Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName);
-            });
+    RowLayout{
+        CoreSwitch {
+            text: "Monitored"
+            checked: midiRouteInput.monitor.isMonitored
+            onToggled: {
+                midiRouteInput.monitor.isMonitored = checked;
+                Constants.balData.applyConfig(() => {
+                    console.log("client says we have finished applay config");
+                });
+            }
+        }
+        CoreTextField {
+            text: midiRouteInput.monitor.logLen
+            onTextEdited: {
+                midiRouteInput.monitor.logLen = Number(text) > 0 ? Number(text) : 1
+                Constants.balData.applyConfig(() => {
+                    console.log("client says we have finished applay config");
+                });
+            }
+        }
+    }
+    Repeater {
+        model: midiRouteInput.monitor.logItems
+        RowLayout {
+            CoreTextArea {
+                readOnly: true
+                text: modelData
+            }
         }
     }
 }

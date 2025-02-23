@@ -117,7 +117,15 @@ void MidiClientClass::runUserDataChanges(){
 
 
 void MidiClientClass::dataToClient(const QJsonArray& message)
-{
-    qDebug()<<"Monitoring works"<<message;
+{   for (const auto &obj:  message){
+        if (obj.isString()){
+            QString str = obj.toString();
+            auto  itemObj = QJsonDocument::fromJson(str.toUtf8());
+
+            auto inputObj = midiClientConnection.userDataConfig()->activePreset()->getInputOrCreateByName(itemObj["portName"].toString());
+            inputObj->monitor()->addLogItem(str);
+        }
+    }
+
 }
 

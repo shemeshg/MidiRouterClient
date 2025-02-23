@@ -22,7 +22,23 @@ public:
     //-only-file body
         : MonitorPrivate{parent}
     {
+        setLogLen(2);
     };
+
+    //- {fn}
+    void addLogItem(const QString &newItem)
+    //-only-file body
+    {
+        QStringList newLogItem = logItems();
+        newLogItem.prepend(newItem);
+
+
+        if (newLogItem.size() > logLen()) {
+            newLogItem = newLogItem.mid(0, logLen());
+        }
+
+        setLogItems(newLogItem);
+    }
 
     //-only-file header
 public slots:

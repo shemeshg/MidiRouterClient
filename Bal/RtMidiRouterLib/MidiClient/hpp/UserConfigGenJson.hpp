@@ -247,6 +247,7 @@ private:
     {
         QJsonObject monitor;
         monitor["isMonitored"] = midiRouteInput->monitor()->isMonitored();
+        monitor["logLen"] = midiRouteInput->monitor()->logLen();
         return monitor;
     }
 

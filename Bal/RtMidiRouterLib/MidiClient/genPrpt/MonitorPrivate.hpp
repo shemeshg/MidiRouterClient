@@ -23,6 +23,8 @@ class MonitorPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool isMonitored READ isMonitored WRITE setIsMonitored NOTIFY isMonitoredChanged )
+    Q_PROPERTY(QStringList logItems READ logItems WRITE setLogItems NOTIFY logItemsChanged )
+    Q_PROPERTY(int logLen READ logLen WRITE setLogLen NOTIFY logLenChanged )
     
     QML_ELEMENT
 public:
@@ -46,6 +48,30 @@ void setIsMonitored(const bool newIsMonitored)
     }
 
 
+    
+    QStringList logItems() const{return m_logItems;} 
+    
+void setLogItems(const QStringList &newLogItems)
+    {
+        if (m_logItems == newLogItems)
+            return;
+        m_logItems = newLogItems;
+        emit logItemsChanged();
+    }
+
+
+    
+    int logLen() const{return m_logLen;} 
+    
+void setLogLen(const int newLogLen)
+    {
+        if (m_logLen == newLogLen)
+            return;
+        m_logLen = newLogLen;
+        emit logLenChanged();
+    }
+
+
 
     template<typename T>
     void clearList();
@@ -60,6 +86,8 @@ void setIsMonitored(const bool newIsMonitored)
     
 signals:
     void isMonitoredChanged();
+    void logItemsChanged();
+    void logLenChanged();
     
 
 protected:
@@ -67,6 +95,8 @@ protected:
 
 private:
     bool m_isMonitored;
+    QStringList m_logItems;
+    int m_logLen;
     
 };
 //-only-file null
