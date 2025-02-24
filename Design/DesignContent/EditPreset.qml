@@ -21,12 +21,6 @@ ColumnLayout {
                 editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
                 editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
 
-                if (editedPreset.midiControlOn.portName){
-                    editedPreset.getInputOrCreateByName(editedPreset.midiControlOn.inPortName)
-                }
-                if (editedPreset.midiControlOff.portName){
-                    editedPreset.getInputOrCreateByName(editedPreset.midiControlOff.inPortName)
-                }
                 presets.state = "ListPresets";
             }
         }

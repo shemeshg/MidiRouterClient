@@ -100,12 +100,6 @@ private:
             obj["midiRouteInputs"] = getMidiRouteInputs(itm->midiRouteInputs());
             obj["userControls"] = getUserControls(itm->userControls());
 
-            //DUMMY DELETE
-            QJsonArray dummyAry;
-            QJsonObject dummyObj;
-            dummyObj["jsToServers"] = dummyAry;
-            obj["jsRouter"] = dummyObj;
-            //END DUMMY DELETE
             ary.append(obj);
         }
         return ary;
