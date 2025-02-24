@@ -142,6 +142,8 @@ public slots:
     QJsonObject getJson()
     //-only-file body
     {
+        openMidiControlOffInputsForEasyConfig();
+
         UserConfigGenJson userConfigGenJson;
         return userConfigGenJson.getJson(
             uniqueId(),
@@ -163,6 +165,26 @@ public slots:
 
     //-only-file header
 private:
+    //- {fn}
+    void openMidiControlOffInputsForEasyConfig()
+    //-only-file body
+    {
+        QStringList midiControlOffNames;
+        for (auto prst:midiRoutePresets()){
+            QString s;
+            s = prst->midiControlOff()->portName();
+            if (!s.isEmpty()){
+                midiControlOffNames.append(s);
+            }
+            s = prst->midiControlOn()->portName();
+            if (!s.isEmpty()){
+                midiControlOffNames.append(s);
+            }
+        }
+        for (const auto &inputStr: midiControlOffNames ){
+            activePreset()->getInputOrCreateByName(inputStr);
+        }
+    }
 
     //-only-file header
 };
