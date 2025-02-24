@@ -88,6 +88,7 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
         doc.setObject(qvm);
         emit dataToClient(doc.toJson());
     } else {
+        qDebug()<<"It is server intercepted MidiEvent";
         std::cout<<m.portName<<" ";
         std::cout<<m.portNumber<<" ";
         std::cout<<m.deltatime<<" ";
