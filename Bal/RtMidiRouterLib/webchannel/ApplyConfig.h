@@ -211,6 +211,17 @@ private:
         }
     }
 
+    inline QJsonArray stringToJsonArray(const QString &qString){
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(qString.toUtf8());
+        QJsonArray jsonArray;
+        if (jsonDoc.isNull() || !jsonDoc.isArray()) {
+            return jsonArray;
+        }
+        jsonArray = jsonDoc.array();
+        return jsonArray;
+
+    }
+
     inline void setInputChainFilters(QString &midiInputName, QJsonArray &midiRoutersFilters, int portNumber, QJsonObject &midiRouterChainObj)
     {
         qDebug() << "TODO CREATE CHAIN AND PARSE FILTER " << midiInputName
@@ -265,10 +276,10 @@ private:
             else if (filter["filterType"].toInt() == static_cast<int>(FilterType::FILTER_AND_TRANSFORM))
             {
                 wcmidiin->routingActionAddFilterMidiChannelMsg(portNumber, chainId,
-                                                               filter["filterChannel"].toArray(),
-                                                               filter["filterEvents"].toArray(),
-                                                               filter["filterData1"].toArray(),
-                                                               filter["filterData2"].toArray(),
+                                                               stringToJsonArray(filter["filterChannel"].toString()),
+                                                               stringToJsonArray(filter["filterEvents"].toString()),
+                                                               stringToJsonArray(filter["filterData1"].toString()),
+                                                               stringToJsonArray(filter["filterData2"].toString()),
                                                                filter["conditionAction"].toInt());
             }
         }

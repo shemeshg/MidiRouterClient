@@ -79,10 +79,8 @@ public:
     void addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs)
     //-only-file body
     {
-        qDebug()<<"addMidiPresetControlEasyConfigsIfRequired";
         for (const auto &m: midiPresetControlEasyConfigs){            
             if (m.pmc->portName() == midiInputName()){
-                qDebug()<<"*************** Chain created"<<midiInputName();
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();
                 midiRouterChain->addEasyConfigPresetFilter(m);
                 midiRouterChain->addEasyConfigPresetLogOnOff(m.isMidiControlOn);
