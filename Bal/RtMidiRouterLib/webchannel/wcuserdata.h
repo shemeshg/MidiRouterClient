@@ -47,7 +47,12 @@ public:
 
 public slots:
     void presetOnOff(bool isMidiControlOn, QString presetUuid){
+        auto json = userdata.toJsonObject();
+        ApplyConfig ac(wcmidiin, wcmidiout);
+        json = ac.presetOnOff(json, isMidiControlOn, presetUuid);
+        setJon(json);
         qDebug()<<"WE ARE AT public slots presetOnOff";
+
     }
 signals:
     bool userDataChanges(QVariant msg);

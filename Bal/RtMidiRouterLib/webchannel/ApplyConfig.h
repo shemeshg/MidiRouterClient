@@ -21,6 +21,21 @@ public:
         QString originedInPort;
     };
 
+    QJsonObject presetOnOff( QJsonObject &json,bool isMidiControlOn, const QString &presetUuid){
+        QJsonArray midiRoutePresets = json["midiRoutePresets"].toArray();
+
+        for (int i = 0; i < midiRoutePresets.size(); ++i) {
+            QJsonObject midiRoutePresetObj = midiRoutePresets[i].toObject();
+            if (midiRoutePresetObj["uuid"].toString() == presetUuid) {
+                midiRoutePresetObj["isEnabled"] = isMidiControlOn;
+                midiRoutePresets[i] = midiRoutePresetObj; // Update the array with the modified object
+            }
+        }
+
+        json["midiRoutePresets"] = midiRoutePresets; // Update the JSON object with the modified array
+        return json;
+    }
+
     QJsonObject applyConfig(const QJsonObject &json)
     {
         qDebug() << "Server will applay a config of " << json;
