@@ -50,8 +50,8 @@ public slots:
         auto json = userdata.toJsonObject();
         ApplyConfig ac(wcmidiin, wcmidiout);
         json = ac.presetOnOff(json, isMidiControlOn, presetUuid);
-        setJon(json);
-        qDebug()<<"WE ARE AT public slots presetOnOff";
+        applyConfig(json);
+        qDebug()<<"WE ARE AT public slots presetOnOff" <<isMidiControlOn;
 
     }
 signals:

@@ -373,16 +373,15 @@ private:
     {
         QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
         for (const auto &itm: midiRoutePresets){
-            MidiPresetControlEasyConfig m;
-            if (itm->isEnabled()){
-                m.pmc = itm->midiControlOff();
-                m.isMidiControlOn = false;
-                midiPresetControlEasyConfigs.append(m);
-            } else {
-                m.pmc = itm->midiControlOn();
-                m.isMidiControlOn = true;
-                midiPresetControlEasyConfigs.append(m);
-            }
+            MidiPresetControlEasyConfig mOff;
+            mOff.pmc = itm->midiControlOff();
+            mOff.isMidiControlOn = false;
+            midiPresetControlEasyConfigs.append(mOff);
+            MidiPresetControlEasyConfig mOn;
+            mOn.pmc = itm->midiControlOn();
+            mOn.isMidiControlOn = true;
+            midiPresetControlEasyConfigs.append(mOn);
+
         }
         return midiPresetControlEasyConfigs;
     }
