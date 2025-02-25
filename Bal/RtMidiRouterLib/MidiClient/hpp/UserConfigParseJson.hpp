@@ -206,8 +206,6 @@ private:
     {
         preset->setIsEnabled(getJson<bool>(valueObj["isEnabled"]));
         preset->setName(getJson<QString>(valueObj["name"]));
-        preset->setIsSendAllUserControls(
-            getJson<bool>(valueObj["isSendAllUserControls"]));
 
         updateMidiControl(preset->midiControlOn(), valueObj["midiControlOn"],
                           PresetMidiControl::PresetMidiType::PRESET_ON);

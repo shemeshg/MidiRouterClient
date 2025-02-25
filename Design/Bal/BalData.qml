@@ -45,7 +45,6 @@ QtObject {
                         "inputZonesAndRoutes": {}
                     },
                     "isEnabled": true,
-                    "isSendAllUserControls": false,
                     "jsRouter": {
                         "jsToServers": []
                     },

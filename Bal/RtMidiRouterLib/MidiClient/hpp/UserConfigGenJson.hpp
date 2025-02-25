@@ -93,8 +93,7 @@ private:
             itm->recreateEasyConfig(presetControlEasyConfigs, itm->uuid());
             obj["name"] = itm->name();
             obj["uuid"] = itm->uuid();
-            obj["isEnabled"] = itm->isEnabled();
-            obj["isSendAllUserControls"] = itm->isSendAllUserControls();
+            obj["isEnabled"] = itm->isEnabled();            
             obj["midiControlOn"] = getModiControlOnOff(itm->midiControlOn());
             obj["midiControlOff"] = getModiControlOnOff(itm->midiControlOff());
             obj["midiRouteInputs"] = getMidiRouteInputs(itm->midiRouteInputs());

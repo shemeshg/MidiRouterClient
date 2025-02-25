@@ -16,8 +16,7 @@ ColumnLayout {
 
 
             onClicked: {
-                editedPreset.name = nameId.text;
-                editedPreset.isSendAllUserControls = isSendAllUserControlsId.checked;
+                editedPreset.name = nameId.text;                
                 editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
                 editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
 
@@ -39,11 +38,6 @@ ColumnLayout {
             id: nameId
             text: editedPreset.name
         }
-    }
-    CoreSwitch {
-        id: isSendAllUserControlsId
-        text: "isSendAllUserControls"
-        checked: editedPreset.isSendAllUserControls
     }
     CoreLabel {
         text: "<H2>Midi control on</h2>"
