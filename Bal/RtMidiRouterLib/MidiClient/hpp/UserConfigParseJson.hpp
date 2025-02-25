@@ -256,6 +256,7 @@ private:
         fst.setField<double>(&UserControl::setNrpnControl, "nrpnControl");
         fst.setField<QString>(&UserControl::setOutputPortnName, "outputPortnName");
         fst.setField<bool>(&UserControl::setIsShowDropdown, "isShowDropdown");
+        fst.setField<bool>(&UserControl::setIsSendOnPresetChange, "isSendOnPresetChange");
         fst.setField<double>(&UserControl::setDropdownListId, "dropdownListId");
     }
 

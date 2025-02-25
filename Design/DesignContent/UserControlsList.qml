@@ -77,7 +77,6 @@ ColumnLayout {
                               return;
                           }
                 if (modelData.eventType === 0){
-                              console.log("HEHE 1")
                     Constants.balData.sendControlChange(
                        portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
                 } else if (modelData.eventType === 1){

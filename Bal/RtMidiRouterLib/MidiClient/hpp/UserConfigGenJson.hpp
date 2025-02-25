@@ -359,6 +359,8 @@ private:
             userControlObj["outputPortnName"] = userControl->outputPortnName();
             userControlObj["isShowDropdown"] = userControl->isShowDropdown();
             userControlObj["dropdownListId"] = userControl->dropdownListId();
+            userControlObj["isSendOnPresetChange"] = userControl->isSendOnPresetChange();
+
             ary.append(userControlObj);
 
         }

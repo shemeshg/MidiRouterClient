@@ -21,6 +21,7 @@ class UserControlPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
+    Q_PROPERTY(bool isSendOnPresetChange READ isSendOnPresetChange WRITE setIsSendOnPresetChange NOTIFY isSendOnPresetChangeChanged )
     Q_PROPERTY(EventType eventType READ eventType WRITE setEventType NOTIFY eventTypeChanged )
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged )
     Q_PROPERTY(int inputVal READ inputVal WRITE setInputVal NOTIFY inputValChanged )
@@ -59,6 +60,18 @@ void setUuid(const QString &newUuid)
             return;
         m_uuid = newUuid;
         emit uuidChanged();
+    }
+
+
+    
+    bool isSendOnPresetChange() const{return m_isSendOnPresetChange;} 
+    
+void setIsSendOnPresetChange(const bool newIsSendOnPresetChange)
+    {
+        if (m_isSendOnPresetChange == newIsSendOnPresetChange)
+            return;
+        m_isSendOnPresetChange = newIsSendOnPresetChange;
+        emit isSendOnPresetChangeChanged();
     }
 
 
@@ -232,6 +245,7 @@ void setDropdownListId(const int newDropdownListId)
     
 signals:
     void uuidChanged();
+    void isSendOnPresetChangeChanged();
     void eventTypeChanged();
     void descriptionChanged();
     void inputValChanged();
@@ -252,6 +266,7 @@ protected:
 
 private:
     QString m_uuid;
+    bool m_isSendOnPresetChange;
     EventType m_eventType;
     QString m_description;
     int m_inputVal;

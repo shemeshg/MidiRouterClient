@@ -17,7 +17,13 @@ ColumnLayout {
         }
     }
 
-
+    CoreSwitch {
+        text: "Send on preset change"
+        checked: control.isSendOnPresetChange
+        onToggled: {
+            control.isSendOnPresetChange = checked;
+        }
+    }
     RowLayout {
         CoreLabel {
             text: "Description"

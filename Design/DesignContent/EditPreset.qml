@@ -23,12 +23,6 @@ ColumnLayout {
                 presets.state = "ListPresets";
             }
         }
-        CoreButton {
-            text: "back"
-            onClicked: {
-                presets.state = "ListPresets";
-            }
-        }
     }
     RowLayout {
         CoreLabel {
