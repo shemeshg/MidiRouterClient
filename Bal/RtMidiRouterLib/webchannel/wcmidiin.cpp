@@ -89,18 +89,34 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
         emit dataToClient(doc.toJson());
     } else {
         qDebug()<<"It is server intercepted MidiEvent";
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(QString::fromStdString(userdata).toUtf8());
+        if (!jsonDoc.isNull() ||
+            !jsonDoc.isObject()
+            ) {
+            auto obj = jsonDoc.object();
+            if (obj["action"].isString() && obj["action"].toString()=="presetOnOff"){
+                emit presetOnOff(obj["isMidiControlOn"].toBool(),
+                                 obj["presetUuid"].toString());
+            }
+
+        }
+
+
         std::cout<<m.portName<<" ";
         std::cout<<m.portNumber<<" ";
         std::cout<<m.deltatime<<" ";
         std::cout<<m.channel<<" ";
         std::cout<<m.commandStr<<" ";
         std::cout<<m.data1<<" ";
-        std::cout<<m.data2<<std::endl;
+        std::cout<<m.data2<<" "<<std::endl;
+        std::cout<<userdata<<std::endl;
 
         unsigned int nBytes = (unsigned int)m.data.size();
         for ( unsigned int i=0; i<nBytes; i++ )
             std::cout << "Byte " << i << " = " << (int)m.data.at(i) << ", ";
         std::cout<<std::endl;
+
+
     }
 }
 

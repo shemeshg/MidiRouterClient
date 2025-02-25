@@ -44,6 +44,11 @@ public:
         setJon(json);
         return ret;
     }
+
+public slots:
+    void presetOnOff(bool isMidiControlOn, QString presetUuid){
+        qDebug()<<"WE ARE AT public slots presetOnOff";
+    }
 signals:
     bool userDataChanges(QVariant msg);
     void applicationQuitSignal();

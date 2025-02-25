@@ -39,6 +39,10 @@ void MidiServerClass::start(int portNumber)
     channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
     //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
 
+    //void presetOnOff(bool isMidiControlOn, QString presetUuid);
+    QObject::connect(wcmidiin, &WcMidiIn::presetOnOff, wcuserdata, &WcUserData::presetOnOff);
+
+
     if (!server->listen(QHostAddress::Any, portNumber)) {
         //qFatal("Failed to open web socket server.");
         serverIsRunning = false;

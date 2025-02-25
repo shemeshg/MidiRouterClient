@@ -177,6 +177,7 @@ public:
 signals:
     bool msgToClient(QString msg);
     bool dataToClient(QString msg);
+    void presetOnOff(bool isMidiControlOn, QString presetUuid);
 
 };
 }
