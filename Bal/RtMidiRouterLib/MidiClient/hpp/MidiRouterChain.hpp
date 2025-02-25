@@ -182,7 +182,7 @@ public slots:
     }
 
     //- {fn}
-    void addEasyConfigPresetLogOnOff(bool isMidiControlOn)
+    void addEasyConfigPresetLogOnOff(bool isMidiControlOn, const QString &presetUuid)
     //-only-file body
     {
         setIsEasyConfig(true);
@@ -190,6 +190,7 @@ public slots:
         QJsonObject obj;
         obj["action"] = "presetOnOff";
         obj["isMidiControlOn"] = isMidiControlOn;
+        obj["presetUuid"] = presetUuid;
         QJsonDocument doc{obj};
         addFilterToConsole(FilterToConsole::LogTo::SERVER,doc.toJson());
     }

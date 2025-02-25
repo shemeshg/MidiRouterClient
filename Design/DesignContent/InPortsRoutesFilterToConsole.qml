@@ -37,7 +37,7 @@ ColumnLayout {
         CoreLabel {
             text: "User Data"
         }
-        CoreTextField {
+        CoreTextArea {
             id: userdata
             text: inPortsRoutesLoaderId.filterObj.userdata
         }

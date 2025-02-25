@@ -34,11 +34,18 @@ public:
         setMidiRouteClockTimeSig( 4);
         setMidiRouteClockTimeSigDivBy(4);
         setMidiRouteClockFromSppPos(0);
-        m_monitor = new Monitor(this);
-        m_easyConfig = new EasyConfig(this);
+        m_monitor = new Monitor();
+        m_easyConfig = new EasyConfig();
         setUuid(getUuId());
     };
 
+    //- {function} 1 1
+    virtual ~MidiRouteInput()
+    //-only-file body
+    {
+        m_monitor->deleteLater();
+        m_easyConfig->deleteLater();
+    }
 
     //- {fn}
     void clearEasyConfigMidiRouterChains()
@@ -76,15 +83,19 @@ public:
     }
 
     //- {fn}
-    void addMidiPresetControlEasyConfigsIfRequired(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs)
+    void addMidiPresetControlEasyConfigsIfRequired(
+        QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs,
+        const QString &presetUuid)
     //-only-file body
     {
         for (const auto &m: midiPresetControlEasyConfigs){            
             if (m.pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();
                 midiRouterChain->addEasyConfigPresetFilter(m);
-                midiRouterChain->addEasyConfigPresetLogOnOff(m.isMidiControlOn);
+                midiRouterChain->addEasyConfigPresetLogOnOff(m.isMidiControlOn, presetUuid);
                 addListItem(midiRouterChain);
+
+
             }
         }
     }

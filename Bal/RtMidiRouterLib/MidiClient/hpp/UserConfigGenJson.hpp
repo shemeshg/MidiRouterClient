@@ -90,7 +90,7 @@ private:
         for (const auto &itm: midiRoutePresets){
             QJsonObject obj;
             auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( midiRoutePresets);
-            itm->recreateEasyConfig(presetControlEasyConfigs);
+            itm->recreateEasyConfig(presetControlEasyConfigs, itm->uuid());
             obj["name"] = itm->name();
             obj["uuid"] = itm->uuid();
             obj["isEnabled"] = itm->isEnabled();

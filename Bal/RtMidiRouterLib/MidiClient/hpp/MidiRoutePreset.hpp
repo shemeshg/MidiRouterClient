@@ -37,14 +37,15 @@ public:
     };
 
     //- {fn}
-    void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs)
+    void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs,
+                            const QString &presetUuid)
     //-only-file body
     {
         for ( MidiRouteInput *input: m_midiRouteInputs){
 
             input->clearEasyConfigMidiRouterChains();
             input->addMonitorEasyConfigIfRequired();
-            input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs);
+            input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs, presetUuid);
 
 
             getInputOrCreateByName(input->midiInputName())->createEasyConfigChains(input->easyConfig());
