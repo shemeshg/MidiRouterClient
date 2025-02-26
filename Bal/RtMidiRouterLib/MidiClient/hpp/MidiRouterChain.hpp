@@ -44,6 +44,12 @@ public:
         setUuid(getUuId());
     };
 
+    //- {function} 1 1
+    virtual ~MidiRouterChain()
+    //-only-file body
+    {
+        clearMidiRoutersFilters();
+    }
 
     //-only-file header
 public slots:
