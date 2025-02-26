@@ -24,6 +24,7 @@ loadIsClientConnectLocal();
 loadIsAutoStartServer();
 loadClientPortNumber();
 loadIsAutoConnectClient();
+loadIsSaveConfigOnServer();
 
 //[[[end]]]
 }
@@ -168,6 +169,17 @@ void BalData::saveIsAutoConnectClient(const bool s)
 {
     settings.setValue("isAutoConnectClient", s);
     loadIsAutoConnectClient();
+}
+void BalData::loadIsSaveConfigOnServer()
+{
+    bool s = settings.value("isSaveConfigOnServer", true).toBool();
+    setIsSaveConfigOnServer(s);
+}
+
+void BalData::saveIsSaveConfigOnServer(const bool s)
+{
+    settings.setValue("isSaveConfigOnServer", s);
+    loadIsSaveConfigOnServer();
 }
 
 //[[[end]]]

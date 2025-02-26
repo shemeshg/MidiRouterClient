@@ -29,6 +29,7 @@ class BalDataPrivate : public JsAsync
     Q_PROPERTY(bool isAutoStartServer READ isAutoStartServer WRITE setIsAutoStartServer NOTIFY isAutoStartServerChanged )
     Q_PROPERTY(int clientPortNumber READ clientPortNumber WRITE setClientPortNumber NOTIFY clientPortNumberChanged )
     Q_PROPERTY(bool isAutoConnectClient READ isAutoConnectClient WRITE setIsAutoConnectClient NOTIFY isAutoConnectClientChanged )
+    Q_PROPERTY(bool isSaveConfigOnServer READ isSaveConfigOnServer WRITE setIsSaveConfigOnServer NOTIFY isSaveConfigOnServerChanged )
     
     QML_ELEMENT
 public:
@@ -164,6 +165,18 @@ void setIsAutoConnectClient(const bool newIsAutoConnectClient)
     }
 
 
+    
+    bool isSaveConfigOnServer() const{return m_isSaveConfigOnServer;} 
+    
+void setIsSaveConfigOnServer(const bool newIsSaveConfigOnServer)
+    {
+        if (m_isSaveConfigOnServer == newIsSaveConfigOnServer)
+            return;
+        m_isSaveConfigOnServer = newIsSaveConfigOnServer;
+        emit isSaveConfigOnServerChanged();
+    }
+
+
 
 signals:
     void xChanged();
@@ -178,6 +191,7 @@ signals:
     void isAutoStartServerChanged();
     void clientPortNumberChanged();
     void isAutoConnectClientChanged();
+    void isSaveConfigOnServerChanged();
     
 
 protected:
@@ -196,6 +210,7 @@ private:
     bool m_isAutoStartServer;
     int m_clientPortNumber;
     bool m_isAutoConnectClient;
+    bool m_isSaveConfigOnServer;
     
     void ctorClass();
 };

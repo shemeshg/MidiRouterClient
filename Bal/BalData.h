@@ -36,6 +36,7 @@ void saveIsClientConnectLocal(const bool IsClientConnectLocal);
 void saveIsAutoStartServer(const bool IsAutoStartServer);
 void saveClientPortNumber(const int ClientPortNumber);
 void saveIsAutoConnectClient(const bool IsAutoConnectClient);
+void saveIsSaveConfigOnServer(const bool IsSaveConfigOnServer);
 
 //[[[end]]]
 
@@ -85,6 +86,7 @@ void loadIsClientConnectLocal();
 void loadIsAutoStartServer();
 void loadClientPortNumber();
 void loadIsAutoConnectClient();
+void loadIsSaveConfigOnServer();
 
 //[[[end]]]
 

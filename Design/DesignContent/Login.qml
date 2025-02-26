@@ -224,6 +224,15 @@ ColumnLayout {
                         }
                     }
                 }
+
+                CoreSwitch {
+                    id: isSaveConfigOnServer
+                    text: "Save config on server"
+                    checked: Constants.balData.isSaveConfigOnServer
+                    onToggled: {
+                        Constants.balData.saveIsSaveConfigOnServer(checked)
+                    }
+                }
             }
 
         }
