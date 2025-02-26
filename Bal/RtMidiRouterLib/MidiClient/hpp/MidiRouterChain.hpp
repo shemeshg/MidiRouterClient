@@ -59,9 +59,7 @@ public slots:
     {
         for (const QVariant &var : m_midiRoutersFilters) {
 
-            if (var.canConvert<MidiRoutersFilter*>()) {
-                delete var.value<MidiRoutersFilter*>();
-            }
+            deleteVarIfCanConvert(var);
         }
         m_midiRoutersFilters.clear();
 
@@ -75,9 +73,7 @@ public slots:
         if (id < m_midiRoutersFilters.size())
         {
             auto var = m_midiRoutersFilters.at(id);
-            if (var.canConvert<MidiRoutersFilter*>()) {
-                delete var.value<MidiRoutersFilter*>();
-            }
+            deleteVarIfCanConvert(var);
 
             m_midiRoutersFilters.removeAt(id);
             emit midiRoutersFiltersChanged();
@@ -237,5 +233,22 @@ signals:
 
 
 private:
+    //- {fn}
+    void deleteVarIfCanConvert(const QVariant &var)
+    //-only-file body
+    {
+        if (var.canConvert<FilterMidiDestination*>()) {
+            delete var.value<FilterMidiDestination*>();
+        } else if (var.canConvert<FilterToConsole*>()) {
+            delete var.value<FilterToConsole*>();
+        } else if (var.canConvert<FilterNetworkDestination*>()) {
+            delete var.value<FilterNetworkDestination*>();
+        } else if (var.canConvert<FilterSchedule*>()) {
+            delete var.value<FilterSchedule*>();
+        } else if (var.canConvert<FilterAndTransform*>()) {
+            delete var.value<FilterAndTransform*>();
+        }
+    }
 
+    //-only-file header
 };

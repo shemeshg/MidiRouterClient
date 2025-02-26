@@ -270,17 +270,25 @@ private:
 
         purgeDeletedCreateMissing(
             [&midiRouterChain](int idx) {
+                QString s="";
                 auto itm = midiRouterChain->midiRoutersFilters().at(idx);
-                MidiRoutersFilter* filterPtr = nullptr;
-                if (itm.canConvert<MidiRoutersFilter*>()) {
-                    filterPtr  = qvariant_cast<MidiRoutersFilter*>(itm);
-                }
-                if (filterPtr == nullptr){
+
+                if (itm.canConvert<FilterMidiDestination*>()) {
+                    s = itm.value<FilterMidiDestination*>()->uuid();
+                } else if (itm.canConvert<FilterToConsole*>()) {
+                    s = itm.value<FilterToConsole*>()->uuid();
+                } else if (itm.canConvert<FilterNetworkDestination*>()) {
+                    s = itm.value<FilterNetworkDestination*>()->uuid();
+                } else if (itm.canConvert<FilterSchedule*>()) {
+                    s = itm.value<FilterSchedule*>()->uuid();
+                } else if (itm.canConvert<FilterAndTransform*>()) {
+                    s = itm.value<FilterAndTransform*>()->uuid();
+                } else {
                     throw std::runtime_error("Unexpected JSON format");
                 }
 
 
-                return filterPtr->uuid();
+                return s;
             },
             [&midiRouterChain](QString uuid, QJsonObject filterJsonObj) {
                 int filterType = getJson<double>(filterJsonObj["filterType"]);
