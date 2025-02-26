@@ -1,6 +1,7 @@
 #include "wcuserdata.h"
 #include <QJsonDocument>
 
+
 WcUserData::WcUserData(Webchannel::WcMidiIn *wcmidiin,
                        Webchannel::WcMidiOut *wcmidiout,
                        QObject *parent) :wcmidiin{wcmidiin},
@@ -8,14 +9,20 @@ WcUserData::WcUserData(Webchannel::WcMidiIn *wcmidiin,
                         QObject(parent)
 {
 
-    QString str = "{}";
+
+    QString str;
+    if (isSaveConfigOnServer) {
+        str = cashFileRead(cahedFileName);
+    }
+    if (str.isEmpty()){
+        str = "{}";
+    }
 
     QByteArray br = str.toUtf8();
 
     QJsonDocument doc = QJsonDocument::fromJson(br);
 
     userdata = doc.object();
-
 
 
 

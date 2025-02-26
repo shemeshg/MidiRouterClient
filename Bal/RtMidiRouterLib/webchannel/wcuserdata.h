@@ -3,6 +3,9 @@
 #include <QObject>
 #include <QVariant>
 #include <QJsonObject>
+#include <QStandardPaths>
+#include <QDir>
+#include <QSettings>
 #include "wcmidiin.h"
 #include "wcmidiout.h"
 #include "ApplyConfig.h"
@@ -14,6 +17,20 @@ public:
     explicit WcUserData(Webchannel::WcMidiIn *wcmidiin,
                         Webchannel::WcMidiOut *wcmidiout,
                         QObject *parent = nullptr);
+
+    virtual ~WcUserData(){
+        if (isSaveConfigOnServer) {
+            auto o = userdata.toJsonObject();
+            QJsonDocument jsonDoc(o);
+            QString s = jsonDoc.toJson(QJsonDocument::Compact);
+            cashFileWrite(cahedFileName, s);
+
+            qDebug()<<isSaveConfigOnServer;
+            qDebug()<<"Cash path is "<<QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+
+        }
+    }
+
     QVariant userdata;
 public:
     Q_INVOKABLE void setJon(QVariant msg){
@@ -68,6 +85,41 @@ private:
         }
         return list;
     }
+
+    const QString cahedFileName = "midiRouterClient.json";
+    void cashFileWrite(const QString &fileName, QString &fileContent)
+    {
+        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        QString filePath = cacheFolderPath + QDir::separator() + fileName;
+        QFile file(filePath);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file);
+            out << fileContent;
+            file.close();
+        }
+    }
+
+    QString cashFileRead(const QString &fileName)
+    {
+        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        QString filePath = cacheFolderPath + QDir::separator() + fileName;
+
+        QString fileContent;
+        // Check if the file exists
+        if (QFile::exists(filePath)) {
+            QFile file(filePath);
+            if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QTextStream stream(&file);
+                fileContent = stream.readAll();
+                file.close();
+            }
+        }
+        return fileContent;
+    }
+
+    QSettings settings;
+    bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
+
 };
 
 

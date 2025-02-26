@@ -15,6 +15,12 @@ public:
 
 public slots:
     QString qtVer() { return QT_VERSION_STR; }
+
+    QString cashFolder(){
+        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        return cacheFolderPath + QDir::separator();
+    }
+
     void queryRemoteMidiPorts(QString serverName, QString serverPort, const QJSValue &callback);
    
 /*[[[cog

@@ -224,13 +224,26 @@ ColumnLayout {
                         }
                     }
                 }
-
-                CoreSwitch {
-                    id: isSaveConfigOnServer
-                    text: "Save config on server"
-                    checked: Constants.balData.isSaveConfigOnServer
-                    onToggled: {
-                        Constants.balData.saveIsSaveConfigOnServer(checked)
+                RowLayout {
+                    CoreSwitch {
+                        id: isSaveConfigOnServer
+                        text: "Save config on server"
+                        checked: Constants.balData.isSaveConfigOnServer
+                        onToggled: {
+                            Constants.balData.saveIsSaveConfigOnServer(checked)
+                        }
+                    }
+                    CoreLabel{
+                        id: hyperlinkBtn
+                        color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
+                        text: "link"
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: () => {
+                                           Qt.openUrlExternally("file://" + Constants.balData.cashFolder());
+                                       }
+                        }
                     }
                 }
             }

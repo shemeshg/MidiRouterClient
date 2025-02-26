@@ -58,8 +58,7 @@ void MidiServerClass::start(int portNumber)
 
 void MidiServerClass::stop()
 {
-    if (serverIsRunning) {
-        server->deleteLater();
+    if (serverIsRunning) {                
         serverIsRunning = false;
     }
 }
