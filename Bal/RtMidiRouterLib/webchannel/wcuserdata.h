@@ -19,6 +19,7 @@ public:
                         QObject *parent = nullptr);
 
     virtual ~WcUserData(){
+        isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
         if (isSaveConfigOnServer) {
             auto o = userdata.toJsonObject();
             QJsonDocument jsonDoc(o);
