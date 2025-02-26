@@ -93,7 +93,7 @@ ColumnLayout {
 
 
             CoreLabel {
-                text: `${modelData.name}  ${modelData.isEasyConfig ? "auto EasyConfig" : ""}  ${modelData.isRunForPresetOnAndOff?
+                text: `Chain name: ${modelData.name} uuid: ${modelData.uuid} ${modelData.isEasyConfig ? "auto EasyConfig" : ""}  ${modelData.isRunForPresetOnAndOff?
                                                                          "auto Preset on/off": ""}`
             }
             CoreLabel {

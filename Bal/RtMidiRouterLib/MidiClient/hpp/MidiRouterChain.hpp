@@ -142,6 +142,7 @@ public slots:
     //-only-file body
     {
         setIsEasyConfig(true);
+        setName("EasyConfig Monitor");
         QJsonObject obj;
         obj["action"] = "monitor";
         QJsonDocument doc{obj};

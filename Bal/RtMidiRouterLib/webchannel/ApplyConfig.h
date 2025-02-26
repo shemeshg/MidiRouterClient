@@ -325,8 +325,7 @@ private:
     }
 
     void setInportSettings(QJsonObject &midiRouteInputObj, QString &midiInputName,
-                           bool isEnabled, QString presetUuid) {
-        qDebug() << "TODO Applay input to " << midiRouteInputObj;
+                           bool isEnabled, QString presetUuid) {        
         int portNumber = wcmidiin->getPortNumber(midiInputName);
 
         wcmidiin->openPort(portNumber);
