@@ -41,6 +41,14 @@ public slots:
     }
 
     //- {fn}
+    void delEasyConfigRoute(int idx)
+    //-only-file body
+    {
+
+        delListItem<EasyConfigRoute *>(idx);
+    }
+
+    //- {fn}
     void addEasyConfigRoute()
     //-only-file body
     {

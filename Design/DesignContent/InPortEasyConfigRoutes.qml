@@ -29,7 +29,9 @@ ColumnLayout {
             property bool fromEventIsCc: [5,7].indexOf( fromEvent.currentValue) > -1
             property bool toEventIsCc: [5,7].indexOf( toEvent.currentValue) > -1
 
+
             RowLayout {
+
                 CoreLabel {
                     text: "Destination"
                 }
@@ -46,6 +48,12 @@ ColumnLayout {
                         if (index !== -1) {
                             currentIndex = index;
                         }
+                    }
+                }
+                CoreButton {
+                    text: "del"
+                    onClicked: {
+                        midiRouteInput.easyConfig.delEasyConfigRoute(index)
                     }
                 }
             }
