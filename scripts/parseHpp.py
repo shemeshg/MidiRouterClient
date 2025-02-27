@@ -19,6 +19,8 @@ import re
 import sys
 import concurrent.futures
 
+is_source_map = True
+
 class FileClass:
     file_path = ""
     file_id = ""
@@ -30,8 +32,6 @@ class LineClass:
     line_number = 0
     line_text = ""
 
-
-import os
 
 def update_file_if_needed(file_path, new_content):
     """
@@ -85,11 +85,6 @@ def replace_next(template, NEXT):
     pattern = re.compile(r'\{NEXT\[(.*?)\]\}')
     result = pattern.sub(replacer, template)
     return result
-
-
-import re
-
-import re
 
 def get_string_parts(line, with_quotes=False):
     if with_quotes:
@@ -253,7 +248,7 @@ def parse_file(input_file):
                     line.line_text = line.line_text.replace(var, varsMap[var])
             elif is_next_text:
                 next_text += line.line_text            
-            if fileMap[only_file_id].original_line_number <  line.line_number:
+            if fileMap[only_file_id].original_line_number <  line.line_number and is_source_map:
                 fileMap[only_file_id].original_line_number = line.line_number
                 ref =  f"#line {fileMap[only_file_id].original_line_number - 1} " +  '"' + line.filne_name +  '"' +"\n"
                 fileMap[only_file_id].file_content.append(ref)
@@ -264,8 +259,6 @@ def parse_file(input_file):
         if fileMap[file_id].file_content and file_id != "null":            
             print("Write file " + fileMap[file_id].file_path)
             update_file_if_needed(fileMap[file_id].file_path, "".join(fileMap[file_id].file_content))
-            #with open(fileMap[file_id].file_path, 'w') as file:
-            #    file.writelines(fileMap[file_id].file_content)
 
 
 
