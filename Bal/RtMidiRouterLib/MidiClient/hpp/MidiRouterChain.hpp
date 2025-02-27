@@ -2,33 +2,41 @@
 //-define-file header GenHpp/MidiRouterChain.h
 //-only-file header //-
 #pragma once
-//- #include "EasyConfig.h"
-//- #include "FilterAndTransform.h"
-//- #include "FilterSchedule.h"
-//- #include "FilterToConsle.h"
-//- #include "MidiPresetControlEasyConfig.h"
-//- #include "../genPrpt/MidiRouterChainPrivate.h"
-//- #include "FilterMidiDestination.h"
-//- #include "FilterNetworkDestination.h"
+
 //-only-file body //-
 //- #include "MidiRouterChain.h"
-//- #include "../genPrpt/MidiRoutersFilter.h"
-//- #include "MidiRoutePreset.h"
+
+//- {include-header}
+#include "EasyConfig.hpp" //- #include "EasyConfig.h"
+//- {include-header}
+#include "FilterAndTransform.hpp" //- #include "FilterAndTransform.h"
+//- {include-header}
+#include "FilterMidiDestination.hpp" //- #include "FilterMidiDestination.h"
+//- {include-header}
+#include "FilterNetworkDestination.hpp" //- #include "FilterNetworkDestination.h"
+//- {include-header}
+#include "FilterSchedule.hpp" //- #include "FilterSchedule.h"
+//- {include-header}
+#include "FilterToConsle.hpp" //- #include "FilterToConsle.h"
+//- {include-header}
+#include "MidiPresetControlEasyConfig.hpp" //- #include "MidiPresetControlEasyConfig.h"
+//- {include-header}
+#include "../genPrpt/MidiRouterChainPrivate.hpp" //- #include "../genPrpt/MidiRouterChainPrivate.h"
 //-only-file null
-#include "EasyConfig.hpp"
-#include "FilterAndTransform.hpp"
-#include "FilterMidiDestination.hpp"
-#include "FilterNetworkDestination.hpp"
-#include "FilterSchedule.hpp"
-#include "FilterToConsle.hpp"
-#include "MidiPresetControlEasyConfig.hpp"
-#include "../genPrpt/MidiRouterChainPrivate.hpp"
-#include "../genPrpt/MidiRoutersFilter.hpp"
-#include "MidiClientUtil.hpp"
+
+
 //-only-file header
 #include <QtCore/qjsondocument.h>
 #include <QtCore/qjsonobject.h>
 
+struct MidiPortInfo {
+    QString serverName;
+    QString serverPort;
+    QString midiPort;
+    bool isRemoteObject(){
+        return !serverName.isEmpty() && !serverPort.isEmpty() && !midiPort.isEmpty();
+    }
+};
 
 //-var {PRE} "MidiRouterChain::"
 class MidiRouterChain : public MidiRouterChainPrivate
@@ -224,8 +232,14 @@ public slots:
                 );
 
         }
+        auto s = parseMidiPortName(toDestinationName);
 
-        addFilterMidiDestination(toDestinationName);
+        if (s.isRemoteObject()) {
+            addFilterNetworkDestination(s.serverName,s.serverPort.toInt(),s.midiPort);
+        } else {
+            addFilterMidiDestination(toDestinationName);
+
+        }
 
     }
 
@@ -234,6 +248,26 @@ signals:
 
 
 private:
+
+
+    //- {fn}
+    MidiPortInfo parseMidiPortName(const QString& completeMidiPortName)
+    //-only-file body
+    {
+        QRegularExpression regex(R"(^([a-zA-Z0-9._-]+):(\d+)(\/([\ a-zA-Z0-9._-]+)?)?$)");
+        QRegularExpressionMatch match = regex.match(completeMidiPortName);
+
+        MidiPortInfo midiPortInfo;
+
+        if (match.hasMatch()) {
+            midiPortInfo.serverName = match.captured(1);
+            midiPortInfo.serverPort = match.captured(2);
+            midiPortInfo.midiPort = match.captured(4);
+        }
+
+        return midiPortInfo;
+    }
+
     //- {fn}
     void deleteVarIfCanConvert(const QVariant &var)
     //-only-file body

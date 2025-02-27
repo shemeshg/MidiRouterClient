@@ -35,20 +35,11 @@ ColumnLayout {
                 CoreLabel {
                     text: "Destination"
                 }
-                CoreComboBox {
-                    id: nameId
-                    Layout.fillWidth: true
-                    model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-                    onActivated: {
-                        modelData.toDestinationName = currentText
-                    }
-
-                    Component.onCompleted: {
-                        var index = model.indexOf(modelData.toDestinationName);
-                        if (index !== -1) {
-                            currentIndex = index;
-                        }
-                    }
+                LocalNetMidiOut {
+                    toDestinationName: modelData.toDestinationName
+                    onUserEdited:()=>{
+                              modelData.toDestinationName =  toDestinationName;
+                                 }
                 }
                 CoreButton {
                     text: "del"

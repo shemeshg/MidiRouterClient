@@ -42,5 +42,8 @@ qt6_add_qml_module(DesignContent
         "UserControlsDropdowns.qml"
         "UserControlsList.qml"
         "UserControlsEditControl.qml"
+        "LocalNetMidiOut.qml"
     )
+
+
 
