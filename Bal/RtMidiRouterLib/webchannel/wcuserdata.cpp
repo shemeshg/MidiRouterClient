@@ -24,6 +24,8 @@ WcUserData::WcUserData(Webchannel::WcMidiIn *wcmidiin,
 
     userdata = doc.object();
 
-
+    if (isSaveConfigOnServer) {
+        applyConfig(doc.object());
+    }
 
 }
