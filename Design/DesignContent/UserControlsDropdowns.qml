@@ -12,7 +12,7 @@ ColumnLayout {
             CoreButton {
                 text: "add"
                 onClicked: {
-                    Constants.balData.midiClientConnection.userDataConfig.addDropdownList()
+                    Constants.balData.midiClientConnection.userDataConfig.addDropdownList("new list","")
                 }
             }
 

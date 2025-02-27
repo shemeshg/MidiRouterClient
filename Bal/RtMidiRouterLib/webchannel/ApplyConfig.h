@@ -46,6 +46,7 @@ public:
 
         setVirtualPorts(inPortsMap, json);
 
+
         inPorts = getMapStringVal(wcmidiin->getPorts());
         outPorts = getMapStringVal(wcmidiout->getPorts());
         disCnctInPorts.clear();

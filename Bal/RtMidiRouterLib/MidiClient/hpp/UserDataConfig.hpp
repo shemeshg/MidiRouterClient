@@ -47,15 +47,7 @@ public:
 
 
 
-    //- {fn}
-    void addDropdownList(QString name, QString data)
-    //-only-file body
-    {
-        Dropdownlist *d = new Dropdownlist();
-        d->setName(name);
-        d->setData(data);
-        addListItem(d);
-    }
+
 
     //- {fn}
     void clearVirtualPorts()
@@ -64,15 +56,6 @@ public:
         m_virtualInPorts.clear();
         emit virtualInPortsChanged();
     }
-
-    //- {fn}
-    void addVirtualPort(QString port)
-    //-only-file body
-    {
-        m_virtualInPorts.append(port);
-        emit virtualInPortsChanged();
-    }
-
 
 
     //- {fn}
@@ -161,6 +144,40 @@ public slots:
         MidiRoutePreset *p = new MidiRoutePreset();
         p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
         addListItem(p);
+    }
+
+
+    //- {fn}
+    void addVirtualPort(QString port)
+    //-only-file body
+    {
+        m_virtualInPorts.append(port);
+        emit virtualInPortsChanged();
+    }
+
+    //- {fn}
+    void delVirtualPort(int idx)
+    //-only-file body
+    {
+        m_virtualInPorts.remove(idx);
+        emit virtualInPortsChanged();
+    }
+
+    //- {fn}
+    void addDropdownList(QString name, QString data)
+    //-only-file body
+    {
+        Dropdownlist *d = new Dropdownlist();
+        d->setName(name);
+        d->setData(data);
+        addListItem(d);
+    }
+
+    //- {fn}
+    void delDropdownList(int idx)
+    //-only-file body
+    {
+        delListItem<Dropdownlist *>(idx);
     }
 
     //-only-file header
