@@ -5,15 +5,21 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 ColumnLayout {
-    property var remotePorts: []
+    property string  serverName: ""
+    property int  serverPort: 1234
+    property string  midiPort: ""
+
+    signal back();
+    signal doSet();
+
     CoreLabel {
-        text: "inPortsRoutesFilterToNetwork"
+        text: "Remote port"
     }
     CoreButton {
         text: "back"
         onClicked: {
-            inPortsRoutesLoaderId.filterObj.setFilter( serverName.text,serverPort.text, baseMidiRouteInput.text)
-            inPortRoutesId.state = "InPortsRoutesListFilters"
+            back()
+
         }
     }
     RowLayout {
@@ -21,8 +27,12 @@ ColumnLayout {
             text: "Server name"
         }
         CoreTextField {
-            id: serverName
-            text: inPortsRoutesLoaderId.filterObj.serverName
+
+            text: serverName
+            onTextEdited: ()=>{
+                          serverName = text
+                        doSet();
+                          }
             Layout.fillWidth: true
         }
     }
@@ -31,8 +41,11 @@ ColumnLayout {
             text: "Server port"
         }
         CoreTextField {
-            id: serverPort
-            text: inPortsRoutesLoaderId.filterObj.serverPort
+            text: serverPort
+            onTextEdited: ()=>{
+                          serverPort = text
+                            doSet();
+                          }
             Layout.fillWidth: true
         }
     }
@@ -42,7 +55,11 @@ ColumnLayout {
         }
         CoreTextField {
             id: baseMidiRouteInput
-            text: inPortsRoutesLoaderId.filterObj.baseMidiRouteInput
+            text: midiPort
+            onTextEdited: ()=>{
+                          midiPort = text;
+                              doSet();
+                          }
             Layout.fillWidth: true
         }
     }
@@ -50,9 +67,9 @@ ColumnLayout {
         CoreButton {
             text: "Query remote midi ports: "
             onClicked: {
-                Constants.balData.queryRemoteMidiPorts(serverName.text,serverPort.text, (result)=>{
+                Constants.balData.queryRemoteMidiPorts(serverName,serverPort, (result)=>{
                               serverStatus.text = result.serverStatus;
-                             remotePorts = result.inPorts
+                             remotePorts.model = result.inPorts
                         })
             }
         }
@@ -62,7 +79,7 @@ ColumnLayout {
         }
     }
     Repeater {
-        model: remotePorts
+        id: remotePorts
         RowLayout {
             CoreLabel {
                 text: modelData
@@ -71,6 +88,8 @@ ColumnLayout {
                 text: "select"
                 onClicked: {
                     baseMidiRouteInput.text = modelData
+                    midiPort = modelData
+                    doSet();
                 }
             }
         }

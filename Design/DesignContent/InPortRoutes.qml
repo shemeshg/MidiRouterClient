@@ -37,6 +37,15 @@ ColumnLayout {
     Component {
         id: inPortsRoutesFilterToNetwork
         InPortsRoutesFilterToNetwork {
+            serverName: inPortsRoutesLoaderId.filterObj.serverName
+            serverPort: inPortsRoutesLoaderId.filterObj.serverPort
+            midiPort: inPortsRoutesLoaderId.filterObj.baseMidiRouteInput
+            onBack: {
+                inPortRoutesId.state = "InPortsRoutesListFilters"
+            }
+            onDoSet: {
+                inPortsRoutesLoaderId.filterObj.setFilter( serverName, serverPort, midiPort)
+            }
         }
     }
 
