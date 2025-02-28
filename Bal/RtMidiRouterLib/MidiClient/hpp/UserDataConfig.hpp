@@ -102,9 +102,22 @@ public:
         if (j["criticalError"].isBool() &&
             j["criticalError"].toBool()) {
             qDebug() << "Server JSON critical error";
+            setCriticalErrorMsg("Server JSON critical error");
             return;
         }
-        userConfigParseJson.setChanges(this, j);
+
+        try {
+            userConfigParseJson.setChanges(this, j);
+        }
+        catch (const std::runtime_error &e) {
+            setCriticalErrorMsg("Server JSON critical error");
+            qDebug() << "Server JSON critical error"<<e.what();
+        }
+        catch (...) {
+            setCriticalErrorMsg("Server JSON critical error");
+            qDebug() << "Server JSON critical error";
+        }
+
     }
 
     //-only-file header

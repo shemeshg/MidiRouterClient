@@ -34,6 +34,13 @@ Window {
         width: parent.width
         height: parent.height
 
+        CoreLabel {
+            visible: Constants.balData.midiClientConnection.userDataConfig.criticalErrorMsg
+            text: "<h1>" +
+                  Constants.balData.midiClientConnection.userDataConfig.criticalErrorMsg +
+                  "</h1>"
+            color: "darkorange"
+        }
 
         HeaderBar {
             id: headerBarId

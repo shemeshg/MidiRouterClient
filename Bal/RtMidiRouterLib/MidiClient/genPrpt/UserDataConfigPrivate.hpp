@@ -34,6 +34,7 @@ class UserDataConfigPrivate : public QObject
     Q_PROPERTY(QStringList connectedInPorts READ connectedInPorts WRITE setConnectedInPorts NOTIFY connectedInPortsChanged )
     Q_PROPERTY(QStringList connectedOutPorts READ connectedOutPorts WRITE setConnectedOutPorts NOTIFY connectedOutPortsChanged )
     Q_PROPERTY(MidiRoutePreset * activePreset READ activePreset  NOTIFY activePresetChanged )
+    Q_PROPERTY(QString criticalErrorMsg READ criticalErrorMsg WRITE setCriticalErrorMsg NOTIFY criticalErrorMsgChanged )
     
     QML_ELEMENT
 public:
@@ -106,6 +107,18 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
     
     MidiRoutePreset * activePreset() const{return m_activePreset;} 
     
+
+    
+    QString criticalErrorMsg() const{return m_criticalErrorMsg;} 
+    
+void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
+    {
+        if (m_criticalErrorMsg == newCriticalErrorMsg)
+            return;
+        m_criticalErrorMsg = newCriticalErrorMsg;
+        emit criticalErrorMsgChanged();
+    }
+
 
 
     template<typename T>
@@ -186,6 +199,7 @@ signals:
     void connectedInPortsChanged();
     void connectedOutPortsChanged();
     void activePresetChanged();
+    void criticalErrorMsgChanged();
     
 
 protected:
@@ -201,6 +215,7 @@ private:
     int m_activePresetID;
     QStringList m_connectedInPorts;
     QStringList m_connectedOutPorts;
+    QString m_criticalErrorMsg;
     
 };
 //-only-file null

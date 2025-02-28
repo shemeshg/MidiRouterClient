@@ -11,7 +11,8 @@ ary = [
     create_prpt("QList<MidiRoutePreset *>", 'midiRoutePresets', is_list=True),
     create_prpt("QStringList", 'connectedInPorts'),
     create_prpt("QStringList", 'connectedOutPorts'),
-    create_prpt("MidiRoutePreset *", 'activePreset', is_writable=False)
+    create_prpt("MidiRoutePreset *", 'activePreset', is_writable=False),
+    create_prpt("QString", 'criticalErrorMsg')
 ]
 
 enumClasss = []
