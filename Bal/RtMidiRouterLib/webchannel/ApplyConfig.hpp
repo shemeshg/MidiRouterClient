@@ -11,7 +11,7 @@
 //-var {PRE} "ApplyConfig::"
 class ApplyConfig {
 public:
-    ApplyConfig(Webchannel::WcMidiIn *wcmidiin, Webchannel::WcMidiOut *wcmidiout)
+    explicit ApplyConfig(Webchannel::WcMidiIn *wcmidiin, Webchannel::WcMidiOut *wcmidiout)
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
     struct DisCnctInPort {

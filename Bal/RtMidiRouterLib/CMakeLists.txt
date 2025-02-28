@@ -64,7 +64,7 @@ add_library(RtMidiRouterLib STATIC
   webchannel/virtualinout.cpp
   webchannel/wcmidiin.cpp
   webchannel/wcmidiout.cpp
-  webchannel/wcuserdata.cpp
+
   libs/QWebchannelCppClient/WebChannelClient.h
   libs/websocket/websocketclientwrapper.h
   libs/websocket/websockettransport.h
@@ -85,7 +85,8 @@ add_library(RtMidiRouterLib STATIC
   webchannel/wcmidiin.h
   webchannel/wcmidiinlistener.h
   webchannel/wcmidiout.h
-  webchannel/wcuserdata.h
+  ${CMAKE_CURRENT_BINARY_DIR}/webchannel/wcuserdata.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/webchannel/wcuserdata.h
   ${CMAKE_CURRENT_BINARY_DIR}/webchannel/ApplyConfig.h
   ${CMAKE_CURRENT_BINARY_DIR}/webchannel/ApplyConfig.cpp
 )
