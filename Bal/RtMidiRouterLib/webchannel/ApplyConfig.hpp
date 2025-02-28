@@ -2,6 +2,7 @@
 //-define-file header webchannel/ApplyConfig.h
 //-only-file header //-
 #pragma once
+#include "MidiClientUtil.h"
 #include "wcmidiin.h"
 #include "wcmidiout.h"
 //-only-file body //-
@@ -11,7 +12,8 @@
 //-var {PRE} "ApplyConfig::"
 class ApplyConfig {
 public:
-    explicit ApplyConfig(Webchannel::WcMidiIn *wcmidiin, Webchannel::WcMidiOut *wcmidiout)
+    explicit ApplyConfig(Webchannel::WcMidiIn *wcmidiin,
+                         Webchannel::WcMidiOut *wcmidiout)
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
     struct DisCnctInPort {
@@ -30,11 +32,11 @@ public:
                             const QString &presetUuid)
     //-only-file body
     {
-        QJsonArray midiRoutePresets = json["midiRoutePresets"].toArray();
+        auto midiRoutePresets = getJson<QJsonArray>(json["midiRoutePresets"]);
 
         for (int i = 0; i < midiRoutePresets.size(); ++i) {
-            QJsonObject midiRoutePresetObj = midiRoutePresets[i].toObject();
-            if (midiRoutePresetObj["uuid"].toString() == presetUuid) {
+            auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
+            if (getJson<QString>(midiRoutePresetObj["uuid"]) == presetUuid) {
                 midiRoutePresetObj["isEnabled"] = isMidiControlOn;
                 midiRoutePresets[i] =
                     midiRoutePresetObj; // Update the array with the modified object
@@ -47,10 +49,9 @@ public:
     }
 
     //- {fn}
-    QJsonObject applyConfig(const QJsonObject &json)
+    QJsonObject applyConfig(QJsonObject &json)
     //-only-file body
     {
-        qDebug() << "Server will applay a config of " << json;
         wcmidiin->restart();
         wcmidiout->restart();
 
@@ -58,7 +59,6 @@ public:
         QVariantMap outPortMap = wcmidiout->getPorts();
 
         setVirtualPorts(inPortsMap, json);
-
 
         inPorts = getMapStringVal(wcmidiin->getPorts());
         outPorts = getMapStringVal(wcmidiout->getPorts());
@@ -113,15 +113,12 @@ private:
     }
 
     //- {fn}
-    void setVirtualPorts(const QVariantMap &inPortsMap, const QJsonObject &json)
+    void setVirtualPorts(const QVariantMap &inPortsMap, QJsonObject &json)
     //-only-file body
     {
         QStringList inHwPortNames = getInHwPortNames(inPortsMap);
 
-        QJsonArray virtualInPorts;
-        if (json["virtualInPorts"].isArray()) {
-            virtualInPorts = json["virtualInPorts"].toArray();
-        }
+        auto virtualInPorts = getJson<QJsonArray>(json["virtualInPorts"]);
 
         for (const auto &itm : virtualInPorts) {
             QString str = itm.toString();
@@ -132,56 +129,53 @@ private:
     }
 
     //- {fn}
-    void setMidiRoutePresets(const QJsonObject &json)
+    void setMidiRoutePresets(QJsonObject &json)
     //-only-file body
     {
-        auto midiRoutePresets = json["midiRoutePresets"];
-        if (midiRoutePresets.isArray()) {
-            auto midiRoutePresetsObj = midiRoutePresets.toArray();
 
-            for (auto const &midiRoutePreset : midiRoutePresetsObj) {
-                if (midiRoutePreset.isObject()) {
-                    auto midiRoutePresetObj = midiRoutePreset.toObject();
-                    bool isEnabled = midiRoutePresetObj["isEnabled"].toBool();
-                    setMidiRouteInputs(midiRoutePresetObj, isEnabled);
-                    // send user control if required
-                    if (isEnabled) {
-                        auto userControlsObj = midiRoutePresetObj["userControls"].toArray();
-                        for (const auto &ctrl : userControlsObj) {
-                            auto ctrlObj = ctrl.toObject();
-                            if (ctrlObj["isSendOnPresetChange"].toBool()) {
-                                QString outputPortnName = ctrlObj["outputPortnName"].toString();
-                                if (outputPortnName.isEmpty()) {
-                                    continue;
-                                }
-                                int portNumber = wcmidiout->getPortNumber(outputPortnName);
-                                if (portNumber == -1) {
-                                    continue;
-                                }
-                                wcmidiout->openPort(portNumber);
-                                int eventType = ctrlObj["eventType"].toInt();
-                                if (eventType == 0) {
+        auto midiRoutePresetsObj = getJson<QJsonArray>(json["midiRoutePresets"]);
 
-                                    wcmidiout->sendControlChange(
-                                        portNumber, ctrlObj["ccId"].toInt(),
-                                        ctrlObj["inputVal"].toInt(),
-                                        {ctrlObj["channelId"].toString()});
-                                } else if (eventType == 1) {
-                                    wcmidiout->sendProgramChange(
-                                        portNumber, ctrlObj["inputVal"].toInt(),
-                                        {ctrlObj["channelId"].toString()});
-                                } else if (eventType == 2) {
-                                    wcmidiout->setNonRegisteredParameterInt(
-                                        portNumber, ctrlObj["nrpnControl"].toInt(),
-                                        ctrlObj["inputVal"].toInt(),
-                                        {ctrlObj["channelId"].toString()});
-                                } else {
-                                    qDebug() << "Bad JSON";
-                                }
-
-                                qDebug() << "TODO send userControls for enabled preset";
-                            }
+        for (auto const &midiRoutePreset : midiRoutePresetsObj) {
+            auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePreset);
+            bool isEnabled = midiRoutePresetObj["isEnabled"].toBool();
+            setMidiRouteInputs(midiRoutePresetObj, isEnabled);
+            // send user control if required
+            if (isEnabled) {
+                auto userControlsObj = getJson<QJsonArray>(midiRoutePresetObj["userControls"]);
+                for (const auto &ctrl : userControlsObj) {
+                    auto ctrlObj = ctrl.toObject();
+                    if (getJson<bool>(ctrlObj["isSendOnPresetChange"])) {
+                        QString outputPortnName = getJson<QString>(ctrlObj["outputPortnName"]);
+                        if (outputPortnName.isEmpty()) {
+                            continue;
                         }
+                        int portNumber = wcmidiout->getPortNumber(outputPortnName);
+                        if (portNumber == -1) {
+                            continue;
+                        }
+                        wcmidiout->openPort(portNumber);
+                        int eventType = getJson<int>(ctrlObj["eventType"]);
+                        if (eventType == 0) {
+
+                            wcmidiout->sendControlChange(portNumber,
+                                                         getJson<int>(ctrlObj["ccId"]),
+                                                         getJson<int>(ctrlObj["inputVal"]),
+                                                         {getJson<QString>(ctrlObj["channelId"])});
+                        } else if (eventType == 1) {
+                            wcmidiout->sendProgramChange(portNumber,
+                                                         getJson<int>(ctrlObj["inputVal"]),
+                                                         {getJson<QString>(ctrlObj["channelId"])});
+                        } else if (eventType == 2) {
+                            wcmidiout->setNonRegisteredParameterInt(
+                                portNumber,
+                                getJson<int>(ctrlObj["nrpnControl"]),
+                                getJson<int>(ctrlObj["inputVal"]),
+                                {getJson<QString>(ctrlObj["channelId"])});
+                        } else {
+                            throw std::runtime_error("Unexpected JSON format");
+                        }
+
+
                     }
                 }
             }
@@ -192,50 +186,50 @@ private:
     bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name)
     //-only-file body
     {
-        return midiRouteInputObj["ignoreTypes"].toObject()["name"].toBool();
+        auto obj = getJson<QJsonObject>(midiRouteInputObj["ignoreTypes"]);
+        return getJson<bool>(obj[name]);
     }
 
     //- {fn}
     double getDoubleTimeSig(QJsonObject &midiRouteInputObj, QString name)
     //-only-file body
     {
-        return midiRouteInputObj["midiRouteClock"].toObject()["name"].toBool();
+        auto obj = getJson<QJsonObject>(midiRouteInputObj["midiRouteClock"]);
+        return getJson<double>(obj[name]);
     }
 
     //- {fn}
     void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled)
     //-only-file body
     {
-        auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
 
-        if (midiRouteInputs.isArray()) {
-            auto midiRouteInputsObj = midiRouteInputs.toArray();
+        auto midiRouteInputsObj = getJson<QJsonArray>(midiRoutePresetObj["midiRouteInputs"]);
 
-            for (auto it = midiRouteInputsObj.begin(); it != midiRouteInputsObj.end();
-                 ++it) {
-                auto midiRouteInputObj = it->toObject();
-                auto midiInputName = midiRouteInputObj["midiInputName"].toString();
+        for (auto it = midiRouteInputsObj.begin(); it != midiRouteInputsObj.end();
+             ++it) {
+            auto midiRouteInputObj = it->toObject();
+            auto midiInputName = getJson<QString>( midiRouteInputObj["midiInputName"]);
 
-                QString presetUuid = midiRoutePresetObj["uuid"].toString();
-                if (inPorts.contains(midiInputName)) {
-                    setInportSettings(midiRouteInputObj, midiInputName, isEnabled,
-                                      presetUuid);
-                } else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
-                                        [&midiInputName](const DisCnctInPort &port) {
-                                            return port.inPortName == midiInputName;
-                           })) {
-                    DisCnctInPort port;
-                    port.presetUuid = presetUuid;
-                    port.inPortName = midiInputName;
-                    disCnctInPorts.append(port);
-                }
+            QString presetUuid = getJson<QString>(midiRoutePresetObj["uuid"]);
+            if (inPorts.contains(midiInputName)) {
+                setInportSettings(midiRouteInputObj, midiInputName, isEnabled,
+                                  presetUuid);
+            } else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
+                                    [&midiInputName](const DisCnctInPort &port) {
+                                        return port.inPortName == midiInputName;
+                       })) {
+                DisCnctInPort port;
+                port.presetUuid = presetUuid;
+                port.inPortName = midiInputName;
+                disCnctInPorts.append(port);
             }
         }
+
     }
 
     //- {fn}
     void setInputPortParams(int portNumber, QJsonObject &midiRouteInputObj,
-                                   QString &midiInputName, QString presetUuid)
+                            QString &midiInputName, QString presetUuid)
     //-only-file body
     {
         wcmidiin->ignoreTypes(portNumber,
@@ -249,11 +243,12 @@ private:
                              getDoubleTimeSig(midiRouteInputObj, "fromSppPos"));
 
         wcmidiin->clearPropegateClockPort(portNumber);
-        auto propegateInputs =
-            midiRouteInputObj["midiRouteClock"].toObject()["propegateInputs"];
-        auto propegateInputsAry = propegateInputs.toArray();
+
+        auto midiRouteClockObj = getJson<QJsonObject>(midiRouteInputObj["midiRouteClock"]);
+        auto propegateInputsAry = getJson<QJsonArray>(midiRouteClockObj["propegateInputs"]);
         for (const auto &propegateInput : propegateInputsAry) {
-            auto outPortName = propegateInput.toObject()["midiInputName"].toString();
+            auto propegateInputObj = getJson<QJsonObject>(propegateInput);
+            auto outPortName = getJson<QString>(propegateInputObj["midiInputName"]);
             if (outPorts.contains(outPortName)) {
                 int outPortId = wcmidiout->getPortNumber(outPortName);
                 wcmidiin->addPropegateClockPort(portNumber, outPortId);
@@ -266,13 +261,13 @@ private:
             }
         }
 
-        auto cc14bitAry = midiRouteInputObj["cc14bitAry"].toArray();
+        auto cc14bitAry = getJson<QJsonArray>(midiRouteInputObj["cc14bitAry"]);
         wcmidiin->clearCc14Bit(portNumber);
         for (const auto &cc14 : cc14bitAry) {
-            auto cc14Obj = cc14.toObject();
-            qDebug() << "CHANNEL CC " << cc14Obj;
-            wcmidiin->addCc14Bit(portNumber, cc14Obj["channel"].toInt(),
-                                 cc14Obj["cc"].toInt());
+            auto cc14Obj = getJson<QJsonObject>(cc14);
+            wcmidiin->addCc14Bit(portNumber,
+                                 getJson<int>( cc14Obj["channel"]),
+                                 getJson<int>(cc14Obj["cc"]));
         }
     }
 
@@ -291,24 +286,19 @@ private:
 
     //- {fn}
     void setInputChainFilters(QString &midiInputName,
-                                     QJsonArray &midiRoutersFilters,
-                                     int portNumber,
-                                     QJsonObject &midiRouterChainObj)
+                              QJsonArray &midiRoutersFilters, int portNumber,
+                              QJsonObject &midiRouterChainObj)
     //-only-file body
     {
-        qDebug() << "TODO CREATE CHAIN AND PARSE FILTER " << midiInputName
-                 << midiRouterChainObj["name"].toString();
         int chainId = wcmidiin->routingMidiChainsAaddChain(portNumber);
         for (const auto &midiRoutersFilter : midiRoutersFilters) {
-            auto filter = midiRoutersFilter.toObject();
-            qDebug() << "Add to chain " << chainId << filter;
-            if (filter["filterType"].toInt() ==
+            auto filter = getJson<QJsonObject>(midiRoutersFilter);
+            if (getJson<int>(filter["filterType"]) ==
                 static_cast<int>(FilterType::TO_MIDI_DESTINATION)) {
-                qDebug() << "** SENDING " << filter["midiInputName"].toString();
                 int outPortNumber =
-                    wcmidiout->getPortNumber(filter["midiInputName"].toString());
+                    wcmidiout->getPortNumber(getJson<QString>(filter["midiInputName"]));
 
-                qDebug() << "** id " << outPortNumber;
+
                 if (outPortNumber >= 0) {
                     wcmidiin->routingActionAddSendPortByNumber(portNumber, chainId,
                                                                outPortNumber);
@@ -316,54 +306,55 @@ private:
                     qDebug() << "Could not find out port";
                 }
 
-            } else if (filter["filterType"].toInt() ==
+            } else if (getJson<int>(filter["filterType"]) ==
                        static_cast<int>(FilterType::TO_CONSOLE)) {
                 wcmidiin->routingActionAddLogData(portNumber, chainId,
-                                                  filter["logTo"].toInt(),
-                                                  filter["userdata"].toString());
-            } else if (filter["filterType"].toInt() ==
+                                                  getJson<int>(filter["logTo"]),
+                                                  getJson<QString>(filter["userdata"]));
+            } else if (getJson<int>(filter["filterType"]) ==
                        static_cast<int>(FilterType::SCHEDULE_TO)) {
 
                 wcmidiin->routingActionAddDeferedEvent(portNumber, chainId,
-                                                       filter["defferedType"].toInt(),
-                                                       filter["defferedTo"].toDouble());
-            } else if (filter["filterType"].toInt() ==
+                                                       getJson<int>(filter["defferedType"]),
+                                                       getJson<double>(filter["defferedTo"]));
+            } else if (getJson<int>(filter["filterType"]) ==
                        static_cast<int>(FilterType::TO_NETWORK)) {
-                QString remotePortName = filter["midiInputName"].toString();
+                QString remotePortName = getJson<QString>(filter["midiInputName"]);
                 auto ok = wcmidiin->routingActionAddSendRemoteServerByRemotePortName(
-                    portNumber, chainId, filter["serverName"].toString(),
-                    filter["serverPort"].toInt(), remotePortName);
+                    portNumber, chainId,
+                    getJson<QString>(filter["serverName"]),
+                    getJson<int>(filter["serverPort"]),
+                    remotePortName);
                 if (ok == -1) {
                     qDebug() << "Could not add remote Port for some reason";
                 }
-            } else if (filter["filterType"].toInt() ==
+            } else if (getJson<int>(filter["filterType"]) ==
                        static_cast<int>(FilterType::FILTER_AND_TRANSFORM)) {
                 wcmidiin->routingActionAddFilterMidiChannelMsg(
                     portNumber, chainId,
-                    stringToJsonArray(filter["filterChannel"].toString()),
-                    stringToJsonArray(filter["filterEvents"].toString()),
-                    stringToJsonArray(filter["filterData1"].toString()),
-                    stringToJsonArray(filter["filterData2"].toString()),
-                    filter["conditionAction"].toInt());
+                    stringToJsonArray(getJson<QString>(filter["filterChannel"])),
+                    stringToJsonArray(getJson<QString>(filter["filterEvents"])),
+                    stringToJsonArray(getJson<QString>(filter["filterData1"])),
+                    stringToJsonArray(getJson<QString>(filter["filterData2"])),
+                    getJson<int>(filter["conditionAction"]));
             }
         }
     }
 
     //- {fn}
     void setInputRouterChains(bool isEnabled, int portNumber,
-                                     QJsonObject &midiRouteInputObj,
-                                     QString &midiInputName)
+                              QJsonObject &midiRouteInputObj,
+                              QString &midiInputName)
     //-only-file body
     {
-        qDebug() << "TODO Inports chains and routes";
-        auto midiRouterChains = midiRouteInputObj["midiRouterChains"].toArray();
+        auto midiRouterChains = getJson<QJsonArray>( midiRouteInputObj["midiRouterChains"]);
         for (const auto &midiRouterChain : midiRouterChains) {
 
             //
-            QJsonObject midiRouterChainObj = midiRouterChain.toObject();
-            if (isEnabled || midiRouterChainObj["isRunForPresetOnAndOff"].toBool()) {
+            QJsonObject midiRouterChainObj = getJson<QJsonObject>(midiRouterChain);
+            if (isEnabled || getJson<bool>(midiRouterChainObj["isRunForPresetOnAndOff"])) {
                 QJsonArray midiRoutersFilters =
-                    midiRouterChainObj["midiRoutersFilters"].toArray();
+                    getJson<QJsonArray>( midiRouterChainObj["midiRoutersFilters"]);
                 if (midiRoutersFilters.size() > 0) {
                     setInputChainFilters(midiInputName, midiRoutersFilters, portNumber,
                                          midiRouterChainObj);

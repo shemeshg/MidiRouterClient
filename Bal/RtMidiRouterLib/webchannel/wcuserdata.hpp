@@ -49,7 +49,8 @@ public:
         userdata = doc.object();
 
         if (isSaveConfigOnServer) {
-            applyConfig(doc.object());
+            auto d = doc.object();
+            applyConfig(d);
         }
 
     }
@@ -106,7 +107,20 @@ public slots:
     }
 
     //- {fn}
-    QJsonObject applyConfig(const QJsonObject &json)
+    QJsonObject applyConfig( QString s)
+    //-only-file body
+    {
+        ApplyConfig ac(wcmidiin, wcmidiout);
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(s.toUtf8());
+
+        auto o = jsonDoc.object();
+        auto ret = ac.applyConfig(o);
+        setJon(o);
+        return ret;
+    }
+
+    //- {fn}
+    QJsonObject applyConfig( QJsonObject json)
     //-only-file body
     {
         ApplyConfig ac(wcmidiin, wcmidiout);

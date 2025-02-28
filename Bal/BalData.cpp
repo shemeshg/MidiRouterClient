@@ -219,7 +219,10 @@ void BalData::applyConfig(const QJSValue &callback)
         return;
     }
     auto json = mcc.midiClientConnection.userDataConfig()->getJson();
-    mcc.invokeMethod("wcuserdata", "applyConfig", {json}, true, callback, qjsEngine(this));
+
+    QJsonDocument jsonDoc(json);
+    QString s=jsonDoc.toJson(QJsonDocument::Compact);
+    mcc.invokeMethod("wcuserdata", "applyConfig", {s}, true, callback, qjsEngine(this));
 
 }
 
