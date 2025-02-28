@@ -118,6 +118,7 @@ private:
     {
         QStringList inHwPortNames = getInHwPortNames(inPortsMap);
 
+        if (!json["virtualInPorts"].isArray()){return;}
         auto virtualInPorts = getJson<QJsonArray>(json["virtualInPorts"]);
 
         for (const auto &itm : virtualInPorts) {
@@ -132,7 +133,7 @@ private:
     void setMidiRoutePresets(QJsonObject &json)
     //-only-file body
     {
-
+        if (!json["midiRoutePresets"].isArray()){return;}
         auto midiRoutePresetsObj = getJson<QJsonArray>(json["midiRoutePresets"]);
 
         for (auto const &midiRoutePreset : midiRoutePresetsObj) {
