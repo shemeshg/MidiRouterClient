@@ -2,9 +2,11 @@
 //-define-file header webchannel/ApplyConfig.h
 //-only-file header //-
 #pragma once
-#include "MidiClientUtil.h"
 #include "wcmidiin.h"
 #include "wcmidiout.h"
+#include <QJsonValueRef>
+#include <QJsonObject>
+#include <QJsonArray>
 //-only-file body //-
 //- #include "ApplyConfig.h"
 
@@ -410,6 +412,82 @@ private:
         json["disCnctOutPorts"] = outPortsArray;
 
         return json;
+    }
+
+    //-only-file header
+    template<typename T>
+    T getJson(QJsonValueRef obj);
+
+
+
+    template<>
+    QJsonArray getJson(QJsonValueRef obj)
+    {
+        if (obj.isArray()){
+            return obj.toArray();
+        } else {
+            QJsonArray tmp;
+            qDebug()<<"Critical AppConfig json error";
+            return tmp;
+        }
+    }
+
+
+    template<>
+    QJsonObject getJson(QJsonValueRef obj)
+    {
+        if (obj.isObject()){
+            return obj.toObject();
+        } else {
+            QJsonObject tmp;
+            qDebug()<<"Critical AppConfig json error";
+            return tmp;
+        }
+    }
+
+
+    template<>
+    QString  getJson(QJsonValueRef obj)
+    {
+        if(obj.isString()){
+            return obj.toString();
+        } else {
+            qDebug()<<"Critical AppConfig json error";
+            return "";
+        }
+    }
+
+    template<>
+    bool  getJson(QJsonValueRef obj)
+    {
+        if(obj.isBool()){
+            return obj.toBool();
+        } else {
+            qDebug()<<"Critical AppConfig json error";
+            return false;
+        }
+    }
+
+    template<>
+    double  getJson(QJsonValueRef obj)
+    {
+        if(obj.isDouble()){
+            return obj.toDouble();
+        } else {
+            qDebug()<<"Critical AppConfig json error";
+            return 0;
+        }
+    }
+
+    template<>
+    int  getJson(QJsonValueRef obj)
+    {
+        if(obj.isDouble()){
+            return obj.toDouble();
+        } else {
+            qDebug()<<"Critical AppConfig json error";
+            return 0;
+        }
     }
 
     //-only-file header

@@ -19,7 +19,7 @@ import re
 import sys
 import concurrent.futures
 
-is_source_map = True
+is_source_map = False
 
 class FileClass:
     file_path = ""
