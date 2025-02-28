@@ -1,7 +1,14 @@
-#ifndef APPLYCONFIG_H
-#define APPLYCONFIG_H
+//-define-file body webchannel/ApplyConfig.cpp
+//-define-file header webchannel/ApplyConfig.h
+//-only-file header //-
+#pragma once
 #include "wcmidiin.h"
 #include "wcmidiout.h"
+//-only-file body //-
+//- #include "ApplyConfig.h"
+
+//-only-file header
+//-var {PRE} "ApplyConfig::"
 class ApplyConfig {
 public:
     ApplyConfig(Webchannel::WcMidiIn *wcmidiin, Webchannel::WcMidiOut *wcmidiout)
@@ -18,8 +25,11 @@ public:
         QString originedInPort;
     };
 
+    //- {fn}
     QJsonObject presetOnOff(QJsonObject &json, bool isMidiControlOn,
-                            const QString &presetUuid) {
+                            const QString &presetUuid)
+    //-only-file body
+    {
         QJsonArray midiRoutePresets = json["midiRoutePresets"].toArray();
 
         for (int i = 0; i < midiRoutePresets.size(); ++i) {
@@ -36,7 +46,10 @@ public:
         return json;
     }
 
-    QJsonObject applyConfig(const QJsonObject &json) {
+    //- {fn}
+    QJsonObject applyConfig(const QJsonObject &json)
+    //-only-file body
+    {
         qDebug() << "Server will applay a config of " << json;
         wcmidiin->restart();
         wcmidiout->restart();
@@ -57,6 +70,7 @@ public:
         return createApplayConfigReturnObj();
     }
 
+    //-only-file header
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
@@ -74,7 +88,10 @@ private:
         FILTER_AND_TRANSFORM
     };
 
-    QStringList getMapStringVal(QVariantMap map) {
+    //- {fn}
+    QStringList getMapStringVal(QVariantMap map)
+    //-only-file body
+    {
         QStringList list;
         for (auto it = map.begin(); it != map.end(); ++it) {
             list.append(it.value().toString());
@@ -82,7 +99,10 @@ private:
         return list;
     }
 
-    QStringList getInHwPortNames(const QVariantMap &inPortsMap) {
+    //- {fn}
+    QStringList getInHwPortNames(const QVariantMap &inPortsMap)
+    //-only-file body
+    {
         QStringList inHwPortNames;
         for (auto it = inPortsMap.begin(); it != inPortsMap.end(); ++it) {
             QString val = it.value().toString();
@@ -92,7 +112,10 @@ private:
         return inHwPortNames;
     }
 
-    void setVirtualPorts(const QVariantMap &inPortsMap, const QJsonObject &json) {
+    //- {fn}
+    void setVirtualPorts(const QVariantMap &inPortsMap, const QJsonObject &json)
+    //-only-file body
+    {
         QStringList inHwPortNames = getInHwPortNames(inPortsMap);
 
         QJsonArray virtualInPorts;
@@ -108,7 +131,10 @@ private:
         }
     }
 
-    void setMidiRoutePresets(const QJsonObject &json) {
+    //- {fn}
+    void setMidiRoutePresets(const QJsonObject &json)
+    //-only-file body
+    {
         auto midiRoutePresets = json["midiRoutePresets"];
         if (midiRoutePresets.isArray()) {
             auto midiRoutePresetsObj = midiRoutePresets.toArray();
@@ -162,15 +188,24 @@ private:
         }
     }
 
-    bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name) {
+    //- {fn}
+    bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name)
+    //-only-file body
+    {
         return midiRouteInputObj["ignoreTypes"].toObject()["name"].toBool();
     }
 
-    double getDoubleTimeSig(QJsonObject &midiRouteInputObj, QString name) {
+    //- {fn}
+    double getDoubleTimeSig(QJsonObject &midiRouteInputObj, QString name)
+    //-only-file body
+    {
         return midiRouteInputObj["midiRouteClock"].toObject()["name"].toBool();
     }
 
-    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled) {
+    //- {fn}
+    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled)
+    //-only-file body
+    {
         auto midiRouteInputs = midiRoutePresetObj["midiRouteInputs"];
 
         if (midiRouteInputs.isArray()) {
@@ -198,8 +233,11 @@ private:
         }
     }
 
-    inline void setInputPortParams(int portNumber, QJsonObject &midiRouteInputObj,
-                                   QString &midiInputName, QString presetUuid) {
+    //- {fn}
+    void setInputPortParams(int portNumber, QJsonObject &midiRouteInputObj,
+                                   QString &midiInputName, QString presetUuid)
+    //-only-file body
+    {
         wcmidiin->ignoreTypes(portNumber,
                               getBoolIgnoreTypes(midiRouteInputObj, "midiSysex"),
                               getBoolIgnoreTypes(midiRouteInputObj, "midiTime"),
@@ -238,7 +276,10 @@ private:
         }
     }
 
-    inline QJsonArray stringToJsonArray(const QString &qString) {
+    //- {fn}
+    QJsonArray stringToJsonArray(const QString &qString)
+    //-only-file body
+    {
         QJsonDocument jsonDoc = QJsonDocument::fromJson(qString.toUtf8());
         QJsonArray jsonArray;
         if (jsonDoc.isNull() || !jsonDoc.isArray()) {
@@ -248,10 +289,13 @@ private:
         return jsonArray;
     }
 
-    inline void setInputChainFilters(QString &midiInputName,
+    //- {fn}
+    void setInputChainFilters(QString &midiInputName,
                                      QJsonArray &midiRoutersFilters,
                                      int portNumber,
-                                     QJsonObject &midiRouterChainObj) {
+                                     QJsonObject &midiRouterChainObj)
+    //-only-file body
+    {
         qDebug() << "TODO CREATE CHAIN AND PARSE FILTER " << midiInputName
                  << midiRouterChainObj["name"].toString();
         int chainId = wcmidiin->routingMidiChainsAaddChain(portNumber);
@@ -305,9 +349,12 @@ private:
         }
     }
 
-    inline void setInputRouterChains(bool isEnabled, int portNumber,
+    //- {fn}
+    void setInputRouterChains(bool isEnabled, int portNumber,
                                      QJsonObject &midiRouteInputObj,
-                                     QString &midiInputName) {
+                                     QString &midiInputName)
+    //-only-file body
+    {
         qDebug() << "TODO Inports chains and routes";
         auto midiRouterChains = midiRouteInputObj["midiRouterChains"].toArray();
         for (const auto &midiRouterChain : midiRouterChains) {
@@ -325,8 +372,11 @@ private:
         }
     }
 
+    //- {fn}
     void setInportSettings(QJsonObject &midiRouteInputObj, QString &midiInputName,
-                           bool isEnabled, QString presetUuid) {        
+                           bool isEnabled, QString presetUuid)
+    //-only-file body
+    {
         int portNumber = wcmidiin->getPortNumber(midiInputName);
 
         wcmidiin->openPort(portNumber);
@@ -340,7 +390,10 @@ private:
                              midiInputName);
     }
 
-    QJsonObject createApplayConfigReturnObj() {
+    //- {fn}
+    QJsonObject createApplayConfigReturnObj()
+    //-only-file body
+    {
         QJsonObject json;
 
         // Create JSON array for disCnctInPorts
@@ -366,6 +419,6 @@ private:
 
         return json;
     }
-};
 
-#endif // APPLYCONFIG_H
+    //-only-file header
+};

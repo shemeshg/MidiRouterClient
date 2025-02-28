@@ -10,10 +10,10 @@ if(GEN_HPP)
         ${HPP_GEN_FILES} 
         ${HPP_PRPT_GEN_FILES}
     )
-    add_custom_target(run_script ALL
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Running parseHpp shell script")
+    #add_custom_target(run_script ALL
+    #    COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
+    #    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    #    COMMENT "Running parseHpp shell script")
 
     # Run a shell script before everything else
     execute_process(

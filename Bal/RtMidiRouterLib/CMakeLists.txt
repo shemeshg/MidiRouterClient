@@ -2,6 +2,39 @@ cmake_minimum_required(VERSION 3.14)
 
 project(RtMidiRouterLib LANGUAGES CXX)
 
+
+SET(GEN_HPP TRUE)
+if(GEN_HPP)
+    make_directory(${CMAKE_CURRENT_BINARY_DIR}/webchannel)
+
+
+    file(GLOB HPP_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/webchannel/*.hpp"  )
+
+    set(HPP_GEN_FILES
+        ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt
+        ${HPP_GEN_FILES}
+    )
+    add_custom_target(run_script ALL
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Running parseHpp shell script")
+
+    # Run a shell script before everything else
+    execute_process(
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        RESULT_VARIABLE result
+    )
+
+    # Check the result of the script execution
+    if(NOT result EQUAL 0)
+        message(FATAL_ERROR "Script execution failed with result: ${result}")
+    endif()
+
+    # Continue with the rest of your CMake configuration
+endif()
+
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -53,7 +86,8 @@ add_library(RtMidiRouterLib STATIC
   webchannel/wcmidiinlistener.h
   webchannel/wcmidiout.h
   webchannel/wcuserdata.h
-  webchannel/ApplyConfig.h webchannel/ApplyConfig.cpp
+  ${CMAKE_CURRENT_BINARY_DIR}/webchannel/ApplyConfig.h
+  ${CMAKE_CURRENT_BINARY_DIR}/webchannel/ApplyConfig.cpp
 )
 
 target_link_libraries(RtMidiRouterLib PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
@@ -66,3 +100,10 @@ target_compile_definitions(RtMidiRouterLib PRIVATE RTMIDIROUTERLIB_LIBRARY)
     target_include_directories(RtMidiRouterLib PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}/MidiClient/GenHpp
         )
+
+if(GEN_HPP)
+    target_include_directories(RtMidiRouterLib PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}/webchannel webchannel
+        )
+  add_dependencies(RtMidiRouterLib run_script)
+endif()
