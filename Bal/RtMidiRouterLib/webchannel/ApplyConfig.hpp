@@ -73,6 +73,7 @@ public:
     }
 
     //-only-file header
+    bool criticalError = false;
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
@@ -140,7 +141,7 @@ private:
 
         for (auto const &midiRoutePreset : midiRoutePresetsObj) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePreset);
-            bool isEnabled = midiRoutePresetObj["isEnabled"].toBool();
+            bool isEnabled = getJson<bool>(midiRoutePresetObj["isEnabled"]);
             setMidiRouteInputs(midiRoutePresetObj, isEnabled);
             // send user control if required
             if (isEnabled) {
@@ -410,6 +411,7 @@ private:
             outPortsArray.append(outPortObj);
         }
         json["disCnctOutPorts"] = outPortsArray;
+        json["criticalError"] = criticalError;
 
         return json;
     }
@@ -428,6 +430,7 @@ private:
         } else {
             QJsonArray tmp;
             qDebug()<<"Critical AppConfig json error";
+            criticalError = true;
             return tmp;
         }
     }
@@ -441,6 +444,7 @@ private:
         } else {
             QJsonObject tmp;
             qDebug()<<"Critical AppConfig json error";
+            criticalError = true;
             return tmp;
         }
     }
@@ -453,6 +457,7 @@ private:
             return obj.toString();
         } else {
             qDebug()<<"Critical AppConfig json error";
+            criticalError = true;
             return "";
         }
     }
@@ -464,6 +469,7 @@ private:
             return obj.toBool();
         } else {
             qDebug()<<"Critical AppConfig json error";
+            criticalError = true;
             return false;
         }
     }
@@ -475,6 +481,7 @@ private:
             return obj.toDouble();
         } else {
             qDebug()<<"Critical AppConfig json error";
+            criticalError = true;
             return 0;
         }
     }
@@ -486,6 +493,7 @@ private:
             return obj.toDouble();
         } else {
             qDebug()<<"Critical AppConfig json error";
+            criticalError = true;
             return 0;
         }
     }

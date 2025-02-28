@@ -10,10 +10,10 @@
 //- #include "UserConfigGenJson.h"
 //- #include "UserConfigParseJson.h"
 //-only-file null
+#include "../genPrpt/UserDataConfigPrivate.hpp"
 #include "MidiClientUtil.hpp"
 #include "UserConfigGenJson.hpp"
 #include "UserConfigParseJson.hpp"
-#include "../genPrpt/UserDataConfigPrivate.hpp"
 //-only-file header
 
 #include <QJsonValue>
@@ -31,9 +31,7 @@ public:
     //- {fn}
     explicit UserDataConfig(QObject *parent = nullptr)
         //-only-file body
-        : UserDataConfigPrivate{parent}
-    {
-
+        : UserDataConfigPrivate{parent} {
 
         m_uniqueId = getUuId();
 
@@ -45,10 +43,6 @@ public:
         setActivePreset(0, true);
     }
 
-
-
-
-
     //- {fn}
     void clearVirtualPorts()
     //-only-file body
@@ -57,34 +51,27 @@ public:
         emit virtualInPortsChanged();
     }
 
-
     //- {fn}
     void setActivePreset(int id, bool setEnable)
     //-only-file body
     {
         setActivePresetID(id);
 
-
-
-        for (int i = 0; i < m_midiRoutePresets.size(); i++)
-        {
-            if (i != id)
-            {
-                if(setEnable){
+        for (int i = 0; i < m_midiRoutePresets.size(); i++) {
+            if (i != id) {
+                if (setEnable) {
                     m_midiRoutePresets.at(i)->setIsEnabled(false);
                 }
             } else {
 
                 m_activePreset = m_midiRoutePresets.at(i);
-                if(setEnable){
+                if (setEnable) {
                     m_midiRoutePresets.at(i)->setIsEnabled(true);
                 }
             }
-
         }
 
         emit activePresetChanged();
-
     }
 
     //- {fn}
@@ -99,25 +86,26 @@ public:
     //-only-file body
     {
 
-            //QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
-            //if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() != computerUuid()){
+        // QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
+        // if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() !=
+        // computerUuid()){
 
         UserConfigParseJson userConfigParseJson;
         QJsonObject j;
-        if (jsonData.isArray()){
+        if (jsonData.isArray()) {
             QJsonArray a = jsonData.toArray();
             j = a[0].toObject();
         } else {
-
             j = jsonData.toObject();
         }
+
+        if (j["criticalError"].isBool() &&
+            j["criticalError"].toBool()) {
+            qDebug() << "Server JSON critical error";
+            return;
+        }
         userConfigParseJson.setChanges(this, j);
-
     }
-
-
-
-
 
     //-only-file header
 public slots:
@@ -128,14 +116,10 @@ public slots:
         openMidiControlOffInputsForEasyConfig();
 
         UserConfigGenJson userConfigGenJson;
-        return userConfigGenJson.getJson(
-            uniqueId(),
-            activePresetID(),
-            dropdownlists(),
-            virtualInPorts(),
-            midiRoutePresets());
+        return userConfigGenJson.getJson(uniqueId(), activePresetID(),
+                                         dropdownlists(), virtualInPorts(),
+                                         midiRoutePresets());
     }
-
 
     //- {fn}
     void addPreset()
@@ -145,7 +129,6 @@ public slots:
         p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
         addListItem(p);
     }
-
 
     //- {fn}
     void addVirtualPort(QString port)
@@ -187,18 +170,18 @@ private:
     //-only-file body
     {
         QStringList midiControlOffNames;
-        for (auto prst:midiRoutePresets()){
+        for (auto prst : midiRoutePresets()) {
             QString s;
             s = prst->midiControlOff()->portName();
-            if (!s.isEmpty()){
+            if (!s.isEmpty()) {
                 midiControlOffNames.append(s);
             }
             s = prst->midiControlOn()->portName();
-            if (!s.isEmpty()){
+            if (!s.isEmpty()) {
                 midiControlOffNames.append(s);
             }
         }
-        for (const auto &inputStr: midiControlOffNames ){
+        for (const auto &inputStr : midiControlOffNames) {
             activePreset()->getInputOrCreateByName(inputStr);
         }
     }

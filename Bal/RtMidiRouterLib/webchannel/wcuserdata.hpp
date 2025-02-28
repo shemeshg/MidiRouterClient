@@ -125,6 +125,7 @@ public slots:
     {
         ApplyConfig ac(wcmidiin, wcmidiout);
         auto ret = ac.applyConfig(json);
+        json["criticalError"] = ac.criticalError;
         setJon(json);
         return ret;
     }
