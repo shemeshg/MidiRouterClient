@@ -44,6 +44,8 @@ Window {
 
         HeaderBar {
             id: headerBarId
+            visible: Constants.balData.midiClientConnection.serverStatus
+                     === Constants.ServerStatus.RUNNING
         }
 
         StackView  {
