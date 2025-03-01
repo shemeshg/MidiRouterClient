@@ -18,6 +18,15 @@ Window {
     title: "Midi Router"
     color: CoreSystemPalette.window
 
+    property bool isClientConnected : {
+        return Constants.balData.midiClientConnection.serverStatus
+                === Constants.ServerStatus.RUNNING;
+    }
+
+    onIsClientConnectedChanged: ()=>{
+                                        headerBarId.selectDefaultItem(isClientConnected)
+                                }
+
     Component.onCompleted: {
         CoreSystemPalette.font = Constants.font
         Constants.balData.onApplicationStarted()

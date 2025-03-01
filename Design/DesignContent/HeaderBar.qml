@@ -4,7 +4,13 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 RowLayout {
-
+    function selectDefaultItem(isConnected){
+        if (isConnected){
+            btnInPortsId.click();
+        } else {
+            btnLoginId.click();
+        }
+    }
 
     Item {
         Layout.fillWidth: true
