@@ -51,28 +51,7 @@ public:
         emit virtualInPortsChanged();
     }
 
-    //- {fn}
-    void setActivePreset(int id, bool setEnable)
-    //-only-file body
-    {
-        setActivePresetID(id);
 
-        for (int i = 0; i < m_midiRoutePresets.size(); i++) {
-            if (i != id) {
-                if (setEnable) {
-                    m_midiRoutePresets.at(i)->setIsEnabled(false);
-                }
-            } else {
-
-                m_activePreset = m_midiRoutePresets.at(i);
-                if (setEnable) {
-                    m_midiRoutePresets.at(i)->setIsEnabled(true);
-                }
-            }
-        }
-
-        emit activePresetChanged();
-    }
 
     //- {fn}
     virtual ~UserDataConfig()
@@ -135,12 +114,42 @@ public slots:
     }
 
     //- {fn}
+    void setActivePreset(int id, bool setEnable)
+    //-only-file body
+    {
+        setActivePresetID(id);
+
+        for (int i = 0; i < m_midiRoutePresets.size(); i++) {
+            if (i != id) {
+                if (setEnable) {
+                    m_midiRoutePresets.at(i)->setIsEnabled(false);
+                }
+            } else {
+
+                m_activePreset = m_midiRoutePresets.at(i);
+                if (setEnable) {
+                    m_midiRoutePresets.at(i)->setIsEnabled(true);
+                }
+            }
+        }
+
+        emit activePresetChanged();
+    }
+
+    //- {fn}
     void addPreset()
     //-only-file body
     {
         MidiRoutePreset *p = new MidiRoutePreset();
         p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
         addListItem(p);
+    }
+
+    //- {fn}
+    void deletePreset(int idx)
+    //-only-file body
+    {
+        delListItem<MidiRoutePreset *>(idx);
     }
 
     //- {fn}
