@@ -112,6 +112,32 @@ Window {
             Layout.fillHeight: true
         }
 
+        GroupBox {
+            visible: Constants.balData.midiClientConnection.serverStatus
+                     === Constants.ServerStatus.RUNNING
+            Layout.fillWidth: true
+            RowLayout {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                CoreButton {
+                    text: "Apply"
+                    onClicked: {
+                        Constants.balData.applyConfig(() => {
+                        });
+                    }
+                }
+
+                CoreLabel {
+                    text: Constants.balData.midiClientConnection.userDataConfig.activePreset.name
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+
+            }
+        }
 
         states: [
             State {

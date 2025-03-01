@@ -6,11 +6,6 @@ import QtQuick.Layouts
 ColumnLayout {
 
 
-
-            CoreLabel {
-                text: "Selected preset id:" + Constants.balData.midiClientConnection.userDataConfig.activePresetID
-            }
-
             Repeater {
                 Layout.fillWidth: true
                 model: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets

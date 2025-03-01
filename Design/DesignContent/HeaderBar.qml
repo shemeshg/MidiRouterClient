@@ -65,13 +65,8 @@ RowLayout {
     Item {
         Layout.fillWidth: true
     }
-    CoreButton {
-        text: "Apply"
-        onClicked: {
-            Constants.balData.applyConfig(() => {
-            });
-        }
-    }
+
+
 
     states: [
         State {
