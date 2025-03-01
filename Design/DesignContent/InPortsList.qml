@@ -12,9 +12,6 @@ Column {
     Repeater {
         model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
         RowLayout {
-            CoreLabel {
-                text: modelData
-            }
             CoreButton {
                 text: "Settings"
                 onClicked: {
@@ -42,6 +39,9 @@ Column {
                     inPortsLoaderId.inPortName = modelData;
                     inPortsId.state = "InPortMonitor";
                 }
+            }
+            CoreLabel {
+                text: modelData
             }
         }
     }

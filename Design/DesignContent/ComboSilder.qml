@@ -3,6 +3,7 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
+import UiComp
 
 ColumnLayout {
     property int val: 0
@@ -15,7 +16,7 @@ ColumnLayout {
     property bool isShowLabel: false
     signal del()
     signal edit()
-    signal setVal(int i);
+    signal setVal(int i, bool isForce);
     signal setName(string s);
 
 
@@ -55,27 +56,31 @@ ColumnLayout {
             model: cmbModel
             onActivated: {
                 slider.value = currentIndex
-                setVal(currentIndex)
+                setVal(currentIndex, false)
             }
 
             Component.onCompleted: {
                 currentIndex = val;
             }
         }
-        CoreButton {
+        UiBtnDel {
             text: "del"
             onClicked: {
                 del()
             }
         }
-        CoreButton {
+        UiBtnEdit {
             visible: showEdit
-            text: "edit"
             onClicked: {
                 edit()
             }
         }
-
+        CoreButton {
+            text: "Send"
+            onClicked: {
+                setVal(slider.value, true)
+            }
+        }
     }
 
     RowLayout{

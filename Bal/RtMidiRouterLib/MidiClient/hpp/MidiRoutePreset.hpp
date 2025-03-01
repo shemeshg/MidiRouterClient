@@ -94,13 +94,6 @@ public slots:
      }
 
 
-     //- {fn}
-     void sendAllUserControls()
-     //-only-file body
-     {
-         qDebug()<<"Not Implemented";
-     }
-
     //-only-file header
 signals:
 

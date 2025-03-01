@@ -3,31 +3,32 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
-
+import UiComp
 
 ColumnLayout {
     property var activePreset: ({})
     signal editControl(var s);
 
-
-    CoreLabel {
-        text:  "User Controls: "
-    }
-    RowLayout {
-        CoreButton {
-            text: "Send all"
-            onClicked: {
-                activePreset.sendAllUserControls()
+    GroupBox {
+        Layout.fillWidth: true
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            UiTitle {
+                title: "User Controls"
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            UiBtnAdd {
+                onClicked: {
+                    activePreset.addUserControl()
+                }
             }
         }
-
-        CoreButton {
-            text: "Add"
-            onClicked: {
-                activePreset.addUserControl()
-            }
-        }
     }
+
+
     Repeater {        
         model: activePreset.userControls
         ComboSilder {
@@ -44,11 +45,6 @@ ColumnLayout {
                     .map((row,idx)=>{
                             return {text: row, value: idx}
                          });
-
-
-
-
-
                 }
                 return []
             }
@@ -70,8 +66,8 @@ ColumnLayout {
             is64Mode: modelData.is64Mode
             isShowLabel: true
             cmbModel: getCmbModel()
-            onSetVal: (i)=>{
-                    if (i=== modelData.inputVal){return;}
+            onSetVal: (i, isForce)=>{
+                    if (i=== modelData.inputVal && !isForce){return;}
                     modelData.inputVal = i;
                 if (portNumber === -1){
                               return;
