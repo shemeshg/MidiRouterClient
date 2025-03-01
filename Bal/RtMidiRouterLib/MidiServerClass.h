@@ -7,7 +7,7 @@ class MidiServerClass
 public:
     MidiServerClass();
     ~MidiServerClass() {
-        delete server;
+
         stop();
     }
     void start(int portNumber);
