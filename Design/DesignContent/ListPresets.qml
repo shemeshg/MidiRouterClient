@@ -40,8 +40,7 @@ ColumnLayout {
                     modelData.isEnabled = checked;
                 }
             }
-            CoreButton {
-                text: "edit"
+            UiBtnEdit {
                 onClicked: {
                     presetsLoaderId.presetIndex = index;
                     presets.state = "EditPreset";
@@ -61,8 +60,7 @@ ColumnLayout {
                     Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index, true);
                 }
             }
-            CoreButton {
-                text: "delete"
+            UiBtnDel {
                 visible: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets.length > 1 && index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
                 onClicked: {
                     Constants.balData.midiClientConnection.userDataConfig.deletePreset(index);

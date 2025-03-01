@@ -93,8 +93,7 @@ Window {
 
         Component {
             id: userControlsId
-            UserControls {
-
+            UserControls {                 
             }
         }
 
@@ -110,6 +109,44 @@ Window {
 
         Item {
             Layout.fillHeight: true
+        }
+
+        RowLayout {
+            visible:  headerBarId.state === "UserControls"
+            Item {
+                Layout.fillWidth: true
+            }
+            GroupBox {
+                RowLayout {
+                    CoreButton {
+                        id: editControlsId
+                        text: "Controls"
+                        hooverText: "User controls"
+                        autoExclusive: true
+                        checkable: true
+                        checked: true
+                        onClicked: {
+
+                            loaderId.currentItem.setLoaderToControls()
+                        }
+                    }
+                    CoreButton {
+                        id: editDropdownsId
+                        text: "Dropdowns"
+                        hooverText: "Map CC/Program number to meaningfull name"
+                        autoExclusive: true
+                        checkable: true
+                        checked: false
+                        onClicked: {
+                            state = "Dropdowns"
+                            loaderId.currentItem.setLoaderToDropdowns()
+                        }
+                    }
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
         }
 
         GroupBox {
