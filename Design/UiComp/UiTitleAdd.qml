@@ -1,5 +1,6 @@
 import Core
 import QtQuick.Layouts
+import UiComp
 
 ColumnLayout {
     id: uiTitleAddId
@@ -9,10 +10,10 @@ ColumnLayout {
     function setInputText(s){
         inTextId.text = s
     }
-
-    CoreLabel {
-        text: `<h2>${title}</h2>`
+    UiTitle {
+        title: uiTitleAddId.title
     }
+
     RowLayout {
         CoreTextField {
             id: inTextId

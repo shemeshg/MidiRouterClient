@@ -9,7 +9,7 @@ ColumnLayout {
     Layout.fillWidth: true
 
     UiTitleAdd {
-        title:"virtual ports"
+        title:"Virtual ports"
         inputText: ""
         onClicked: (txt)=>{
                        if (txt && Constants.balData.midiClientConnection.

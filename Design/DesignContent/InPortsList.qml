@@ -2,60 +2,47 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
+import UiComp
 
 Column {
-        CoreLabel {
-            text: "In ports"
-        }
-        CoreButton {
-            onClicked: {
-                console.log(JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.getJson()));
+    UiTitle {
+        title: "Connected in ports"
+    }
 
-                dummy.text = JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets[0].midiRouteInputs);
+    Repeater {
+        model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
+        RowLayout {
+            CoreLabel {
+                text: modelData
             }
-        }
-
-        CoreLabel {
-            text: "<h1>Connected in ports</h1>"
-        }
-        Repeater {
-            model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
-            RowLayout {
-                CoreLabel {
-                    text: modelData
-                }
-                CoreButton {
-                    text: "Settings"
-                    onClicked: {
-                        inPortsLoaderId.inPortName = modelData;
-                        inPortsId.state = "InPortSettings";
-                    }
-                }
-                CoreButton {
-                    text: "Routes"
-                    onClicked: {
-                        inPortsLoaderId.inPortName = modelData;
-                        inPortsId.state = "InPortRoutes";
-                    }
-                }
-                CoreButton {
-                    text: "EasyConfig"
-                    onClicked: {
-                        inPortsLoaderId.inPortName = modelData;
-                        inPortsId.state = "InPortEasyConfig";
-                    }
-                }
-                CoreButton {
-                    text: "Monitor"
-                    onClicked: {
-                        inPortsLoaderId.inPortName = modelData;
-                        inPortsId.state = "InPortMonitor";
-                    }
+            CoreButton {
+                text: "Settings"
+                onClicked: {
+                    inPortsLoaderId.inPortName = modelData;
+                    inPortsId.state = "InPortSettings";
                 }
             }
-        }
-        CoreTextArea {
-            id: dummy
-            wrapMode: Text.WordWrap
+            CoreButton {
+                text: "Routes"
+                onClicked: {
+                    inPortsLoaderId.inPortName = modelData;
+                    inPortsId.state = "InPortRoutes";
+                }
+            }
+            CoreButton {
+                text: "EasyConfig"
+                onClicked: {
+                    inPortsLoaderId.inPortName = modelData;
+                    inPortsId.state = "InPortEasyConfig";
+                }
+            }
+            CoreButton {
+                text: "Monitor"
+                onClicked: {
+                    inPortsLoaderId.inPortName = modelData;
+                    inPortsId.state = "InPortMonitor";
+                }
+            }
         }
     }
+}
