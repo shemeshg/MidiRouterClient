@@ -2,6 +2,7 @@ import QtQuick
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
+import Design
 
 RowLayout {
     function selectDefaultItem(isConnected){
@@ -63,6 +64,13 @@ RowLayout {
     }
     Item {
         Layout.fillWidth: true
+    }
+    CoreButton {
+        text: "Apply"
+        onClicked: {
+            Constants.balData.applyConfig(() => {
+            });
+        }
     }
 
     states: [

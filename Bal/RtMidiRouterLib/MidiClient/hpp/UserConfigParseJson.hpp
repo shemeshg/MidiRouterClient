@@ -36,8 +36,8 @@ public:
 
         if (userDataConfigItf->uniqueId() ==
             getJson<QString>(jsonDoc["uniqueId"])) {
-            qDebug() << "Same session created the config, return;";
-            // return;
+            // Same session created the config, return;";
+            return;
         }
 
         updateVirtualInPorts(userDataConfigItf,

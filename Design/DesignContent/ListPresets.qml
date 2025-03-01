@@ -4,20 +4,8 @@ import Core
 import QtQuick.Layouts
 
 ColumnLayout {
-            CoreButton {
-                text: "applayConfig"
-                onClicked: {
-                    Constants.balData.applyConfig(() => {
-                        console.log("client says we have finished applay config");
-                    });
-                }
-            }
-            CoreButton {
-                text: "console.log getJson"
-                onClicked: {
-                    console.log(JSON.stringify(Constants.balData.midiClientConnection.userDataConfig.getJson()));
-                }
-            }
+
+
 
             CoreLabel {
                 text: "Selected preset id:" + Constants.balData.midiClientConnection.userDataConfig.activePresetID
