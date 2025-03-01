@@ -1,19 +1,52 @@
 import QtQuick
+import QtQuick.Controls
 import Design
 import Core
 import QtQuick.Layouts
 import UiComp
 
 ColumnLayout {
-    UiTitle {
-        title: "Presets"
-    }
+    GroupBox {
+        Layout.fillWidth: true
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            UiTitle {
+                title: "Presets"
 
+
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            UiBtnAdd {
+                onClicked: {
+                    Constants.balData.midiClientConnection.userDataConfig.addPreset();
+                }
+
+            }
+        }
+    }
     Repeater {
         Layout.fillWidth: true
         model: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets
 
         RowLayout {
+
+            CoreSwitch {
+                text: ""
+                checked: modelData.isEnabled
+                onToggled: {
+                    modelData.isEnabled = checked;
+                }
+            }
+            CoreButton {
+                text: "edit"
+                onClicked: {
+                    presetsLoaderId.presetIndex = index;
+                    presets.state = "EditPreset";
+                }
+            }
             CoreLabel {
                 text: modelData.name
             }
@@ -35,28 +68,10 @@ ColumnLayout {
                     Constants.balData.midiClientConnection.userDataConfig.deletePreset(index);
                 }
             }
-            CoreSwitch {
-                text: "isEnabled"
-                checked: modelData.isEnabled
-                onToggled: {
-                    modelData.isEnabled = checked;
-                }
-            }
-            CoreButton {
-                text: "edit"
-                onClicked: {
-                    presetsLoaderId.presetIndex = index;
-                    presets.state = "EditPreset";
-                }
-            }
+
         }
     }
 
-    CoreButton {
-        text: "add preset"
-        onClicked: {
-            Constants.balData.midiClientConnection.userDataConfig.addPreset();
-        }
-    }
+
 
 }

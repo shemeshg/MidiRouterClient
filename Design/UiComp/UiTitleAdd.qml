@@ -20,8 +20,7 @@ ColumnLayout {
             text: inputText
             Layout.fillWidth: true
         }
-        CoreButton {
-            text: "add"
+        UiBtnAdd {
             onClicked: {
                 uiTitleAddId.clicked(inTextId.text)
             }

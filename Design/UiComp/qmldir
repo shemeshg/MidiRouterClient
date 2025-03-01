@@ -2,3 +2,4 @@ Module UiComp
 
 UiTitleAdd 1.0 UiTitleAdd.qml
 UiTitle 1.1 UiTitle.qml
+UiBtnAdd 1.1 UiBtnAdd.qml
