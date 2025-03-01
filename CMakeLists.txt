@@ -49,6 +49,7 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
 add_subdirectory(Design/Design)
 add_subdirectory(Design/DesignContent)
 add_subdirectory(Design/Core)
+add_subdirectory(Design/UiComp)
 add_subdirectory(Bal)
 
 
@@ -59,6 +60,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     Coreplugin
     Designplugin
     DesignContentplugin
+    UiCompplugin
 )
 
 include(GNUInstallDirs)

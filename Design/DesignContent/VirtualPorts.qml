@@ -2,34 +2,26 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick
+import UiComp
 
 ColumnLayout {
     id: virtualPorts
     Layout.fillWidth: true
-    CoreLabel {
-        text: "<h1>Virtual ports</h1>"
+
+    UiTitleAdd {
+        title:"virtual ports"
+        inputText: ""
+        onClicked: (txt)=>{
+                       if (txt && Constants.balData.midiClientConnection.
+                               userDataConfig.virtualInPorts.indexOf(txt) === -1){
+
+                           Constants.balData.midiClientConnection.userDataConfig.addVirtualPort(txt)
+                           setInputText("")
+                       }
+                   }
     }
 
-    CoreLabel {
-        text: "virtual ports "
-    }
-    RowLayout {
-        CoreTextField {
-            id: newPortId
-            text: ""
-            Layout.fillWidth: true
-        }
-        CoreButton {
-            text: "add"
-            onClicked: {
-                if (newPortId.text && Constants.balData.midiClientConnection.
-                        userDataConfig.virtualInPorts.indexOf(newPortId.text) === -1){
 
-                    Constants.balData.midiClientConnection.userDataConfig.addVirtualPort(newPortId.text)
-                }
-            }
-        }
-    }
     Repeater {
         model: Constants.balData.midiClientConnection.userDataConfig.virtualInPorts
         RowLayout {
