@@ -47,7 +47,9 @@ ColumnLayout {
             UiBtnEdit {
                 onClicked: {
                     presetsLoaderId.presetIndex = index;
+                    isSubForm = true
                     presets.state = "EditPreset";
+
                 }
             }
             CoreLabel {

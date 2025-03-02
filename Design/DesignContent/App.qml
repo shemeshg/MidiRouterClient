@@ -23,6 +23,8 @@ Window {
                 === Constants.ServerStatus.RUNNING;
     }
 
+    property bool isSubForm: false
+
     onIsClientConnectedChanged: ()=>{
                                         headerBarId.selectDefaultItem(isClientConnected)
                                 }
@@ -53,8 +55,7 @@ Window {
 
         HeaderBar {
             id: headerBarId
-            visible: Constants.balData.midiClientConnection.serverStatus
-                     === Constants.ServerStatus.RUNNING
+            visible: isClientConnected && !isSubForm
         }
 
         StackView  {
@@ -182,7 +183,11 @@ Window {
                 name: "Login"
                 when: headerBarId.state === "Login"
                 StateChangeScript {
-                          script: loaderId.push(loginId)
+                          script:
+                          {
+                              loaderId.push(loginId)
+                              isSubForm = false
+                          }
                  }
             },
             State {
@@ -196,7 +201,10 @@ Window {
                 name: "Presets"
                 when: headerBarId.state === "Presets"
                 StateChangeScript {
-                          script: loaderId.push(presetsId)
+                          script: {
+                              loaderId.push(presetsId)
+                              isSubForm = false
+                          }
                  }
             }
             ,
@@ -204,14 +212,20 @@ Window {
                 name: "UserControls"
                 when: headerBarId.state === "UserControls"
                 StateChangeScript {
-                          script: loaderId.push(userControlsId)
+                          script: {
+                              loaderId.push(userControlsId)
+                              isSubForm = false
+                          }
                  }
             },
             State {
                 name: "InPorts"
                 when: headerBarId.state === "InPorts"
                 StateChangeScript {
-                          script: loaderId.push(inPortsId)
+                          script: {
+                              loaderId.push(inPortsId)
+                              isSubForm = false
+                          }
                  }
             }
         ]
