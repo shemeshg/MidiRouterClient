@@ -5,3 +5,4 @@ UiTitle 1.1 UiTitle.qml
 UiBtnAdd 1.1 UiBtnAdd.qml
 UiBtnAdd 1.1 UiBtnDel.qml
 UiBtnAdd 1.1 UiBtnEdit.qml
+UiBtnBack 1.1 UiBtnBack.qml

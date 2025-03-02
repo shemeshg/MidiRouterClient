@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Design
 import Core
 import QtQuick.Layouts
+import UiComp
 
 ColumnLayout {
     property var editedPreset: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets[presetsLoaderId.presetIndex]
@@ -19,11 +20,7 @@ ColumnLayout {
             Item {
                 Layout.fillWidth: true
             }
-            CoreButton {
-                text: "back"
-
-
-
+            UiBtnBack {
                 onClicked: {
                     editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
                     editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
