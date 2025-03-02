@@ -28,7 +28,8 @@ ColumnLayout {
     Repeater {
         model: Constants.balData.midiClientConnection.userDataConfig.virtualInPorts
         RowLayout {
-            Layout.margins:  Constants.font.pixelSize
+            Layout.leftMargin:  Constants.font.pixelSize
+            Layout.rightMargin:  Constants.font.pixelSize
             CoreLabel {
                 text: modelData
             }

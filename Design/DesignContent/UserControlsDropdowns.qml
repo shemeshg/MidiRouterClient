@@ -8,6 +8,7 @@ import UiComp
 ColumnLayout {
     GroupBox {
         Layout.fillWidth: true
+        Layout.margins:  Constants.font.pixelSize
         RowLayout {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -30,6 +31,8 @@ ColumnLayout {
         model: Constants.balData.midiClientConnection.userDataConfig.dropdownlists
 
         ColumnLayout {
+            Layout.leftMargin:  Constants.font.pixelSize
+            Layout.rightMargin:  Constants.font.pixelSize
             RowLayout {
 
                 CoreLabel {

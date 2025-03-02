@@ -1,17 +1,31 @@
 import QtQuick
+import QtQuick.Controls
 import Design
 import Core
 import QtQuick.Layouts
 import UiComp
 
-Column {
-    UiTitle {
-        title: "Connected in ports"
+ColumnLayout {
+
+    GroupBox {
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
+        RowLayout {
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            UiTitle {
+                title: "Connected in ports"
+            }
+        }
     }
+
 
     Repeater {
         model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
         RowLayout {
+            Layout.leftMargin:  Constants.font.pixelSize
+            Layout.rightMargin:  Constants.font.pixelSize
             CoreButton {
                 text: "Settings"
                 onClicked: {

@@ -92,7 +92,7 @@ ColumnLayout {
             to: toVal
             onMoved: {
                 cmb.currentIndex = value
-                setVal(value)
+                setVal(value, false)
             }
         }
     }

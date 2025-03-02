@@ -11,6 +11,7 @@ ColumnLayout {
 
     GroupBox {
         Layout.fillWidth: true
+        Layout.margins:  Constants.font.pixelSize
         RowLayout {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -32,6 +33,8 @@ ColumnLayout {
     Repeater {        
         model: activePreset.userControls
         ComboSilder {
+            Layout.leftMargin:  Constants.font.pixelSize
+            Layout.rightMargin:  Constants.font.pixelSize
             function getCmbModel(){
 
                 let ddlists = Constants.balData.

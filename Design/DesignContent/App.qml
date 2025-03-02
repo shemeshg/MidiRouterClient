@@ -150,6 +150,7 @@ Window {
         }
 
         GroupBox {
+            Layout.margins:  Constants.font.pixelSize
             visible: Constants.balData.midiClientConnection.serverStatus
                      === Constants.ServerStatus.RUNNING
             Layout.fillWidth: true
