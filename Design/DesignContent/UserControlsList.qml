@@ -95,6 +95,7 @@ ColumnLayout {
                 activePreset.delUserControl(index)
             }
             onEdit: {
+                isSubForm = true;
                 editControl(modelData)
             }
         }

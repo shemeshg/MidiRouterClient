@@ -113,7 +113,7 @@ Window {
         }
 
         RowLayout {
-            visible:  headerBarId.state === "UserControls"
+            visible:  headerBarId.state === "UserControls" && !isSubForm
             Item {
                 Layout.fillWidth: true
             }
@@ -126,8 +126,7 @@ Window {
                         autoExclusive: true
                         checkable: true
                         checked: true
-                        onClicked: {
-
+                        onClicked: {                            
                             loaderId.currentItem.setLoaderToControls()
                         }
                     }

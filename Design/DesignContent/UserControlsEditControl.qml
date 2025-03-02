@@ -12,7 +12,8 @@ ColumnLayout {
     signal back();
     CoreButton {
         text: "back"
-        onClicked: {            
+        onClicked: {
+            isSubForm = false;
             back();
         }
     }
