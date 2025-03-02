@@ -6,9 +6,12 @@ import QtQuick.Layouts
 import UiComp
 
 ColumnLayout {
+
     GroupBox {
+        Layout.margins:  Constants.font.pixelSize
         Layout.fillWidth: true
         RowLayout {
+
             anchors.left: parent.left
             anchors.right: parent.right
             UiTitle {
@@ -32,7 +35,8 @@ ColumnLayout {
         model: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets
 
         RowLayout {
-
+            Layout.leftMargin:  Constants.font.pixelSize
+            Layout.rightMargin:  Constants.font.pixelSize
             CoreSwitch {
                 text: ""
                 checked: modelData.isEnabled
