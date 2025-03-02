@@ -5,7 +5,7 @@ import QtQuick.Layouts
 
 CoreComboBox {
             id: presetMidiControlOnData1Id
-            editable: true
+            //editable: true
             textRole: "text"
             valueRole: "value"
             model: [
@@ -26,5 +26,6 @@ CoreComboBox {
                 }
                 currentIndex = idx;
                 editText = model[idx].text;
+
             }            
         }

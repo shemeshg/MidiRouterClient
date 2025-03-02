@@ -6,7 +6,14 @@ import QtQuick.Layouts
 import UiComp
 
 ColumnLayout {
+    id: editPresetId
     property var editedPreset: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets[presetsLoaderId.presetIndex]
+
+    function save(){
+        editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
+        editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
+    }
+
     GroupBox {
         Layout.margins:  Constants.font.pixelSize
         Layout.fillWidth: true
@@ -14,16 +21,9 @@ ColumnLayout {
         RowLayout {
             anchors.left: parent.left
             anchors.right: parent.right
-            CoreLabel {
-                text: "Edit Preset "
-            }
-            Item {
-                Layout.fillWidth: true
-            }
+
             UiBtnBack {
                 onClicked: {
-                    editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
-                    editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
                     isSubForm = false
                     presets.state = "ListPresets";
                 }
@@ -33,6 +33,12 @@ ColumnLayout {
             }
             CoreLabel {
                 text: editedPreset.name
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: "Edit Preset"
             }
         }
     }

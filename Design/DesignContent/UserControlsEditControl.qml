@@ -6,7 +6,7 @@ import QtQuick.Controls
 
 
 ColumnLayout {  
-    property var control: loaderId.editControlObj
+    property var control: controlLoaderId.editControlObj
 
 
     signal back();
