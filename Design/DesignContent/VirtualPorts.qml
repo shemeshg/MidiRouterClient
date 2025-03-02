@@ -8,7 +8,10 @@ ColumnLayout {
     id: virtualPorts
     Layout.fillWidth: true
 
+
+
     UiTitleAdd {
+        Layout.margins:  Constants.font.pixelSize
         title:"Virtual ports"
         inputText: ""
         onClicked: (txt)=>{
@@ -25,6 +28,7 @@ ColumnLayout {
     Repeater {
         model: Constants.balData.midiClientConnection.userDataConfig.virtualInPorts
         RowLayout {
+            Layout.margins:  Constants.font.pixelSize
             CoreLabel {
                 text: modelData
             }
