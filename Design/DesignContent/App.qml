@@ -58,16 +58,11 @@ Window {
             visible: isClientConnected && !isSubForm
         }
 
-        StackView  {
+        Loader  {
             id: loaderId
             Layout.fillWidth: true
-            initialItem: loginId
-            pushEnter: Transition {}
-            pushExit: Transition {}
-            popEnter: Transition {}
-            popExit: Transition {}
-            replaceEnter: Transition {}
-            replaceExit: Transition {}
+            sourceComponent: loginId
+
 
         }
 
@@ -127,7 +122,7 @@ Window {
                         checkable: true
                         checked: true
                         onClicked: {                            
-                            loaderId.currentItem.setLoaderToControls()
+                            loaderId.item.setLoaderToControls()
                         }
                     }
                     CoreButton {
@@ -139,7 +134,7 @@ Window {
                         checked: false
                         onClicked: {
                             state = "Dropdowns"
-                            loaderId.currentItem.setLoaderToDropdowns()
+                            loaderId.item.setLoaderToDropdowns()
                         }
                     }
                 }
@@ -184,7 +179,7 @@ Window {
                 StateChangeScript {
                           script:
                           {
-                              loaderId.push(loginId)
+                              loaderId.sourceComponent = loginId
                               isSubForm = false
                           }
                  }
@@ -193,7 +188,7 @@ Window {
                 name: "VirtualPorts"
                 when: headerBarId.state === "VirtualPorts"
                 StateChangeScript {
-                          script: loaderId.push(virtualPortsId)
+                          script: loaderId.sourceComponent = virtualPortsId
                  }
             },
             State {
@@ -201,7 +196,7 @@ Window {
                 when: headerBarId.state === "Presets"
                 StateChangeScript {
                           script: {
-                              loaderId.push(presetsId)
+                              loaderId.sourceComponent = presetsId
                               isSubForm = false
                           }
                  }
@@ -212,7 +207,7 @@ Window {
                 when: headerBarId.state === "UserControls"
                 StateChangeScript {
                           script: {
-                              loaderId.push(userControlsId)
+                              loaderId.sourceComponent = userControlsId
                               isSubForm = false
                           }
                  }
@@ -222,7 +217,7 @@ Window {
                 when: headerBarId.state === "InPorts"
                 StateChangeScript {
                           script: {
-                              loaderId.push(inPortsId)
+                              loaderId.sourceComponent = inPortsId
                               isSubForm = false
                           }
                  }
