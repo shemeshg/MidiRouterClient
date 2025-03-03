@@ -42,9 +42,7 @@ ColumnLayout {
             property bool fromEventIsCc: [5,7].indexOf( fromEvent.currentValue) > -1
             property bool toEventIsCc: [5,7].indexOf( toEvent.currentValue) > -1
             ColumnLayout {
-
-
-
+                width: parent.width
                 RowLayout {
 
                     CoreLabel {
