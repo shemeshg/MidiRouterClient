@@ -6,6 +6,7 @@ import QtQuick.Controls
 
 RowLayout{
     id: localNetMidiOut
+
     property string toDestinationName: ""
     property bool isNetMode: toDestinationName.includes(":")
     signal userEdited()
@@ -53,7 +54,7 @@ RowLayout{
     CoreComboBox {
         visible: !isNetMode
         id: nameId
-        Layout.fillWidth: true
+        Layout.fillWidth: true        
         model:
             [...new Set(
                 ["",toDestinationName, ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
