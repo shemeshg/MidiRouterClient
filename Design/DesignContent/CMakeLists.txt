@@ -43,6 +43,7 @@ qt6_add_qml_module(DesignContent
         "UserControlsList.qml"
         "UserControlsEditControl.qml"
         "LocalNetMidiOut.qml"
+        "About.qml"
     )
 
 

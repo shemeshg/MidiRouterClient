@@ -25,6 +25,7 @@ Window {
 
     property bool isSubForm: false
     property bool isEasyConfigForm: false
+    property string aboutPreviousStr: ""
 
     onIsClientConnectedChanged: ()=>{
                                         headerBarId.selectDefaultItem(isClientConnected)
@@ -102,8 +103,11 @@ Window {
             }
         }
 
+        Component {
+            id: aboutId
+            About {}
 
-
+        }
 
         Item {
             Layout.fillHeight: true
@@ -179,14 +183,15 @@ Window {
 
         GroupBox {
             Layout.margins:  Constants.font.pixelSize
-            visible: Constants.balData.midiClientConnection.serverStatus
-                     === Constants.ServerStatus.RUNNING
+
             Layout.fillWidth: true
             RowLayout {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 CoreButton {
                     text: "Apply"
+                    visible: Constants.balData.midiClientConnection.serverStatus
+                             === Constants.ServerStatus.RUNNING
                     onClicked: {
                         Constants.balData.applyConfig(() => {
                         });
@@ -201,7 +206,21 @@ Window {
                     Layout.fillWidth: true
                 }
 
-
+                CoreButton {
+                    text: "⋮"
+                    hooverText: "About and settings"
+                    onClicked: {
+                        if (headerBarId.state === "About" ){
+                            headerBarId.state = aboutPreviousStr
+                            isSubForm = false
+                        } else {
+                            aboutPreviousStr = headerBarId.state
+                            loaderId.sourceComponent = aboutId
+                            headerBarId.state = "About"
+                            isSubForm = true
+                        }
+                    }
+                }
             }
         }
 
