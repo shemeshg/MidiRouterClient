@@ -2,10 +2,22 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
+import QtQuick.Controls
 
-
-ColumnLayout {
+Column {
+    ColumnLayout {
+        width: parent.width
+        id: scrollerWidthId
+        Layout.fillWidth: true
+    }
+    ScrollView {
+        contentHeight: login.height
+        contentWidth: login.width
+        width: parent.width
+        height: parent.height
+        ColumnLayout {
             id: login
+            width: scrollerWidthId.width - 30
             Layout.fillWidth: true
 
             FormGroupBox {
@@ -247,5 +259,10 @@ ColumnLayout {
                     }
                 }
             }
+            Item {
 
+                Layout.fillHeight: true
+            }
         }
+    }
+}

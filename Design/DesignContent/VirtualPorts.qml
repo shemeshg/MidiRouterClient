@@ -1,45 +1,61 @@
 import Design
 import Core
 import QtQuick.Layouts
+import QtQuick.Controls
 import QtQuick
 import UiComp
 
-ColumnLayout {
-    id: virtualPorts
-    Layout.fillWidth: true
-
-
-
-    UiTitleAdd {
-        Layout.margins:  Constants.font.pixelSize
-        title:"Virtual ports"
-        inputText: ""
-        onClicked: (txt)=>{
-                       if (txt && Constants.balData.midiClientConnection.
-                               userDataConfig.virtualInPorts.indexOf(txt) === -1){
-
-                           Constants.balData.midiClientConnection.userDataConfig.addVirtualPort(txt)
-                           setInputText("")
-                       }
-                   }
+Column {
+    ColumnLayout {
+        width: parent.width
+        id: scrollerWidthId
+        Layout.fillWidth: true
     }
+    ScrollView {
+        contentHeight: virtualPorts.height
+        contentWidth: virtualPorts.width
+        width: parent.width
+        height: parent.height
+
+        ColumnLayout {
+            id: virtualPorts
+            width: scrollerWidthId.width - 30
+            Layout.fillWidth: true
 
 
-    Repeater {
-        model: Constants.balData.midiClientConnection.userDataConfig.virtualInPorts
-        RowLayout {
-            Layout.leftMargin:  Constants.font.pixelSize
-            Layout.rightMargin:  Constants.font.pixelSize
-            CoreLabel {
-                text: modelData
+
+            UiTitleAdd {
+                Layout.margins:  Constants.font.pixelSize
+                title:"Virtual ports"
+                inputText: ""
+                onClicked: (txt)=>{
+                               if (txt && Constants.balData.midiClientConnection.
+                                   userDataConfig.virtualInPorts.indexOf(txt) === -1){
+
+                                   Constants.balData.midiClientConnection.userDataConfig.addVirtualPort(txt)
+                                   setInputText("")
+                               }
+                           }
             }
-            CoreButton {
-                text: "del"
-                onClicked: {
-                    Constants.balData.midiClientConnection.userDataConfig.delVirtualPort(index)
+
+
+            Repeater {
+                model: Constants.balData.midiClientConnection.userDataConfig.virtualInPorts
+                RowLayout {
+                    Layout.leftMargin:  Constants.font.pixelSize
+                    Layout.rightMargin:  Constants.font.pixelSize
+                    CoreLabel {
+                        text: modelData
+                    }
+                    CoreButton {
+                        text: "del"
+                        onClicked: {
+                            Constants.balData.midiClientConnection.userDataConfig.delVirtualPort(index)
+                        }
+                    }
                 }
             }
+
         }
     }
-
 }

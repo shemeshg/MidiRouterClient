@@ -61,6 +61,7 @@ Window {
         Loader  {
             id: loaderId
             Layout.fillWidth: true
+            Layout.fillHeight: true
             sourceComponent: loginId
 
 

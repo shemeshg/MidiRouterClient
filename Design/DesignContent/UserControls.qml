@@ -4,10 +4,7 @@ import Core
 import QtQuick.Layouts
 import QtQuick.Controls
 
-
-ColumnLayout {            
-    Layout.fillWidth: true
-    id: userControlsId
+Column {
     function setLoaderToControls(){
         controlLoaderId.sourceComponent = controls
     }
@@ -16,40 +13,51 @@ ColumnLayout {
         controlLoaderId.sourceComponent = dropdowns
     }
 
-    Loader {
-        id: controlLoaderId
+    ColumnLayout {
+        width: parent.width
+        id: scrollerWidthId
         Layout.fillWidth: true
-        sourceComponent: editControlsId.checked ? controls : dropdowns
-        property var editControlObj: ({})
     }
-    Component {
-        id: controls
-        UserControlsList {
-            activePreset: Constants.balData.midiClientConnection.userDataConfig.activePreset
-            onEditControl: (v)=>{
-                               controlLoaderId.editControlObj = v
-                               controlLoaderId.sourceComponent = userControls;
-                           }
-        }
-    }
-    Component {
-        id: dropdowns
-        UserControlsDropdowns {
-        }
-    }
+    ScrollView {
+        contentHeight: userControlsId.height
+        contentWidth: userControlsId.width
+        width: parent.width
+        height: parent.height
+        ColumnLayout {
+            Layout.fillWidth: true
+            width: scrollerWidthId.width - 30
+            id: userControlsId
 
-    Component {
-        id: userControls
-        UserControlsEditControl {
-            onBack: {
-                controlLoaderId.sourceComponent = controls
+            Loader {
+                id: controlLoaderId
+                Layout.fillWidth: true
+                sourceComponent: editControlsId.checked ? controls : dropdowns
+                property var editControlObj: ({})
+            }
+            Component {
+                id: controls
+                UserControlsList {
+                    activePreset: Constants.balData.midiClientConnection.userDataConfig.activePreset
+                    onEditControl: (v)=>{
+                                       controlLoaderId.editControlObj = v
+                                       controlLoaderId.sourceComponent = userControls;
+                                   }
+                }
+            }
+            Component {
+                id: dropdowns
+                UserControlsDropdowns {
+                }
+            }
+
+            Component {
+                id: userControls
+                UserControlsEditControl {
+                    onBack: {
+                        controlLoaderId.sourceComponent = controls
+                    }
+                }
             }
         }
     }
-
-
-
-
-
-
 }
