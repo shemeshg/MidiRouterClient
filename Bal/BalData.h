@@ -43,6 +43,7 @@ void saveIsAutoStartServer(const bool IsAutoStartServer);
 void saveClientPortNumber(const int ClientPortNumber);
 void saveIsAutoConnectClient(const bool IsAutoConnectClient);
 void saveIsSaveConfigOnServer(const bool IsSaveConfigOnServer);
+void saveDefaultFontSize(const QString DefaultFontSize);
 
 //[[[end]]]
 
@@ -93,6 +94,7 @@ void loadIsAutoStartServer();
 void loadClientPortNumber();
 void loadIsAutoConnectClient();
 void loadIsSaveConfigOnServer();
+void loadDefaultFontSize();
 
 //[[[end]]]
 

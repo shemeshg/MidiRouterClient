@@ -11,14 +11,24 @@ QtObject {
 
     property string relativeFontDirectory: "fonts"
 
+
+    function defaultFontSize(){
+        let f= Number(Constants.balData.defaultFontSize)
+        if (f){
+            return f;
+        } else {
+            return Qt.application.font.pixelSize;
+        }
+    }
+
     /* Edit this comment to add your custom font */
     readonly property font font: Qt.font({
                                              "family": Qt.application.font.family,
-                                             "pixelSize": Qt.application.font.pixelSize
+                                             "pixelSize": defaultFontSize()
                                          })
     readonly property font largeFont: Qt.font({
                                                   "family": Qt.application.font.family,
-                                                  "pixelSize": Qt.application.font.pixelSize * 1.6
+                                                  "pixelSize": defaultFontSize() * 1.6
                                               })
 
     readonly property color backgroundColor: "#EAEAEA"

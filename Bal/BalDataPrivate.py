@@ -100,6 +100,14 @@ p.is_notify = True
 p.is_local_storage = True
 p.local_storage_default = "true"
 ary.append(p)
+p = Prpt("QString",'defaultFontSize')
+p.is_bindable = False
+p.is_writable = True
+p.is_notify = True
+p.is_local_storage = True
+p.local_storage_default = ""
+ary.append(p)
+
 
 enumClasss = []
 

@@ -30,6 +30,7 @@ class BalDataPrivate : public JsAsync
     Q_PROPERTY(int clientPortNumber READ clientPortNumber WRITE setClientPortNumber NOTIFY clientPortNumberChanged )
     Q_PROPERTY(bool isAutoConnectClient READ isAutoConnectClient WRITE setIsAutoConnectClient NOTIFY isAutoConnectClientChanged )
     Q_PROPERTY(bool isSaveConfigOnServer READ isSaveConfigOnServer WRITE setIsSaveConfigOnServer NOTIFY isSaveConfigOnServerChanged )
+    Q_PROPERTY(QString defaultFontSize READ defaultFontSize WRITE setDefaultFontSize NOTIFY defaultFontSizeChanged )
     
     QML_ELEMENT
 public:
@@ -177,6 +178,18 @@ void setIsSaveConfigOnServer(const bool newIsSaveConfigOnServer)
     }
 
 
+    
+    QString defaultFontSize() const{return m_defaultFontSize;} 
+    
+void setDefaultFontSize(const QString &newDefaultFontSize)
+    {
+        if (m_defaultFontSize == newDefaultFontSize)
+            return;
+        m_defaultFontSize = newDefaultFontSize;
+        emit defaultFontSizeChanged();
+    }
+
+
 
 signals:
     void xChanged();
@@ -192,6 +205,7 @@ signals:
     void clientPortNumberChanged();
     void isAutoConnectClientChanged();
     void isSaveConfigOnServerChanged();
+    void defaultFontSizeChanged();
     
 
 protected:
@@ -211,6 +225,7 @@ private:
     int m_clientPortNumber;
     bool m_isAutoConnectClient;
     bool m_isSaveConfigOnServer;
+    QString m_defaultFontSize;
     
     void ctorClass();
 };

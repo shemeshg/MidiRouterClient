@@ -25,6 +25,7 @@ loadIsAutoStartServer();
 loadClientPortNumber();
 loadIsAutoConnectClient();
 loadIsSaveConfigOnServer();
+loadDefaultFontSize();
 
 //[[[end]]]
 }
@@ -180,6 +181,17 @@ void BalData::saveIsSaveConfigOnServer(const bool s)
 {
     settings.setValue("isSaveConfigOnServer", s);
     loadIsSaveConfigOnServer();
+}
+void BalData::loadDefaultFontSize()
+{
+    QString s = settings.value("defaultFontSize", "true").toString();
+    setDefaultFontSize(s);
+}
+
+void BalData::saveDefaultFontSize(const QString s)
+{
+    settings.setValue("defaultFontSize", s);
+    loadDefaultFontSize();
 }
 
 //[[[end]]]
