@@ -3,88 +3,142 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
+import UiComp
 
 ColumnLayout {
-    CoreLabel {
-        text: "InPortsRoutesFilterFnt"
+    function doSave(){
+        inPortsRoutesLoaderId.filterObj.setFilter(name.text,
+                                                  conditionAction.currentValue,
+                                                  filterChannel.text,
+                                                  filterEvents.text,
+                                                  filterData1.text,
+                                                  filterData2.text
+                                                  )
     }
-    CoreButton {
-        text: "back"
-        onClicked: {
 
-            inPortsRoutesLoaderId.filterObj.setFilter(name.text,
-                        conditionAction.currentValue,
-                        filterChannel.text,
-                        filterEvents.text,
-                        filterData1.text,
-                        filterData2.text
-            )
+    GroupBox {
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
 
-            inPortRoutesId.state = "InPortsRoutesListFilters"
-        }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "name"
-        }
-        CoreTextField {
-            id: name
-            text: inPortsRoutesLoaderId.filterObj.name
-        }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "Condition Action"
-        }
-        CoreComboBox {
-            id:conditionAction
-            Layout.fillWidth: true
-            textRole: "text"
-            valueRole: "value"
-            model: [
-                { value: Constants.ConditionAction.DO_NOT_DELETE, text: "Do not delete" },
-                { value: Constants.ConditionAction.DELETE_IF_NOT_MET_CONDITION, text: "Delete if not met condition" },
-                { value: Constants.ConditionAction.DELETE_IF_MET_CONDITION,text: "Delete if met condition" },
-            ]
-            Component.onCompleted: {
-                    currentIndex = inPortsRoutesLoaderId.filterObj.conditionAction;
+
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            UiBtnBack {
+                onClicked: {
+
+
+                    inPortRoutesId.state = "InPortsRoutesListFilters"
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: midiRouteInput.midiInputName + " - " + inPortsRoutesLoaderId.filterObj.name
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: "Edit filter - Filter Transform"
             }
         }
     }
-    RowLayout {
-        CoreLabel {
-            text: "Filter Channel"
+
+
+    ColumnLayout {
+        Layout.leftMargin:   Constants.font.pixelSize
+        Layout.rightMargin:   Constants.font.pixelSize
+
+
+        RowLayout {
+            CoreLabel {
+                text: "name"
+            }
+            CoreTextField {
+                id: name
+                Layout.fillWidth: true
+                text: inPortsRoutesLoaderId.filterObj.name
+                onTextEdited: {
+                    doSave()
+                }
+            }
         }
-        CoreTextField {
-            id: filterChannel
-            text: inPortsRoutesLoaderId.filterObj.filterChannel
+        RowLayout {
+            CoreLabel {
+                text: "Condition Action"
+            }
+            CoreComboBox {
+                id:conditionAction
+                Layout.fillWidth: true
+                textRole: "text"
+                valueRole: "value"
+                model: [
+                    { value: Constants.ConditionAction.DO_NOT_DELETE, text: "Do not delete" },
+                    { value: Constants.ConditionAction.DELETE_IF_NOT_MET_CONDITION, text: "Delete if not met condition" },
+                    { value: Constants.ConditionAction.DELETE_IF_MET_CONDITION,text: "Delete if met condition" },
+                ]
+                Component.onCompleted: {
+                    currentIndex = inPortsRoutesLoaderId.filterObj.conditionAction;
+                }
+                onActivated: {
+                    doSave()
+                }
+            }
         }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "Filter Event"
+        RowLayout {
+            CoreLabel {
+                text: "Filter Channel"
+            }
+            CoreTextField {
+                id: filterChannel
+                Layout.fillWidth: true
+                text: inPortsRoutesLoaderId.filterObj.filterChannel
+                onTextEdited: {
+                    doSave()
+                }
+            }
         }
-        CoreTextField {
-            id: filterEvents
-            text: inPortsRoutesLoaderId.filterObj.filterEvents
+        RowLayout {
+            CoreLabel {
+                text: "Filter Event"
+            }
+            CoreTextField {
+                id: filterEvents
+                Layout.fillWidth: true
+                text: inPortsRoutesLoaderId.filterObj.filterEvents
+                onTextEdited: {
+                    doSave()
+                }
+            }
         }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "Filter Data1"
+        RowLayout {
+            CoreLabel {
+                text: "Filter Data1"
+            }
+            CoreTextField {
+                id: filterData1
+                Layout.fillWidth: true
+                text: inPortsRoutesLoaderId.filterObj.filterData1
+                onTextEdited: {
+                    doSave()
+                }
+            }
         }
-        CoreTextField {
-            id: filterData1
-            text: inPortsRoutesLoaderId.filterObj.filterData1
-        }
-    }
-    RowLayout {
-        CoreLabel {
-            text: "Filter Data2"
-        }
-        CoreTextField {
-            id: filterData2
-            text: inPortsRoutesLoaderId.filterObj.filterData2
+        RowLayout {
+            CoreLabel {
+                text: "Filter Data2"
+            }
+            CoreTextField {
+                id: filterData2
+                Layout.fillWidth: true
+                text: inPortsRoutesLoaderId.filterObj.filterData2
+                onTextEdited: {
+                    doSave()
+                }
+            }
         }
     }
 }
