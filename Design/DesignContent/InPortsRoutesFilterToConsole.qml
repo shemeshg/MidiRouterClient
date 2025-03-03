@@ -3,19 +3,45 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
+import UiComp
 
 ColumnLayout {
-    CoreLabel {
-        text: "inPortsRoutesFilterToConsole"
+    function doSave(){
+        inPortsRoutesLoaderId.filterObj.setFilter( logTo.currentValue, userdata.text)
     }
-    CoreButton {
-        text: "back"
-        onClicked: {
-            inPortsRoutesLoaderId.filterObj.setFilter( logTo.currentValue, userdata.text)
-            inPortRoutesId.state = "InPortsRoutesListFilters"
+
+    GroupBox {
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
+
+
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            UiBtnBack {
+                onClicked: {
+                    inPortRoutesId.state = "InPortsRoutesListFilters"
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: midiRouteInput.midiInputName
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: "Edit filter - Log to"
+            }
         }
     }
+
     RowLayout {
+        Layout.leftMargin:   Constants.font.pixelSize
+        Layout.rightMargin:   Constants.font.pixelSize
         CoreLabel {
             text: "Destination"
         }
@@ -31,15 +57,30 @@ ColumnLayout {
             Component.onCompleted: {
                     currentIndex = inPortsRoutesLoaderId.filterObj.logTo;
             }
+            onActivated: {
+                doSave()
+            }
         }
     }
     RowLayout {
+        Layout.margins:  Constants.font.pixelSize
         CoreLabel {
             text: "User Data"
         }
         CoreTextArea {
             id: userdata
+            Layout.fillWidth: true
             text: inPortsRoutesLoaderId.filterObj.userdata
+            property bool processing: true
+            onTextChanged: {
+                if (!processing) {
+                    processing = true
+                    doSave()
+                }
+            }
+            Keys.onPressed: {
+                processing = false
+            }
         }
     }
 }
