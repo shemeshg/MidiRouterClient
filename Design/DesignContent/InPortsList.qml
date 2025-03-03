@@ -45,6 +45,7 @@ ColumnLayout {
             CoreButton {
                 text: "EasyConfig"
                 onClicked: {
+                    isSubForm = true
                     inPortsLoaderId.inPortName = modelData;
                     inPortsId.state = "InPortEasyConfig";
                 }
@@ -53,6 +54,7 @@ ColumnLayout {
                 text: "Monitor"
                 onClicked: {
                     inPortsLoaderId.inPortName = modelData;
+                    isSubForm = true
                     inPortsId.state = "InPortMonitor";
                 }
             }

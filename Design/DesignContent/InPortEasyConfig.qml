@@ -10,6 +10,7 @@ ColumnLayout {
         text: "back"
         onClicked: {
             midiRouteInput.easyConfig.emitKeyboardSplitsChanged()
+            isSubForm = false
             inPortsId.state = "InPortsList";
         }
     }
