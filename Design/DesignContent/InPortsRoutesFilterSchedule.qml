@@ -3,20 +3,46 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
+import UiComp
 
 ColumnLayout {
-    CoreLabel {
-        text: "InPortsRoutesFilterSchedule"
+    function doSave(){
+        inPortsRoutesLoaderId.filterObj.setFilter( defferedType.currentValue, defferedTo.text)
     }
-    CoreButton {
-        text: "back"
-        onClicked: {
-            inPortsRoutesLoaderId.filterObj.setFilter( defferedType.currentValue, defferedTo.text)
-            inPortRoutesId.state = "InPortsRoutesListFilters"
+
+    GroupBox {
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
+
+
+        RowLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            UiBtnBack {
+                onClicked: {
+                    inPortRoutesId.state = "InPortsRoutesListFilters"
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: midiRouteInput.midiInputName
+            }
+            Item {
+                Layout.fillWidth: true
+            }
+            CoreLabel {
+                text: "Edit filter - Schedule"
+            }
         }
     }
 
+
     RowLayout {
+        Layout.leftMargin:   Constants.font.pixelSize
+        Layout.rightMargin:   Constants.font.pixelSize
         CoreLabel {
             text: "Deffered Type"
         }
@@ -36,16 +62,25 @@ ColumnLayout {
             Component.onCompleted: {
                     currentIndex = inPortsRoutesLoaderId.filterObj.defferedType;
             }
+            onActivated: {
+                doSave()
+            }
         }
     }
     RowLayout {
+        Layout.leftMargin:   Constants.font.pixelSize
+        Layout.rightMargin:   Constants.font.pixelSize
         CoreLabel {
             text: "Deffered To"
         }
         CoreTextField {
             id: defferedTo
             text: inPortsRoutesLoaderId.filterObj.defferedTo
+            onTextEdited: {
+                doSave()
+            }
         }
+
     }
 
 }
