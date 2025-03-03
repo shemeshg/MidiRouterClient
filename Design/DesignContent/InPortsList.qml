@@ -47,6 +47,7 @@ ColumnLayout {
                 onClicked: {
                     isSubForm = true
                     inPortsLoaderId.inPortName = modelData;
+                    isEasyConfigForm = true
                     inPortsId.state = "InPortEasyConfig";
                 }
             }

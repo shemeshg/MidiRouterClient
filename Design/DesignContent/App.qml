@@ -24,6 +24,7 @@ Window {
     }
 
     property bool isSubForm: false
+    property bool isEasyConfigForm: false
 
     onIsClientConnectedChanged: ()=>{
                                         headerBarId.selectDefaultItem(isClientConnected)
@@ -106,6 +107,37 @@ Window {
 
         Item {
             Layout.fillHeight: true
+        }
+
+        RowLayout {
+            visible:  headerBarId.state === "InPorts" && isSubForm && isEasyConfigForm
+
+            Item {
+                Layout.fillWidth: true
+            }
+            GroupBox {
+                RowLayout {
+                    CoreButton {
+                        id: easyConfigRoutesId
+                        text: "Routes"
+                        hooverText: "Routes"
+                        autoExclusive: true
+                        checkable: true
+                        checked: true
+                    }
+                    CoreButton {
+                        id: easyConfigSplitsId
+                        text: "Splits"
+                        hooverText: "Keyboard Splits"
+                        autoExclusive: true
+                        checkable: true
+                        checked: false
+                    }
+                }
+            }
+            Item {
+                Layout.fillWidth: true
+            }
         }
 
         RowLayout {

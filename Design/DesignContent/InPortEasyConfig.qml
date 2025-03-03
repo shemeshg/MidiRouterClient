@@ -10,32 +10,12 @@ ColumnLayout {
         text: "back"
         onClicked: {
             midiRouteInput.easyConfig.emitKeyboardSplitsChanged()
+            isEasyConfigForm = false
             isSubForm = false
             inPortsId.state = "InPortsList";
         }
     }
-    RowLayout {
-        GroupBox {
-            RowLayout {
-                CoreButton {
-                    id: easyConfigRoutesId
-                    text: "Routes"
-                    hooverText: "Routes"
-                    autoExclusive: true
-                    checkable: true
-                    checked: true
-                }
-                CoreButton {
-                    id: easyConfigSplitsId
-                    text: "Splits"
-                    hooverText: "Keyboard Splits"
-                    autoExclusive: true
-                    checkable: true
-                    checked: false
-                }
-            }
-        }
-    }
+
     RowLayout {
         CoreLabel {
             text: "Easy config InPort: " + midiRouteInput.midiInputName
