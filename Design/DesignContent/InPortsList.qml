@@ -30,6 +30,7 @@ ColumnLayout {
                 text: "Settings"
                 onClicked: {
                     inPortsLoaderId.inPortName = modelData;
+                    isSubForm = true
                     inPortsId.state = "InPortSettings";
                 }
             }

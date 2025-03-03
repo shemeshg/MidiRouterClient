@@ -2,8 +2,11 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
+import UiComp
 
 ColumnLayout {
+    id: inPortsSettings14BitId
+    signal selectedItemsModified()
     property var selectedItems: []
         RowLayout {
             CoreLabel {
@@ -25,8 +28,7 @@ ColumnLayout {
                 id: cc14bitCc
                 text: "0"
             }
-            CoreButton{
-                text: "add"
+            UiBtnAdd{
                 onClicked: {
                     cc14bitErr.text = ""
                     if (
@@ -53,29 +55,43 @@ ColumnLayout {
                           selectedItems = [...selectedItems,{channel:
                                         Number(cc14bitChannel.text),
                                         cc: Number(cc14bitCc.text)}];
+                          selectedItemsModified();
 
 
                 }
             }
+            CoreLabel {
+                visible: text !==""
+                id: cc14bitErr
+                text: ""
+                color: "darkorange"
+            }
         }
 
-        CoreLabel {
-            visible: text !==""
-            id: cc14bitErr
-            text: ""
+        function filterSelectedItems(cc, channel){
+            let a = selectedItems.map(row=>{
+
+                                          return {cc:row.cc,  channel: row.channel}
+                                      })
+            selectedItems = a.filter(item => {return !(item.cc === cc
+                                                     && item.channel === channel)} );
+            selectedItemsModified();
         }
+
 
         Repeater {
+            id: chanelCcRepeaterId
+
             model: selectedItems
             RowLayout {
+                signal testSignal();
                 CoreLabel {
                     text: `channel ${modelData.channel} cc ${modelData.cc}`
                 }
-                CoreButton {
-                    text: "Del"
+                UiBtnDel {
                     onClicked: {
-                        selectedItems = selectedItems.filter(item => {return !(item.cc === modelData.cc
-                                                                 && item.channel === modelData.channel)} );
+                        filterSelectedItems(modelData.cc, modelData.channel)
+
                     }
                 }                
             }

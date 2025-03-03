@@ -2,11 +2,13 @@ import QtQuick
 import Design
 import Core
 import QtQuick.Layouts
+import UiComp
 
 ColumnLayout{
         id: properateInputsId
         property var selectedItems: []
         property var allItems: []
+        signal selectedItemsModified()
 
         RowLayout {
             CoreLabel {
@@ -18,12 +20,12 @@ ColumnLayout{
 
                 Layout.fillWidth: true
             }
-            CoreButton {
-                text: "add"
+            UiBtnAdd {
                 onClicked: {
                     if (comboId.currentText ){
                         properateInputsId.selectedItems.push(comboId.currentText)
                         properateInputsId.selectedItems = [...properateInputsId.selectedItems]
+                        selectedItemsModified()
                     }
                 }
             }
@@ -34,10 +36,10 @@ ColumnLayout{
                 CoreLabel {
                     text: modelData
                 }
-                CoreButton {
-                    text: "Del"
+                UiBtnDel {
                     onClicked: {
                         properateInputsId.selectedItems = properateInputsId.selectedItems.filter(item => item !== modelData);
+                        properateInputsId.selectedItemsModified()
                     }
                 }
             }
