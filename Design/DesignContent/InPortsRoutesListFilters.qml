@@ -25,6 +25,7 @@ ColumnLayout {
     CoreButton {
         text: "back"
         onClicked: {
+            isSubForm = false
             inPortsId.state = "InPortsList";
         }
     }
