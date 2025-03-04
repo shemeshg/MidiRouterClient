@@ -13,7 +13,7 @@ endif()
 
 
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Widgets WebSockets WebChannel Svg)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Widgets WebSockets WebChannel Svg Concurrent)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -147,7 +147,7 @@ add_subdirectory(Bal)
 
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    PRIVATE Qt6::Quick Qt6::Widgets Qt6::WebSockets Qt6::WebChannel Qt6::Svg
+    PRIVATE Qt6::Quick Qt6::Widgets Qt6::WebSockets Qt6::WebChannel Qt6::Svg Qt6::Concurrent
     Bal
     Coreplugin
     Designplugin
