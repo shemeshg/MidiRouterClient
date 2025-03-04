@@ -97,11 +97,11 @@ if(LINUX)
         ${CMAKE_CURRENT_BINARY_DIR}/deployScript/prerm)
 
 
-    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/script/postinst;${CMAKE_CURRENT_BINARY_DIR}/script/prerm;")
+    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/deployScript/postinst;${CMAKE_CURRENT_BINARY_DIR}/deployScript/prerm;")
 
 
-    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA, ./script/postinst)
-    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA, ./script/prerm)
+    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA, ./deployScript/postinst)
+    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA, ./deployScript/prerm)
 
 endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
