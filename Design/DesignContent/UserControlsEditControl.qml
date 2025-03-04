@@ -76,10 +76,12 @@ ColumnLayout {
             CoreComboBox {
                 id: portName
                 Layout.fillWidth: true
-                model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+                
 
                 Component.onCompleted: {
-                    var index = model.indexOf(control.outputPortnName);
+                    let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+                    var index = list.indexOf(control.outputPortnName);
+                    portName.model = list
                     if (index !== -1) {
                         currentIndex = index;
                     }

@@ -49,10 +49,12 @@ ColumnLayout {
         CoreComboBox {
             id: nameId
             Layout.fillWidth: true
-            model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+            
 
             Component.onCompleted: {
-                var index = model.indexOf(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
+                let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]                
+                var index = list.indexOf(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
+                nameId.model = list
                 if (index !== -1) {
                     currentIndex = index;
                 }

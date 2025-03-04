@@ -23,7 +23,6 @@ public:
     void setChanges(UserDataConfig *userDataConfigItf, QJsonObject &jsonDoc)
     //-only-file body
     {
-
         userDataConfigItf->setConnectedInPorts(
             convertJsonArrayToQList<QString>(jsonDoc["connectedInPorts"]));
         userDataConfigItf->setConnectedOutPorts(

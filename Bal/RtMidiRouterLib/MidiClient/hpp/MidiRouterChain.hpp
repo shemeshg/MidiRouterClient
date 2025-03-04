@@ -50,6 +50,8 @@ public:
     //-only-file body
         : MidiRouterChainPrivate{parent}{
         setUuid(getUuId());
+        setIsEasyConfig(false);
+        setIsRunForPresetOnAndOff(false);
     };
 
     //- {function} 1 1
