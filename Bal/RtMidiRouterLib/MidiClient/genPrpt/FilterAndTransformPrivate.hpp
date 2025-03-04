@@ -120,11 +120,11 @@ protected:
     
 
 private:
-    ConditionAction m_conditionAction;
-    QString m_filterChannel;
-    QString m_filterEvents;
-    QString m_filterData1;
-    QString m_filterData2;
+    ConditionAction m_conditionAction ;
+    QString m_filterChannel ;
+    QString m_filterEvents ;
+    QString m_filterData1 ;
+    QString m_filterData2 ;
     
 };
 //-only-file null

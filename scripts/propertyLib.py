@@ -146,13 +146,19 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             return ""
 
     def private_h_file(self, class_name):
+        defalut_init = ""
+        if self.field_type == "int":
+            defalut_init = "= 0"
+        if self.field_type == "bool":
+            defalut_init = "= false"
+        
         if self.is_bindable:
             t = Template("""Q_OBJECT_BINDABLE_PROPERTY(${class_name}, ${field_type}, m_${field_name}, &${class_name}::${field_name}Changed)
     """)            
         else:
-            t = Template("""${field_type} m_${field_name};
+            t = Template("""${field_type} m_${field_name} ${defalut_init};
     """)    
-        return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name )
+        return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name,defalut_init=defalut_init )
 
     def destructot_h_file(self):
         type_in_list = self.field_type.split("<")[1].split(">")[0]

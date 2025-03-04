@@ -90,9 +90,9 @@ protected:
     
 
 private:
-    QString m_uuid;
-    FilterType m_filterType;
-    QString m_name;
+    QString m_uuid ;
+    FilterType m_filterType ;
+    QString m_name ;
     
 };
 //-only-file null

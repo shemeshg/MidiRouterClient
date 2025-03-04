@@ -85,9 +85,9 @@ protected:
     
 
 private:
-    bool m_isMonitored;
-    QStringList m_logItems;
-    int m_logLen;
+    bool m_isMonitored = false;
+    QStringList m_logItems ;
+    int m_logLen = 0;
     
 };
 //-only-file null

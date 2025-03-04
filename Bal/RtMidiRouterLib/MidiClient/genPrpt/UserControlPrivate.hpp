@@ -242,20 +242,20 @@ protected:
     
 
 private:
-    QString m_uuid;
-    bool m_isSendOnPresetChange;
-    EventType m_eventType;
-    QString m_description;
-    int m_inputVal;
-    int m_minVal;
-    int m_maxVal;
-    bool m_is64Mode;
-    int m_channelId;
-    int m_ccId;
-    int m_nrpnControl;
-    QString m_outputPortnName;
-    bool m_isShowDropdown;
-    int m_dropdownListId;
+    QString m_uuid ;
+    bool m_isSendOnPresetChange = false;
+    EventType m_eventType ;
+    QString m_description ;
+    int m_inputVal = 0;
+    int m_minVal = 0;
+    int m_maxVal = 0;
+    bool m_is64Mode = false;
+    int m_channelId = 0;
+    int m_ccId = 0;
+    int m_nrpnControl = 0;
+    QString m_outputPortnName ;
+    bool m_isShowDropdown = false;
+    int m_dropdownListId = 0;
     
 };
 //-only-file null

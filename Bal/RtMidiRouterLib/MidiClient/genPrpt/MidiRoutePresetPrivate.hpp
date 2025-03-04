@@ -180,16 +180,16 @@ signals:
     
 
 protected:
-    PresetMidiControl * m_midiControlOn;
-    PresetMidiControl * m_midiControlOff;
-    QList<UserControl *> m_userControls;
-    QList<MidiRouteInput *> m_midiRouteInputs;
+    PresetMidiControl * m_midiControlOn ;
+    PresetMidiControl * m_midiControlOff ;
+    QList<UserControl *> m_userControls ;
+    QList<MidiRouteInput *> m_midiRouteInputs ;
     
 
 private:
-    QString m_name;
-    QString m_uuid;
-    bool m_isEnabled;
+    QString m_name ;
+    QString m_uuid ;
+    bool m_isEnabled = false;
     
 };
 //-only-file null

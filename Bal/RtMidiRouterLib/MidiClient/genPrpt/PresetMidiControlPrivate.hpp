@@ -132,12 +132,12 @@ protected:
     
 
 private:
-    QString m_portName;
-    PresetMidiType m_presetMidiType;
-    int m_eventTypeId;
-    int m_channel;
-    int m_data1;
-    int m_data2;
+    QString m_portName ;
+    PresetMidiType m_presetMidiType ;
+    int m_eventTypeId = 0;
+    int m_channel = 0;
+    int m_data1 = 0;
+    int m_data2 = 0;
     
 };
 //-only-file null

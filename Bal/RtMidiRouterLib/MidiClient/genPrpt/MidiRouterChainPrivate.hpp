@@ -102,14 +102,14 @@ signals:
     
 
 protected:
-    QList<QVariant> m_midiRoutersFilters;
+    QList<QVariant> m_midiRoutersFilters ;
     
 
 private:
-    QString m_name;
-    QString m_uuid;
-    bool m_isEasyConfig;
-    bool m_isRunForPresetOnAndOff;
+    QString m_name ;
+    QString m_uuid ;
+    bool m_isEasyConfig = false;
+    bool m_isRunForPresetOnAndOff = false;
     
 };
 //-only-file null

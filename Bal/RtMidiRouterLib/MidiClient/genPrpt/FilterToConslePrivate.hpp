@@ -76,8 +76,8 @@ protected:
     
 
 private:
-    LogTo m_logTo;
-    QString m_userdata;
+    LogTo m_logTo ;
+    QString m_userdata ;
     
 };
 //-only-file null

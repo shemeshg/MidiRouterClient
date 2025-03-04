@@ -79,12 +79,12 @@ signals:
     
 
 protected:
-    UserDataConfig * m_userDataConfig;
+    UserDataConfig * m_userDataConfig ;
     
 
 private:
-    QString m_serverStatusText;
-    ServerStatus m_serverStatus;
+    QString m_serverStatusText ;
+    ServerStatus m_serverStatus ;
     
 };
 //-only-file null

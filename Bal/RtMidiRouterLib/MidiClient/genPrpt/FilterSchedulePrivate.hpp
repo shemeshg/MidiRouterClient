@@ -78,8 +78,8 @@ protected:
     
 
 private:
-    DefferedType m_defferedType;
-    int m_defferedTo;
+    DefferedType m_defferedType ;
+    int m_defferedTo = 0;
     
 };
 //-only-file null

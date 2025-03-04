@@ -85,9 +85,9 @@ protected:
     
 
 private:
-    QString m_baseMidiRouteInput;
-    QString m_serverName;
-    int m_serverPort;
+    QString m_baseMidiRouteInput ;
+    QString m_serverName ;
+    int m_serverPort = 0;
     
 };
 //-only-file null

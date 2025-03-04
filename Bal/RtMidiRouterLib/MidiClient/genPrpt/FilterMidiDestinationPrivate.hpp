@@ -58,7 +58,7 @@ protected:
     
 
 private:
-    QString m_baseMidiRouteInput;
+    QString m_baseMidiRouteInput ;
     
 };
 //-only-file null

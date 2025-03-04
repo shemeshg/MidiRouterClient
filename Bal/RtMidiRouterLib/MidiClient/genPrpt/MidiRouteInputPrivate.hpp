@@ -261,22 +261,22 @@ signals:
     
 
 protected:
-    QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit;
-    QList<MidiRouterChain *> m_midiRouterChains;
-    Monitor * m_monitor;
-    EasyConfig * m_easyConfig;
+    QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit ;
+    QList<MidiRouterChain *> m_midiRouterChains ;
+    Monitor * m_monitor ;
+    EasyConfig * m_easyConfig ;
     
 
 private:
-    QString m_uuid;
-    QString m_midiInputName;
-    bool m_ignoreTypesMidiSysex;
-    bool m_ignoreTypesMidiTime;
-    bool m_ignoreTypesMidiSense;
-    int m_midiRouteClockTimeSig;
-    int m_midiRouteClockTimeSigDivBy;
-    int m_midiRouteClockFromSppPos;
-    QStringList m_midiRouteClockPropegateInputs;
+    QString m_uuid ;
+    QString m_midiInputName ;
+    bool m_ignoreTypesMidiSysex = false;
+    bool m_ignoreTypesMidiTime = false;
+    bool m_ignoreTypesMidiSense = false;
+    int m_midiRouteClockTimeSig = 0;
+    int m_midiRouteClockTimeSigDivBy = 0;
+    int m_midiRouteClockFromSppPos = 0;
+    QStringList m_midiRouteClockPropegateInputs ;
     
 };
 //-only-file null

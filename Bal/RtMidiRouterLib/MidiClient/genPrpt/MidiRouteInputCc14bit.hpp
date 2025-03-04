@@ -70,8 +70,8 @@ protected:
     
 
 private:
-    int m_channel;
-    int m_cc;
+    int m_channel = 0;
+    int m_cc = 0;
     
 };
 //-only-file null

@@ -200,19 +200,19 @@ signals:
     
 
 protected:
-    QString m_computerUuid;
-    QList<Dropdownlist *> m_dropdownlists;
-    QString m_uniqueId;
-    QStringList m_virtualInPorts;
-    QList<MidiRoutePreset *> m_midiRoutePresets;
-    MidiRoutePreset * m_activePreset;
+    QString m_computerUuid ;
+    QList<Dropdownlist *> m_dropdownlists ;
+    QString m_uniqueId ;
+    QStringList m_virtualInPorts ;
+    QList<MidiRoutePreset *> m_midiRoutePresets ;
+    MidiRoutePreset * m_activePreset ;
     
 
 private:
-    int m_activePresetID;
-    QStringList m_connectedInPorts;
-    QStringList m_connectedOutPorts;
-    QString m_criticalErrorMsg;
+    int m_activePresetID = 0;
+    QStringList m_connectedInPorts ;
+    QStringList m_connectedOutPorts ;
+    QString m_criticalErrorMsg ;
     
 };
 //-only-file null

@@ -99,12 +99,12 @@ signals:
     
 
 protected:
-    QList<int> m_keyboardSplits;
-    QList<EasyConfigRoute *> m_easyConfigRoutes;
+    QList<int> m_keyboardSplits ;
+    QList<EasyConfigRoute *> m_easyConfigRoutes ;
     
 
 private:
-    QStringList m_zoneNames;
+    QStringList m_zoneNames ;
     
 };
 //-only-file null

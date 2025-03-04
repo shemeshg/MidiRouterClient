@@ -69,8 +69,8 @@ protected:
     
 
 private:
-    QString m_name;
-    QString m_data;
+    QString m_name ;
+    QString m_data ;
     
 };
 //-only-file null

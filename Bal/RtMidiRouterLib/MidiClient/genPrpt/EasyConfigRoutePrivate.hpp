@@ -237,20 +237,20 @@ protected:
     
 
 private:
-    QString m_uuid;
-    int m_splitRangeId;
-    int m_fromSelectedMidiEventTypeId;
-    int m_fromChannel;
-    int m_fromData1;
-    int m_transpose;
-    int m_fromCcOrNrpnStart;
-    int m_fromCcOrNrpnEnd;
-    int m_toCcOrNrpnStart;
-    int m_toCcOrNrpnEnd;
-    int m_toSelectedMidiEventTypeId;
-    int m_toChannel;
-    int m_toData1;
-    QString m_toDestinationName;
+    QString m_uuid ;
+    int m_splitRangeId = 0;
+    int m_fromSelectedMidiEventTypeId = 0;
+    int m_fromChannel = 0;
+    int m_fromData1 = 0;
+    int m_transpose = 0;
+    int m_fromCcOrNrpnStart = 0;
+    int m_fromCcOrNrpnEnd = 0;
+    int m_toCcOrNrpnStart = 0;
+    int m_toCcOrNrpnEnd = 0;
+    int m_toSelectedMidiEventTypeId = 0;
+    int m_toChannel = 0;
+    int m_toData1 = 0;
+    QString m_toDestinationName ;
     
 };
 //-only-file null
