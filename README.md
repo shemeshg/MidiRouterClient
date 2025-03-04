@@ -17,13 +17,13 @@ brew install --cask midi-router-client/
 * *Must* fix signature:
   
 ```bash
-codesign --force --deep --sign - /Applications/cakebrewjs.app/
+codesign --force --deep --sign - /Applications/midi-router-client.app/
 ```
 
 * *Must* fix authorizations:
 
 ```bash  
-xattr -c /Applications/cakebrewjs.app/
+xattr -c /Applications/midi-router-client.app/
 ```
 
 ### Windows
