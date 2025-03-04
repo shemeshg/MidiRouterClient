@@ -107,6 +107,11 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set_property(TARGET midi-router-client PROPERTY WIN32_EXECUTABLE true)
 
+    if(WINDOWS)
+      install(FILES
+            ${CMAKE_SOURCE_DIR}/icon.ico
+            DESTINATION bin)
+    endif()
 
     # set the install/uninstall icon used for the installer itself
     set (CPACK_NSIS_MUI_ICON
