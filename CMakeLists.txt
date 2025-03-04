@@ -41,7 +41,7 @@ if(MACOSX)
     set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Misi Router Client")
     set(CPACK_PACKAGE_VENDOR "shemeshg")    
 endif()
-include(CPack)
+
 
 
 list(APPEND QML_DIRS CMAKE_CURRENT_SOURCE_DIR}/Design/ ${CMAKE_CURRENT_BINARY_DIR}/Bal)
@@ -74,10 +74,13 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
     OUTPUT_NAME "midi-router-client"
 )
+
+
 if(LINUX)
     set(CPACK_PACKAGE_NAME midi-router-client)
     set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Midi router client")
-    set(CPACK_PACKAGE_VENDOR "shemeshg")
+    set(CPACK_PACKAGE_VENDOR "shemeshg")   
+    set(CPACK_PACKAGE_CONTACT "https://github.com/shemeshg") 
     set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
     set(CPACK_VERBATIM_VARIABLES ON)
     set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/midi-router-client")
@@ -154,7 +157,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     DesignContentplugin
     UiCompplugin
 )
-
+include(CPack)
 include(GNUInstallDirs)
 install(TARGETS ${CMAKE_PROJECT_NAME}
     BUNDLE DESTINATION .
