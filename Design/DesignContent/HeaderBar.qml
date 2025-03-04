@@ -35,6 +35,7 @@ RowLayout {
                 autoExclusive: true
                 checkable: true
                 checked: false
+                visible: Qt.platform.os !== "windows"
             }
             CoreButton {
                 id: btnPresetsId

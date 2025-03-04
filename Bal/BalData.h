@@ -72,7 +72,7 @@ MidiClientConnection *midiClientConnection() { return &mcc.midiClientConnection;
 void startClient();
 
 private:
-QSettings settings;
+QSettings settings{"shemeshg", "MidiRouterClient"};
 
 /*[[[cog
 import cog

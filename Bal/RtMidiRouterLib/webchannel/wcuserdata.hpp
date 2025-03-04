@@ -206,8 +206,8 @@ private:
     }
 
     //-only-file header
-    QSettings settings;
-    bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
+    QSettings settings{"shemeshg", "MidiRouterClient"};
+    bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", false).toBool();
 
 };
 
