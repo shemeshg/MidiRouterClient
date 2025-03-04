@@ -50,7 +50,12 @@ public:
 
         if (isSaveConfigOnServer) {
             auto d = doc.object();
-            applyConfig(d);
+
+
+            QTimer::singleShot(1000, [=]() {
+                applyConfig(d);
+            });
+
         }
 
     }

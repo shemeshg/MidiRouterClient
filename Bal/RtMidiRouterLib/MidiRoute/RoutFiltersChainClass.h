@@ -32,7 +32,8 @@ public:
     {
 
         auto srs = std::unique_ptr<SendRemoteServer>(new SendRemoteServer(ec, serverName, serverPort));
-        if (srs->initConnectByPortName(remoteMidiPortName)){
+        auto portNumber = srs->initConnectByPortName(remoteMidiPortName);
+        if (portNumber > -1){
             filterMidiChannelMsgAry.push_back(std::move(srs));
             return true;
         }

@@ -17,13 +17,13 @@ public:
     std::unique_ptr<SignalSlotClass> slotClass;
     std::unique_ptr<SignalClass> signalClass;
 
-    bool initConnectByPortName(std::string remoteMidiPortName){
+    int initConnectByPortName(std::string remoteMidiPortName){
 
         slotClass = std::unique_ptr<SignalSlotClass>(new SignalSlotClass()) ;
-        auto ok = slotClass->openConnection(QString::fromStdString(serverName),serverPort,QString::fromStdString(remoteMidiPortName));
-        if (!ok) {return false;}
+        remoteMidiPortNumber = slotClass->openConnection(QString::fromStdString(serverName),serverPort,QString::fromStdString(remoteMidiPortName));
+        if (remoteMidiPortNumber == -1) {return -1;}
         signalClass =  std::unique_ptr< SignalClass>( new SignalClass( *slotClass.get() ) );
-        return true;
+        return remoteMidiPortNumber;
 
     }
 
