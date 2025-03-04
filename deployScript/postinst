@@ -1,0 +1,4 @@
+#!/bin/bash
+cp /opt/midi-router-client/share/applications/midi-router-client.desktop /usr/share/applications/midi-router-client.desktop
+cp /opt/midi-router-client/share/icons/hicolor/256x256/apps/midi-router-client.png /usr/share/icons/hicolor/256x256/apps/midi-router-client.png
+chmod 777 /opt/midi-router-client/bin/midi-router-client.sh

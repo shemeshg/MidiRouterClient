@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=midi-router-client
+Version=1.0
+GenericName=Midi router client
+Comment=Midi router client
+Exec=/opt/midi-router-client/bin/midi-router-client.sh
+Icon=/usr/share/icons/hicolor/256x256/apps/midi-router-client.png
+Terminal=false
+Categories=Music;Utility;
+Keywords=Midi;QT;

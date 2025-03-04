@@ -1,0 +1,76 @@
+import Design
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Core
+
+RowLayout {
+
+    property string homebrewVersion: ""
+    ColumnLayout {
+        Layout.margins:  Constants.font.pixelSize
+        RowLayout {
+            CoreLabel {
+                text: "Font size (Empty for default, requires reopen) "
+                color: CoreSystemPalette.text
+            }
+            CoreTextField {
+                id: defaultFontSize
+                text: Constants.balData.defaultFontSize
+                Layout.fillWidth: true
+            }
+            CoreButton {
+                text: "set"
+                onClicked: {
+                    Constants.balData.saveDefaultFontSize(defaultFontSize.text)
+                }
+            }
+        }
+
+        CoreLabel {
+            text: `
+            <h2>About</h2>
+            `
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+        }
+
+
+        CoreLabel{
+            id: hyperlinkBtn
+            color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
+            text: "Midi Router Client " + Qt.application.version
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: () => {
+                               Qt.openUrlExternally("https://sourceforge.net/projects/midi-router-client/");
+                           }
+            }
+        }
+
+
+        CoreLabel {
+            text: "Qt " + Constants.balData.qtVer()
+        }
+        CoreLabel {
+            text: homebrewVersion
+        }
+
+        CoreLabel {
+            text: `
+            <h2>License</h2>
+            <p>Copyright 2020 shemeshg</p>
+            <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+            <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+            <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+            `
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+        }
+
+        Item {
+            Layout.fillHeight: true
+        }
+    }
+}
