@@ -11,7 +11,6 @@ ary = [
     create_prpt("int", 'minVal'),
     create_prpt("int", 'maxVal'),
     create_prpt("bool", 'is64Mode'),
-    create_prpt("bool", 'isEditMode'),
     create_prpt("int", 'channelId'),
     create_prpt("int", 'ccId'),
     create_prpt("int", 'nrpnControl'),

@@ -28,7 +28,6 @@ class UserControlPrivate : public QObject
     Q_PROPERTY(int minVal READ minVal WRITE setMinVal NOTIFY minValChanged )
     Q_PROPERTY(int maxVal READ maxVal WRITE setMaxVal NOTIFY maxValChanged )
     Q_PROPERTY(bool is64Mode READ is64Mode WRITE setIs64Mode NOTIFY is64ModeChanged )
-    Q_PROPERTY(bool isEditMode READ isEditMode WRITE setIsEditMode NOTIFY isEditModeChanged )
     Q_PROPERTY(int channelId READ channelId WRITE setChannelId NOTIFY channelIdChanged )
     Q_PROPERTY(int ccId READ ccId WRITE setCcId NOTIFY ccIdChanged )
     Q_PROPERTY(int nrpnControl READ nrpnControl WRITE setNrpnControl NOTIFY nrpnControlChanged )
@@ -148,18 +147,6 @@ void setIs64Mode(const bool newIs64Mode)
 
 
     
-    bool isEditMode() const{return m_isEditMode;} 
-    
-void setIsEditMode(const bool newIsEditMode)
-    {
-        if (m_isEditMode == newIsEditMode)
-            return;
-        m_isEditMode = newIsEditMode;
-        emit isEditModeChanged();
-    }
-
-
-    
     int channelId() const{return m_channelId;} 
     
 void setChannelId(const int newChannelId)
@@ -243,7 +230,6 @@ signals:
     void minValChanged();
     void maxValChanged();
     void is64ModeChanged();
-    void isEditModeChanged();
     void channelIdChanged();
     void ccIdChanged();
     void nrpnControlChanged();
@@ -264,7 +250,6 @@ private:
     int m_minVal;
     int m_maxVal;
     bool m_is64Mode;
-    bool m_isEditMode;
     int m_channelId;
     int m_ccId;
     int m_nrpnControl;

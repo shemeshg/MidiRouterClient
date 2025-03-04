@@ -352,7 +352,6 @@ private:
             userControlObj["minVal"] = userControl->minVal();
             userControlObj["maxVal"] = userControl->maxVal();
             userControlObj["is64Mode"] = userControl->is64Mode();
-            userControlObj["isEditMode"] = userControl->isEditMode();
             userControlObj["channelId"] = userControl->channelId();
             userControlObj["ccId"] = userControl->ccId();
             userControlObj["nrpnControl"] = userControl->nrpnControl();

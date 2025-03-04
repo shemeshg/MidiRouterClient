@@ -250,7 +250,6 @@ private:
         fst.setField<double>(&UserControl::setMinVal, "minVal");
         fst.setField<double>(&UserControl::setMaxVal, "maxVal");
         fst.setField<bool>(&UserControl::setIs64Mode, "is64Mode");
-        fst.setField<bool>(&UserControl::setIsEditMode, "isEditMode");
         fst.setField<double>(&UserControl::setChannelId, "channelId");
         fst.setField<double>(&UserControl::setCcId, "ccId");
         fst.setField<double>(&UserControl::setNrpnControl, "nrpnControl");
