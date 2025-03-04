@@ -42,6 +42,8 @@ ColumnLayout {
                 checked: modelData.isEnabled
                 onToggled: {
                     modelData.isEnabled = checked;
+                    Constants.balData.applyConfig(() => {
+                    });
                 }
             }
             UiBtnEdit {
@@ -64,6 +66,8 @@ ColumnLayout {
                 visible: index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
                 onClicked: {
                     Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index, true);
+                    Constants.balData.applyConfig(() => {
+                    });
                 }
             }
             UiBtnDel {
