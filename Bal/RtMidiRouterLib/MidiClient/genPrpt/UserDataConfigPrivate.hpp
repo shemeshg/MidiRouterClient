@@ -120,19 +120,11 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
     }
 
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
-        template<>
-        void delListItem<Dropdownlist *>(int id){
+        template<typename T = Dropdownlist *>
+        std::enable_if_t<std::is_same_v<T, Dropdownlist *>, void>
+        delListItem(int id){
             if (id < m_dropdownlists.size())
             {
                 delete m_dropdownlists.at(id);
@@ -140,28 +132,31 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
                 emit dropdownlistsChanged();
             }
         }
-        
+
         void addListItem(Dropdownlist * item)
         {
             m_dropdownlists.push_back(item);
             emit dropdownlistsChanged();
         }
-        
-        template<>
-        void clearList<Dropdownlist *>(){
+
+        template<typename T = Dropdownlist * >
+        std::enable_if_t<std::is_same_v<T, Dropdownlist * >, void>
+        clearList(){
             qDeleteAll(m_dropdownlists);
             m_dropdownlists.clear();
             emit dropdownlistsChanged();
-        }   
+        }
 
-        template<>
-        const QList<Dropdownlist *> listItems<Dropdownlist *>(){
+        template<typename T = Dropdownlist *>
+        std::enable_if_t<std::is_same_v<T, Dropdownlist *>, const QList<Dropdownlist *>>
+        listItems(){
             return m_dropdownlists;
         }
 
         
-        template<>
-        void delListItem<MidiRoutePreset *>(int id){
+        template<typename T = MidiRoutePreset *>
+        std::enable_if_t<std::is_same_v<T, MidiRoutePreset *>, void>
+        delListItem(int id){
             if (id < m_midiRoutePresets.size())
             {
                 delete m_midiRoutePresets.at(id);
@@ -169,22 +164,24 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
                 emit midiRoutePresetsChanged();
             }
         }
-        
+
         void addListItem(MidiRoutePreset * item)
         {
             m_midiRoutePresets.push_back(item);
             emit midiRoutePresetsChanged();
         }
-        
-        template<>
-        void clearList<MidiRoutePreset *>(){
+
+        template<typename T = MidiRoutePreset * >
+        std::enable_if_t<std::is_same_v<T, MidiRoutePreset * >, void>
+        clearList(){
             qDeleteAll(m_midiRoutePresets);
             m_midiRoutePresets.clear();
             emit midiRoutePresetsChanged();
-        }   
+        }
 
-        template<>
-        const QList<MidiRoutePreset *> listItems<MidiRoutePreset *>(){
+        template<typename T = MidiRoutePreset *>
+        std::enable_if_t<std::is_same_v<T, MidiRoutePreset *>, const QList<MidiRoutePreset *>>
+        listItems(){
             return m_midiRoutePresets;
         }
 

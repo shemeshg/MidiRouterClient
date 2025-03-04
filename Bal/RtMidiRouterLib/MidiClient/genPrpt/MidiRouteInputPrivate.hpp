@@ -177,19 +177,11 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     EasyConfig * easyConfig() const{return m_easyConfig;} 
     
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
-        template<>
-        void delListItem<MidiRouteInputCc14bit *>(int id){
+        template<typename T = MidiRouteInputCc14bit *>
+        std::enable_if_t<std::is_same_v<T, MidiRouteInputCc14bit *>, void>
+        delListItem(int id){
             if (id < m_midiRouteInputCc14bit.size())
             {
                 delete m_midiRouteInputCc14bit.at(id);
@@ -197,28 +189,31 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
                 emit midiRouteInputCc14bitChanged();
             }
         }
-        
+
         void addListItem(MidiRouteInputCc14bit * item)
         {
             m_midiRouteInputCc14bit.push_back(item);
             emit midiRouteInputCc14bitChanged();
         }
-        
-        template<>
-        void clearList<MidiRouteInputCc14bit *>(){
+
+        template<typename T = MidiRouteInputCc14bit * >
+        std::enable_if_t<std::is_same_v<T, MidiRouteInputCc14bit * >, void>
+        clearList(){
             qDeleteAll(m_midiRouteInputCc14bit);
             m_midiRouteInputCc14bit.clear();
             emit midiRouteInputCc14bitChanged();
-        }   
+        }
 
-        template<>
-        const QList<MidiRouteInputCc14bit *> listItems<MidiRouteInputCc14bit *>(){
+        template<typename T = MidiRouteInputCc14bit *>
+        std::enable_if_t<std::is_same_v<T, MidiRouteInputCc14bit *>, const QList<MidiRouteInputCc14bit *>>
+        listItems(){
             return m_midiRouteInputCc14bit;
         }
 
         
-        template<>
-        void delListItem<MidiRouterChain *>(int id){
+        template<typename T = MidiRouterChain *>
+        std::enable_if_t<std::is_same_v<T, MidiRouterChain *>, void>
+        delListItem(int id){
             if (id < m_midiRouterChains.size())
             {
                 delete m_midiRouterChains.at(id);
@@ -226,22 +221,24 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
                 emit midiRouterChainsChanged();
             }
         }
-        
+
         void addListItem(MidiRouterChain * item)
         {
             m_midiRouterChains.push_back(item);
             emit midiRouterChainsChanged();
         }
-        
-        template<>
-        void clearList<MidiRouterChain *>(){
+
+        template<typename T = MidiRouterChain * >
+        std::enable_if_t<std::is_same_v<T, MidiRouterChain * >, void>
+        clearList(){
             qDeleteAll(m_midiRouterChains);
             m_midiRouterChains.clear();
             emit midiRouterChainsChanged();
-        }   
+        }
 
-        template<>
-        const QList<MidiRouterChain *> listItems<MidiRouterChain *>(){
+        template<typename T = MidiRouterChain *>
+        std::enable_if_t<std::is_same_v<T, MidiRouterChain *>, const QList<MidiRouterChain *>>
+        listItems(){
             return m_midiRouterChains;
         }
 

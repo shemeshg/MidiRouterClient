@@ -105,15 +105,6 @@ void setFilterData2(const QString &newFilterData2)
     }
 
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
     

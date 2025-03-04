@@ -164,8 +164,9 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         type_in_list = self.field_type.split("<")[1].split(">")[0]
         t = Template(
         """
-        template<>
-        void delListItem<${type_in_list}>(int id){
+        template<typename T = ${type_in_list}>
+        std::enable_if_t<std::is_same_v<T, ${type_in_list}>, void>
+        delListItem(int id){
             if (id < m_${field_name}.size())
             {
                 delete m_${field_name}.at(id);
@@ -173,22 +174,24 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
                 emit ${field_name}Changed();
             }
         }
-        
+
         void addListItem(${type_in_list} item)
         {
             m_${field_name}.push_back(item);
             emit ${field_name}Changed();
         }
-        
-        template<>
-        void clearList<${type_in_list}>(){
+
+        template<typename T = ${type_in_list} >
+        std::enable_if_t<std::is_same_v<T, ${type_in_list} >, void>
+        clearList(){
             qDeleteAll(m_${field_name});
             m_${field_name}.clear();
             emit ${field_name}Changed();
-        }   
+        }
 
-        template<>
-        const QList<${type_in_list}> listItems<${type_in_list}>(){
+        template<typename T = ${type_in_list}>
+        std::enable_if_t<std::is_same_v<T, ${type_in_list}>, const QList<${type_in_list}>>
+        listItems(){
             return m_${field_name};
         }
 
@@ -244,15 +247,6 @@ public:
     }
 
     ${public_content}
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     ${public_pointer_list}
     

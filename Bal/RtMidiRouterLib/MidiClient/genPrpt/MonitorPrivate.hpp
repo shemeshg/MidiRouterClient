@@ -72,15 +72,6 @@ void setLogLen(const int newLogLen)
     }
 
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
     

@@ -116,15 +116,6 @@ void setData2(const int newData2)
     }
 
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
     

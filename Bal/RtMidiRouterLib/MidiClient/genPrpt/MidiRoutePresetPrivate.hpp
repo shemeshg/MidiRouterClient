@@ -102,19 +102,11 @@ void setIsEnabled(const bool newIsEnabled)
     QList<MidiRouteInput *> midiRouteInputs() const{return m_midiRouteInputs;} 
     
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
-        template<>
-        void delListItem<UserControl *>(int id){
+        template<typename T = UserControl *>
+        std::enable_if_t<std::is_same_v<T, UserControl *>, void>
+        delListItem(int id){
             if (id < m_userControls.size())
             {
                 delete m_userControls.at(id);
@@ -122,28 +114,31 @@ void setIsEnabled(const bool newIsEnabled)
                 emit userControlsChanged();
             }
         }
-        
+
         void addListItem(UserControl * item)
         {
             m_userControls.push_back(item);
             emit userControlsChanged();
         }
-        
-        template<>
-        void clearList<UserControl *>(){
+
+        template<typename T = UserControl * >
+        std::enable_if_t<std::is_same_v<T, UserControl * >, void>
+        clearList(){
             qDeleteAll(m_userControls);
             m_userControls.clear();
             emit userControlsChanged();
-        }   
+        }
 
-        template<>
-        const QList<UserControl *> listItems<UserControl *>(){
+        template<typename T = UserControl *>
+        std::enable_if_t<std::is_same_v<T, UserControl *>, const QList<UserControl *>>
+        listItems(){
             return m_userControls;
         }
 
         
-        template<>
-        void delListItem<MidiRouteInput *>(int id){
+        template<typename T = MidiRouteInput *>
+        std::enable_if_t<std::is_same_v<T, MidiRouteInput *>, void>
+        delListItem(int id){
             if (id < m_midiRouteInputs.size())
             {
                 delete m_midiRouteInputs.at(id);
@@ -151,22 +146,24 @@ void setIsEnabled(const bool newIsEnabled)
                 emit midiRouteInputsChanged();
             }
         }
-        
+
         void addListItem(MidiRouteInput * item)
         {
             m_midiRouteInputs.push_back(item);
             emit midiRouteInputsChanged();
         }
-        
-        template<>
-        void clearList<MidiRouteInput *>(){
+
+        template<typename T = MidiRouteInput * >
+        std::enable_if_t<std::is_same_v<T, MidiRouteInput * >, void>
+        clearList(){
             qDeleteAll(m_midiRouteInputs);
             m_midiRouteInputs.clear();
             emit midiRouteInputsChanged();
-        }   
+        }
 
-        template<>
-        const QList<MidiRouteInput *> listItems<MidiRouteInput *>(){
+        template<typename T = MidiRouteInput *>
+        std::enable_if_t<std::is_same_v<T, MidiRouteInput *>, const QList<MidiRouteInput *>>
+        listItems(){
             return m_midiRouteInputs;
         }
 

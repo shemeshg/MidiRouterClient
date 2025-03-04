@@ -57,19 +57,11 @@ void setZoneNames(const QStringList &newZoneNames)
     QList<EasyConfigRoute *> easyConfigRoutes() const{return m_easyConfigRoutes;} 
     
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
-        template<>
-        void delListItem<EasyConfigRoute *>(int id){
+        template<typename T = EasyConfigRoute *>
+        std::enable_if_t<std::is_same_v<T, EasyConfigRoute *>, void>
+        delListItem(int id){
             if (id < m_easyConfigRoutes.size())
             {
                 delete m_easyConfigRoutes.at(id);
@@ -77,22 +69,24 @@ void setZoneNames(const QStringList &newZoneNames)
                 emit easyConfigRoutesChanged();
             }
         }
-        
+
         void addListItem(EasyConfigRoute * item)
         {
             m_easyConfigRoutes.push_back(item);
             emit easyConfigRoutesChanged();
         }
-        
-        template<>
-        void clearList<EasyConfigRoute *>(){
+
+        template<typename T = EasyConfigRoute * >
+        std::enable_if_t<std::is_same_v<T, EasyConfigRoute * >, void>
+        clearList(){
             qDeleteAll(m_easyConfigRoutes);
             m_easyConfigRoutes.clear();
             emit easyConfigRoutesChanged();
-        }   
+        }
 
-        template<>
-        const QList<EasyConfigRoute *> listItems<EasyConfigRoute *>(){
+        template<typename T = EasyConfigRoute *>
+        std::enable_if_t<std::is_same_v<T, EasyConfigRoute *>, const QList<EasyConfigRoute *>>
+        listItems(){
             return m_easyConfigRoutes;
         }
 

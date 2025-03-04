@@ -184,7 +184,7 @@ void BalData::saveIsSaveConfigOnServer(const bool s)
 }
 void BalData::loadDefaultFontSize()
 {
-    QString s = settings.value("defaultFontSize", "true").toString();
+    QString s = settings.value("defaultFontSize", "").toString();
     setDefaultFontSize(s);
 }
 

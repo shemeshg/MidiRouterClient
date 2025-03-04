@@ -231,15 +231,6 @@ void setDropdownListId(const int newDropdownListId)
     }
 
 
-
-    template<typename T>
-    void clearList();
-    
-    template<typename T>
-    void delListItem(int id);
-    
-    template<typename T>
-    const QList<T> listItems();
     
     
     
