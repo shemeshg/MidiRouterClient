@@ -18,18 +18,22 @@ ColumnLayout {
 
     RowLayout {
         CoreLabel {
-            text: "portName"
+            text: "Port name"
         }
         CoreComboBox {
             id: presetMidiControlOnPortNameId
             Layout.fillWidth: true
-            model: ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+            
 
             Component.onCompleted: {
-                var index = model.indexOf(midiControl.portName);
+                let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]                
+                var index = list.indexOf(midiControl.portName);
+
+                presetMidiControlOnPortNameId.model = list
                 if (index !== -1) {
                     currentIndex = index;
                 }
+                
             }
 
             onActivated: {

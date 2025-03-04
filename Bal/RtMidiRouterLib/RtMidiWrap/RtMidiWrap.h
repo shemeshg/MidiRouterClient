@@ -65,6 +65,7 @@ private:
     int openedPortNumber = -1;
     RtMidi  *p_midi=0;
     unsigned int unqIdPortNumber(unsigned int portNumber);
+    std::string extractAlsaNameIfRequired(const std::string& input) ;
 };
 
 class MidiIn:public IMidiInOut{

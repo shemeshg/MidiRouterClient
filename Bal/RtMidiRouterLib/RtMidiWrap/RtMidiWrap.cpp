@@ -2,6 +2,7 @@
 //#include <map>
 //#include "RtMidi.h"
 #include "RtMidiWrap.h"
+#include <regex>
 
 namespace RtMidiWrap {
 
@@ -71,8 +72,34 @@ std::vector<std::string> getCompiledApi(){
 
     std::string IMidiInOut::getPortName(unsigned int portNumber){
 
-        return std::to_string(unqIdPortNumber(portNumber)) + "_" + p_midi->getPortName(portNumber);
+        return std::to_string(unqIdPortNumber(portNumber)) + "_" + extractAlsaNameIfRequired(p_midi->getPortName(portNumber));
     }
+
+    std::string IMidiInOut::extractAlsaNameIfRequired(const std::string& input) {
+        // Regex pattern to match the desired part
+        std::regex pattern(R"((.*):(.* \d+:\d+$))");
+        std::smatch match;
+    
+        if (std::regex_match(input, match, pattern)) {
+            // match[2] contains the part after the first colon, but includes the numbers at the end
+            std::string namePart = match[2];
+    
+            // Find the position of the last space
+            size_t lastSpace = namePart.find_last_of(' ');
+            if (lastSpace != std::string::npos) {
+                // Remove the digits part after the last space
+                namePart = namePart.substr(0, lastSpace);
+            }
+            
+            return namePart;
+        }
+    
+        // Return an empty string if the pattern does not match
+        return input;
+    }
+    
+    
+    
 
     int IMidiInOut::getPortNumber(const std::string &portName){
         unsigned int nPorts = this->getPortCount();
