@@ -63,18 +63,19 @@ ColumnLayout {
                 currentIndex = val;
             }
         }
-        UiBtnDel {
-            text: "del"
-            onClicked: {
-                del()
-            }
-        }
         UiBtnEdit {
             visible: showEdit
             onClicked: {
                 edit()
             }
         }
+        UiBtnDel {
+            text: "del"
+            onClicked: {
+                del()
+            }
+        }
+
         CoreButton {
             text: "Send"
             onClicked: {
