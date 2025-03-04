@@ -25,6 +25,7 @@ public:
         : PresetMidiControlPrivate{parent}
         {            
             setPresetMidiType(presetMidiType);
+            setEventTypeId(0);
             setChannel(-1);
             setData1(-1);
             setData2(-1);
