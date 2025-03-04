@@ -45,15 +45,10 @@ void moveItem(std::vector<T>& vec, int intFrom, int intTo)
 }
 //-only-file header
 
-template<typename T>
-T getJson(QJsonValueRef obj);
 
-
-
-//- {fn}
-template<>
-QJsonArray getJson(QJsonValueRef obj)
-//-only-file body
+template<typename T = QJsonArray>
+std::enable_if_t<std::is_same_v<T, QJsonArray>, QJsonArray>
+getJson(QJsonValueRef obj)
 {
     if (obj.isArray()){
         return obj.toArray();
@@ -62,10 +57,9 @@ QJsonArray getJson(QJsonValueRef obj)
     }
 }
 
-//- {fn}
-template<>
-QJsonObject getJson(QJsonValueRef obj)
-//-only-file body
+template<typename T = QJsonObject>
+std::enable_if_t<std::is_same_v<T, QJsonObject>, QJsonObject>
+getJson(QJsonValueRef obj)
 {
     if (obj.isObject()){
         return obj.toObject();
@@ -74,10 +68,9 @@ QJsonObject getJson(QJsonValueRef obj)
     }
 }
 
-//- {fn}
-template<>
-QString  getJson(QJsonValueRef obj)
-//-only-file body
+template<typename T = QString>
+std::enable_if_t<std::is_same_v<T, QString>, QString>
+getJson(QJsonValueRef obj)
 {
     if(obj.isString()){
         return obj.toString();
@@ -86,10 +79,9 @@ QString  getJson(QJsonValueRef obj)
     }
 }
 
-//- {fn}
-template<>
-bool  getJson(QJsonValueRef obj)
-//-only-file body
+template<typename T = bool>
+std::enable_if_t<std::is_same_v<T, bool>, bool>
+getJson(QJsonValueRef obj)
 {
     if(obj.isBool()){
         return obj.toBool();
@@ -98,10 +90,9 @@ bool  getJson(QJsonValueRef obj)
     }
 }
 
-//- {fn}
-template<>
-double  getJson(QJsonValueRef obj)
-//-only-file body
+template<typename T = double>
+std::enable_if_t<std::is_same_v<T, double>, double>
+getJson(QJsonValueRef obj)
 {
     if(obj.isDouble()){
         return obj.toDouble();
@@ -110,10 +101,10 @@ double  getJson(QJsonValueRef obj)
     }
 }
 
-//- {fn}
-template<>
-int  getJson(QJsonValueRef obj)
-//-only-file body
+
+template<typename T = int>
+std::enable_if_t<std::is_same_v<T, int>, int>
+getJson(QJsonValueRef obj)
 {
     if(obj.isDouble()){
         return obj.toDouble();

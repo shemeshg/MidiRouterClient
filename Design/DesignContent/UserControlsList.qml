@@ -41,7 +41,7 @@ ColumnLayout {
                 midiClientConnection.
                 userDataConfig.dropdownlists;
 
-                if (modelData.isShowDropdown &&
+                if (modelData.isShowDropdown && ddlists.lenght > 0 &&
                         modelData.dropdownListId >= 0 ) {
 
                     return  ddlists[modelData.dropdownListId].data.trim().split("\n")
