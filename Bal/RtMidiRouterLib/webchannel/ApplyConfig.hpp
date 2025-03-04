@@ -417,13 +417,11 @@ private:
     }
 
     //-only-file header
-    template<typename T>
-    T getJson(QJsonValueRef obj);
 
 
-
-    template<>
-    QJsonArray getJson(QJsonValueRef obj)
+    template<typename T = QJsonArray>
+    std::enable_if_t<std::is_same_v<T, QJsonArray>, QJsonArray>
+    getJson(QJsonValueRef obj)
     {
         if (obj.isArray()){
             return obj.toArray();
@@ -436,8 +434,9 @@ private:
     }
 
 
-    template<>
-    QJsonObject getJson(QJsonValueRef obj)
+    template<typename T = QJsonObject>
+    std::enable_if_t<std::is_same_v<T, QJsonObject>, QJsonObject>
+    getJson(QJsonValueRef obj)
     {
         if (obj.isObject()){
             return obj.toObject();
@@ -450,8 +449,9 @@ private:
     }
 
 
-    template<>
-    QString  getJson(QJsonValueRef obj)
+    template<typename T = QString>
+    std::enable_if_t<std::is_same_v<T, QString>, QString>
+    getJson(QJsonValueRef obj)
     {
         if(obj.isString()){
             return obj.toString();
@@ -462,8 +462,9 @@ private:
         }
     }
 
-    template<>
-    bool  getJson(QJsonValueRef obj)
+    template<typename T = bool>
+    std::enable_if_t<std::is_same_v<T, bool>, bool>
+    getJson(QJsonValueRef obj)
     {
         if(obj.isBool()){
             return obj.toBool();
@@ -474,8 +475,9 @@ private:
         }
     }
 
-    template<>
-    double  getJson(QJsonValueRef obj)
+    template<typename T = double>
+    std::enable_if_t<std::is_same_v<T, double>, double>
+    getJson(QJsonValueRef obj)
     {
         if(obj.isDouble()){
             return obj.toDouble();
@@ -486,8 +488,9 @@ private:
         }
     }
 
-    template<>
-    int  getJson(QJsonValueRef obj)
+    template<typename T = int>
+    std::enable_if_t<std::is_same_v<T, int>, int>
+    getJson(QJsonValueRef obj)
     {
         if(obj.isDouble()){
             return obj.toDouble();
