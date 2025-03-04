@@ -81,7 +81,16 @@ public slots:
          auto uc  = new UserControl();
          uc->setDescription("Description");
          uc->setMaxVal(127);
+         uc->setMinVal(0);
          uc->setDropdownListId(-1);
+         uc->setEventType(UserControl::EventType::CC);
+         uc->setChannelId(1);
+         uc->setCcId(0);
+         uc->setNrpnControl(0);
+         uc->setInputVal(0);
+         uc->setIs64Mode(false);
+         uc->setIsShowDropdown(false);
+         uc->setIsSendOnPresetChange(false);
          addListItem(uc);
      }
 
