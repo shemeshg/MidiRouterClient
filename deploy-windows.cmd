@@ -8,7 +8,7 @@ R:
 cd \
 mkdir deployed
 cd deployed
-call D:\Qt\6.8.0\msvc2022_64\bin\qt-cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. D:\projects\midi-router-client
+call D:\Qt\6.8.0\msvc2022_64\bin\qt-cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. D:\projects\MidiRouterClient
 call ninja
 
 rmdir /s/q R:\WinDll
