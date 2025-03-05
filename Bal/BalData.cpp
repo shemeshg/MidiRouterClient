@@ -1,4 +1,5 @@
 #include "BalData.h"
+#include <QDesktopServices>
 
 BalData::BalData(QObject *parent)
     : BalDataPrivate{parent}
@@ -28,6 +29,10 @@ loadIsSaveConfigOnServer();
 loadDefaultFontSize();
 
 //[[[end]]]
+}
+
+void BalData::openCashFolder(){
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)));
 }
 
 void BalData::queryRemoteMidiPorts(QString serverName, QString serverPort, const QJSValue &callback)

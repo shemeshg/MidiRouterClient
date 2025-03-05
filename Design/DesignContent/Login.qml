@@ -253,7 +253,7 @@ Column {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
                             onClicked: () => {
-                                           Qt.openUrlExternally("file://" + Constants.balData.cashFolder());
+                                           Constants.balData.openCashFolder()
                                        }
                         }
                     }

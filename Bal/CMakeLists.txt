@@ -1,4 +1,4 @@
-find_package(Qt6 REQUIRED COMPONENTS Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS Concurrent Gui)
 add_subdirectory(RtMidiRouterLib)
 
 
@@ -17,4 +17,4 @@ qt6_add_qml_module(Bal
 
 
 
-target_link_libraries(Bal PRIVATE Qt6::Concurrent RtMidiRouterLib)
+target_link_libraries(Bal PRIVATE Qt6::Concurrent Qt6::Gui RtMidiRouterLib)
