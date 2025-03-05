@@ -32,6 +32,10 @@ ColumnLayout{
         }
         Repeater {
             model: properateInputsId.selectedItems
+            onItemRemoved: {
+                properateInputsId.selectedItemsModified();
+            }
+
             RowLayout {
                 CoreLabel {
                     text: modelData
@@ -39,7 +43,6 @@ ColumnLayout{
                 UiBtnDel {
                     onClicked: {
                         properateInputsId.selectedItems = properateInputsId.selectedItems.filter(item => item !== modelData);
-                        properateInputsId.selectedItemsModified()
                     }
                 }
             }

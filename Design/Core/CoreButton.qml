@@ -25,7 +25,7 @@ Button {
 
 
 
-    palette.alternateBase: CoreSystemPalette.alternateBase 
+    palette.alternateBase: CoreSystemPalette.alternateBase
     palette.base: CoreSystemPalette.base
     palette.button: CoreSystemPalette.button
     palette.buttonText: CoreSystemPalette.buttonText
@@ -42,4 +42,38 @@ Button {
     palette.windowText: CoreSystemPalette.windowText
 
     font: CoreSystemPalette.font
+
+    onReleased: {
+        colorAnimation.start()
+    }
+
+
+
+    PropertyAnimation {
+          id: colorAnimation
+          target: btn
+          property: "palette.buttonText"
+          from: CoreSystemPalette.buttonText
+          to: CoreSystemPalette.midlight
+          duration: 100
+          easing.type: Easing.InOutQuad
+          onStopped: {
+              revertColorAnimation.start();
+          }
+
+      }
+
+      PropertyAnimation {
+          id: revertColorAnimation
+          target: btn
+          property: "palette.buttonText"
+          from: CoreSystemPalette.midlight
+          to: CoreSystemPalette.buttonText
+          duration: 100
+          easing.type: Easing.InOutQuad
+          running: false // To prevent it from running initially
+      }
+
+
+
 }

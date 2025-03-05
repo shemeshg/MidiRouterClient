@@ -69,11 +69,7 @@ public:
             auto o = userdata.toJsonObject();
             QJsonDocument jsonDoc(o);
             QString s = jsonDoc.toJson(QJsonDocument::Compact);
-            cashFileWrite(cahedFileName, s);
-
-            qDebug()<<isSaveConfigOnServer;
-            qDebug()<<"Cash path is "<<QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-
+            cashFileWrite(cahedFileName, s);            
         }
     }
 
