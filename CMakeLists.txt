@@ -160,6 +160,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     Designplugin
     DesignContentplugin
     UiCompplugin
+    Coreplugin
 )
 include(CPack)
 include(GNUInstallDirs)
