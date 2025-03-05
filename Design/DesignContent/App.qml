@@ -128,6 +128,7 @@ Window {
                         autoExclusive: true
                         checkable: true
                         checked: true
+                        isAnimation: false
                     }
                     CoreButton {
                         id: easyConfigSplitsId
@@ -136,6 +137,7 @@ Window {
                         autoExclusive: true
                         checkable: true
                         checked: false
+                        isAnimation: false
                     }
                 }
             }
@@ -161,6 +163,7 @@ Window {
                         onClicked: {                            
                             loaderId.item.setLoaderToControls()
                         }
+                        isAnimation: false
                     }
                     CoreButton {
                         id: editDropdownsId
@@ -173,6 +176,7 @@ Window {
                             state = "Dropdowns"
                             loaderId.item.setLoaderToDropdowns()
                         }
+                        isAnimation: false
                     }
                 }
             }

@@ -27,6 +27,7 @@ RowLayout {
                 autoExclusive: true
                 checkable: true
                 checked: true
+                isAnimation: false
             }
             CoreButton {
                 id: btnVirtualPortsId
@@ -36,6 +37,7 @@ RowLayout {
                 checkable: true
                 checked: false
                 visible: Qt.platform.os !== "windows"
+                isAnimation: false
             }
             CoreButton {
                 id: btnPresetsId
@@ -44,6 +46,7 @@ RowLayout {
                 autoExclusive: true
                 checkable: true
                 checked: false
+                isAnimation: false
             }
             CoreButton {
                 id: btnUserControlsId
@@ -52,6 +55,7 @@ RowLayout {
                 autoExclusive: true
                 checkable: true
                 checked: false
+                isAnimation: false
             }
             CoreButton {
                 id: btnInPortsId
@@ -60,6 +64,7 @@ RowLayout {
                 autoExclusive: true
                 checkable: true
                 checked: false
+                isAnimation: false
             }
 
 

@@ -5,6 +5,7 @@ import QtQuick.Controls
 Button {
     id: btn
     property string hooverText: ""
+    property bool isAnimation: true
 
     CoreToolTip {
         id: toolTip
@@ -44,7 +45,11 @@ Button {
     font: CoreSystemPalette.font
 
     onReleased: {
-        colorAnimation.start()
+        if (isAnimation) {
+            colorAnimation.start()
+        }
+
+
     }
 
 
