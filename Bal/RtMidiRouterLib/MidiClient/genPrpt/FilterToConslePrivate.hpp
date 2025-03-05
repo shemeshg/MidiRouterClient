@@ -76,7 +76,7 @@ protected:
     
 
 private:
-    LogTo m_logTo ;
+    LogTo m_logTo = LogTo::CLIENT;
     QString m_userdata ;
     
 };

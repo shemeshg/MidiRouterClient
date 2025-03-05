@@ -29,6 +29,7 @@ loadIsSaveConfigOnServer();
 loadDefaultFontSize();
 
 //[[[end]]]
+
 }
 
 void BalData::openCashFolder(){

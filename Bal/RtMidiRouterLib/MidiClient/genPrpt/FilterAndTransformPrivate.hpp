@@ -120,7 +120,7 @@ protected:
     
 
 private:
-    ConditionAction m_conditionAction ;
+    ConditionAction m_conditionAction = ConditionAction::DELETE_IF_NOT_MET_CONDITION;
     QString m_filterChannel ;
     QString m_filterEvents ;
     QString m_filterData1 ;

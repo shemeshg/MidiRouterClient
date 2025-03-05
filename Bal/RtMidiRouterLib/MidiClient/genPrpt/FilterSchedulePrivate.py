@@ -3,7 +3,7 @@ from property import create_prpt, PrptClass, EnumClass
 
 
 ary = [
-    create_prpt("DefferedType", 'defferedType'),
+    create_prpt("DefferedType", 'defferedType', init_val="= DefferedType::IN_SPP"),
     create_prpt("int", 'defferedTo'),
 ]
 

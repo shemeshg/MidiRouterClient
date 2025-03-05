@@ -78,7 +78,7 @@ protected:
     
 
 private:
-    DefferedType m_defferedType ;
+    DefferedType m_defferedType = DefferedType::IN_SPP;
     int m_defferedTo = 0;
     
 };

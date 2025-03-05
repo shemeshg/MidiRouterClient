@@ -4,8 +4,8 @@ from property import create_prpt, PrptClass, EnumClass
 
 ary = [
     create_prpt("QString", 'serverStatusText'),
-    create_prpt("ServerStatus", 'serverStatus'),
-    create_prpt("UserDataConfig *", 'userDataConfig', is_writable=False),
+    create_prpt("ServerStatus", 'serverStatus', init_val="= ServerStatus::STOPPED"),
+    create_prpt("UserDataConfig *", 'userDataConfig', is_writable=False, init_val = "= new UserDataConfig(this);"),
 ]
 
 enumClasss = [

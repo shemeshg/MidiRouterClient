@@ -47,7 +47,8 @@ private:
     //-only-file body
     {
         QJsonArray ary;
-        for (const auto itm: dropdownlists){
+        for (int i=0;i<dropdownlists.length();i++){
+            auto itm = dropdownlists.at(i);
             QJsonObject obj;
             obj["name"] = itm->name();
             obj["data"] = itm->data();
@@ -87,8 +88,10 @@ private:
 
 
         QJsonArray ary;
-        for (const auto &itm: midiRoutePresets){
+        for (int i=0;i<midiRoutePresets.length();i++){
+            const auto itm = midiRoutePresets.at(i);
             QJsonObject obj;
+
             auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( midiRoutePresets);
             itm->recreateEasyConfig(presetControlEasyConfigs, itm->uuid());
             obj["name"] = itm->name();
@@ -124,7 +127,8 @@ private:
     //-only-file body
     {
         QJsonArray ary;
-        for (const auto &easyConfigRoute: easyConfigRoutes){
+        for (int i=0;i<easyConfigRoutes.length();i++){
+            auto easyConfigRoute = easyConfigRoutes.at(i);
             QJsonObject obj;
             obj["uuid"] = easyConfigRoute->uuid();
             obj["splitRangeId"] = easyConfigRoute->splitRangeId();
@@ -199,7 +203,8 @@ private:
     //-only-file body
     {
         QJsonArray cc14bitAry;
-        for (const auto &cc14bit: midiRouteInput->midiRouteInputCc14bit()){
+        for (int i=0;i<midiRouteInput->midiRouteInputCc14bit().length();i++){
+            auto cc14bit = midiRouteInput->midiRouteInputCc14bit().at(i);
             QJsonObject cc14bitObj;
             cc14bitObj["channel"] = cc14bit->channel();
             cc14bitObj["cc"] = cc14bit->cc();
@@ -249,7 +254,8 @@ private:
     //-only-file body
     {
         QJsonArray midiRouterChains;
-        for (const auto midiRouterChain: midiRouteInput->midiRouterChains()){
+        for (int i=0;i<midiRouteInput->midiRouterChains().length();i++){
+            auto midiRouterChain = midiRouteInput->midiRouterChains().at(i);
             QJsonObject midiRouterChainObj;
             midiRouterChainObj["uuid"] = midiRouterChain->uuid();
             midiRouterChainObj["name"] = midiRouterChain->name();
@@ -269,7 +275,8 @@ private:
     //-only-file body
     {
         QJsonArray ary;
-        for (const auto &midiRoutersFilter: midiRoutersFilters ){
+        for (int i=0;i<midiRoutersFilters.length();i++){
+            auto midiRoutersFilter = midiRoutersFilters.at(i);
             QJsonObject filterObj;
 
             if (midiRoutersFilter.canConvert<FilterMidiDestination*>()) {
@@ -343,7 +350,8 @@ private:
     //-only-file body
     {
         QJsonArray ary;
-        for (const auto &userControl: userControls){
+        for (int i=0;i<userControls.length();i++){
+            auto userControl=userControls.at(i);
             QJsonObject userControlObj;
             userControlObj["uuid"] = userControl->uuid();
             userControlObj["eventType"] = static_cast<int>(userControl->eventType());
@@ -372,7 +380,8 @@ private:
     //-only-file body
     {
         QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
-        for (const auto &itm: midiRoutePresets){
+        for (int i=0;i<midiRoutePresets.length();i++){
+            const auto itm = midiRoutePresets.at(i);
             MidiPresetControlEasyConfig mOff;
             mOff.pmc = itm->midiControlOff();
             mOff.isMidiControlOn = false;

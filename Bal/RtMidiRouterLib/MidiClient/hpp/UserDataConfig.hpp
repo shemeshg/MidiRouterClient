@@ -26,8 +26,12 @@ class UserDataConfig : public UserDataConfigPrivate
 
 {
     Q_OBJECT
+    Q_PROPERTY(MidiRoutePreset * activePreset READ activePreset  NOTIFY activePresetChanged )
     QML_ELEMENT
 public:
+
+    MidiRoutePreset * activePreset() const{return m_activePreset;}
+
     //- {fn}
     explicit UserDataConfig(QObject *parent = nullptr)
         //-only-file body
@@ -42,6 +46,8 @@ public:
         addPreset();
         setActivePreset(0, true);
     }
+
+
 
     //- {fn}
     void clearVirtualPorts()
@@ -139,10 +145,11 @@ public slots:
     //- {fn}
     void addPreset()
     //-only-file body
-    {
-        MidiRoutePreset *p = new MidiRoutePreset();
+    {        
+        MidiRoutePreset *p =addListItem( new MidiRoutePreset());
         p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
-        addListItem(p);
+        p->midiRouteInputs() = {};
+
     }
 
     //- {fn}
@@ -186,7 +193,10 @@ public slots:
     }
 
     //-only-file header
+signals:
+    void activePresetChanged();
 private:
+    MidiRoutePreset * m_activePreset = nullptr;
     //- {fn}
     void openMidiControlOffInputsForEasyConfig()
     //-only-file body

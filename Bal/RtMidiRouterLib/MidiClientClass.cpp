@@ -17,7 +17,7 @@ MidiClientClass::MidiClientClass(QObject *parent)
             new CWebChannelClient(qwebsocket.get()));
     });
 
-
+    qDebug()<<"Created MidiClientClass";
 }
 
 void MidiClientClass::start(const QString &serverName, int portNumber)

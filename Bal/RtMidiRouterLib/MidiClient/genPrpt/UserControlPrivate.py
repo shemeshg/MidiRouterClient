@@ -5,7 +5,7 @@ from property import create_prpt, PrptClass, EnumClass
 ary = [
     create_prpt("QString", 'uuid'),
     create_prpt("bool", 'isSendOnPresetChange'),
-    create_prpt("EventType", 'eventType'),
+    create_prpt("EventType", 'eventType', init_val="= EventType::CC"),
     create_prpt("QString", 'description'),
     create_prpt("int", 'inputVal'),
     create_prpt("int", 'minVal'),

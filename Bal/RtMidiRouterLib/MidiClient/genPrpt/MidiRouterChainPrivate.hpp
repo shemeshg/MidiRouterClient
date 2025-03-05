@@ -102,7 +102,7 @@ signals:
     
 
 protected:
-    QList<QVariant> m_midiRoutersFilters ;
+    QList<QVariant> m_midiRoutersFilters ={};
     
 
 private:

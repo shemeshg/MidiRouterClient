@@ -91,7 +91,7 @@ protected:
 
 private:
     QString m_uuid ;
-    FilterType m_filterType ;
+    FilterType m_filterType = FilterType::TO_MIDI_DESTINATION;
     QString m_name ;
     
 };

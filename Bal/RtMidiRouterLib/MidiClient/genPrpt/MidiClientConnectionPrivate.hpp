@@ -79,12 +79,12 @@ signals:
     
 
 protected:
-    UserDataConfig * m_userDataConfig ;
+    UserDataConfig * m_userDataConfig = new UserDataConfig(this);;
     
 
 private:
     QString m_serverStatusText ;
-    ServerStatus m_serverStatus ;
+    ServerStatus m_serverStatus = ServerStatus::STOPPED;
     
 };
 //-only-file null

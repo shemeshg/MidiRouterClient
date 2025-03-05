@@ -133,7 +133,7 @@ protected:
 
 private:
     QString m_portName ;
-    PresetMidiType m_presetMidiType ;
+    PresetMidiType m_presetMidiType = PresetMidiType::PRESET_OFF;
     int m_eventTypeId = 0;
     int m_channel = 0;
     int m_data1 = 0;

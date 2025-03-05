@@ -86,7 +86,7 @@ protected:
 
 private:
     bool m_isMonitored = false;
-    QStringList m_logItems ;
+    QStringList m_logItems = {};
     int m_logLen = 0;
     
 };

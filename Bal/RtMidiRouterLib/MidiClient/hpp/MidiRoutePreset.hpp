@@ -25,24 +25,21 @@ public:
         : MidiRoutePresetPrivate{parent}{
 
         setUuid(getUuId());
-        m_midiControlOn = new PresetMidiControl(
-            PresetMidiControl::PresetMidiType::PRESET_ON,
-            uuid(),this);
-        m_midiControlOff = new PresetMidiControl(
-            PresetMidiControl::PresetMidiType::PRESET_OFF,
-            uuid(),this);
 
         clearList<UserControl *>();
-
+        m_midiRouteInputs  = {};
     };
+
+
 
     //- {fn}
     void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs,
                             const QString &presetUuid)
     //-only-file body
     {
-        for ( MidiRouteInput *input: m_midiRouteInputs){
 
+        for (int i=m_midiRouteInputs.length()-1;i>=0;i--){
+            auto input = m_midiRouteInputs.at(i);
             input->clearEasyConfigMidiRouterChains();
             input->addMonitorEasyConfigIfRequired();
             input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs, presetUuid);

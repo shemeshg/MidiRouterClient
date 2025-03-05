@@ -244,7 +244,7 @@ protected:
 private:
     QString m_uuid ;
     bool m_isSendOnPresetChange = false;
-    EventType m_eventType ;
+    EventType m_eventType = EventType::CC;
     QString m_description ;
     int m_inputVal = 0;
     int m_minVal = 0;

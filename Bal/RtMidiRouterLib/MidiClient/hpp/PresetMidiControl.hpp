@@ -18,8 +18,7 @@ class PresetMidiControl : public PresetMidiControlPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit PresetMidiControl(PresetMidiType presetMidiType,
-                               QString presetUuid,
+    explicit PresetMidiControl(PresetMidiType presetMidiType,                               
                                QObject *parent = nullptr)
         //-only-file body
         : PresetMidiControlPrivate{parent}

@@ -1,7 +1,7 @@
 from property import create_prpt, PrptClass, EnumClass
 
 ary = [
-    create_prpt("ConditionAction", 'conditionAction'),
+    create_prpt("ConditionAction", 'conditionAction', init_val = "= ConditionAction::DELETE_IF_NOT_MET_CONDITION"),
     create_prpt("QString", 'filterChannel'),
     create_prpt("QString", 'filterEvents'),
     create_prpt("QString", 'filterData1'),

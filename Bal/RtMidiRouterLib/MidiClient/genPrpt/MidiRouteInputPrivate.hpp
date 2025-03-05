@@ -190,10 +190,11 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
             }
         }
 
-        void addListItem(MidiRouteInputCc14bit * item)
+        MidiRouteInputCc14bit * addListItem(MidiRouteInputCc14bit * item)
         {
             m_midiRouteInputCc14bit.push_back(item);
             emit midiRouteInputCc14bitChanged();
+            return item;
         }
 
         template<typename T = MidiRouteInputCc14bit * >
@@ -222,10 +223,11 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
             }
         }
 
-        void addListItem(MidiRouterChain * item)
+        MidiRouterChain * addListItem(MidiRouterChain * item)
         {
             m_midiRouterChains.push_back(item);
             emit midiRouterChainsChanged();
+            return item;
         }
 
         template<typename T = MidiRouterChain * >
@@ -261,10 +263,10 @@ signals:
     
 
 protected:
-    QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit ;
-    QList<MidiRouterChain *> m_midiRouterChains ;
-    Monitor * m_monitor ;
-    EasyConfig * m_easyConfig ;
+    QList<MidiRouteInputCc14bit *> m_midiRouteInputCc14bit = {};
+    QList<MidiRouterChain *> m_midiRouterChains = {};
+    Monitor * m_monitor = new Monitor(this);
+    EasyConfig * m_easyConfig = new EasyConfig();
     
 
 private:
@@ -276,7 +278,7 @@ private:
     int m_midiRouteClockTimeSig = 0;
     int m_midiRouteClockTimeSigDivBy = 0;
     int m_midiRouteClockFromSppPos = 0;
-    QStringList m_midiRouteClockPropegateInputs ;
+    QStringList m_midiRouteClockPropegateInputs = {};
     
 };
 //-only-file null

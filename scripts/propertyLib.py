@@ -4,12 +4,13 @@ from string import Template
 def initCapital(s):
     return s[0].upper() + s[1:]
 
-def create_prpt(type_name, name, is_writable=True, is_notify=True, is_list = False):
+def create_prpt(type_name, name, is_writable=True, is_notify=True, is_list = False, init_val = ""):
     p = Prpt(type_name, name)
     p.is_bindable = False
     p.is_writable = is_writable
     p.is_notify = is_notify
     p.is_list = is_list
+    p.init_val = init_val
     if is_list:
         p.is_writable = False        
     return p
@@ -46,6 +47,7 @@ class Prpt:
     readable_declare_only = False
     is_getter_ref = False
     is_list = False
+    init_val = ""
     
     writable_declare_only_template = Template(
 """
@@ -146,19 +148,18 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             return ""
 
     def private_h_file(self, class_name):
-        defalut_init = ""
         if self.field_type == "int":
-            defalut_init = "= 0"
+            self.init_val = "= 0"
         if self.field_type == "bool":
-            defalut_init = "= false"
+            self.init_val = "= false"
         
         if self.is_bindable:
             t = Template("""Q_OBJECT_BINDABLE_PROPERTY(${class_name}, ${field_type}, m_${field_name}, &${class_name}::${field_name}Changed)
     """)            
         else:
-            t = Template("""${field_type} m_${field_name} ${defalut_init};
+            t = Template("""${field_type} m_${field_name} ${init_val};
     """)    
-        return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name,defalut_init=defalut_init )
+        return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name,init_val=self.init_val )
 
     def destructot_h_file(self):
         type_in_list = self.field_type.split("<")[1].split(">")[0]
@@ -181,10 +182,11 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             }
         }
 
-        void addListItem(${type_in_list} item)
+        ${type_in_list} addListItem(${type_in_list} item)
         {
             m_${field_name}.push_back(item);
             emit ${field_name}Changed();
+            return item;
         }
 
         template<typename T = ${type_in_list} >

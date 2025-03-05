@@ -4,7 +4,7 @@ from property import create_prpt, PrptClass, EnumClass
 
 ary = [
     create_prpt("QString", 'uuid'),
-    create_prpt("FilterType", 'filterType'),
+    create_prpt("FilterType", 'filterType', init_val = "= FilterType::TO_MIDI_DESTINATION"),
     create_prpt("QString", 'name'),
 ]
 

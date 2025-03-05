@@ -34,8 +34,8 @@ public:
         setMidiRouteClockTimeSig( 4);
         setMidiRouteClockTimeSigDivBy(4);
         setMidiRouteClockFromSppPos(0);
-        m_monitor = new Monitor();
-        m_easyConfig = new EasyConfig();
+
+
         setUuid(getUuId());
     };
 
@@ -43,8 +43,6 @@ public:
     virtual ~MidiRouteInput()
     //-only-file body
     {
-        m_monitor->deleteLater();
-        m_easyConfig->deleteLater();
     }
 
     //- {fn}
@@ -62,7 +60,8 @@ public:
     void createEasyConfigChains(EasyConfig *easyConfig)
     //-only-file body
     {
-        for (auto easyConfigRoute : easyConfig->easyConfigRoutes()) {
+        for (int i=0;i<easyConfig->easyConfigRoutes().length();i++){
+            auto easyConfigRoute = easyConfig->easyConfigRoutes().at(i);
             MidiRouterChain *midiRouterChain = new MidiRouterChain();
             midiRouterChain->setEasyConfigChain(easyConfig, easyConfigRoute);
 
@@ -88,7 +87,8 @@ public:
         const QString &presetUuid)
     //-only-file body
     {
-        for (const auto &m: midiPresetControlEasyConfigs){            
+        for (int i=0;i<midiPresetControlEasyConfigs.length();i++){
+            auto m = midiPresetControlEasyConfigs.at(i);
             if (m.pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain();
                 midiRouterChain->addEasyConfigPresetFilter(m);

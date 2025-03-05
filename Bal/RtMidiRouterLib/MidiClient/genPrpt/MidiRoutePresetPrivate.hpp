@@ -115,10 +115,11 @@ void setIsEnabled(const bool newIsEnabled)
             }
         }
 
-        void addListItem(UserControl * item)
+        UserControl * addListItem(UserControl * item)
         {
             m_userControls.push_back(item);
             emit userControlsChanged();
+            return item;
         }
 
         template<typename T = UserControl * >
@@ -147,10 +148,11 @@ void setIsEnabled(const bool newIsEnabled)
             }
         }
 
-        void addListItem(MidiRouteInput * item)
+        MidiRouteInput * addListItem(MidiRouteInput * item)
         {
             m_midiRouteInputs.push_back(item);
             emit midiRouteInputsChanged();
+            return item;
         }
 
         template<typename T = MidiRouteInput * >
@@ -180,10 +182,10 @@ signals:
     
 
 protected:
-    PresetMidiControl * m_midiControlOn ;
-    PresetMidiControl * m_midiControlOff ;
-    QList<UserControl *> m_userControls ;
-    QList<MidiRouteInput *> m_midiRouteInputs ;
+    PresetMidiControl * m_midiControlOn = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_ON,this);
+    PresetMidiControl * m_midiControlOff = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_OFF,this);
+    QList<UserControl *> m_userControls = {};
+    QList<MidiRouteInput *> m_midiRouteInputs = {};
     
 
 private:

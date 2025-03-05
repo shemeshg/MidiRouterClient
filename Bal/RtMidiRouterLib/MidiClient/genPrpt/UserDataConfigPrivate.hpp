@@ -33,7 +33,6 @@ class UserDataConfigPrivate : public QObject
     Q_PROPERTY(QList<MidiRoutePreset *> midiRoutePresets READ midiRoutePresets  NOTIFY midiRoutePresetsChanged )
     Q_PROPERTY(QStringList connectedInPorts READ connectedInPorts WRITE setConnectedInPorts NOTIFY connectedInPortsChanged )
     Q_PROPERTY(QStringList connectedOutPorts READ connectedOutPorts WRITE setConnectedOutPorts NOTIFY connectedOutPortsChanged )
-    Q_PROPERTY(MidiRoutePreset * activePreset READ activePreset  NOTIFY activePresetChanged )
     Q_PROPERTY(QString criticalErrorMsg READ criticalErrorMsg WRITE setCriticalErrorMsg NOTIFY criticalErrorMsgChanged )
     
     QML_ELEMENT
@@ -105,10 +104,6 @@ void setConnectedOutPorts(const QStringList &newConnectedOutPorts)
 
 
     
-    MidiRoutePreset * activePreset() const{return m_activePreset;} 
-    
-
-    
     QString criticalErrorMsg() const{return m_criticalErrorMsg;} 
     
 void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
@@ -133,10 +128,11 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
             }
         }
 
-        void addListItem(Dropdownlist * item)
+        Dropdownlist * addListItem(Dropdownlist * item)
         {
             m_dropdownlists.push_back(item);
             emit dropdownlistsChanged();
+            return item;
         }
 
         template<typename T = Dropdownlist * >
@@ -165,10 +161,11 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
             }
         }
 
-        void addListItem(MidiRoutePreset * item)
+        MidiRoutePreset * addListItem(MidiRoutePreset * item)
         {
             m_midiRoutePresets.push_back(item);
             emit midiRoutePresetsChanged();
+            return item;
         }
 
         template<typename T = MidiRoutePreset * >
@@ -195,23 +192,21 @@ signals:
     void midiRoutePresetsChanged();
     void connectedInPortsChanged();
     void connectedOutPortsChanged();
-    void activePresetChanged();
     void criticalErrorMsgChanged();
     
 
 protected:
     QString m_computerUuid ;
-    QList<Dropdownlist *> m_dropdownlists ;
+    QList<Dropdownlist *> m_dropdownlists = {};
     QString m_uniqueId ;
-    QStringList m_virtualInPorts ;
-    QList<MidiRoutePreset *> m_midiRoutePresets ;
-    MidiRoutePreset * m_activePreset ;
+    QStringList m_virtualInPorts = {};
+    QList<MidiRoutePreset *> m_midiRoutePresets = {};
     
 
 private:
     int m_activePresetID = 0;
-    QStringList m_connectedInPorts ;
-    QStringList m_connectedOutPorts ;
+    QStringList m_connectedInPorts = {};
+    QStringList m_connectedOutPorts = {};
     QString m_criticalErrorMsg ;
     
 };

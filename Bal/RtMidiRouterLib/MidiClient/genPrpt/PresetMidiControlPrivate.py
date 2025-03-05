@@ -4,7 +4,7 @@ from property import create_prpt, PrptClass, EnumClass
 
 ary = [
     create_prpt("QString", 'portName'),
-    create_prpt("PresetMidiType", 'presetMidiType'),
+    create_prpt("PresetMidiType", 'presetMidiType', init_val="= PresetMidiType::PRESET_OFF"),
     create_prpt("int", 'eventTypeId'),
     create_prpt("int", 'channel'),
     create_prpt("int", 'data1'),
