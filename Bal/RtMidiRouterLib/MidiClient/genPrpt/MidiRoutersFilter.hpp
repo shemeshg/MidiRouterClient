@@ -30,6 +30,11 @@ public:
     };
 
     //-only-file header
+    virtual ~MidiRoutersFilter(){}
+
+    virtual QJsonObject getJson() = 0;
+
+    //-only-file header
 public slots:
 
 private:

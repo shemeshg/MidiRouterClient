@@ -29,6 +29,19 @@ public:
         setUuid(getUuId());
     };
 
+    //- {fn}
+    QJsonObject getJson() override
+    //-only-file body
+    {
+        QJsonObject filterObj;
+        filterObj["uuid"] = uuid();
+        filterObj["filterType"] = static_cast<int>(filterType());
+        filterObj["serverName"] = serverName();
+        filterObj["serverPort"] = serverPort();
+        filterObj["midiInputName"]= baseMidiRouteInput();
+        return filterObj;
+    }
+
     //-only-file header
 public slots:
     //- {fn}

@@ -60,11 +60,6 @@ public:
     //-only-file body
     {
         QJsonObject obj;
-        qDebug()<<"For PRESET "<<name();
-        for (auto in: midiRouteInputs()){
-            qDebug()<<"For PRESET "<<name() <<" input "<<
-                in->midiInputName();
-        }
 
         recreateEasyConfig(presetControlEasyConfigs, uuid());
         obj["name"] = name();
@@ -147,10 +142,6 @@ QJsonArray getJsonMidiRouteInputs()
 MidiRouteInput * getInputByName(QString midiInputName)
 //-only-file body
 {
-    qDebug()<<" SIZE OF Unputs IS ";
-    qDebug()<<" SIZE OF Unputs IS "<< midiRouteInputs().size();
-    qDebug()<<" SIZE OF Unputs IS "<< (*m_midiRouteInputs).size();
-
     for (MidiRouteInput *input : midiRouteInputs()) {
         if (input->midiInputName() == midiInputName) {
             return input;

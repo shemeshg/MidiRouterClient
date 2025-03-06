@@ -30,6 +30,19 @@ public:
          setUuid(getUuId());
     }
 
+    //- {fn}
+    QJsonObject getJson() override
+    //-only-file body
+    {
+        QJsonObject filterObj;
+
+        filterObj["uuid"] = uuid();
+        filterObj["filterType"] = static_cast<int>(filterType());
+        filterObj["logTo"] = static_cast<int>(logTo());
+        filterObj["userdata"] = userdata();
+        return filterObj;
+    }
+
     //-only-file header
 public slots:
     //- {fn}

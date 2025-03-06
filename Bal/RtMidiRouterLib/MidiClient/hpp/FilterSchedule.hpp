@@ -28,6 +28,18 @@ public:
         setUuid(getUuId());
     };
 
+    //- {fn}
+    QJsonObject getJson() override
+    //-only-file body
+    {
+        QJsonObject filterObj;
+        filterObj["uuid"] = uuid();
+        filterObj["filterType"] = static_cast<int>(filterType());
+        filterObj["defferedType"] = static_cast<int>(defferedType());
+        filterObj["defferedTo"] = static_cast<int>(defferedTo());
+        return filterObj;
+    }
+
     //-only-file header
 public slots:
     //- {fn}

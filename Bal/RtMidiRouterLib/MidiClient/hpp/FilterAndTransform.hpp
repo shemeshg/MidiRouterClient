@@ -29,6 +29,23 @@ public:
         setUuid(getUuId());
     };
 
+    //- {fn}
+    QJsonObject getJson() override
+    //-only-file body
+    {
+        QJsonObject filterObj;
+        filterObj["uuid"] = uuid();
+        filterObj["filterType"] = static_cast<int>(filterType());
+        filterObj["name"] = name();
+        filterObj["conditionAction"] = static_cast<int>(conditionAction());
+        filterObj["filterChannel"] = filterChannel();
+        filterObj["filterEvents"] = filterEvents();
+        filterObj["filterData1"] = filterData1();
+        filterObj["filterData2"] = filterData2();
+        return filterObj;
+
+    }
+
     //-only-file header
 public slots:
     //- {fn}
