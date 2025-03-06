@@ -27,7 +27,7 @@ public:
                       const QJSValue &callback,
                       QJSEngine *engine);
 
-    MidiClientConnection midiClientConnection{};
+    MidiClientConnection *midiClientConnection=new MidiClientConnection(this);
 
 
 private slots:
@@ -38,9 +38,8 @@ private:
     int port = -1;
     bool clientIsRunning = false;
 
-    std::unique_ptr<QWebSocket> qwebsocket = std::unique_ptr<QWebSocket>(new QWebSocket());
-    std::unique_ptr<CWebChannelClient> qwebsocketClient = std::unique_ptr<CWebChannelClient>(
-        new CWebChannelClient(qwebsocket.get()));
+   QWebSocket *qwebsocket = new QWebSocket(QString(), QWebSocketProtocol::VersionLatest,this);
+   CWebChannelClient* qwebsocketClient = new CWebChannelClient(qwebsocket);
 
     void runUserDataChanges();
 };

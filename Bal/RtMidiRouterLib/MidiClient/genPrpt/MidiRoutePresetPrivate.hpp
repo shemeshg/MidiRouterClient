@@ -95,11 +95,11 @@ void setIsEnabled(const bool newIsEnabled)
     
 
     
-    QList<UserControl *> userControls() const{return m_userControls;} 
+    QList<UserControl *> userControls() const{return *m_userControls;} 
     
 
     
-    QList<MidiRouteInput *> midiRouteInputs() const{return m_midiRouteInputs;} 
+    QList<MidiRouteInput *> midiRouteInputs() const{return *m_midiRouteInputs;} 
     
 
     
@@ -107,17 +107,17 @@ void setIsEnabled(const bool newIsEnabled)
         template<typename T = UserControl *>
         std::enable_if_t<std::is_same_v<T, UserControl *>, void>
         delListItem(int id){
-            if (id < m_userControls.size())
+            if (id < m_userControls->size())
             {
-                delete m_userControls.at(id);
-                m_userControls.removeAt(id);
+                delete m_userControls->at(id);
+                m_userControls->removeAt(id);
                 emit userControlsChanged();
             }
         }
 
         UserControl * addListItem(UserControl * item)
         {
-            m_userControls.push_back(item);
+            m_userControls->push_back(item);
             emit userControlsChanged();
             return item;
         }
@@ -125,32 +125,32 @@ void setIsEnabled(const bool newIsEnabled)
         template<typename T = UserControl * >
         std::enable_if_t<std::is_same_v<T, UserControl * >, void>
         clearList(){
-            qDeleteAll(m_userControls);
-            m_userControls.clear();
+            qDeleteAll(*m_userControls);
+            m_userControls->clear();
             emit userControlsChanged();
         }
 
         template<typename T = UserControl *>
         std::enable_if_t<std::is_same_v<T, UserControl *>, const QList<UserControl *>>
         listItems(){
-            return m_userControls;
+            return *m_userControls;
         }
 
         
         template<typename T = MidiRouteInput *>
         std::enable_if_t<std::is_same_v<T, MidiRouteInput *>, void>
         delListItem(int id){
-            if (id < m_midiRouteInputs.size())
+            if (id < m_midiRouteInputs->size())
             {
-                delete m_midiRouteInputs.at(id);
-                m_midiRouteInputs.removeAt(id);
+                delete m_midiRouteInputs->at(id);
+                m_midiRouteInputs->removeAt(id);
                 emit midiRouteInputsChanged();
             }
         }
 
         MidiRouteInput * addListItem(MidiRouteInput * item)
         {
-            m_midiRouteInputs.push_back(item);
+            m_midiRouteInputs->push_back(item);
             emit midiRouteInputsChanged();
             return item;
         }
@@ -158,15 +158,15 @@ void setIsEnabled(const bool newIsEnabled)
         template<typename T = MidiRouteInput * >
         std::enable_if_t<std::is_same_v<T, MidiRouteInput * >, void>
         clearList(){
-            qDeleteAll(m_midiRouteInputs);
-            m_midiRouteInputs.clear();
+            qDeleteAll(*m_midiRouteInputs);
+            m_midiRouteInputs->clear();
             emit midiRouteInputsChanged();
         }
 
         template<typename T = MidiRouteInput *>
         std::enable_if_t<std::is_same_v<T, MidiRouteInput *>, const QList<MidiRouteInput *>>
         listItems(){
-            return m_midiRouteInputs;
+            return *m_midiRouteInputs;
         }
 
         
@@ -184,8 +184,8 @@ signals:
 protected:
     PresetMidiControl * m_midiControlOn = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_ON,this);
     PresetMidiControl * m_midiControlOff = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_OFF,this);
-    QList<UserControl *> m_userControls = {};
-    QList<MidiRouteInput *> m_midiRouteInputs = {};
+    QList<UserControl *> *m_userControls = new QList<UserControl *>();
+    QList<MidiRouteInput *> *m_midiRouteInputs = new QList<MidiRouteInput *>();
     
 
 private:

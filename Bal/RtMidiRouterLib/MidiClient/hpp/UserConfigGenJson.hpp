@@ -91,7 +91,11 @@ private:
         for (int i=0;i<midiRoutePresets.length();i++){
             const auto itm = midiRoutePresets.at(i);
             QJsonObject obj;
-
+            qDebug()<<"For PRESET "<<itm->name();
+            for (auto in:itm->midiRouteInputs()){
+                qDebug()<<"For PRESET "<<itm->name() <<" input "<<
+                    itm->midiRouteInputs().at(i)->midiInputName();
+            }
             auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( midiRoutePresets);
             itm->recreateEasyConfig(presetControlEasyConfigs, itm->uuid());
             obj["name"] = itm->name();

@@ -5,16 +5,16 @@
 MidiClientClass::MidiClientClass(QObject *parent)
     : QObject(parent)
 {
-    CWebChannelConnection::connect(qwebsocket.get(), &QWebSocket::disconnected, [=] {
-        if (midiClientConnection.serverStatus()
+    CWebChannelConnection::connect(qwebsocket, &QWebSocket::disconnected, [=] {
+        if (midiClientConnection->serverStatus()
             == MidiClientConnectionPrivate::ServerStatus::STARTING) {
             return;
         }
-        midiClientConnection.setServerStatusAndText(
+        midiClientConnection->setServerStatusAndText(
             MidiClientConnectionPrivate::ServerStatus::STOPPED);
         qDebug() << "Disconnected";
-        qwebsocketClient = std::unique_ptr<CWebChannelClient>(
-            new CWebChannelClient(qwebsocket.get()));
+        qwebsocketClient =
+            new CWebChannelClient(qwebsocket);
     });
 
     qDebug()<<"Created MidiClientClass";
@@ -31,16 +31,16 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
 
     constexpr int msecTimeout = 1000;
     qDebug() << "opening ";
-    midiClientConnection.setServerStatusAndText(MidiClientConnectionPrivate::ServerStatus::STARTING);
-    if (WaitForSignal(qwebsocket.get(), &QWebSocket::connected, msecTimeout)) {
+    midiClientConnection->setServerStatusAndText(MidiClientConnectionPrivate::ServerStatus::STARTING);
+    if (WaitForSignal(qwebsocket, &QWebSocket::connected, msecTimeout)) {
         qDebug() << "connected.";
 
         qwebsocketClient->initialize();
-        if (WaitForSignal(qwebsocketClient.get(), &CWebChannelClient::initialized)) {
+        if (WaitForSignal(qwebsocketClient, &CWebChannelClient::initialized)) {
             qDebug() << "Initialized";
-            midiClientConnection.setServerStatusAndText(
+            midiClientConnection->setServerStatusAndText(
                 MidiClientConnectionPrivate::ServerStatus::RUNNING);
-            midiClientConnection.setServerStatusText("Running " + serverName + " "
+            midiClientConnection->setServerStatusText("Running " + serverName + " "
                                                      + QString::number(portNumber));
 
             runUserDataChanges();
@@ -64,13 +64,13 @@ void MidiClientClass::start(const QString &serverName, int portNumber)
 
             // End testing
         } else {
-            midiClientConnection.setServerStatusAndText(
+            midiClientConnection->setServerStatusAndText(
                 MidiClientConnectionPrivate::ServerStatus::FAILED);
             qDebug() << "Did not Initialized";
         }
     } else {
         qDebug() << "Could not connect.";
-        midiClientConnection.setServerStatusAndText(
+        midiClientConnection->setServerStatusAndText(
             MidiClientConnectionPrivate::ServerStatus::FAILED);
     }
 }
@@ -100,7 +100,7 @@ void MidiClientClass::invokeMethod(const QString &object,
 }
 
 void MidiClientClass::userDataChanges(const QJsonArray& message){
-    midiClientConnection.userDataConfig()->resetUserDataConfig(message);
+    midiClientConnection->userDataConfig()->resetUserDataConfig(message);
 }
 
 void MidiClientClass::runUserDataChanges(){
@@ -112,7 +112,7 @@ void MidiClientClass::runUserDataChanges(){
                 midiClientConnection.userDataConfig()->resetUserDataConfig(message);
             });
     */
-   midiClientConnection.userDataConfig()->resetUserDataConfig(resopnse1);
+   midiClientConnection->userDataConfig()->resetUserDataConfig(resopnse1);
 }
 
 
@@ -122,7 +122,7 @@ void MidiClientClass::dataToClient(const QJsonArray& message)
             QString str = obj.toString();
             auto  itemObj = QJsonDocument::fromJson(str.toUtf8());
 
-            auto inputObj = midiClientConnection.userDataConfig()->activePreset()->getInputOrCreateByName(itemObj["portName"].toString());
+            auto inputObj = midiClientConnection->userDataConfig()->activePreset()->getInputOrCreateByName(itemObj["portName"].toString());
             inputObj->monitor()->addLogItem(str);
         }
     }

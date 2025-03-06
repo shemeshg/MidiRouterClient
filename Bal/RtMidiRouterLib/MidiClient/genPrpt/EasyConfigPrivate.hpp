@@ -54,7 +54,7 @@ void setZoneNames(const QStringList &newZoneNames)
 
 
     
-    QList<EasyConfigRoute *> easyConfigRoutes() const{return m_easyConfigRoutes;} 
+    QList<EasyConfigRoute *> easyConfigRoutes() const{return *m_easyConfigRoutes;} 
     
 
     
@@ -62,17 +62,17 @@ void setZoneNames(const QStringList &newZoneNames)
         template<typename T = EasyConfigRoute *>
         std::enable_if_t<std::is_same_v<T, EasyConfigRoute *>, void>
         delListItem(int id){
-            if (id < m_easyConfigRoutes.size())
+            if (id < m_easyConfigRoutes->size())
             {
-                delete m_easyConfigRoutes.at(id);
-                m_easyConfigRoutes.removeAt(id);
+                delete m_easyConfigRoutes->at(id);
+                m_easyConfigRoutes->removeAt(id);
                 emit easyConfigRoutesChanged();
             }
         }
 
         EasyConfigRoute * addListItem(EasyConfigRoute * item)
         {
-            m_easyConfigRoutes.push_back(item);
+            m_easyConfigRoutes->push_back(item);
             emit easyConfigRoutesChanged();
             return item;
         }
@@ -80,15 +80,15 @@ void setZoneNames(const QStringList &newZoneNames)
         template<typename T = EasyConfigRoute * >
         std::enable_if_t<std::is_same_v<T, EasyConfigRoute * >, void>
         clearList(){
-            qDeleteAll(m_easyConfigRoutes);
-            m_easyConfigRoutes.clear();
+            qDeleteAll(*m_easyConfigRoutes);
+            m_easyConfigRoutes->clear();
             emit easyConfigRoutesChanged();
         }
 
         template<typename T = EasyConfigRoute *>
         std::enable_if_t<std::is_same_v<T, EasyConfigRoute *>, const QList<EasyConfigRoute *>>
         listItems(){
-            return m_easyConfigRoutes;
+            return *m_easyConfigRoutes;
         }
 
         
@@ -101,7 +101,7 @@ signals:
 
 protected:
     QList<int> m_keyboardSplits ={};
-    QList<EasyConfigRoute *> m_easyConfigRoutes ={};
+    QList<EasyConfigRoute *> *m_easyConfigRoutes = new QList<EasyConfigRoute *>();
     
 
 private:

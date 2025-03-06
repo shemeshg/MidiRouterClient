@@ -27,7 +27,8 @@ public:
         setUuid(getUuId());
 
         clearList<UserControl *>();
-        m_midiRouteInputs  = {};
+
+        qDebug()<<" SIZE OF INPUT IS "<< (*m_midiRouteInputs).size();
     };
 
 
@@ -38,12 +39,16 @@ public:
     //-only-file body
     {
 
-        for (int i=m_midiRouteInputs.length()-1;i>=0;i--){
-            auto input = m_midiRouteInputs.at(i);
+        for (int i=midiRouteInputs().length()-1;i>=0;i--){
+            auto input = midiRouteInputs().at(i);
             input->clearEasyConfigMidiRouterChains();
+        }
+
+
+        for (int i=midiRouteInputs().length()-1;i>=0;i--){
+            auto input = midiRouteInputs().at(i);
             input->addMonitorEasyConfigIfRequired();
             input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs, presetUuid);
-
 
             getInputOrCreateByName(input->midiInputName())->createEasyConfigChains(input->easyConfig());
 
@@ -61,9 +66,9 @@ public slots:
      MidiRouteInput* getInputOrCreateByName(QString midiInputName)
      //-only-file body
      {
-        std::optional<MidiRouteInput *> input = getInputByName(midiInputName);
+        MidiRouteInput * input = getInputByName(midiInputName);
          if (input){
-             return input.value();
+             return input;
          }
          MidiRouteInput *newInput = new MidiRouteInput();
          newInput->setMidiInputName(midiInputName);
@@ -108,16 +113,20 @@ private:
 
 
     //- {fn}
-    std::optional<MidiRouteInput *> getInputByName(QString midiInputName) 
+    MidiRouteInput * getInputByName(QString midiInputName)
     //-only-file body
     {
-        for (MidiRouteInput *input : m_midiRouteInputs) {
+        qDebug()<<" SIZE OF Unputs IS ";
+        qDebug()<<" SIZE OF Unputs IS "<< midiRouteInputs().size();
+        qDebug()<<" SIZE OF Unputs IS "<< (*m_midiRouteInputs).size();
+
+        for (MidiRouteInput *input : midiRouteInputs()) {
             if (input->midiInputName() == midiInputName) {
                 return input;
             }
         }
 
-        return std::nullopt;
+        return nullptr;
     }
 
     //-only-file header

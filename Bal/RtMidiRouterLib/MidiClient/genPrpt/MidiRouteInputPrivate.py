@@ -13,10 +13,10 @@ ary = [
     create_prpt("int", 'midiRouteClockTimeSigDivBy'),
     create_prpt("int", 'midiRouteClockFromSppPos'),
     create_prpt("QStringList", 'midiRouteClockPropegateInputs',  init_val = "= {}"),
-    create_prpt("QList<MidiRouteInputCc14bit *>", 'midiRouteInputCc14bit', is_list=True,  init_val = "= {}"),
-    create_prpt("QList<MidiRouterChain *>", 'midiRouterChains', is_list=True,  init_val = "= {}"),
+    create_prpt("QList<MidiRouteInputCc14bit *>", 'midiRouteInputCc14bit', is_list=True,  init_val = "= new QList<MidiRouteInputCc14bit *>()"),
+    create_prpt("QList<MidiRouterChain *>", 'midiRouterChains', is_list=True,  init_val = "= new QList<MidiRouterChain *>()"),
     create_prpt("Monitor *", 'monitor', is_writable=False, init_val = "= new Monitor(this)"),
-    create_prpt("EasyConfig *", 'easyConfig', is_writable=False, init_val = "= new EasyConfig()")
+    create_prpt("EasyConfig *", 'easyConfig', is_writable=False, init_val = "= new EasyConfig(this)")
 ]
 
 enumClasss = []

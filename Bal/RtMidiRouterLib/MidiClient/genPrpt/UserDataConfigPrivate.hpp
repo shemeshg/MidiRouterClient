@@ -64,7 +64,7 @@ void setActivePresetID(const int newActivePresetID)
     
 
     
-    QList<Dropdownlist *> dropdownlists() const{return m_dropdownlists;} 
+    QList<Dropdownlist *> dropdownlists() const{return *m_dropdownlists;} 
     
 
     
@@ -76,7 +76,7 @@ void setActivePresetID(const int newActivePresetID)
     
 
     
-    QList<MidiRoutePreset *> midiRoutePresets() const{return m_midiRoutePresets;} 
+    QList<MidiRoutePreset *> midiRoutePresets() const{return *m_midiRoutePresets;} 
     
 
     
@@ -120,17 +120,17 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         template<typename T = Dropdownlist *>
         std::enable_if_t<std::is_same_v<T, Dropdownlist *>, void>
         delListItem(int id){
-            if (id < m_dropdownlists.size())
+            if (id < m_dropdownlists->size())
             {
-                delete m_dropdownlists.at(id);
-                m_dropdownlists.removeAt(id);
+                delete m_dropdownlists->at(id);
+                m_dropdownlists->removeAt(id);
                 emit dropdownlistsChanged();
             }
         }
 
         Dropdownlist * addListItem(Dropdownlist * item)
         {
-            m_dropdownlists.push_back(item);
+            m_dropdownlists->push_back(item);
             emit dropdownlistsChanged();
             return item;
         }
@@ -138,32 +138,32 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         template<typename T = Dropdownlist * >
         std::enable_if_t<std::is_same_v<T, Dropdownlist * >, void>
         clearList(){
-            qDeleteAll(m_dropdownlists);
-            m_dropdownlists.clear();
+            qDeleteAll(*m_dropdownlists);
+            m_dropdownlists->clear();
             emit dropdownlistsChanged();
         }
 
         template<typename T = Dropdownlist *>
         std::enable_if_t<std::is_same_v<T, Dropdownlist *>, const QList<Dropdownlist *>>
         listItems(){
-            return m_dropdownlists;
+            return *m_dropdownlists;
         }
 
         
         template<typename T = MidiRoutePreset *>
         std::enable_if_t<std::is_same_v<T, MidiRoutePreset *>, void>
         delListItem(int id){
-            if (id < m_midiRoutePresets.size())
+            if (id < m_midiRoutePresets->size())
             {
-                delete m_midiRoutePresets.at(id);
-                m_midiRoutePresets.removeAt(id);
+                delete m_midiRoutePresets->at(id);
+                m_midiRoutePresets->removeAt(id);
                 emit midiRoutePresetsChanged();
             }
         }
 
         MidiRoutePreset * addListItem(MidiRoutePreset * item)
         {
-            m_midiRoutePresets.push_back(item);
+            m_midiRoutePresets->push_back(item);
             emit midiRoutePresetsChanged();
             return item;
         }
@@ -171,15 +171,15 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         template<typename T = MidiRoutePreset * >
         std::enable_if_t<std::is_same_v<T, MidiRoutePreset * >, void>
         clearList(){
-            qDeleteAll(m_midiRoutePresets);
-            m_midiRoutePresets.clear();
+            qDeleteAll(*m_midiRoutePresets);
+            m_midiRoutePresets->clear();
             emit midiRoutePresetsChanged();
         }
 
         template<typename T = MidiRoutePreset *>
         std::enable_if_t<std::is_same_v<T, MidiRoutePreset *>, const QList<MidiRoutePreset *>>
         listItems(){
-            return m_midiRoutePresets;
+            return *m_midiRoutePresets;
         }
 
         
@@ -197,10 +197,10 @@ signals:
 
 protected:
     QString m_computerUuid ;
-    QList<Dropdownlist *> m_dropdownlists = {};
+    QList<Dropdownlist *> *m_dropdownlists = new QList<Dropdownlist *>();
     QString m_uniqueId ;
     QStringList m_virtualInPorts = {};
-    QList<MidiRoutePreset *> m_midiRoutePresets = {};
+    QList<MidiRoutePreset *> *m_midiRoutePresets = new QList<MidiRoutePreset *>();
     
 
 private:

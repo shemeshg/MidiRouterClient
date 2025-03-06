@@ -68,6 +68,9 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
 """)
 
     readable_template = Template("""${field_type} ${ref_str}${field_name}() ${const_str}{return m_${field_name};}""")
+   
+        
+    
 
     def __init__(self, field_type, field_name):
         self.field_type = field_type
@@ -124,9 +127,12 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             const_str = ""
 
         readable_template = self.readable_template
+        if self.is_list:
+            readable_template = Template("""${field_type} ${ref_str}${field_name}() ${const_str}{return *m_${field_name};}""")
+
         if self.readable_declare_only:
             readable_template = self.readable_declare_only_template        
-        readable_text = self.readable_template.substitute(field_type=self.field_type, field_name = self.field_name,
+        readable_text = readable_template.substitute(field_type=self.field_type, field_name = self.field_name,
                 const_str = const_str, ref_str = ref_str)
         t = Template(
 """
@@ -159,6 +165,9 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         else:
             t = Template("""${field_type} m_${field_name} ${init_val};
     """)    
+            if self.is_list:
+                t = Template("""${field_type} *m_${field_name} ${init_val};
+    """)    
         return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name,init_val=self.init_val )
 
     def destructot_h_file(self):
@@ -174,17 +183,17 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         template<typename T = ${type_in_list}>
         std::enable_if_t<std::is_same_v<T, ${type_in_list}>, void>
         delListItem(int id){
-            if (id < m_${field_name}.size())
+            if (id < m_${field_name}->size())
             {
-                delete m_${field_name}.at(id);
-                m_${field_name}.removeAt(id);
+                delete m_${field_name}->at(id);
+                m_${field_name}->removeAt(id);
                 emit ${field_name}Changed();
             }
         }
 
         ${type_in_list} addListItem(${type_in_list} item)
         {
-            m_${field_name}.push_back(item);
+            m_${field_name}->push_back(item);
             emit ${field_name}Changed();
             return item;
         }
@@ -192,15 +201,15 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         template<typename T = ${type_in_list} >
         std::enable_if_t<std::is_same_v<T, ${type_in_list} >, void>
         clearList(){
-            qDeleteAll(m_${field_name});
-            m_${field_name}.clear();
+            qDeleteAll(*m_${field_name});
+            m_${field_name}->clear();
             emit ${field_name}Changed();
         }
 
         template<typename T = ${type_in_list}>
         std::enable_if_t<std::is_same_v<T, ${type_in_list}>, const QList<${type_in_list}>>
         listItems(){
-            return m_${field_name};
+            return *m_${field_name};
         }
 
         """)

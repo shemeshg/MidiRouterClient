@@ -52,7 +52,7 @@ void setAsyncServerStatusAndText(MidiClientConnection::ServerStatus serverStatus
                                  const QJSValue &callback)
 {
     makeAsync<bool>(callback, [=]() {
-        mcc.midiClientConnection.setServerStatusAndText(serverStatus);
+        mcc->midiClientConnection->setServerStatusAndText(serverStatus);
         return true;
     });
 }
@@ -64,7 +64,7 @@ void getPortNumber(const QString &midiPortName, const QJSValue &callback);
 void setNonRegisteredParameterInt( int portNumber,int parameter,int data,QStringList channels,const QJSValue &callback);
 void sendControlChange( int portNumber,int controller,int value,QStringList channels,const QJSValue &callback);
 void sendProgramChange( int portNumber,int program,QStringList channels,const QJSValue &callback);
-MidiClientConnection *midiClientConnection() { return &mcc.midiClientConnection; }
+MidiClientConnection *midiClientConnection() { return mcc->midiClientConnection; }
 
 void startClient();
 
@@ -97,9 +97,9 @@ void loadDefaultFontSize();
 
 void startClient(const QString &serverName, int portNumber);
 
-MidiServerClass msc{};
-MidiClientClass mcc{};
-MidiClientClass remoteMcc{};
+MidiServerClass *msc= new MidiServerClass(this);
+MidiClientClass *mcc = new MidiClientClass(this);
+MidiClientClass *remoteMcc = new MidiClientClass(this);
 void updateServerStatus();
 
 

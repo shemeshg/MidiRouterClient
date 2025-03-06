@@ -40,17 +40,17 @@ void BalData::queryRemoteMidiPorts(QString serverName, QString serverPort, const
 {
 
 
-    remoteMcc.start(serverName, serverPort.toInt());
+    remoteMcc->start(serverName, serverPort.toInt());
 
     QJSValue cbCopy(callback);
 
     QJsonObject s;
 
-    s["serverStatus"] = remoteMcc.midiClientConnection.serverStatusText();
+    s["serverStatus"] = remoteMcc->midiClientConnection->serverStatusText();
     QJsonArray ary;
 
-    if (remoteMcc.midiClientConnection.serverStatus() == MidiClientConnection::ServerStatus::RUNNING ){
-         ary =  getListToJsonAry(remoteMcc.midiClientConnection.userDataConfig()->connectedInPorts());
+    if (remoteMcc->midiClientConnection->serverStatus() == MidiClientConnection::ServerStatus::RUNNING ){
+         ary =  getListToJsonAry(remoteMcc->midiClientConnection->userDataConfig()->connectedInPorts());
     }
     s["inPorts"] = ary;
     cbCopy.call(QJSValueList{qjsEngine(this)->toScriptValue(s)});
@@ -224,8 +224,8 @@ void BalData::onApplicationStarted()
 }
 void BalData::updateServerStatus()
 {
-    m_serverPort = msc.getPort();
-    m_isServerRunning = msc.getServerIsRunning();
+    m_serverPort = msc->getPort();
+    m_isServerRunning = msc->getServerIsRunning();
     emit serverPortChanged();
     emit isServerRunningChanged();
 }
@@ -236,17 +236,17 @@ void BalData::applyConfig(const QJSValue &callback)
         qDebug()<<"Not connected";
         return;
     }
-    auto json = mcc.midiClientConnection.userDataConfig()->getJson();
+    auto json = mcc->midiClientConnection->userDataConfig()->getJson();
 
     QJsonDocument jsonDoc(json);
     QString s=jsonDoc.toJson(QJsonDocument::Compact);
-    mcc.invokeMethod("wcuserdata", "applyConfig", {s}, true, callback, qjsEngine(this));
+    mcc->invokeMethod("wcuserdata", "applyConfig", {s}, true, callback, qjsEngine(this));
 
 }
 
 void BalData::startServer(int portNumber)
 {
-    msc.start(portNumber);
+    msc->start(portNumber);
     updateServerStatus();
     if (isServerRunning()) {
         saveReqServerPortNumber(serverPort());
@@ -255,22 +255,22 @@ void BalData::startServer(int portNumber)
 
 void BalData::stopServer()
 {
-    msc.stop();
+    msc->stop();
     updateServerStatus();
 }
 
 void BalData::startClient(const QString &serverName, int portNumber)
 {
-    mcc.start(serverName, portNumber);
+    mcc->start(serverName, portNumber);
 }
 
 void BalData::stopClient()
 {
-    mcc.stop();
+    mcc->stop();
 }
 
 void BalData::getPortNumber(const QString &midiPortName, const QJSValue &callback){
-    mcc.invokeMethod("wcmidiout", "getPortNumber", {midiPortName}, true, callback, qjsEngine(this));
+    mcc->invokeMethod("wcmidiout", "getPortNumber", {midiPortName}, true, callback, qjsEngine(this));
 }
 
 void BalData::setNonRegisteredParameterInt(int portNumber, int parameter, int data, QStringList channels, const QJSValue &callback)
@@ -280,7 +280,7 @@ void BalData::setNonRegisteredParameterInt(int portNumber, int parameter, int da
     if (!channels.isEmpty()){
         a.append(b);
     }
-    mcc.invokeMethod("wcmidiout", "setNonRegisteredParameterInt", a, false, callback, qjsEngine(this));
+    mcc->invokeMethod("wcmidiout", "setNonRegisteredParameterInt", a, false, callback, qjsEngine(this));
 }
 
 void BalData::sendControlChange(int portNumber, int controller, int value, QStringList channels, const QJSValue &callback)
@@ -291,7 +291,7 @@ void BalData::sendControlChange(int portNumber, int controller, int value, QStri
         a.append(b);
     }
 
-    mcc.invokeMethod("wcmidiout", "sendControlChange", a, false, callback, qjsEngine(this));
+    mcc->invokeMethod("wcmidiout", "sendControlChange", a, false, callback, qjsEngine(this));
 }
 
 void BalData::sendProgramChange(int portNumber, int program, QStringList channels, const QJSValue &callback)
@@ -301,10 +301,10 @@ void BalData::sendProgramChange(int portNumber, int program, QStringList channel
     if (!channels.isEmpty()){
         a.append(b);
     }
-    mcc.invokeMethod("wcmidiout", "sendProgramChange", a, false, callback, qjsEngine(this));
+    mcc->invokeMethod("wcmidiout", "sendProgramChange", a, false, callback, qjsEngine(this));
 }
 
 void BalData::testDummyDelete(const QJSValue &callback)
 {
-    mcc.invokeMethod("wcmidiout", "getPortCount", {}, true, callback, qjsEngine(this));
+    mcc->invokeMethod("wcmidiout", "getPortCount", {}, true, callback, qjsEngine(this));
 }

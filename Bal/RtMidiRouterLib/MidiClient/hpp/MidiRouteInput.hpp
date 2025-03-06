@@ -49,8 +49,8 @@ public:
     void clearEasyConfigMidiRouterChains()
     //-only-file body
     {
-        for (int i = m_midiRouterChains.size() - 1; i >= 0; --i) {
-            if (m_midiRouterChains[i]->isEasyConfig()) {
+        for (int i = midiRouterChains().size() - 1; i >= 0; --i) {
+            if (midiRouterChains().at(i)->isEasyConfig()) {
                 delListItem<MidiRouterChain *>(i);
             }
         }
@@ -104,12 +104,12 @@ public:
     void clearMidiRouterChains()
     //-only-file body
     {
-        for (MidiRouterChain *item : m_midiRouterChains) {
+        for (MidiRouterChain *item : midiRouterChains()) {
             delete item;
         }
         // Clear the outer list
 
-        m_midiRouterChains.clear();
+        midiRouterChains().clear();
         emit midiRouterChainsChanged();
     }
 

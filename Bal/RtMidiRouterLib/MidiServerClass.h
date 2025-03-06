@@ -1,11 +1,14 @@
 #pragma once
-
+#include<QObject>
 #include "QtWebSockets/qwebsocketserver.h"
 
-class MidiServerClass
+class MidiServerClass: public QObject
 {
+    Q_OBJECT
 public:
-    MidiServerClass();
+    MidiServerClass(QObject *parent = nullptr):QObject(parent){}
+
+
     ~MidiServerClass() {
 
         stop();

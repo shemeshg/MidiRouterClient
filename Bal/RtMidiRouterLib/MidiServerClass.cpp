@@ -10,7 +10,7 @@
 
 using namespace Webchannel;
 
-MidiServerClass::MidiServerClass() {}
+
 
 void MidiServerClass::start(int portNumber)
 {

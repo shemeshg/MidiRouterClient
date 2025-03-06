@@ -43,8 +43,8 @@ public:
         m_virtualInPorts = {};
 
         clearList<MidiRoutePreset *>();
-        addPreset();
-        setActivePreset(0, true);
+        emit addPreset();
+        emit setActivePreset(0, true);
     }
 
 
@@ -125,16 +125,16 @@ public slots:
     {
         setActivePresetID(id);
 
-        for (int i = 0; i < m_midiRoutePresets.size(); i++) {
+        for (int i = 0; i < midiRoutePresets().size(); i++) {
             if (i != id) {
                 if (setEnable) {
-                    m_midiRoutePresets.at(i)->setIsEnabled(false);
+                    midiRoutePresets().at(i)->setIsEnabled(false);
                 }
             } else {
 
-                m_activePreset = m_midiRoutePresets.at(i);
+                m_activePreset = m_midiRoutePresets->at(i);
                 if (setEnable) {
-                    m_midiRoutePresets.at(i)->setIsEnabled(true);
+                    midiRoutePresets().at(i)->setIsEnabled(true);
                 }
             }
         }
@@ -147,8 +147,7 @@ public slots:
     //-only-file body
     {        
         MidiRoutePreset *p =addListItem( new MidiRoutePreset());
-        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
-        p->midiRouteInputs() = {};
+        p->setName(QString{"Preset %0"}.arg(midiRoutePresets().size()));
 
     }
 
