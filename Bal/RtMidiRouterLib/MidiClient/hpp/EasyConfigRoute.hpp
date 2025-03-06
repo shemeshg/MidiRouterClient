@@ -162,8 +162,8 @@ public:
             sortUniq(vKeyboardSplits);
             int fromKey = vKeyboardSplits.at(vSplitRangeId);
             int toKey = vKeyboardSplits.at(vSplitRangeId + 1);
-            data1Filter = QString{"[[%0, %1, %2]]"}.arg(
-                fromKey, toKey, fromKey + transpose());
+
+            data1Filter = QString{"[[%0, %1, %2]]"}.arg(fromKey).arg(toKey).arg(fromKey + transpose());
         } else {
             data1Filter =
                 QString{"[[0, 127, %0]]"}.arg(0 + transpose());
