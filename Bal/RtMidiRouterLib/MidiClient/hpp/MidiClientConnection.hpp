@@ -22,8 +22,7 @@ public:
     //-only-file body
     : MidiClientConnectionPrivate{parent}
     {
-        setServerStatusAndText(ServerStatus::STOPPED);
-        qDebug()<<"Creating MidiClientConnection";
+        setServerStatusAndText(ServerStatus::STOPPED);        
     }
 
     //-only-file header

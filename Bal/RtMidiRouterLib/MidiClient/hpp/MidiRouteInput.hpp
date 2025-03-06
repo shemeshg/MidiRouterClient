@@ -80,7 +80,7 @@ public:
     {
         for (int i=0;i<easyConfig->easyConfigRoutes().length();i++){
             auto easyConfigRoute = easyConfig->easyConfigRoutes().at(i);
-            MidiRouterChain *midiRouterChain = new MidiRouterChain();
+            MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
             midiRouterChain->setEasyConfigChain(easyConfig, easyConfigRoute);
 
 
@@ -93,7 +93,7 @@ public:
     //-only-file body
     {
         if (monitor()->isMonitored()){
-            MidiRouterChain *midiRouterChain = new MidiRouterChain();
+            MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
             midiRouterChain->addEasyConfigMonitor();
             addListItem(midiRouterChain);
         }
@@ -108,7 +108,7 @@ public:
         for (int i=0;i<midiPresetControlEasyConfigs.length();i++){
             auto m = midiPresetControlEasyConfigs.at(i);
             if (m.pmc->portName() == midiInputName()){
-                MidiRouterChain *midiRouterChain = new MidiRouterChain();
+                MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
                 midiRouterChain->addEasyConfigPresetFilter(m);
                 midiRouterChain->addEasyConfigPresetLogOnOff(m.isMidiControlOn, presetUuid);
                 addListItem(midiRouterChain);
@@ -137,7 +137,7 @@ public slots:
     void addMidiRouterChain(const QString name)
     //-only-file body
     {
-        MidiRouterChain *midiRouterChain = new MidiRouterChain();
+        MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
         midiRouterChain->setName(name);
         addListItem(midiRouterChain);
     }
@@ -159,7 +159,7 @@ public slots:
     void add14BitCc(int channel, int cc)
     //-only-file body
     {
-        MidiRouteInputCc14bit *item = new MidiRouteInputCc14bit();
+        MidiRouteInputCc14bit *item = new MidiRouteInputCc14bit(this);
         item->setChannel(channel);
         item->setCc(cc);
         addListItem(item);

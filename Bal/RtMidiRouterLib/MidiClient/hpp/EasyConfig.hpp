@@ -66,7 +66,7 @@ public slots:
     void addEasyConfigRoute()
     //-only-file body
     {
-        auto itm = new EasyConfigRoute();
+        auto itm = new EasyConfigRoute(this);
         addListItem(itm);
     }
 

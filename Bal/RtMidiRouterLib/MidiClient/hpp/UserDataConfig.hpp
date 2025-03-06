@@ -69,9 +69,7 @@ public:
     //-only-file body
     {
 
-        // QJsonDocument jsonDoc = QJsonDocument::fromVariant(jsonData.toVariant());
-        // if (jsonDoc["uniqueId"].isString() && jsonDoc["uniqueId"].toString() !=
-        // computerUuid()){
+
 
         UserConfigParseJson userConfigParseJson;
         QJsonObject j;
@@ -81,6 +79,12 @@ public:
         } else {
             j = jsonData.toObject();
         }
+
+
+        //if (j["uniqueId"].toString() == uniqueId()){
+        //    qDebug()<<"RETURN IGNORE";
+        //    return;
+        //}
 
         if (j["criticalError"].isBool() &&
             j["criticalError"].toBool()) {
@@ -179,7 +183,7 @@ public slots:
     void addDropdownList(QString name, QString data)
     //-only-file body
     {
-        Dropdownlist *d = new Dropdownlist();
+        Dropdownlist *d = new Dropdownlist(this);
         d->setName(name);
         d->setData(data);
         addListItem(d);

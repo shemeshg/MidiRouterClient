@@ -28,7 +28,6 @@ public:
 
         clearList<UserControl *>();
 
-        qDebug()<<" SIZE OF INPUT IS "<< (*m_midiRouteInputs).size();
     };
 
 
@@ -91,7 +90,7 @@ MidiRouteInput* getInputOrCreateByName(QString midiInputName)
     if (input){
         return input;
     }
-    MidiRouteInput *newInput = new MidiRouteInput();
+    MidiRouteInput *newInput = new MidiRouteInput(this);
     newInput->setMidiInputName(midiInputName);
     addListItem(newInput);
     return newInput;
@@ -101,7 +100,7 @@ MidiRouteInput* getInputOrCreateByName(QString midiInputName)
 void addUserControl()
 //-only-file body
 {
-    auto uc  = new UserControl();
+    auto uc  = new UserControl(this);
     uc->setDescription("Description");
     uc->setMaxVal(127);
     uc->setMinVal(0);
