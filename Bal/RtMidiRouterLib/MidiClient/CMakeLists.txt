@@ -50,7 +50,6 @@ ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouteInputCc14bit.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouteInputPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutePresetPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouterChainPrivate.h
-${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilter.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MonitorPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/PresetMidiControlPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/UserControlPrivate.h
@@ -90,6 +89,9 @@ ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/PresetMidiControl.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigParseJson.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserControl.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserDataConfig.cpp
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilterPrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilter.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilter.cpp
 )
 
   target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel

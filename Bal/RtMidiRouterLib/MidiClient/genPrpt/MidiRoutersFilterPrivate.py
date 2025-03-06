@@ -18,5 +18,5 @@ enumClasss = [
 ]
 
 
-prptClass = PrptClass("MidiRoutersFilter", ary, enumClasss)
+prptClass = PrptClass("MidiRoutersFilterPrivate", ary, enumClasss)
 
