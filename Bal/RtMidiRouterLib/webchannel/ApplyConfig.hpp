@@ -99,6 +99,7 @@ private:
         for (auto it = map.begin(); it != map.end(); ++it) {
             list.append(it.value().toString());
         }
+
         return list;
     }
 

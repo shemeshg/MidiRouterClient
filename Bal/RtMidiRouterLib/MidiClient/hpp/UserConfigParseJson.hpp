@@ -23,10 +23,12 @@ public:
     void setChanges(UserDataConfig *userDataConfigItf, QJsonObject &jsonDoc)
     //-only-file body
     {
-        userDataConfigItf->setConnectedInPorts(
-            convertJsonArrayToQList<QString>(jsonDoc["connectedInPorts"]));
-        userDataConfigItf->setConnectedOutPorts(
-            convertJsonArrayToQList<QString>(jsonDoc["connectedOutPorts"]));
+        QStringList connIn = convertJsonArrayToQList<QString>(jsonDoc["connectedInPorts"]);
+        connIn.sort();
+        userDataConfigItf->setConnectedInPorts(connIn);
+        QStringList connOut = convertJsonArrayToQList<QString>(jsonDoc["connectedOutPorts"]);
+        connOut.sort();
+        userDataConfigItf->setConnectedOutPorts(connOut);
 
         bool isServerInitialConfig = !jsonDoc["uniqueId"].isString();
         if (isServerInitialConfig) {
