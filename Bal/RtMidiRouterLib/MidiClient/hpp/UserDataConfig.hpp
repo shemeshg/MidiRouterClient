@@ -7,12 +7,10 @@
 //- #include "UserDataConfig.h"
 #include <QSettings>
 //- #include "MidiClientUtil.h"
-//- #include "UserConfigGenJson.h"
 //- #include "UserConfigParseJson.h"
 //-only-file null
 #include "../genPrpt/UserDataConfigPrivate.hpp"
 #include "MidiClientUtil.hpp"
-#include "UserConfigGenJson.hpp"
 #include "UserConfigParseJson.hpp"
 //-only-file header
 
@@ -112,11 +110,14 @@ public slots:
     //-only-file body
     {
         openMidiControlOffInputsForEasyConfig();
+        QJsonObject objUserConfig;
+        objUserConfig["uniqueId"] = uniqueId();
+        objUserConfig["_activePresetID"] = activePresetID();
+        objUserConfig["dropdownlists"] = getDropdownList(dropdownlists());
+        objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts());
+        objUserConfig["midiRoutePresets"] = getJsonMidiRoutePresets(midiRoutePresets());
+        return objUserConfig;
 
-        UserConfigGenJson userConfigGenJson;
-        return userConfigGenJson.getJson(uniqueId(), activePresetID(),
-                                         dropdownlists(), virtualInPorts(),
-                                         midiRoutePresets());
     }
 
     //- {fn}
@@ -215,6 +216,69 @@ private:
         for (const auto &inputStr : midiControlOffNames) {
             activePreset()->getInputOrCreateByName(inputStr);
         }
+    }
+
+    //- {fn}
+    QJsonArray getDropdownList(QList<Dropdownlist *> dropdownlists)
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (int i=0;i<dropdownlists.length();i++){
+            auto itm = dropdownlists.at(i);
+            QJsonObject obj;
+            obj["name"] = itm->name();
+            obj["data"] = itm->data();
+            ary.append(obj);
+        }
+        return ary;
+    }
+
+    //- {fn}
+    QJsonArray getListToJsonAry(const QStringList &sl)
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (const auto &itm: sl){
+            ary.append(itm);
+        }
+        return ary;
+    }
+
+
+    //- {fn}
+    QJsonArray getJsonMidiRoutePresets(QList<MidiRoutePreset *> midiRoutePresets)
+    //-only-file body
+    {
+
+
+        QJsonArray ary;
+        auto presetControlEasyConfigs = getMidiPresetControlEasyConfigs( midiRoutePresets);
+        for (int i=0;i<midiRoutePresets.length();i++){
+            const auto itm = midiRoutePresets.at(i);
+
+            ary.append(itm->getJson(presetControlEasyConfigs));
+        }
+        return ary;
+    }
+
+    //- {fn}
+    QList<MidiPresetControlEasyConfig> getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets)
+    //-only-file body
+    {
+        QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
+        for (int i=0;i<midiRoutePresets.length();i++){
+            const auto itm = midiRoutePresets.at(i);
+            MidiPresetControlEasyConfig mOff;
+            mOff.pmc = itm->midiControlOff();
+            mOff.isMidiControlOn = false;
+            midiPresetControlEasyConfigs.append(mOff);
+            MidiPresetControlEasyConfig mOn;
+            mOn.pmc = itm->midiControlOn();
+            mOn.isMidiControlOn = true;
+            midiPresetControlEasyConfigs.append(mOn);
+
+        }
+        return midiPresetControlEasyConfigs;
     }
 
     //-only-file header

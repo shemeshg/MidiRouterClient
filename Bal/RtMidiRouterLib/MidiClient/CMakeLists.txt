@@ -70,7 +70,6 @@ ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRoutePreset.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouterChain.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/Monitor.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/PresetMidiControl.h
-${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigGenJson.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigParseJson.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserControl.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserDataConfig.h
@@ -88,7 +87,6 @@ ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRoutePreset.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouterChain.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/Monitor.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/PresetMidiControl.cpp
-${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigGenJson.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserConfigParseJson.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserControl.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/UserDataConfig.cpp

@@ -2,6 +2,7 @@
 //-define-file header GenHpp/PresetMidiControl.h
 //-only-file header //-
 #pragma once
+#include <QJsonObject>
 //- #include "../genPrpt/PresetMidiControlPrivate.h"
 //-only-file body //-
 //- #include "PresetMidiControl.h"
@@ -29,6 +30,20 @@ public:
             setData1(-1);
             setData2(-1);
         };
+
+        //- {fn}
+        QJsonObject getJson()
+        //-only-file body
+        {
+            QJsonObject obj;
+            obj["presetMidiType"] = static_cast<int>(presetMidiType());
+            obj["portName"] = portName();
+            obj["eventTypeId"] = eventTypeId();
+            obj["channel"] = channel();
+            obj["data1"] = data1();
+            obj["data2"] = data2();
+            return obj;
+        }
 
         //-only-file header
 public slots:

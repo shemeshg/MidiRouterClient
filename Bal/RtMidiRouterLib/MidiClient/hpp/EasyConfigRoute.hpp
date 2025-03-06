@@ -87,7 +87,29 @@ public:
         {DropdownMidiEventTypeEnum::pitchbend, EventTypes::pitchbend}
     };
 
-     //- {fn}
+    //- {fn}
+    QJsonObject getJson()
+    //-only-file body
+    {
+        QJsonObject obj;
+        obj["uuid"] = uuid();
+        obj["splitRangeId"] = splitRangeId();
+        obj["fromSelectedMidiEventTypeId"] = fromSelectedMidiEventTypeId();
+        obj["fromChannel"] = fromChannel();
+        obj["fromData1"] = fromData1();
+        obj["transpose"] = transpose();
+        obj["fromCcOrNrpnStart"] = fromCcOrNrpnStart();
+        obj["fromCcOrNrpnEnd"] = fromCcOrNrpnEnd();
+        obj["toCcOrNrpnStart"] = toCcOrNrpnStart();
+        obj["toCcOrNrpnEnd"] = toCcOrNrpnEnd();
+        obj["toSelectedMidiEventTypeId"] = toSelectedMidiEventTypeId();
+        obj["toChannel"] = toChannel();
+        obj["toData1"] = toData1();
+        obj["toDestinationName"] = toDestinationName();
+        return obj;
+    }
+
+    //- {fn}
     EasyConfigRouteFilter getEasyConfigRouteFilter(const QList<int> &keyboardSplits)
     //-only-file body
     {

@@ -22,6 +22,20 @@ public:
         //-only-file body
         : EasyConfigPrivate{parent} {};
 
+
+    //- {fn}
+    QJsonObject getJson()
+    //-only-file body
+    {
+        QJsonObject  easyConfigInput;
+        easyConfigInput["keyboardSplits"] = getKeyboardSplits(keyboardSplits());
+        easyConfigInput["zoneNames"] = getStringListToJsonAry(zoneNames());
+        easyConfigInput["easyConfigRoutes"] = getJsonEasyConfigRoutes();
+
+        return easyConfigInput;
+    }
+
+
     //-only-file header
 public slots:
 
@@ -133,5 +147,40 @@ private:
         int octave = std::floor(inputVal / 12.0) - 1;
         return std::to_string(octave) + " " + noteName;
     }
+
+    //- {fn}
+    QJsonArray getKeyboardSplits(QList<int> keyboardSplits)
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (const auto &keyboardSplit: keyboardSplits){
+            ary.append(keyboardSplit);
+        }
+        return ary;
+    }
+
+    //- {fn}
+    QJsonArray getStringListToJsonAry(QStringList list )
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (const auto &str: list){
+            ary.append(str);
+        }
+        return ary;
+    }
+
+    //- {fn}
+    QJsonArray getJsonEasyConfigRoutes()
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (int i=0;i<easyConfigRoutes().length();i++){
+            ary.append(easyConfigRoutes().at(i)->getJson());
+        }
+        return ary;
+
+    }
+
     //-only-file header
 };

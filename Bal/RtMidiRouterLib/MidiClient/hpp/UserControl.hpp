@@ -26,6 +26,28 @@ public:
         setUuid(getUuId());
     };
 
+    //- {fn}
+    QJsonObject getJson()
+    //-only-file body
+    {
+        QJsonObject userControlObj;
+        userControlObj["uuid"] = uuid();
+        userControlObj["eventType"] = static_cast<int>(eventType());
+        userControlObj["description"] = description();
+        userControlObj["inputVal"] = inputVal();
+        userControlObj["minVal"] = minVal();
+        userControlObj["maxVal"] = maxVal();
+        userControlObj["is64Mode"] = is64Mode();
+        userControlObj["channelId"] = channelId();
+        userControlObj["ccId"] = ccId();
+        userControlObj["nrpnControl"] = nrpnControl();
+        userControlObj["outputPortnName"] = outputPortnName();
+        userControlObj["isShowDropdown"] = isShowDropdown();
+        userControlObj["dropdownListId"] = dropdownListId();
+        userControlObj["isSendOnPresetChange"] = isSendOnPresetChange();
+        return userControlObj;
+    }
+
      //-only-file header
 public slots:
 

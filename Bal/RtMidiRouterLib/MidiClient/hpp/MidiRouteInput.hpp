@@ -46,6 +46,24 @@ public:
     }
 
     //- {fn}
+    QJsonObject getJson()
+    //-only-file body
+    {
+        QJsonObject obj;
+        obj["uuid"] = uuid();
+        obj["midiInputName"] = midiInputName();
+        obj["ignoreTypes"] = getJsonIgnoreTypes();
+        obj["midiRouteClock"] = getJsonMidiRouteClock();
+        obj["cc14bitAry"] = getJsonCc14bitAry();
+        obj["monitor"] = monitor()->getJson();
+        obj["easyConfig"] = easyConfig()->getJson();
+
+        obj["midiRouterChains"] = getJsonMidiRouterChains();
+
+        return obj;
+    }
+
+    //- {fn}
     void clearEasyConfigMidiRouterChains()
     //-only-file body
     {
@@ -150,4 +168,71 @@ public slots:
     //-only-file header
 private:
 
+    //- {fn}
+    QJsonObject getJsonIgnoreTypes()
+    //-only-file body
+    {
+        QJsonObject ignoreTypes;
+        ignoreTypes["midiSysex"] = ignoreTypesMidiSysex();
+        ignoreTypes["midiTime"] = ignoreTypesMidiTime();
+        ignoreTypes["midiSense"] = ignoreTypesMidiSense();
+
+        return ignoreTypes;
+    }
+
+    //- {fn}
+    QJsonObject getJsonMidiRouteClock()
+    //-only-file body
+    {
+        QJsonObject midiRouteClock;
+        midiRouteClock["timeSig"] = midiRouteClockTimeSig();
+        midiRouteClock["timeSigDivBy"] = midiRouteClockTimeSigDivBy();
+        midiRouteClock["fromSppPos"] = midiRouteClockFromSppPos();
+        midiRouteClock["propegateInputs"] = getListToJMidiInsonAry(midiRouteClockPropegateInputs());
+
+        return midiRouteClock;
+    }
+
+    //- {fn}
+    QJsonArray getListToJMidiInsonAry(const QStringList &sl)
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (const auto &itm: sl){
+            QJsonObject obj;
+            obj["midiInputName"] = itm;
+            ary.append(obj);
+        }
+        return ary;
+    }
+
+    //- {fn}
+    QJsonArray getJsonCc14bitAry()
+    //-only-file body
+    {
+        QJsonArray cc14bitAry;
+        for (int i=0;i< midiRouteInputCc14bit().length();i++){
+            auto cc14bit = midiRouteInputCc14bit().at(i);
+            QJsonObject cc14bitObj;
+            cc14bitObj["channel"] = cc14bit->channel();
+            cc14bitObj["cc"] = cc14bit->cc();
+            cc14bitAry.append(cc14bitObj);
+        }
+
+        return cc14bitAry;
+    }
+
+    //- {fn}
+    QJsonArray getJsonMidiRouterChains()
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (int i=0;i< midiRouterChains().length();i++){
+            auto midiRouterChain = midiRouterChains().at(i);
+            ary.append(midiRouterChain->getJson());
+        }
+        return ary;
+    }
+
+    //-only-file header
 };

@@ -61,6 +61,19 @@ public:
         clearMidiRoutersFilters();
     }
 
+    //- {fn}
+    QJsonObject getJson()
+    //-only-file body
+    {
+        QJsonObject midiRouterChainObj;
+        midiRouterChainObj["uuid"] = uuid();
+        midiRouterChainObj["name"] = name();
+        midiRouterChainObj["isEasyConfig"] = isEasyConfig();
+        midiRouterChainObj["isRunForPresetOnAndOff"] = isRunForPresetOnAndOff();
+        midiRouterChainObj["midiRoutersFilters"] = getJsonMidiRoutersFilters();
+        return midiRouterChainObj;
+    }
+
     //-only-file header
 public slots:
     //- {fn}
@@ -285,6 +298,63 @@ private:
         } else if (var.canConvert<FilterAndTransform*>()) {
             delete var.value<FilterAndTransform*>();
         }
+    }
+
+    //- {fn}
+    QJsonArray getJsonMidiRoutersFilters()
+    //-only-file body
+    {
+        QJsonArray ary;
+        for (int i=0;i<midiRoutersFilters().length();i++){
+            auto midiRoutersFilter = midiRoutersFilters().at(i);
+            QJsonObject filterObj;
+
+            if (midiRoutersFilter.canConvert<FilterMidiDestination*>()) {
+                auto filter = midiRoutersFilter.value<FilterMidiDestination*>();
+                filterObj["uuid"] = filter->uuid();
+                filterObj["filterType"] = static_cast<int>(filter->filterType());
+                filterObj["midiInputName"]= filter->baseMidiRouteInput();
+                ary.append(filterObj);
+            } else if (midiRoutersFilter.canConvert<FilterToConsole*>()) {
+                auto filter = midiRoutersFilter.value<FilterToConsole*>();
+                filterObj["uuid"] = filter->uuid();
+                filterObj["filterType"] = static_cast<int>(filter->filterType());
+                filterObj["logTo"] = static_cast<int>(filter->logTo());
+                filterObj["userdata"] = filter->userdata();
+
+                ary.append(filterObj);
+            } else if (midiRoutersFilter.canConvert<FilterSchedule*>()) {
+                auto filter = midiRoutersFilter.value<FilterSchedule*>();
+                filterObj["uuid"] = filter->uuid();
+                filterObj["filterType"] = static_cast<int>(filter->filterType());
+                filterObj["defferedType"] = static_cast<int>(filter->defferedType());
+                filterObj["defferedTo"] = static_cast<int>(filter->defferedTo());
+
+                ary.append(filterObj);
+            } else if (midiRoutersFilter.canConvert<FilterNetworkDestination*>()) {
+                auto filter = midiRoutersFilter.value<FilterNetworkDestination*>();
+                filterObj["uuid"] = filter->uuid();
+                filterObj["filterType"] = static_cast<int>(filter->filterType());
+                filterObj["serverName"] = filter->serverName();
+                filterObj["serverPort"] = filter->serverPort();
+                filterObj["midiInputName"]= filter->baseMidiRouteInput();
+
+                ary.append(filterObj);
+            } else if (midiRoutersFilter.canConvert<FilterAndTransform*>()) {
+                auto filter = midiRoutersFilter.value<FilterAndTransform*>();
+                filterObj["uuid"] = filter->uuid();
+                filterObj["filterType"] = static_cast<int>(filter->filterType());
+                filterObj["name"] = filter->name();
+                filterObj["conditionAction"] = static_cast<int>(filter->conditionAction());
+                filterObj["filterChannel"] = filter->filterChannel();
+                filterObj["filterEvents"] = filter->filterEvents();
+                filterObj["filterData1"] = filter->filterData1();
+                filterObj["filterData2"] = filter->filterData2();
+
+                ary.append(filterObj);
+            }
+        }
+        return ary;
     }
 
     //-only-file header

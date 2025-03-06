@@ -2,6 +2,7 @@
 //-define-file header GenHpp/Monitor.h
 //-only-file header //-
 #pragma once
+#include <QJsonObject>
 //- #include "../genPrpt/MonitorPrivate.h"
 //-only-file body //-
 //- #include "Monitor.h"
@@ -38,6 +39,16 @@ public:
         }
 
         setLogItems(newLogItem);
+    }
+
+    //- {fn}
+    QJsonObject getJson()
+    //-only-file body
+    {
+        QJsonObject monitor;
+        monitor["isMonitored"] = isMonitored();
+        monitor["logLen"] = logLen();
+        return monitor;
     }
 
     //-only-file header
