@@ -2,6 +2,7 @@
 #include "BalDataPrivate.h"
 #include "RtMidiRouterLib/MidiClientClass.h"
 #include "RtMidiRouterLib/MidiServerClass.h"
+#include "config.h"
 
 class BalData : public BalDataPrivate
 
@@ -14,7 +15,9 @@ public:
 
 
 public slots:
-    QString qtVer() { return QT_VERSION_STR; }
+    QString qtVer() {
+        return "App:" + QString(PROJECT_VER) + " qt:" + qVersion();
+    }
 
     void openCashFolder();
 

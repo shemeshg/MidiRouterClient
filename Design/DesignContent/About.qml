@@ -51,7 +51,7 @@ RowLayout {
 
 
         CoreLabel {
-            text: "Qt " + Constants.balData.qtVer()
+            text: Constants.balData.qtVer()
         }
         CoreLabel {
             text: homebrewVersion

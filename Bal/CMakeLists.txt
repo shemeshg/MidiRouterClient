@@ -13,8 +13,12 @@ qt6_add_qml_module(Bal
       BalDataPrivate.h
       BalDataPrivate.cpp        
       JsAsync.h
+      ${CMAKE_BINARY_DIR}/config.h
 )
 
 
 
 target_link_libraries(Bal PRIVATE Qt6::Concurrent Qt6::Gui RtMidiRouterLib)
+target_include_directories(Bal PRIVATE
+${CMAKE_BINARY_DIR}
+    )

@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(midi-router-client VERSION 2.0.3 LANGUAGES CXX)
+project(midi-router-client VERSION 2.0.4 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
+
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     # Append -fPIC to the CXXFLAGS only if the system is Linux
@@ -13,7 +14,8 @@ endif()
 
 
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Widgets WebSockets WebChannel Svg Concurrent)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Widgets WebSockets
+    WebChannel Svg Concurrent QuickControls2)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -155,7 +157,8 @@ add_subdirectory(Bal)
 
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    PRIVATE Qt6::Quick Qt6::Widgets Qt6::WebSockets Qt6::WebChannel Qt6::Svg Qt6::Concurrent
+    PRIVATE Qt6::Quick Qt6::Widgets Qt6::WebSockets Qt6::WebChannel
+    Qt6::Svg Qt6::Concurrent Qt6::QuickControls2
     Bal
     Designplugin
     DesignContentplugin
@@ -180,3 +183,5 @@ qt_generate_deploy_qml_app_script(
 
 # Call the deployment script on "cmake --install".
 install(SCRIPT ${deploy_script})
+
+configure_file("${PROJECT_SOURCE_DIR}/config.h.in" "${CMAKE_BINARY_DIR}/config.h")
