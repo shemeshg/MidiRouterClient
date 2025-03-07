@@ -62,7 +62,7 @@ public:
     }
 
     //- {fn}
-    QJsonObject getJson()
+    QJsonObject genJson()
     //-only-file body
     {
         QJsonObject midiRouterChainObj;
@@ -311,7 +311,7 @@ private:
 
             if (midiRoutersFilter.canConvert<MidiRoutersFilter*>()) {
                 auto filter = midiRoutersFilter.value<MidiRoutersFilter*>();
-                ary.append(filter->getJson());
+                ary.append(filter->genJson());
             }
         }
         return ary;

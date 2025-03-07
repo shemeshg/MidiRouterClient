@@ -236,7 +236,7 @@ void BalData::applyConfig(const QJSValue &callback)
         qDebug()<<"Not connected";
         return;
     }
-    auto json = mcc->midiClientConnection->userDataConfig()->getJson();
+    auto json = mcc->midiClientConnection->userDataConfig()->genJson();
 
     QJsonDocument jsonDoc(json);
     QString s=jsonDoc.toJson(QJsonDocument::Compact);

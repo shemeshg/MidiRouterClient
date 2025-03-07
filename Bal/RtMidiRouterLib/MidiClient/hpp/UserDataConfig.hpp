@@ -110,7 +110,7 @@ public:
     //-only-file header
 public slots:
     //- {fn}
-    QJsonObject getJson()
+    QJsonObject genJson()
     //-only-file body
     {
         openMidiControlOffInputsForEasyConfig();

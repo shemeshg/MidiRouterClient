@@ -65,8 +65,8 @@ public:
         obj["name"] = name();
         obj["uuid"] = uuid();
         obj["isEnabled"] = isEnabled();
-        obj["midiControlOn"] = midiControlOn()->getJson();
-        obj["midiControlOff"] = midiControlOff()->getJson();
+        obj["midiControlOn"] = midiControlOn()->genJson();
+        obj["midiControlOff"] = midiControlOff()->genJson();
         obj["midiRouteInputs"] = getJsonMidiRouteInputs();
         obj["userControls"] = getJsonUserControls();
         return obj;
@@ -132,7 +132,7 @@ QJsonArray getJsonMidiRouteInputs()
 {
     QJsonArray obj;
     for (const auto &itm: midiRouteInputs()){
-        obj.append( itm->getJson());
+        obj.append( itm->genJson());
     }
     return obj;
 }
@@ -158,7 +158,7 @@ QJsonArray getJsonUserControls()
     QJsonArray ary;
     for (int i=0;i<userControls().length();i++){
 
-        ary.append(userControls().at(i)->getJson());
+        ary.append(userControls().at(i)->genJson());
 
     }
     return ary;

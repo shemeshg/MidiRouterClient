@@ -24,7 +24,7 @@ public:
 
 
     //- {fn}
-    QJsonObject getJson()
+    QJsonObject genJson()
     //-only-file body
     {
         QJsonObject  easyConfigInput;
@@ -176,7 +176,7 @@ private:
     {
         QJsonArray ary;
         for (int i=0;i<easyConfigRoutes().length();i++){
-            ary.append(easyConfigRoutes().at(i)->getJson());
+            ary.append(easyConfigRoutes().at(i)->genJson());
         }
         return ary;
 

@@ -30,7 +30,7 @@ public:
     };
 
     //- {fn}
-    QJsonObject getJson() override
+    QJsonObject genJson() override
     //-only-file body
     {
         QJsonObject filterObj;

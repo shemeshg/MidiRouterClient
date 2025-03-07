@@ -32,7 +32,7 @@ public:
         };
 
         //- {fn}
-        QJsonObject getJson()
+        QJsonObject genJson()
         //-only-file body
         {
             QJsonObject obj;

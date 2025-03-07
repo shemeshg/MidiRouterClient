@@ -46,7 +46,7 @@ public:
     }
 
     //- {fn}
-    QJsonObject getJson()
+    QJsonObject genJson()
     //-only-file body
     {
         QJsonObject obj;
@@ -55,8 +55,8 @@ public:
         obj["ignoreTypes"] = getJsonIgnoreTypes();
         obj["midiRouteClock"] = getJsonMidiRouteClock();
         obj["cc14bitAry"] = getJsonCc14bitAry();
-        obj["monitor"] = monitor()->getJson();
-        obj["easyConfig"] = easyConfig()->getJson();
+        obj["monitor"] = monitor()->genJson();
+        obj["easyConfig"] = easyConfig()->genJson();
 
         obj["midiRouterChains"] = getJsonMidiRouterChains();
 
@@ -229,7 +229,7 @@ private:
         QJsonArray ary;
         for (int i=0;i< midiRouterChains().length();i++){
             auto midiRouterChain = midiRouterChains().at(i);
-            ary.append(midiRouterChain->getJson());
+            ary.append(midiRouterChain->genJson());
         }
         return ary;
     }

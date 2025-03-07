@@ -27,7 +27,7 @@ public:
     };
 
     //- {fn}
-    QJsonObject getJson()
+    QJsonObject genJson()
     //-only-file body
     {
         QJsonObject userControlObj;
