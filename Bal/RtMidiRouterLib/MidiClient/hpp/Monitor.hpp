@@ -3,11 +3,10 @@
 //-only-file header //-
 #pragma once
 #include <QJsonObject>
-//- #include "../genPrpt/MonitorPrivate.h"
 //-only-file body //-
 //- #include "Monitor.h"
-//-only-file null
-#include "../genPrpt/MonitorPrivate.hpp"
+//- {include-header}
+#include "../genPrpt/MonitorPrivate.hpp" //- #include "../genPrpt/MonitorPrivate.h"
 //-only-file header
 
 

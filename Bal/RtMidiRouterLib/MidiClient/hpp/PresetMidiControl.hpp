@@ -3,11 +3,10 @@
 //-only-file header //-
 #pragma once
 #include <QJsonObject>
-//- #include "../genPrpt/PresetMidiControlPrivate.h"
 //-only-file body //-
 //- #include "PresetMidiControl.h"
-//-only-file null
-#include "../genPrpt/PresetMidiControlPrivate.hpp"
+//- {include-header}
+#include "../genPrpt/PresetMidiControlPrivate.hpp" //- #include "../genPrpt/PresetMidiControlPrivate.h"
 //-only-file header
 
 

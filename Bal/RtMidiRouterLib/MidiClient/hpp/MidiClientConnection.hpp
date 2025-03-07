@@ -2,11 +2,11 @@
 //-define-file header GenHpp/MidiClientConnection.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/MidiClientConnectionPrivate.h"
+
 //-only-file body //-
 //- #include "MidiClientConnection.h"
-//-only-file null
-#include "../genPrpt/MidiClientConnectionPrivate.hpp"
+//- {include-header}
+#include "../genPrpt/MidiClientConnectionPrivate.hpp" //- #include "../genPrpt/MidiClientConnectionPrivate.h"
 //-only-file header
 
 //-var {PRE} "MidiClientConnection::"
