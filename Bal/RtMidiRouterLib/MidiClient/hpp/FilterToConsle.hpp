@@ -2,13 +2,12 @@
 //-define-file header GenHpp/FilterToConsle.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/FilterToConslePrivate.h"
 //-only-file body //-
 //- #include "FilterToConsle.h"
-//- #include "MidiClientUtil.h"
-//-only-file null
-#include "MidiClientUtil.hpp"
-#include "../genPrpt/FilterToConslePrivate.hpp"
+//- {include-body}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+//- {include-header}
+#include "../genPrpt/FilterToConslePrivate.hpp" //- #include "../genPrpt/FilterToConslePrivate.h"
 //-only-file header
 
 

@@ -2,13 +2,14 @@
 //-define-file header GenHpp/FilterSchedule.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/FilterSchedulePrivate.h"
+
 //-only-file body //-
 //- #include "FilterSchedule.h"
-//- #include "MidiClientUtil.h"
-//-only-file null
-#include "MidiClientUtil.hpp"
-#include "../genPrpt/FilterSchedulePrivate.hpp"
+//- {include-body}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+
+//- {include-header}
+#include "../genPrpt/FilterSchedulePrivate.hpp" //- #include "../genPrpt/FilterSchedulePrivate.h"
 //-only-file header
 
 //-var {PRE} "FilterSchedule::"

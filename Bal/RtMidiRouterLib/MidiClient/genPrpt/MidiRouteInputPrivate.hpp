@@ -2,18 +2,18 @@
 //-only-file header //-
 #pragma once
 
-//- #include "MidiRouteInputCc14bit.h"
-//- #include "../GenHpp/MidiRouterChain.h"
-//- #include "../GenHpp/Monitor.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
+
+//- {include-header}
+#include "MidiRouteInputCc14bit.hpp" //- #include "MidiRouteInputCc14bit.h"
+//- {include-header}
+#include "../hpp/MidiRouterChain.hpp" //- #include "../GenHpp/MidiRouterChain.h"
+//- {include-header}
+#include "../hpp/Monitor.hpp" //- #include "../GenHpp/Monitor.h"
+
 //-only-file null
-#include "MidiRouteInputCc14bit.hpp"
-#include "../hpp/MidiRouterChain.hpp"
-#include "../hpp/Monitor.hpp"
-
-
 /*[[[cog
 import cog
 from MidiRouteInputPrivate import prptClass

@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-//- #include "Dropdownlist.h"
-//- #include "../GenHpp/MidiRoutePreset.h"
-//-only-file null
-#include "../hpp/MidiRoutePreset.hpp"
-#include "Dropdownlist.hpp"
-//-only-file header 
+
+//- {include-header}
+#include "../hpp/MidiRoutePreset.hpp" //- #include "../GenHpp/MidiRoutePreset.h"
+//- {include-header}
+#include "Dropdownlist.hpp" //- #include "Dropdownlist.h"
+
 
 //-only-file null
 /*[[[cog

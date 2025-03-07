@@ -2,13 +2,15 @@
 //-only-file header //-
 //- #pragma once
 
-//- #include "../GenHpp/UserDataConfig.h"
+
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//- {include-header}
+#include "../hpp/UserDataConfig.hpp" //- #include "../GenHpp/UserDataConfig.h"
+
 //-only-file null
-#include "../hpp/UserDataConfig.hpp"
 /*[[[cog
 import cog
 from MidiClientConnectionPrivate import prptClass

@@ -2,13 +2,14 @@
 //-only-file header //-
 #pragma once
 
-//- #include "MidiRoutersFilter.h"
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
+//- {include-header}
+#include "MidiRoutersFilter.hpp" //- #include "MidiRoutersFilter.h"
+
 //-only-file null
-#include "MidiRoutersFilter.hpp"
 /*[[[cog
 import cog
 from FilterNetworkDestinationPrivate import prptClass

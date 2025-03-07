@@ -5,10 +5,11 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-//- #include "../GenHpp/EasyConfigRoute.h"
+
+//- {include-header}
+#include "../hpp/EasyConfigRoute.hpp" //- #include "../GenHpp/EasyConfigRoute.h"
 
 //-only-file null
-#include "../hpp/EasyConfigRoute.hpp"
 /*[[[cog
 import cog
 from EasyConfigPrivate import prptClass

@@ -6,17 +6,16 @@
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
 
-//- #include "../GenHpp/EasyConfig.h"
-//- #include "../GenHpp/MidiRouteInput.h"
-//- #include "../GenHpp/PresetMidiControl.h"
-//- #include "../GenHpp/UserControl.h"
+
+//- {include-header}
+#include "../hpp/MidiRouteInput.hpp" //- #include "../GenHpp/MidiRouteInput.h"
+//- {include-header}
+#include "../hpp/PresetMidiControl.hpp" //- #include "../GenHpp/PresetMidiControl.h"
+//- {include-header}
+#include "../hpp/UserControl.hpp" //- #include "../GenHpp/UserControl.h"
+
+
 //-only-file null
-#include "../hpp/EasyConfig.hpp"
-#include "../hpp/MidiRouteInput.hpp"
-#include "../hpp/PresetMidiControl.hpp"
-#include "../hpp/UserControl.hpp"
-
-
 /*[[[cog
 import cog
 from MidiRoutePresetPrivate import prptClass

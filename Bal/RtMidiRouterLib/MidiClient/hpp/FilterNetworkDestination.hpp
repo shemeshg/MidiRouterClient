@@ -2,13 +2,15 @@
 //-define-file header GenHpp/FilterNetworkDestination.h
 //-only-file header //-
 #pragma once
-//- #include "../genPrpt/FilterNetworkDestinationPrivate.h"
 //-only-file body //-
 //- #include "FilterNetworkDestination.h"
-//- #include "MidiClientUtil.h"
-//-only-file null
-#include "MidiClientUtil.hpp"
-#include "../genPrpt/FilterNetworkDestinationPrivate.hpp"
+
+
+//- {include-body}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+
+//- {include-header}
+#include "../genPrpt/FilterNetworkDestinationPrivate.hpp" //- #include "../genPrpt/FilterNetworkDestinationPrivate.h"
 //-only-file header
 
 
