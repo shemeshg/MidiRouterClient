@@ -202,7 +202,7 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         addNewListItem()
         {
             auto item = new MidiRouteInputCc14bit (this);
-            m_midiRouteInputCc14bit.push_back(item);
+            m_midiRouteInputCc14bit->push_back(item);
             emit midiRouteInputCc14bitChanged();
             return item;
         }
@@ -245,7 +245,7 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         addNewListItem()
         {
             auto item = new MidiRouterChain (this);
-            m_midiRouterChains.push_back(item);
+            m_midiRouterChains->push_back(item);
             emit midiRouterChainsChanged();
             return item;
         }

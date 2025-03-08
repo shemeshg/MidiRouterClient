@@ -140,7 +140,7 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         addNewListItem()
         {
             auto item = new Dropdownlist (this);
-            m_dropdownlists.push_back(item);
+            m_dropdownlists->push_back(item);
             emit dropdownlistsChanged();
             return item;
         }
@@ -183,7 +183,7 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         addNewListItem()
         {
             auto item = new MidiRoutePreset (this);
-            m_midiRoutePresets.push_back(item);
+            m_midiRoutePresets->push_back(item);
             emit midiRoutePresetsChanged();
             return item;
         }

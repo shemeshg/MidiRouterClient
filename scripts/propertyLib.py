@@ -204,7 +204,7 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         addNewListItem()
         {
             auto item = new ${type_in_list_no_str}(this);
-            m_${field_name}.push_back(item);
+            m_${field_name}->push_back(item);
             emit ${field_name}Changed();
             return item;
         }

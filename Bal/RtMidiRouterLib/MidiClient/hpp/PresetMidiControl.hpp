@@ -18,14 +18,9 @@ class PresetMidiControl : public PresetMidiControlPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-<<<<<<< HEAD
-    explicit PresetMidiControl(PresetMidiType presetMidiType,                               
-                               QObject *parent = nullptr)
-=======
+
     explicit PresetMidiControl(PresetMidiType presetMidiType,
-                               QString presetUuid,
                                QObject *parent)
->>>>>>> e1c2bc8 (memory parent issues)
         //-only-file body
         : PresetMidiControlPrivate{parent}
         {            

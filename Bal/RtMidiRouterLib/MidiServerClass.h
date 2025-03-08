@@ -6,13 +6,8 @@ class MidiServerClass: public QObject
 {
     Q_OBJECT
 public:
-<<<<<<< HEAD
-    MidiServerClass(QObject *parent = nullptr):QObject(parent){}
 
-
-=======
     MidiServerClass(QObject *parent):QObject(parent){}
->>>>>>> e1c2bc8 (memory parent issues)
     ~MidiServerClass() {
 
         stop();

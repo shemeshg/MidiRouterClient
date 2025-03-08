@@ -83,7 +83,7 @@ void setZoneNames(const QStringList &newZoneNames)
         addNewListItem()
         {
             auto item = new EasyConfigRoute (this);
-            m_easyConfigRoutes.push_back(item);
+            m_easyConfigRoutes->push_back(item);
             emit easyConfigRoutesChanged();
             return item;
         }

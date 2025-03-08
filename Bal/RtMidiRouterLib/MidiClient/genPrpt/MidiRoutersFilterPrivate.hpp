@@ -29,7 +29,7 @@ class MidiRoutersFilterPrivate : public QObject
     QML_ELEMENT
 public:
     
-    MidiRoutersFilterPrivate(QObject *parent = nullptr):QObject(parent){}
+    MidiRoutersFilterPrivate(QObject *parent):QObject(parent){}
 
     virtual ~MidiRoutersFilterPrivate() {
         

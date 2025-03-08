@@ -25,7 +25,7 @@ public:
     //-only-file body
     : FilterAndTransformPrivate{parent}
     {
-         setFilterType( FilterType::FILTER_AND_TRANSFORM);
+         setFilterType( MidiRoutersFilterPrivate::FilterType::FILTER_AND_TRANSFORM);
         setUuid(getUuId());
     };
 

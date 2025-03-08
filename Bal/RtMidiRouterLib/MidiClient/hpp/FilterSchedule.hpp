@@ -25,7 +25,7 @@ public:
     //-only-file body
     : FilterSchedulePrivate{parent}
     {
-        setFilterType( FilterType::SCHEDULE_TO);
+        setFilterType( MidiRoutersFilterPrivate::FilterType::SCHEDULE_TO);
         setUuid(getUuId());
     };
 

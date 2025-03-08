@@ -126,7 +126,7 @@ void setIsEnabled(const bool newIsEnabled)
         addNewListItem()
         {
             auto item = new UserControl (this);
-            m_userControls.push_back(item);
+            m_userControls->push_back(item);
             emit userControlsChanged();
             return item;
         }
@@ -169,7 +169,7 @@ void setIsEnabled(const bool newIsEnabled)
         addNewListItem()
         {
             auto item = new MidiRouteInput (this);
-            m_midiRouteInputs.push_back(item);
+            m_midiRouteInputs->push_back(item);
             emit midiRouteInputsChanged();
             return item;
         }

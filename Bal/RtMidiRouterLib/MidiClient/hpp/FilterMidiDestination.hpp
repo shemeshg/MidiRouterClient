@@ -25,7 +25,8 @@ public:
     //-only-file body
     : FilterMidiDestinationPrivate{parent}
     {
-        setFilterType( FilterType::TO_MIDI_DESTINATION);
+
+        setFilterType( MidiRoutersFilterPrivate::FilterType::TO_MIDI_DESTINATION);
         setUuid(getUuId());
     };
 

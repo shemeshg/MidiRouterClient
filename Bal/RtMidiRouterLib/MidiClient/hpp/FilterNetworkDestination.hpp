@@ -27,7 +27,7 @@ public:
     //-only-file body
     : FilterNetworkDestinationPrivate{parent}
     {
-        setFilterType( FilterType::TO_NETWORK);
+        setFilterType( MidiRoutersFilterPrivate::FilterType::TO_NETWORK);
         setUuid(getUuId());
     };
 

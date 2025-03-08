@@ -150,17 +150,10 @@ public slots:
     //- {fn}
     void addPreset()
     //-only-file body
-<<<<<<< HEAD
-    {        
-        MidiRoutePreset *p =addListItem( new MidiRoutePreset());
-        p->setName(QString{"Preset %0"}.arg(midiRoutePresets().size()));
-
-=======
     {
         MidiRoutePreset *p = new MidiRoutePreset(this);
-        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets.size()));
+        p->setName(QString{"Preset %0"}.arg(m_midiRoutePresets->size()));
         addListItem(p);
->>>>>>> e1c2bc8 (memory parent issues)
     }
 
     //- {fn}
