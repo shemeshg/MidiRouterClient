@@ -26,7 +26,7 @@ public:
     //- {function} 1 1
     explicit WcUserData(Webchannel::WcMidiIn *wcmidiin,
                         Webchannel::WcMidiOut *wcmidiout,
-                        QObject *parent = nullptr)
+                        QObject *parent)
     //-only-file body
         :wcmidiin{wcmidiin},
         wcmidiout{wcmidiout},

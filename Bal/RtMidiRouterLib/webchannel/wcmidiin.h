@@ -40,7 +40,7 @@ private:
     std::map<std::string, std::unique_ptr<QWebSocket>> opendRemoteServersSockets;
 
 public:
-    explicit WcMidiIn(QObject *parent = nullptr);
+    explicit WcMidiIn(QObject *parent);
 
     void msgSend(RtMidiWrap::MidiEvent &m,LOG_TO logto, std::string userdata) override;
 

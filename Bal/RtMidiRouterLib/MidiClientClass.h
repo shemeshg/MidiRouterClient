@@ -9,7 +9,7 @@
 class MidiClientClass: public QObject
 {
 public:
-    MidiClientClass(QObject *parent = nullptr);
+    MidiClientClass(QObject *parent);
     ~MidiClientClass() { stop(); }
     void start(const QString &serverName, int portNumber);
     void stop();
@@ -26,6 +26,7 @@ public:
                       bool isResponse,
                       const QJSValue &callback,
                       QJSEngine *engine);
+
 
     MidiClientConnection *midiClientConnection=new MidiClientConnection(this);
 

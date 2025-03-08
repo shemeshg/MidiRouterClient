@@ -30,7 +30,7 @@ class FilterNetworkDestinationPrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     
-    FilterNetworkDestinationPrivate(QObject *parent = nullptr):MidiRoutersFilter(parent){}
+    FilterNetworkDestinationPrivate(QObject *parent):MidiRoutersFilter(parent){}
 
     virtual ~FilterNetworkDestinationPrivate() {
         

@@ -18,7 +18,7 @@ class Monitor : public MonitorPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit Monitor(QObject *parent = nullptr)
+    explicit Monitor(QObject *parent)
     //-only-file body
         : MonitorPrivate{parent}
     {

@@ -24,7 +24,7 @@ class EasyConfigRoute : public EasyConfigRoutePrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit EasyConfigRoute(QObject *parent = nullptr)
+    explicit EasyConfigRoute(QObject *parent)
         //-only-file body
         : EasyConfigRoutePrivate{parent}{
         setSplitRangeId(-1);

@@ -31,7 +31,7 @@ class MidiRouterChainPrivate : public QObject
     QML_ELEMENT
 public:
     
-    MidiRouterChainPrivate(QObject *parent = nullptr):QObject(parent){}
+    MidiRouterChainPrivate(QObject *parent):QObject(parent){}
 
     virtual ~MidiRouterChainPrivate() {
         

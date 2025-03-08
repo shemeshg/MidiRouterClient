@@ -19,7 +19,7 @@ class UserControl : public UserControlPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit UserControl(QObject *parent = nullptr)
+    explicit UserControl(QObject *parent)
     //-only-file body
     : UserControlPrivate{parent}
     {

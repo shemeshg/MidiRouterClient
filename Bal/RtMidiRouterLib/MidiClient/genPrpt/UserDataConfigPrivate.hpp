@@ -38,7 +38,7 @@ class UserDataConfigPrivate : public QObject
     QML_ELEMENT
 public:
     
-    UserDataConfigPrivate(QObject *parent = nullptr):QObject(parent){}
+    UserDataConfigPrivate(QObject *parent):QObject(parent){}
 
     virtual ~UserDataConfigPrivate() {
         clearList<Dropdownlist *>();
@@ -136,6 +136,16 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         }
 
         template<typename T = Dropdownlist * >
+        std::enable_if_t<std::is_same_v<T, Dropdownlist * >, Dropdownlist * >
+        addNewListItem()
+        {
+            auto item = new Dropdownlist (this);
+            m_dropdownlists.push_back(item);
+            emit dropdownlistsChanged();
+            return item;
+        }
+
+        template<typename T = Dropdownlist * >
         std::enable_if_t<std::is_same_v<T, Dropdownlist * >, void>
         clearList(){
             qDeleteAll(*m_dropdownlists);
@@ -164,6 +174,16 @@ void setCriticalErrorMsg(const QString &newCriticalErrorMsg)
         MidiRoutePreset * addListItem(MidiRoutePreset * item)
         {
             m_midiRoutePresets->push_back(item);
+            emit midiRoutePresetsChanged();
+            return item;
+        }
+
+        template<typename T = MidiRoutePreset * >
+        std::enable_if_t<std::is_same_v<T, MidiRoutePreset * >, MidiRoutePreset * >
+        addNewListItem()
+        {
+            auto item = new MidiRoutePreset (this);
+            m_midiRoutePresets.push_back(item);
             emit midiRoutePresetsChanged();
             return item;
         }

@@ -30,7 +30,7 @@ class EasyConfigPrivate : public QObject
     QML_ELEMENT
 public:
     
-    EasyConfigPrivate(QObject *parent = nullptr):QObject(parent){}
+    EasyConfigPrivate(QObject *parent):QObject(parent){}
 
     virtual ~EasyConfigPrivate() {
         clearList<EasyConfigRoute *>();
@@ -74,6 +74,16 @@ void setZoneNames(const QStringList &newZoneNames)
         EasyConfigRoute * addListItem(EasyConfigRoute * item)
         {
             m_easyConfigRoutes->push_back(item);
+            emit easyConfigRoutesChanged();
+            return item;
+        }
+
+        template<typename T = EasyConfigRoute * >
+        std::enable_if_t<std::is_same_v<T, EasyConfigRoute * >, EasyConfigRoute * >
+        addNewListItem()
+        {
+            auto item = new EasyConfigRoute (this);
+            m_easyConfigRoutes.push_back(item);
             emit easyConfigRoutesChanged();
             return item;
         }

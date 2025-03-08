@@ -18,7 +18,7 @@ class MidiClientConnection : public MidiClientConnectionPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit MidiClientConnection(QObject *parent = nullptr)
+    explicit MidiClientConnection(QObject *parent)
     //-only-file body
     : MidiClientConnectionPrivate{parent}
     {

@@ -20,7 +20,7 @@ class FilterToConsole : public FilterToConslePrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit FilterToConsole(QObject *parent = nullptr)
+    explicit FilterToConsole(QObject *parent)
     //-only-file body
     : FilterToConslePrivate{parent}
     {

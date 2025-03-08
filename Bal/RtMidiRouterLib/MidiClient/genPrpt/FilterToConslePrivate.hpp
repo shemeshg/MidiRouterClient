@@ -29,7 +29,7 @@ class FilterToConslePrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     
-    FilterToConslePrivate(QObject *parent = nullptr):MidiRoutersFilter(parent){}
+    FilterToConslePrivate(QObject *parent):MidiRoutersFilter(parent){}
 
     virtual ~FilterToConslePrivate() {
         

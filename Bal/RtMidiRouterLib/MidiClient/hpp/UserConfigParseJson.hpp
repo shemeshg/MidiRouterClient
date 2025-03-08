@@ -135,8 +135,7 @@ private:
                 return userDataConfig->template listItems<T *>().at(idx)->uuid();
             },
             [&userDataConfig](QString uuid, QJsonObject) {
-                T *preset = new T();
-                userDataConfig->addListItem(preset);
+                auto preset = userDataConfig->template addNewListItem<T *>();
                 preset->setUuid(uuid);
             },
             userDataConfig->template listItems<T *>().size(),
@@ -423,13 +422,11 @@ private:
         auto cc14bitAry = getJson<QJsonArray>(midirouteInputJsonObj["cc14bitAry"]);
         midiRouteInput->clearList<MidiRouteInputCc14bit *>();
         for (const auto &cc14bit : cc14bitAry) {
-            auto midiRouteInputCc14bit = new MidiRouteInputCc14bit();
+             MidiRouteInputCc14bit *midiRouteInputCc14bit = midiRouteInput->addNewListItem<MidiRouteInputCc14bit *>();
             auto cc14bitObj = getJson<QJsonObject>(cc14bit);
             FieldSetter fsCc14(midiRouteInputCc14bit, cc14bitObj);
             fsCc14.setField<double>(&MidiRouteInputCc14bit::setChannel, "channel");
             fsCc14.setField<double>(&MidiRouteInputCc14bit::setCc, "cc");
-
-            midiRouteInput->addListItem(midiRouteInputCc14bit);
         }
         recreateSettings<MidiRouteInput, MidiRouterChain>(
             midiRouteInput, midirouteInputJsonObj, "midiRouterChains");

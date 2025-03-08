@@ -40,7 +40,7 @@ class MidiRoutePresetPrivate : public QObject
     QML_ELEMENT
 public:
     
-    MidiRoutePresetPrivate(QObject *parent = nullptr):QObject(parent){}
+    MidiRoutePresetPrivate(QObject *parent):QObject(parent){}
 
     virtual ~MidiRoutePresetPrivate() {
         clearList<UserControl *>();
@@ -122,6 +122,16 @@ void setIsEnabled(const bool newIsEnabled)
         }
 
         template<typename T = UserControl * >
+        std::enable_if_t<std::is_same_v<T, UserControl * >, UserControl * >
+        addNewListItem()
+        {
+            auto item = new UserControl (this);
+            m_userControls.push_back(item);
+            emit userControlsChanged();
+            return item;
+        }
+
+        template<typename T = UserControl * >
         std::enable_if_t<std::is_same_v<T, UserControl * >, void>
         clearList(){
             qDeleteAll(*m_userControls);
@@ -150,6 +160,16 @@ void setIsEnabled(const bool newIsEnabled)
         MidiRouteInput * addListItem(MidiRouteInput * item)
         {
             m_midiRouteInputs->push_back(item);
+            emit midiRouteInputsChanged();
+            return item;
+        }
+
+        template<typename T = MidiRouteInput * >
+        std::enable_if_t<std::is_same_v<T, MidiRouteInput * >, MidiRouteInput * >
+        addNewListItem()
+        {
+            auto item = new MidiRouteInput (this);
+            m_midiRouteInputs.push_back(item);
             emit midiRouteInputsChanged();
             return item;
         }

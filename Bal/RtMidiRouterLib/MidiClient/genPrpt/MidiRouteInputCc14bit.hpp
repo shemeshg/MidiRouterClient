@@ -27,7 +27,7 @@ class MidiRouteInputCc14bit : public QObject
     QML_ELEMENT
 public:
     
-    MidiRouteInputCc14bit(QObject *parent = nullptr):QObject(parent){}
+    MidiRouteInputCc14bit(QObject *parent):QObject(parent){}
 
     virtual ~MidiRouteInputCc14bit() {
         

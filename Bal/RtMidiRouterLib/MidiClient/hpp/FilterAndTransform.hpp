@@ -21,7 +21,7 @@ class FilterAndTransform : public FilterAndTransformPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit FilterAndTransform(QObject *parent = nullptr)
+    explicit FilterAndTransform(QObject *parent)
     //-only-file body
     : FilterAndTransformPrivate{parent}
     {

@@ -31,7 +31,7 @@ class MidiClientConnectionPrivate : public QObject
     QML_ELEMENT
 public:
     
-    MidiClientConnectionPrivate(QObject *parent = nullptr):QObject(parent){}
+    MidiClientConnectionPrivate(QObject *parent):QObject(parent){}
 
     virtual ~MidiClientConnectionPrivate() {
         

@@ -29,7 +29,7 @@ class MonitorPrivate : public QObject
     QML_ELEMENT
 public:
     
-    MonitorPrivate(QObject *parent = nullptr):QObject(parent){}
+    MonitorPrivate(QObject *parent):QObject(parent){}
 
     virtual ~MonitorPrivate() {
         

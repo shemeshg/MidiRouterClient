@@ -11,7 +11,6 @@
 using namespace Webchannel;
 
 
-
 void MidiServerClass::start(int portNumber)
 {
     if (serverIsRunning) {
@@ -21,7 +20,7 @@ void MidiServerClass::start(int portNumber)
                                   QWebSocketServer::NonSecureMode);
 
     // wrap WebSocket clients in QWebChannelAbstractTransport objects
-    WebSocketClientWrapper *clientWrapper = new WebSocketClientWrapper(server); //NOLINT
+    WebSocketClientWrapper *clientWrapper = new WebSocketClientWrapper(server, this); //NOLINT
 
     // setup the channel
     QWebChannel *channel = new QWebChannel(server); //NOLINT

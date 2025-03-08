@@ -21,7 +21,7 @@ class FilterSchedule : public FilterSchedulePrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit FilterSchedule(QObject *parent = nullptr)
+    explicit FilterSchedule(QObject *parent)
     //-only-file body
     : FilterSchedulePrivate{parent}
     {

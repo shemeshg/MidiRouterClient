@@ -32,7 +32,7 @@ class PresetMidiControlPrivate : public QObject
     QML_ELEMENT
 public:
     
-    PresetMidiControlPrivate(QObject *parent = nullptr):QObject(parent){}
+    PresetMidiControlPrivate(QObject *parent):QObject(parent){}
 
     virtual ~PresetMidiControlPrivate() {
         

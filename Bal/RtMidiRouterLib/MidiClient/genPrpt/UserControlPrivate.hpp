@@ -38,7 +38,7 @@ class UserControlPrivate : public QObject
     QML_ELEMENT
 public:
     
-    UserControlPrivate(QObject *parent = nullptr):QObject(parent){}
+    UserControlPrivate(QObject *parent):QObject(parent){}
 
     virtual ~UserControlPrivate() {
         

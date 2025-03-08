@@ -23,7 +23,7 @@ class FilterNetworkDestination : public FilterNetworkDestinationPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit FilterNetworkDestination(QObject *parent = nullptr)
+    explicit FilterNetworkDestination(QObject *parent)
     //-only-file body
     : FilterNetworkDestinationPrivate{parent}
     {

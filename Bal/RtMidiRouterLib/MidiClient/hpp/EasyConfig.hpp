@@ -18,7 +18,7 @@ class EasyConfig : public EasyConfigPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit EasyConfig(QObject *parent = nullptr)
+    explicit EasyConfig(QObject *parent)
         //-only-file body
         : EasyConfigPrivate{parent} {};
 

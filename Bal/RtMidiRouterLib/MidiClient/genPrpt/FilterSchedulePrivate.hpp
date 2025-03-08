@@ -30,7 +30,7 @@ class FilterSchedulePrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     
-    FilterSchedulePrivate(QObject *parent = nullptr):MidiRoutersFilter(parent){}
+    FilterSchedulePrivate(QObject *parent):MidiRoutersFilter(parent){}
 
     virtual ~FilterSchedulePrivate() {
         

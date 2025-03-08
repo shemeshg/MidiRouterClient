@@ -46,7 +46,7 @@ class MidiRouterChain : public MidiRouterChainPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit MidiRouterChain(QObject *parent = nullptr)
+    explicit MidiRouterChain(QObject *parent)
     //-only-file body
         : MidiRouterChainPrivate{parent}{
         setUuid(getUuId());
@@ -107,7 +107,7 @@ public slots:
     FilterMidiDestination* addFilterMidiDestination(QString midiDestination)
     //-only-file body
     {
-        auto f = new FilterMidiDestination();
+        auto f = new FilterMidiDestination(this);
         f->setFilter(midiDestination);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
         emit midiRoutersFiltersChanged();
@@ -118,7 +118,7 @@ public slots:
     FilterToConsole* addFilterToConsole(FilterToConsole::LogTo logTo, QString userData)
     //-only-file body
     {
-        auto f = new FilterToConsole();
+        auto f = new FilterToConsole(this);
         f->setFilter(logTo, userData);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
         emit midiRoutersFiltersChanged();
@@ -129,7 +129,7 @@ public slots:
     FilterNetworkDestination* addFilterNetworkDestination(QString serverName, int serverPort, QString baseMidiRouteInput)
     //-only-file body
     {
-        auto f = new FilterNetworkDestination();
+        auto f = new FilterNetworkDestination(this);
         f->setFilter(serverName,  serverPort, baseMidiRouteInput);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
         emit midiRoutersFiltersChanged();
@@ -140,7 +140,7 @@ public slots:
     FilterSchedule* addFilterFilterSchedule(FilterSchedule::DefferedType defferedType, int defferedTo )
     //-only-file body
     {
-        auto f = new FilterSchedule();
+        auto f = new FilterSchedule(this);
         f->setFilter(defferedType, defferedTo);
         m_midiRoutersFilters.append(QVariant::fromValue(f));
         emit midiRoutersFiltersChanged();
@@ -152,7 +152,7 @@ public slots:
                                QString filterEvents, QString filterData1, QString filterData2 )
     //-only-file body
     {
-        auto f = new FilterAndTransform();
+        auto f = new FilterAndTransform(this);
         f->setFilter( name,  conditionAction,  filterChannel,
                     filterEvents,  filterData1,  filterData2 );
         m_midiRoutersFilters.append(QVariant::fromValue(f));
@@ -179,7 +179,7 @@ public slots:
 
         setName("EasyConfig");
         setIsEasyConfig(true);
-        EasyConfigRoute ecr{};
+        EasyConfigRoute ecr{this};
         ecr.setFromChannel(m.pmc->channel());
         ecr.setToChannel(m.pmc->channel());
         ecr.setFromSelectedMidiEventTypeId(m.pmc->eventTypeId());

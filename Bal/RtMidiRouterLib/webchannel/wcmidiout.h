@@ -14,7 +14,7 @@ class WcMidiOut : public QObject
     Q_OBJECT
 
 public:
-    explicit WcMidiOut(QObject *parent = nullptr);
+    explicit WcMidiOut(QObject *parent);
 
     Q_INVOKABLE bool msgToServer(const QString &msg);
     Q_INVOKABLE int getPortCount();

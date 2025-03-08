@@ -21,7 +21,7 @@ class MidiRoutePreset : public MidiRoutePresetPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit MidiRoutePreset(QObject *parent = nullptr)
+    explicit MidiRoutePreset(QObject *parent)
         //-only-file body
         : MidiRoutePresetPrivate{parent}{
 
@@ -78,6 +78,7 @@ public:
 
 //-only-file header
 public slots:
+<<<<<<< HEAD
 //- {fn}
 MidiRouteInput* getInputOrCreateByName(QString midiInputName)
 //-only-file body
@@ -111,6 +112,41 @@ void addUserControl()
     uc->setIsSendOnPresetChange(false);
     addListItem(uc);
 }
+=======
+     //- {fn}
+     MidiRouteInput* getInputOrCreateByName(QString midiInputName)
+     //-only-file body
+     {
+        std::optional<MidiRouteInput *> input = getInputByName(midiInputName);
+         if (input){
+             return input.value();
+         }
+         MidiRouteInput *newInput = new MidiRouteInput(this);
+         newInput->setMidiInputName(midiInputName);
+         addListItem(newInput);
+         return newInput;
+     }
+
+     //- {fn}
+     void addUserControl()
+     //-only-file body
+     {
+         auto uc  = new UserControl(this);
+         uc->setDescription("Description");
+         uc->setMaxVal(127);
+         uc->setMinVal(0);
+         uc->setDropdownListId(-1);
+         uc->setEventType(UserControl::EventType::CC);
+         uc->setChannelId(1);
+         uc->setCcId(0);
+         uc->setNrpnControl(0);
+         uc->setInputVal(0);
+         uc->setIs64Mode(false);
+         uc->setIsShowDropdown(false);
+         uc->setIsSendOnPresetChange(false);
+         addListItem(uc);
+     }
+>>>>>>> e1c2bc8 (memory parent issues)
 
 
 //- {fn}

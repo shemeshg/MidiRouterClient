@@ -100,9 +100,15 @@ void loadDefaultFontSize();
 
 void startClient(const QString &serverName, int portNumber);
 
+<<<<<<< HEAD
 MidiServerClass *msc= new MidiServerClass(this);
 MidiClientClass *mcc = new MidiClientClass(this);
 MidiClientClass *remoteMcc = new MidiClientClass(this);
+=======
+MidiServerClass msc{this};
+MidiClientClass mcc{this};
+MidiClientClass remoteMcc{this};
+>>>>>>> e1c2bc8 (memory parent issues)
 void updateServerStatus();
 
 

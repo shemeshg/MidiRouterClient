@@ -21,7 +21,7 @@ class FilterMidiDestination : public FilterMidiDestinationPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit FilterMidiDestination(QObject *parent = nullptr)
+    explicit FilterMidiDestination(QObject *parent)
     //-only-file body
     : FilterMidiDestinationPrivate{parent}
     {

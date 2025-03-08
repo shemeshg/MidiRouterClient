@@ -178,6 +178,7 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
 
     def public_slots_h_file(self):
         type_in_list = self.field_type.split("<")[1].split(">")[0]
+        type_in_list_no_str = type_in_list.replace("*","");
         t = Template(
         """
         template<typename T = ${type_in_list}>
@@ -199,6 +200,16 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
         }
 
         template<typename T = ${type_in_list} >
+        std::enable_if_t<std::is_same_v<T, ${type_in_list} >, ${type_in_list} >
+        addNewListItem()
+        {
+            auto item = new ${type_in_list_no_str}(this);
+            m_${field_name}.push_back(item);
+            emit ${field_name}Changed();
+            return item;
+        }
+
+        template<typename T = ${type_in_list} >
         std::enable_if_t<std::is_same_v<T, ${type_in_list} >, void>
         clearList(){
             qDeleteAll(*m_${field_name});
@@ -214,7 +225,8 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
 
         """)
         return t.substitute(field_name = self.field_name,field_type=self.field_type,
-                            field_name_initCap=self.field_name_initCap,type_in_list=type_in_list )
+                            field_name_initCap=self.field_name_initCap,type_in_list=type_in_list,
+                             type_in_list_no_str = type_in_list_no_str )
 
 class PrptClass:
     class_name = ""
@@ -342,11 +354,11 @@ private:
         return private_content
 
     def get_constructor_h_file(self):        
-        t = Template("    ${class_name}(QObject *parent = nullptr);\n")
+        t = Template("    ${class_name}(QObject *parent);\n")
         
         if self.is_hpp:                      
             t = Template("""
-    ${class_name}(QObject *parent = nullptr):${inhirit_from}(parent){}
+    ${class_name}(QObject *parent):${inhirit_from}(parent){}
 """)
         return t.substitute(class_name = self.class_name, inhirit_from = self.inhirit_from)
 

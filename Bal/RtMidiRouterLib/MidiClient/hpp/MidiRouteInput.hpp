@@ -22,7 +22,7 @@ class MidiRouteInput : public MidiRouteInputPrivate
     QML_ELEMENT
 public:
     //- {function} 1 1
-    explicit MidiRouteInput(QObject *parent = nullptr)
+    explicit MidiRouteInput(QObject *parent)
         //-only-file body
         : MidiRouteInputPrivate{parent} {
         clearList<MidiRouteInputCc14bit *>();
@@ -34,8 +34,13 @@ public:
         setMidiRouteClockTimeSig( 4);
         setMidiRouteClockTimeSigDivBy(4);
         setMidiRouteClockFromSppPos(0);
+<<<<<<< HEAD
 
 
+=======
+        m_monitor = new Monitor(this);
+        m_easyConfig = new EasyConfig(this);
+>>>>>>> e1c2bc8 (memory parent issues)
         setUuid(getUuId());
     };
 
@@ -78,8 +83,12 @@ public:
     void createEasyConfigChains(EasyConfig *easyConfig)
     //-only-file body
     {
+<<<<<<< HEAD
         for (int i=0;i<easyConfig->easyConfigRoutes().length();i++){
             auto easyConfigRoute = easyConfig->easyConfigRoutes().at(i);
+=======
+        for (auto easyConfigRoute : easyConfig->easyConfigRoutes()) {
+>>>>>>> e1c2bc8 (memory parent issues)
             MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
             midiRouterChain->setEasyConfigChain(easyConfig, easyConfigRoute);
 
@@ -117,6 +126,8 @@ public:
             }
         }
     }
+
+
 
     //- {fn}
     void clearMidiRouterChains()

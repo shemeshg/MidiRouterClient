@@ -44,7 +44,7 @@ class MidiRouteInputPrivate : public QObject
     QML_ELEMENT
 public:
     
-    MidiRouteInputPrivate(QObject *parent = nullptr):QObject(parent){}
+    MidiRouteInputPrivate(QObject *parent):QObject(parent){}
 
     virtual ~MidiRouteInputPrivate() {
         clearList<MidiRouteInputCc14bit *>();
@@ -198,6 +198,16 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         }
 
         template<typename T = MidiRouteInputCc14bit * >
+        std::enable_if_t<std::is_same_v<T, MidiRouteInputCc14bit * >, MidiRouteInputCc14bit * >
+        addNewListItem()
+        {
+            auto item = new MidiRouteInputCc14bit (this);
+            m_midiRouteInputCc14bit.push_back(item);
+            emit midiRouteInputCc14bitChanged();
+            return item;
+        }
+
+        template<typename T = MidiRouteInputCc14bit * >
         std::enable_if_t<std::is_same_v<T, MidiRouteInputCc14bit * >, void>
         clearList(){
             qDeleteAll(*m_midiRouteInputCc14bit);
@@ -226,6 +236,16 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
         MidiRouterChain * addListItem(MidiRouterChain * item)
         {
             m_midiRouterChains->push_back(item);
+            emit midiRouterChainsChanged();
+            return item;
+        }
+
+        template<typename T = MidiRouterChain * >
+        std::enable_if_t<std::is_same_v<T, MidiRouterChain * >, MidiRouterChain * >
+        addNewListItem()
+        {
+            auto item = new MidiRouterChain (this);
+            m_midiRouterChains.push_back(item);
             emit midiRouterChainsChanged();
             return item;
         }

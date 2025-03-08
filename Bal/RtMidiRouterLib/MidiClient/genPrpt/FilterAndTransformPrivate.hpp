@@ -34,7 +34,7 @@ class FilterAndTransformPrivate : public MidiRoutersFilter
     QML_ELEMENT
 public:
     
-    FilterAndTransformPrivate(QObject *parent = nullptr):MidiRoutersFilter(parent){}
+    FilterAndTransformPrivate(QObject *parent):MidiRoutersFilter(parent){}
 
     virtual ~FilterAndTransformPrivate() {
         
