@@ -1,8 +1,8 @@
 #!/bin/sh
-# git tag 2.0.3
+# git tag 2.0.5
 # git push --tags 
 # or
-# git push origin 2.0.3
+# git push origin 2.0.5
 mkdir deploye
 cd deploye
 ~/Qt/6.8.2/macos/bin/qt-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../MidiRouterClient
