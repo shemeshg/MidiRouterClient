@@ -439,24 +439,5 @@ private:
     }
 
 
-
-
-
-
-    //- {fn}
-    QList<int> extractKeyboardSplits(const QJsonArray &array)
-    //-only-file body
-    {
-        QList<int> keyboardSplits;
-        for (const QJsonValue &value : array) {
-            keyboardSplits.push_back(value["splitPosition"].toInt());
-        }
-        return keyboardSplits;
-    }
-
-
-
-
-
     //-only-file header
 };
