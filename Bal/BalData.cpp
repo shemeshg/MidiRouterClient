@@ -244,6 +244,20 @@ void BalData::applyConfig(const QJSValue &callback)
 
 }
 
+void BalData::uploadJson(QString filePath, const QJSValue &callback)
+{
+    QFile file(QUrl(filePath).toLocalFile());
+    if (file.exists()) {
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QString fileContent;
+            QTextStream stream(&file);
+            fileContent = stream.readAll();
+            file.close();
+            mcc->invokeMethod("wcuserdata", "applyConfig", {fileContent}, true, callback, qjsEngine(this));
+        }
+    }
+}
+
 void BalData::startServer(int portNumber)
 {
     msc->start(portNumber);

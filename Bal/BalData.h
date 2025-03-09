@@ -63,6 +63,7 @@ void setAsyncServerStatusAndText(MidiClientConnection::ServerStatus serverStatus
 void stopClient();
 void testDummyDelete(const QJSValue &callback);
 void applyConfig(const QJSValue &callback);
+void uploadJson(QString filePath, const QJSValue &callback);
 void getPortNumber(const QString &midiPortName, const QJSValue &callback);
 void setNonRegisteredParameterInt( int portNumber,int parameter,int data,QStringList channels,const QJSValue &callback);
 void sendControlChange( int portNumber,int controller,int value,QStringList channels,const QJSValue &callback);

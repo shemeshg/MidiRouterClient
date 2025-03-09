@@ -42,9 +42,13 @@ public:
             str = "{}";
         }
 
-        QByteArray br = str.toUtf8();
 
-        QJsonDocument doc = QJsonDocument::fromJson(br);
+
+        QJsonDocument doc = QJsonDocument::fromJson(str.toUtf8());
+        if (isSaveConfigOnServer && doc.isNull()){
+            str = "{\"criticalError\": true}";
+            doc = QJsonDocument::fromJson(str.toUtf8());
+        }
 
         userdata = doc.object();
 

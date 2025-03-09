@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Core
+import QtQuick.Dialogs
 
 RowLayout {
 
@@ -26,7 +27,43 @@ RowLayout {
                 }
             }
         }
+        RowLayout {
+            CoreButton {
+                text: "Download client settings"
+                onClicked: {
+                    fileDialogDownload.open()
+                }
+            }
+        }
+        RowLayout {
+            CoreButton {
+                text: "Upload client settings"
+                onClicked: {
+                    fileDialogUpload.open();
+                }
+            }
+        }
+        FileDialog {
+            id: fileDialogDownload
+            title: "Please choose a .json file to download"
+            fileMode: FileDialog.SaveFile
+            onAccepted: {
+                        Constants.balData.midiClientConnection.
+                            userDataConfig.downloadJson(currentFile);
+            }
+            nameFilters: ["json (*.json)"]
 
+        }
+        FileDialog {
+            id: fileDialogUpload
+            title: "Please choose a .json file to upload"
+            fileMode: FileDialog.OpenFile
+            onAccepted: {
+                Constants.balData.uploadJson(currentFile,()=>{});
+            }
+            nameFilters: ["json (*.json)"]
+
+        }
         CoreLabel {
             text: `
             <h2>About</h2>

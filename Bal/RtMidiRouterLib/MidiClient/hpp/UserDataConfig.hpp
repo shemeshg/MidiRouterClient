@@ -2,6 +2,7 @@
 //-define-file header GenHpp/UserDataConfig.h
 //-only-file header //-
 #pragma once
+#include <QFile>
 //- #include "../genPrpt/UserDataConfigPrivate.h"
 //-only-file body //-
 //- #include "UserDataConfig.h"
@@ -123,6 +124,20 @@ public slots:
         return objUserConfig;
 
     }
+    //- {fn}
+    void downloadJson(QString filePath)
+    //-only-file body
+    {
+
+        QFile file(QUrl(filePath).toLocalFile());
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file);
+            QJsonDocument jsonDoc(genJson());
+            out << jsonDoc.toJson(QJsonDocument::Compact);
+            file.close();
+        }
+    }
+
 
     //- {fn}
     void setActivePreset(int id, bool setEnable)
