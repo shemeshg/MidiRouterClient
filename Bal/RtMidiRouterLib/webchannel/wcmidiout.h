@@ -50,48 +50,63 @@ public:
     }
 
     Q_INVOKABLE void sendActiveSensing(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendActiveSensing();
     }
     Q_INVOKABLE void sendClock(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendClock();
     }
     Q_INVOKABLE void sendContinue(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendContinue();
     }
     Q_INVOKABLE void sendReset(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendReset();
     }
     Q_INVOKABLE void sendStart(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendStart();
     }
     Q_INVOKABLE void sendStop(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendStop();
     }
     Q_INVOKABLE void sendTuningRequest(int portNumber){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendTuningRequest();
     }
     Q_INVOKABLE void setMasterTuning( int portNumber,float value,QStringList channels){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->setMasterTuning( value, qStringListToVectorByte(channels));
     }
     Q_INVOKABLE void sendSongPosition( int portNumber,int value){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendSongPosition( value);
     }
     Q_INVOKABLE void sendSongSelect( int portNumber,int value){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendSongSelect( value);
     }
     Q_INVOKABLE void sendTimecodeQuarterFrame( int portNumber,int value){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendTimecodeQuarterFrame( value);
     }
     Q_INVOKABLE void setTuningBank( int portNumber,int value,QStringList channels){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->setTuningBank( value, qStringListToVectorByte(channels));
     }
     Q_INVOKABLE void setTuningProgram( int portNumber,int value,QStringList channels){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->setTuningProgram( value, qStringListToVectorByte(channels));
     }
     Q_INVOKABLE void sendProgramChange( int portNumber,int program,QStringList channels){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendProgramChange( program, qStringListToVectorByte(channels));
     }
     Q_INVOKABLE void sendSysex( int portNumber,QStringList data){
+        openPort(portNumber);
         openedMidiOutObj[portNumber]->sendSysex( qStringListToVectorByte(data));
     }
 
