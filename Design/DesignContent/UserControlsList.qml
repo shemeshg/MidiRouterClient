@@ -35,16 +35,16 @@ ColumnLayout {
         ComboSilder {
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
-            function getCmbModel(){
+            function getCmbModel(controlModelData){
 
                 let ddlists = Constants.balData.
                 midiClientConnection.
                 userDataConfig.dropdownlists;
 
-                if (modelData.isShowDropdown && ddlists.lenght > 0 &&
-                        modelData.dropdownListId >= 0 ) {
+                if (controlModelData.isShowDropdown && ddlists.length > 0 &&
+                        controlModelData.dropdownListId >= 0 ) {
 
-                    return  ddlists[modelData.dropdownListId].data.trim().split("\n")
+                    return  ddlists[controlModelData.dropdownListId].data.trim().split("\n")
                     .map((row,idx)=>{
                             return {text: row, value: idx}
                          });
@@ -58,6 +58,7 @@ ColumnLayout {
                                                  portNumber = i;
                                                 })
 
+                cmbSliderId.cmbModel = getCmbModel(modelData)
             }
 
             id: cmbSliderId
@@ -68,7 +69,7 @@ ColumnLayout {
             name: modelData.description
             is64Mode: modelData.is64Mode
             isShowLabel: true
-            cmbModel: getCmbModel()
+            cmbModel: []
             onSetVal: (i, isForce)=>{
                     if (i=== modelData.inputVal && !isForce){return;}
                     modelData.inputVal = i;
