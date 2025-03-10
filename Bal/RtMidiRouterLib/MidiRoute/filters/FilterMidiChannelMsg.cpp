@@ -28,7 +28,10 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
         }
         int new_command = old_command;
         passedFromFilter = passedFromFilter && fromCommand.isInRange( old_command);
-        if (fromCommand.isInRange( old_command)){new_command = fromCommand.getVal((float)old_command);}
+
+        if (fromCommand.isInRange( old_command)){
+            new_command = fromCommand.getVal((float)old_command);
+        }
 
         int old_channel = in.channel;
         int new_channel = old_channel;
@@ -104,8 +107,11 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
                     sndVector[2] = new_data2;
                 }
 
-                if(new_command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::channelaftertouch){
-                    if (2 == sndVector.size()){
+
+
+                if(new_command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::channelaftertouch ||
+                   new_command ==  RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::programchange ){
+                    if (3 == sndVector.size()){
                         sndVector[1] = sndVector[2];
                         // There should not be sndVector[2] in channelaftertouch
                         sndVector.pop_back();

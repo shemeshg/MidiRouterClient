@@ -1,9 +1,9 @@
 #include "rangemap.h"
 namespace MidiRoute {
 
-RangeMap setRangeMapObject(std::vector<int> &jv, RangeMap &rm){
+RangeMap setRangeMapObject(std::vector<int> &jv, RangeMap &rm){    
     if (jv.size() == 1){
-        rm.set(jv[0]);
+        rm.set(jv[0]);        
     } else if (jv.size() == 2){
         rm.set(jv[0], jv[1]);
     } else if (jv.size() == 3){

@@ -41,6 +41,7 @@ ColumnLayout {
             property bool fromKeyOnOff: [1,2,3].indexOf( fromEvent.currentIndex) > -1
             property bool fromEventIsCc: [5,7].indexOf( fromEvent.currentValue) > -1
             property bool toEventIsCc: [5,7].indexOf( toEvent.currentValue) > -1
+            property bool toEventIsPc: [8].indexOf( toEvent.currentValue) > -1
             ColumnLayout {
                 width: parent.width
                 RowLayout {
@@ -220,7 +221,7 @@ ColumnLayout {
                         }
                     }
                     ColumnLayout {
-                        visible: toEventIsCc
+                        visible: toEventIsCc || toEventIsPc
                         CoreLabel {
                             text: "From data"
                         }
@@ -232,7 +233,7 @@ ColumnLayout {
                         }
                     }
                     ColumnLayout {
-                        visible: toEventIsCc
+                        visible: toEventIsCc || toEventIsPc
                         CoreLabel {
                             text: "To data"
                         }

@@ -165,6 +165,7 @@ public:
         MidiRoute::RangeMap _data2;
         _setRangeMap(_data2, data2);
 
+
         openedMidiInObj[portNumber]->getRouteFilterChains()->chains[chainId]->addFilterMidiChannelMsg(_channels,_eventTypes, _data1, _data2,
                                                                                                 (MidiRoute::MIDI_FILTER_ACTION_IF_NOT)midiFilterActionIfNot );
 

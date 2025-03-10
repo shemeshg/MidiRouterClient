@@ -135,9 +135,18 @@ public:
                 eventFilter = QString{"[[%0], [%1]]"}
                                   .arg((int)EventTypes::noteoff)
                                   .arg((int)EventTypes::noteon);
-            } else {
+            }
+            else if (fromSelectedMidiEventTypeId() ==   (int)DropdownMidiEventTypeEnum::noteOnOf){
+                eventFilter = QString{"[[%0,%2], [%1,%2]]"}
+                                  .arg((int)EventTypes::noteoff)
+                                  .arg((int)EventTypes::noteon)
+                                  .arg((int)dropdownMidiEventTypeEnum
+                                           [(DropdownMidiEventTypeEnum)
+                                            toSelectedMidiEventTypeId()]);
+            }
+            else {
                 eventFilter =
-                    QString{"[[%0], [%1]]"}
+                    QString{"[[%0, %1]]"}
                         .arg((int)dropdownMidiEventTypeEnum
                                  [(DropdownMidiEventTypeEnum)
                                   fromSelectedMidiEventTypeId()])
