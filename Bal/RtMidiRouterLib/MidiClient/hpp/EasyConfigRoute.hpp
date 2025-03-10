@@ -149,8 +149,14 @@ public:
 
         QString data1Filter = "[[0, 127, 0]]";
         QString data2Filter = "[[0, 127, 0]]";
-        int vSplitRangeId = splitRangeId();
-        if (vSplitRangeId != -1) {
+
+        int vSplitRangeId = splitRangeId();        
+        if (vSplitRangeId != -1 &&
+            (
+                fromSelectedMidiEventTypeId() == (int)DropdownMidiEventTypeEnum::noteOnOf ||
+                fromSelectedMidiEventTypeId() == (int)DropdownMidiEventTypeEnum::noteon ||
+                fromSelectedMidiEventTypeId() == (int)DropdownMidiEventTypeEnum::noteoff
+                )) {
 
             QList<int> vKeyboardSplits = keyboardSplits;
             if (!vKeyboardSplits.contains(8)) {
@@ -178,20 +184,24 @@ public:
                                   .arg(toData1());
             }
         }
-        if (fromData1() != -1 &&
-            toData1() != -1) {
-            data1Filter = QString{"[[%0 %1]]"}
-                              .arg(fromData1())
-                              .arg(toData1());
+
+        if (fromCcOrNrpnStart()!= -1 &&
+            toCcOrNrpnStart() != -1){
+
+            if (fromCcOrNrpnStart() == fromCcOrNrpnEnd() &&
+                toCcOrNrpnStart() == toCcOrNrpnEnd()) {
+                data2Filter = QString{"[[%0 %1]]"}
+                                  .arg(fromData1())
+                                  .arg(toData1());
+            } else {
+                data2Filter = QString{"[[%0, %1, %2, %3]]"}
+                                  .arg(fromCcOrNrpnStart())
+                                  .arg(fromCcOrNrpnEnd())
+                                  .arg(toCcOrNrpnStart())
+                                  .arg(toCcOrNrpnEnd());
+            }
         }
-        if (fromData1() != -1 ||
-            toData1() != -1) {
-            data2Filter = QString{"[[%0, %1, %2, %3]]"}
-                              .arg(fromCcOrNrpnStart())
-                              .arg(fromCcOrNrpnEnd())
-                              .arg(toCcOrNrpnStart())
-                              .arg(toCcOrNrpnEnd());
-        }
+
 
         ecf.isAllDefault = isAllDefault;
         ecf.channelFilter = channelFilter;
