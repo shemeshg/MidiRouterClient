@@ -129,7 +129,7 @@ ColumnLayout {
             }
         }
         RowLayout {
-            visible: eventTypeId.currentIndex !== 2
+            visible: eventTypeId.currentIndex === 0
             CoreLabel {
                 text: "CC Number"
             }

@@ -160,22 +160,22 @@ private:
                         }
                         wcmidiout->openPort(portNumber);
                         int eventType = getJson<int>(ctrlObj["eventType"]);
-                        if (eventType == 0) {
-
+                        QStringList channelIds{ QString::number( getJson<int>(ctrlObj["channelId"])) };
+                        if (eventType == 0) {                            
                             wcmidiout->sendControlChange(portNumber,
                                                          getJson<int>(ctrlObj["ccId"]),
                                                          getJson<int>(ctrlObj["inputVal"]),
-                                                         {getJson<QString>(ctrlObj["channelId"])});
+                                                         {channelIds});
                         } else if (eventType == 1) {
                             wcmidiout->sendProgramChange(portNumber,
                                                          getJson<int>(ctrlObj["inputVal"]),
-                                                         {getJson<QString>(ctrlObj["channelId"])});
+                                                         channelIds);
                         } else if (eventType == 2) {
                             wcmidiout->setNonRegisteredParameterInt(
                                 portNumber,
                                 getJson<int>(ctrlObj["nrpnControl"]),
                                 getJson<int>(ctrlObj["inputVal"]),
-                                {getJson<QString>(ctrlObj["channelId"])});
+                                channelIds);
                         } else {
                             throw std::runtime_error("Unexpected JSON format");
                         }
