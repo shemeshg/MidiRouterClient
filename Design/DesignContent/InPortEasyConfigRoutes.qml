@@ -55,8 +55,7 @@ ColumnLayout {
                                          modelData.toDestinationName =  toDestinationName;
                                      }
                     }
-                    CoreButton {
-                        text: "del"
+                    UiBtnDel {
                         onClicked: {
                             midiRouteInput.easyConfig.delEasyConfigRoute(index)
                         }

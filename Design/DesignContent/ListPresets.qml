@@ -62,7 +62,13 @@ ColumnLayout {
                 visible: index === Constants.balData.midiClientConnection.userDataConfig.activePresetID
             }
             CoreButton {
-                text: "select"
+                hooverText: "select"
+                icon.name: "select"
+                icon.source: Qt.resolvedUrl("icons/ink_selection_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
+                icon.color: CoreSystemPalette.buttonText
+                palette.buttonText: CoreSystemPalette.buttonText
+
+
                 visible: index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
                 onClicked: {
                     Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index, true);
