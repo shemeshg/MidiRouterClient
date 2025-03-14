@@ -33,6 +33,11 @@ RowLayout {
                 onClicked: {
                     fileDialogDownload.open()
                 }
+                icon.source: Qt.resolvedUrl(
+                                 "icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
+
+                icon.color: CoreSystemPalette.buttonText
+                palette.buttonText: CoreSystemPalette.buttonText
             }
         }
         RowLayout {
@@ -41,6 +46,11 @@ RowLayout {
                 onClicked: {
                     fileDialogUpload.open();
                 }
+                icon.source: Qt.resolvedUrl(
+                                 "icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
+
+                icon.color: CoreSystemPalette.buttonText
+                palette.buttonText: CoreSystemPalette.buttonText
             }
         }
         FileDialog {

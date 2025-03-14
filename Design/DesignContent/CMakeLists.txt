@@ -44,6 +44,9 @@ qt6_add_qml_module(DesignContent
         "UserControlsEditControl.qml"
         "LocalNetMidiOut.qml"
         "About.qml"
+        RESOURCES
+            "icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
+            "icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
     )
 
 
