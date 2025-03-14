@@ -1,5 +1,6 @@
 import Core
 
 CoreButton {
-    text: "back"
+    text: "🏠"
+    hooverText: "back"
 }

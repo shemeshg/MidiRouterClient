@@ -47,8 +47,7 @@ Column {
                     CoreLabel {
                         text: modelData
                     }
-                    CoreButton {
-                        text: "del"
+                    UiBtnDel {
                         onClicked: {
                             Constants.balData.midiClientConnection.userDataConfig.delVirtualPort(index)
                         }

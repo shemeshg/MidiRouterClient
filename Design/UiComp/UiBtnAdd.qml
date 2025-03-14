@@ -1,5 +1,6 @@
 import Core
 
 CoreButton {
-    text: "add"
+    hooverText: "add"
+    text: "+"
 }

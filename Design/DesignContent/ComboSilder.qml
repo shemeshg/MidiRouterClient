@@ -70,7 +70,6 @@ ColumnLayout {
             }
         }
         UiBtnDel {
-            text: "del"
             onClicked: {
                 del()
             }
