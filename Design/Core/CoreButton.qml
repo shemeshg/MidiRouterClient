@@ -24,6 +24,8 @@ Button {
         }
     }
 
+    icon.width: CoreSystemPalette.font.pixelSize
+    icon.height: CoreSystemPalette.font.pixelSize
 
 
     palette.alternateBase: CoreSystemPalette.alternateBase
