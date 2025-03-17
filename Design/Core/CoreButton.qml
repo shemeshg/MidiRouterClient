@@ -43,6 +43,7 @@ Button {
     palette.text: CoreSystemPalette.text
     palette.window: CoreSystemPalette.window
     palette.windowText: CoreSystemPalette.windowText
+    icon.color: CoreSystemPalette.buttonText
 
     font: CoreSystemPalette.font
 
@@ -66,6 +67,7 @@ Button {
           easing.type: Easing.InOutQuad
           onStopped: {
               revertColorAnimation.start();
+              colorAnimationIcon.start();
           }
 
       }
@@ -82,5 +84,29 @@ Button {
       }
 
 
+      PropertyAnimation {
+            id: colorAnimationIcon
+            target: btn
+            property: "icon.color"
+            from: CoreSystemPalette.buttonText
+            to: CoreSystemPalette.midlight
+            duration: 100
+            easing.type: Easing.InOutQuad
+            onStopped: {
+                revertColorAnimationIcon.start();
+            }
+
+        }
+
+        PropertyAnimation {
+            id: revertColorAnimationIcon
+            target: btn
+            property: "icon.color"
+            from: CoreSystemPalette.midlight
+            to: CoreSystemPalette.buttonText
+            duration: 100
+            easing.type: Easing.InOutQuad
+            running: false // To prevent it from running initially
+        }
 
 }
