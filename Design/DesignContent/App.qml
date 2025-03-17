@@ -189,6 +189,7 @@ Window {
             Layout.margins:  Constants.font.pixelSize
 
             Layout.fillWidth: true
+            visible: headerBarId.state !== "About"
             RowLayout {
                 anchors.left: parent.left
                 anchors.right: parent.right

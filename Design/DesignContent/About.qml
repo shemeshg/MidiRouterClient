@@ -4,13 +4,55 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Core
 import Qt.labs.platform
+import UiComp
 
 RowLayout {
 
     property string homebrewVersion: ""
     ColumnLayout {
         Layout.margins:  Constants.font.pixelSize
+
+
+        GroupBox {
+            Layout.margins:  Constants.font.pixelSize
+            Layout.fillWidth: true
+
+
+            RowLayout {
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                UiBtnBack {
+                    onClicked: {
+                        headerBarId.state = aboutPreviousStr
+                        isSubForm = false
+                    }
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                CoreLabel {
+                    text: "Settings & About"
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                CoreLabel {
+                    text: ""
+                }
+            }
+        }
+
+
+
+
+
+
+
+
         RowLayout {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             CoreLabel {
                 text: "Font size (Empty for default, requires reopen) "
                 color: CoreSystemPalette.text
@@ -28,6 +70,8 @@ RowLayout {
             }
         }
         RowLayout {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             CoreButton {
                 text: "Download client settings"
                 onClicked: {
@@ -41,6 +85,8 @@ RowLayout {
             }
         }
         RowLayout {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             CoreButton {
                 text: "Upload client settings"
                 onClicked: {
@@ -75,6 +121,8 @@ RowLayout {
 
         }
         CoreLabel {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             text: `
             <h2>About</h2>
             `
@@ -84,6 +132,8 @@ RowLayout {
 
 
         CoreLabel{
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             id: hyperlinkBtn
             color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
             text: "Midi Router Client " + Qt.application.version
@@ -98,13 +148,19 @@ RowLayout {
 
 
         CoreLabel {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             text: Constants.balData.qtVer()
         }
         CoreLabel {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             text: homebrewVersion
         }
 
         CoreLabel {
+            Layout.leftMargin:   Constants.font.pixelSize
+            Layout.rightMargin:   Constants.font.pixelSize
             text: `
             <h2>License</h2>
             <p>Copyright 2020 shemeshg</p>
