@@ -68,6 +68,7 @@ public:
         obj["isEnabled"] = isEnabled();
         obj["midiControlOn"] = midiControlOn()->genJson();
         obj["midiControlOff"] = midiControlOff()->genJson();
+        obj["midiControlToggle"] = midiControlToggle()->genJson();
         obj["midiRouteInputs"] = getJsonMidiRouteInputs();
         obj["userControls"] = getJsonUserControls();
         return obj;

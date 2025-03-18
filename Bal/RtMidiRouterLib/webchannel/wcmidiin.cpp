@@ -95,7 +95,7 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
             ) {
             auto obj = jsonDoc.object();
             if (obj["action"].isString() && obj["action"].toString()=="presetOnOff"){
-                emit presetOnOff(obj["isMidiControlOn"].toBool(),
+                emit presetOnOff(obj["presetMidiType"].toInt(),
                                  obj["presetUuid"].toString());
             }
 

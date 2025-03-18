@@ -138,12 +138,12 @@ public slots:
 
 
     //- {fn}
-    void presetOnOff(bool isMidiControlOn, QString presetUuid)
+    void presetOnOff(int presetMidiType, QString presetUuid)
     //-only-file body
     {
         auto json = userdata.toJsonObject();
         ApplyConfig ac(wcmidiin, wcmidiout);
-        json = ac.presetOnOff(json, isMidiControlOn, presetUuid);
+        json = ac.presetOnOff(json, presetMidiType, presetUuid);
         applyConfig(json);
     }
 

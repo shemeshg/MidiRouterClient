@@ -211,6 +211,8 @@ private:
                           PresetMidiControl::PresetMidiType::PRESET_ON);
         updateMidiControl(preset->midiControlOff(), valueObj["midiControlOff"],
                           PresetMidiControl::PresetMidiType::PRESET_OFF);
+        updateMidiControl(preset->midiControlToggle(), valueObj["midiControlToggle"],
+                          PresetMidiControl::PresetMidiType::PRESET_TOGGLE);
 
         updateUserControls(preset, valueObj);
         updateMidirouteInputs(preset, valueObj);

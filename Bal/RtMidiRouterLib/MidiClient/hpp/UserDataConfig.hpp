@@ -231,6 +231,10 @@ private:
             if (!s.isEmpty()) {
                 midiControlOffNames.append(s);
             }
+            s = prst->midiControlToggle()->portName();
+            if (!s.isEmpty()) {
+                midiControlOffNames.append(s);
+            }
         }
         for (const auto &inputStr : midiControlOffNames) {
             activePreset()->getInputOrCreateByName(inputStr);
@@ -289,12 +293,16 @@ private:
             const auto itm = midiRoutePresets.at(i);
             MidiPresetControlEasyConfig mOff;
             mOff.pmc = itm->midiControlOff();
-            mOff.isMidiControlOn = false;
+            mOff.presetMidiType = 0;
             midiPresetControlEasyConfigs.append(mOff);
             MidiPresetControlEasyConfig mOn;
             mOn.pmc = itm->midiControlOn();
-            mOn.isMidiControlOn = true;
+            mOn.presetMidiType = 1;
             midiPresetControlEasyConfigs.append(mOn);
+            MidiPresetControlEasyConfig mToggle;
+            mToggle.pmc = itm->midiControlToggle();
+            mToggle.presetMidiType =2;
+            midiPresetControlEasyConfigs.append(mToggle);
 
         }
         return midiPresetControlEasyConfigs;

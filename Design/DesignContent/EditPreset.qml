@@ -12,6 +12,7 @@ ColumnLayout {
     function save(){
         editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
         editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
+        editPresetControlToggleId.setMidiControlData(editedPreset.midiControlToggle);
     }
 
     GroupBox {
@@ -90,6 +91,22 @@ ColumnLayout {
             EditPresetControl {
                 id: editPresetControlOffId
                 midiControl: editedPreset.midiControlOff
+            }
+        }
+    }
+    GroupBox {
+
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            CoreLabel {
+                text: "<H2>Midi control Toggle</h2>"
+            }
+            EditPresetControl {
+                id: editPresetControlToggleId
+                midiControl: editedPreset.midiControlToggle
             }
         }
     }
