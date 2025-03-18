@@ -110,7 +110,7 @@ public:
             if (m.pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
                 midiRouterChain->addEasyConfigPresetFilter(m);
-                midiRouterChain->addEasyConfigPresetLogOnOff(m.presetMidiType, presetUuid);
+                midiRouterChain->addEasyConfigPresetLogOnOff((int)m.pmc->presetMidiType(), presetUuid);
                 addListItem(midiRouterChain);
 
 

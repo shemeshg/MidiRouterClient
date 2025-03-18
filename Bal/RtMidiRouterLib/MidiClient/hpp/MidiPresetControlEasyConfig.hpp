@@ -8,5 +8,4 @@
 class MidiPresetControlEasyConfig {
 public:
     PresetMidiControl *pmc;
-    int presetMidiType;
 };
