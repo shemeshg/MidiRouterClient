@@ -63,7 +63,6 @@ ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSchedule.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterToConsle.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientConnection.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientUtil.h
-${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiPresetControlEasyConfig.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouteInput.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRoutePreset.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiRouterChain.h

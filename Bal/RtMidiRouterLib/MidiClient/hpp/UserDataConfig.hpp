@@ -285,21 +285,15 @@ private:
     }
 
     //- {fn}
-    QList<MidiPresetControlEasyConfig> getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets)
+    QList<PresetMidiControl *> getMidiPresetControlEasyConfigs(QList<MidiRoutePreset *> midiRoutePresets)
     //-only-file body
     {
-        QList<MidiPresetControlEasyConfig> midiPresetControlEasyConfigs;
+        QList<PresetMidiControl *> midiPresetControlEasyConfigs;
         for (int i=0;i<midiRoutePresets.length();i++){
             const auto itm = midiRoutePresets.at(i);
-            MidiPresetControlEasyConfig mOff;
-            mOff.pmc = itm->midiControlOff();
-            midiPresetControlEasyConfigs.append(mOff);
-            MidiPresetControlEasyConfig mOn;
-            mOn.pmc = itm->midiControlOn();
-            midiPresetControlEasyConfigs.append(mOn);
-            MidiPresetControlEasyConfig mToggle;
-            mToggle.pmc = itm->midiControlToggle();
-            midiPresetControlEasyConfigs.append(mToggle);
+            midiPresetControlEasyConfigs.append(itm->midiControlOff());
+            midiPresetControlEasyConfigs.append(itm->midiControlOn());
+            midiPresetControlEasyConfigs.append(itm->midiControlToggle());
 
         }
         return midiPresetControlEasyConfigs;

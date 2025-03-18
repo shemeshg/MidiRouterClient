@@ -19,7 +19,7 @@
 //- {include-header}
 #include "FilterToConsle.hpp" //- #include "FilterToConsle.h"
 //- {include-header}
-#include "MidiPresetControlEasyConfig.hpp" //- #include "MidiPresetControlEasyConfig.h"
+#include "PresetMidiControl.hpp" //- #include "PresetMidiControl.h"
 //- {include-header}
 #include "../genPrpt/MidiRouterChainPrivate.hpp" //- #include "../genPrpt/MidiRouterChainPrivate.h"
 //-only-file null
@@ -173,23 +173,23 @@ public slots:
     }
 
     //- {fn}
-    void addEasyConfigPresetFilter(const MidiPresetControlEasyConfig &m)
+    void addEasyConfigPresetFilter(const PresetMidiControl *pmc)
     //-only-file body
     {
 
         setName("EasyConfig");
         setIsEasyConfig(true);
         EasyConfigRoute ecr{this};
-        ecr.setFromChannel(m.pmc->channel());
-        ecr.setToChannel(m.pmc->channel());
-        ecr.setFromSelectedMidiEventTypeId(m.pmc->eventTypeId());
-        ecr.setToSelectedMidiEventTypeId(m.pmc->eventTypeId());
-        ecr.setFromData1(m.pmc->data1());
-        if (m.pmc->data2()!= -1){
-            ecr.setFromCcOrNrpnStart(m.pmc->data2());
-            ecr.setFromCcOrNrpnEnd(m.pmc->data2());
-            ecr.setToCcOrNrpnStart(m.pmc->data2());
-            ecr.setToCcOrNrpnEnd(m.pmc->data2());
+        ecr.setFromChannel(pmc->channel());
+        ecr.setToChannel(pmc->channel());
+        ecr.setFromSelectedMidiEventTypeId(pmc->eventTypeId());
+        ecr.setToSelectedMidiEventTypeId(pmc->eventTypeId());
+        ecr.setFromData1(pmc->data1());
+        if (pmc->data2()!= -1){
+            ecr.setFromCcOrNrpnStart(pmc->data2());
+            ecr.setFromCcOrNrpnEnd(pmc->data2());
+            ecr.setToCcOrNrpnStart(pmc->data2());
+            ecr.setToCcOrNrpnEnd(pmc->data2());
         }
         auto easyConfigRouteFilter = ecr.getEasyConfigRouteFilter({});
 

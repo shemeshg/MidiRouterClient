@@ -34,7 +34,7 @@ public:
 
 
     //- {fn}
-    void recreateEasyConfig(QList<MidiPresetControlEasyConfig> &midiPresetControlEasyConfigs,
+    void recreateEasyConfig(QList<PresetMidiControl *> &midiPresetControlEasyConfigs,
                             const QString &presetUuid)
     //-only-file body
     {
@@ -57,7 +57,7 @@ public:
     }
 
     //- {fn}
-    QJsonObject getJson(QList<MidiPresetControlEasyConfig> & presetControlEasyConfigs)
+    QJsonObject getJson(QList<PresetMidiControl *> & presetControlEasyConfigs)
     //-only-file body
     {
         QJsonObject obj;
