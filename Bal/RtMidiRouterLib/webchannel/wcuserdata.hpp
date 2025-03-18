@@ -144,7 +144,7 @@ public slots:
         auto json = userdata.toJsonObject();
         ApplyConfig ac(wcmidiin, wcmidiout);
         json = ac.presetOnOff(json, isMidiControlOn, presetUuid);
-        applyConfig(json);        
+        applyConfig(json);
     }
 
     //-only-file header

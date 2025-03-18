@@ -9,6 +9,7 @@
 #include <QJsonArray>
 //-only-file body //-
 //- #include "ApplyConfig.h"
+#include <QUuid>
 
 //-only-file header
 //-var {PRE} "ApplyConfig::"
@@ -42,6 +43,7 @@ public:
                 midiRoutePresetObj["isEnabled"] = isMidiControlOn;
                 midiRoutePresets[i] =
                     midiRoutePresetObj; // Update the array with the modified object
+                json["uniqueId"] = getUuId(); //server uuid
             }
         }
 
@@ -500,6 +502,13 @@ private:
             criticalError = true;
             return 0;
         }
+    }
+
+    //- {fn}
+    QString getUuId()
+    //-only-file body
+    {
+        return QUuid::createUuid().toString().replace("{", "").replace("}", "");
     }
 
     //-only-file header
