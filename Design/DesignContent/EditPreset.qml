@@ -102,7 +102,7 @@ ColumnLayout {
             anchors.left: parent.left
             anchors.right: parent.right
             CoreLabel {
-                text: "<H2>Midi control Toggle</h2>"
+                text: "<H2>Midi control toggle</h2>"
             }
             EditPresetControl {
                 id: editPresetControlToggleId
