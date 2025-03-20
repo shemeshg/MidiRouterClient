@@ -291,6 +291,9 @@ private:
         QList<PresetMidiControl *> midiPresetControlEasyConfigs;
         for (int i=0;i<midiRoutePresets.length();i++){
             const auto itm = midiRoutePresets.at(i);
+            itm->midiControlOff()->presetUuid = itm->uuid();
+            itm->midiControlOn()->presetUuid = itm->uuid();
+            itm->midiControlToggle()->presetUuid = itm->uuid();
             midiPresetControlEasyConfigs.append(itm->midiControlOff());
             midiPresetControlEasyConfigs.append(itm->midiControlOn());
             midiPresetControlEasyConfigs.append(itm->midiControlToggle());

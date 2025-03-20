@@ -101,8 +101,7 @@ public:
 
     //- {fn}
     void addMidiPresetControlEasyConfigsIfRequired(
-        QList<PresetMidiControl *> &midiPresetControlEasyConfigs,
-        const QString &presetUuid)
+        QList<PresetMidiControl *> &midiPresetControlEasyConfigs)
     //-only-file body
     {
         for (int i=0;i<midiPresetControlEasyConfigs.length();i++){
@@ -110,7 +109,7 @@ public:
             if (pmc->portName() == midiInputName()){
                 MidiRouterChain *midiRouterChain = new MidiRouterChain(this);
                 midiRouterChain->addEasyConfigPresetFilter(pmc);
-                midiRouterChain->addEasyConfigPresetLogOnOff((int)pmc->presetMidiType(), presetUuid);
+                midiRouterChain->addEasyConfigPresetLogOnOff((int)pmc->presetMidiType(), pmc->presetUuid);
                 addListItem(midiRouterChain);
 
 
