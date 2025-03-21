@@ -59,8 +59,15 @@ public:
         for (int i = 0; i < midiRoutePresets.size(); ++i) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
             QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
+            bool isEnable = getJson<bool>( midiRoutePresetObj["isEnabled"]);
             if (key ==presetUuid){
-                bool isEnable = !getJson<bool>( midiRoutePresetObj["isEnabled"]);
+
+                if (isEnable) {
+                    presetOnOffStatus[key] = 0;
+                } else {
+                    presetOnOffStatus[key] = 1;
+                }
+            } else {
                 if (isEnable) {
                     presetOnOffStatus[key] = 1;
                 } else {
