@@ -279,7 +279,7 @@ private:
         for (int i=0;i<midiRoutePresets.length();i++){
             const auto itm = midiRoutePresets.at(i);
 
-            ary.append(itm->getJson(presetControlEasyConfigs));
+            ary.append(itm->getJson(presetControlEasyConfigs, i==0));
         }
         return ary;
     }

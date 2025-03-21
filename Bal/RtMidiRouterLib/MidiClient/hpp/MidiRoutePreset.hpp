@@ -34,7 +34,7 @@ public:
 
 
     //- {fn}
-    void recreateEasyConfig(QList<PresetMidiControl *> &midiPresetControlEasyConfigs)
+    void recreateEasyConfig(QList<PresetMidiControl *> &midiPresetControlEasyConfigs, bool recreatePreseControltOnOff)
     //-only-file body
     {
 
@@ -47,7 +47,9 @@ public:
         for (int i=midiRouteInputs().length()-1;i>=0;i--){
             auto input = midiRouteInputs().at(i);
             input->addMonitorEasyConfigIfRequired();
-            input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs);
+            if (recreatePreseControltOnOff) {
+                input->addMidiPresetControlEasyConfigsIfRequired(midiPresetControlEasyConfigs);
+            }
 
             getInputOrCreateByName(input->midiInputName())->createEasyConfigChains(input->easyConfig());
 
@@ -56,12 +58,12 @@ public:
     }
 
     //- {fn}
-    QJsonObject getJson(QList<PresetMidiControl *> & presetControlEasyConfigs)
+    QJsonObject getJson(QList<PresetMidiControl *> & presetControlEasyConfigs, bool recreatePreseControltOnOff)
     //-only-file body
     {
         QJsonObject obj;
 
-        recreateEasyConfig(presetControlEasyConfigs);
+        recreateEasyConfig(presetControlEasyConfigs, recreatePreseControltOnOff);
         obj["name"] = name();
         obj["uuid"] = uuid();
         obj["isEnabled"] = isEnabled();
