@@ -141,9 +141,12 @@ public slots:
     void presetOnOff(int presetMidiType, QString presetUuid)
     //-only-file body
     {
+        presetOnOffStatus[presetUuid] = presetMidiType;
+
         auto json = userdata.toJsonObject();
         ApplyConfig ac(wcmidiin, wcmidiout);
-        json = ac.presetOnOff(json, presetMidiType, presetUuid);
+        json = ac.presetOnOff(json, presetOnOffStatus);
+        json["uniqueId"] = uniqueId++;
         applyConfig(json);
     }
 
@@ -154,6 +157,9 @@ signals:
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
+    std::atomic<int> uniqueId = 1;
+    QMap<QString, int> presetOnOffStatus;
+
 
     //- {fn}
     QStringList getMapStringVal(QVariantMap map)

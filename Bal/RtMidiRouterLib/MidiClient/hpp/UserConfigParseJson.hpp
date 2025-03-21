@@ -30,12 +30,12 @@ public:
         connOut.sort();
         userDataConfigItf->setConnectedOutPorts(connOut);
 
-        bool isServerInitialConfig = !jsonDoc["uniqueId"].isString();
+        bool isServerInitialConfig = !jsonDoc["uniqueId"].isString() && !jsonDoc["uniqueId"].isDouble();
         if (isServerInitialConfig) {
             return;
         }
 
-        if (userDataConfigItf->uniqueId() ==
+        if (!jsonDoc["uniqueId"].isDouble() && userDataConfigItf->uniqueId() ==
             getJson<QString>(jsonDoc["uniqueId"])) {
             // Same session created the config, return;";
             return;

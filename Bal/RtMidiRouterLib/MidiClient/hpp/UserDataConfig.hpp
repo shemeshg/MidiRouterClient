@@ -82,6 +82,14 @@ public:
         }
 
 
+        if (j["uniqueId"].isDouble()) {
+            if (serverUniqueId > j["uniqueId"].toInteger()){
+                return;
+            } else {
+                serverUniqueId = j["uniqueId"].toInteger();
+            }
+        }
+
         //if (j["uniqueId"].toString() == uniqueId()){
         //    qDebug()<<"RETURN IGNORE";
         //    return;
@@ -216,6 +224,9 @@ signals:
     void activePresetChanged();
 private:
     MidiRoutePreset * m_activePreset = nullptr;
+
+    qint64 serverUniqueId = 0;
+
     //- {fn}
     void openMidiControlOffInputsForEasyConfig()
     //-only-file body

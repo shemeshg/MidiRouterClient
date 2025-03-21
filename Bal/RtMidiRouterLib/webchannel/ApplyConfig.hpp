@@ -31,15 +31,16 @@ public:
     };
 
     //- {fn}
-    QJsonObject presetOnOff(QJsonObject &json, int presetMidiType,
-                            const QString &presetUuid)
+    QJsonObject presetOnOff(QJsonObject &json, QMap<QString, int> &presetOnOffStatus)
     //-only-file body
     {
         auto midiRoutePresets = getJson<QJsonArray>(json["midiRoutePresets"]);
 
         for (int i = 0; i < midiRoutePresets.size(); ++i) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
-            if (getJson<QString>(midiRoutePresetObj["uuid"]) == presetUuid) {
+            QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
+            if (presetOnOffStatus.contains(key)) {
+                int presetMidiType = presetOnOffStatus[key];
                 bool isMidiControlOn;
                 if (presetMidiType == 0) {
                     isMidiControlOn = false;
@@ -51,12 +52,13 @@ public:
                 midiRoutePresetObj["isEnabled"] = isMidiControlOn;
                 midiRoutePresets[i] =
                     midiRoutePresetObj; // Update the array with the modified object
-                json["uniqueId"] = getUuId(); //server uuid
+
             }
         }
 
         json["midiRoutePresets"] =
             midiRoutePresets; // Update the JSON object with the modified array
+
         return json;
     }
 
