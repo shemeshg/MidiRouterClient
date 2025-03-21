@@ -142,12 +142,20 @@ public slots:
     //-only-file body
     {        
         presetOnOffStatus[presetUuid] = presetMidiType;
+        if (isInPresetOnOff){return;}
+        isInPresetOnOff = true;
+        QTimer::singleShot(250, [=]() {
+            auto json = userdata.toJsonObject();
+            ApplyConfig ac(wcmidiin, wcmidiout);
+            json = ac.presetOnOff(json, presetOnOffStatus);
+            json["uniqueId"] = uniqueId++;
+            applyConfig(json);
+            isInPresetOnOff = false;
+        });
 
-        auto json = userdata.toJsonObject();
-        ApplyConfig ac(wcmidiin, wcmidiout);
-        json = ac.presetOnOff(json, presetOnOffStatus);
-        json["uniqueId"] = uniqueId++;
-        applyConfig(json);
+
+
+
     }
 
     //-only-file header
@@ -159,6 +167,7 @@ private:
     Webchannel::WcMidiOut *wcmidiout;
     int uniqueId = 1;
     QMap<QString, int> presetOnOffStatus;
+    std::atomic<bool> isInPresetOnOff = false;
 
 
     //- {fn}

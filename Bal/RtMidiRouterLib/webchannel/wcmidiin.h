@@ -92,6 +92,9 @@ public:
     Q_INVOKABLE void restart(){
         midiin = std::make_unique<WcMidiInListener>(* dynamic_cast<Webchannel::EmitCommand*>(this));
 
+        for (auto  &o: openedMidiInObj){
+            o.second->clearRoutingMidiChains();
+        }
         openedMidiInObj.clear();
         opendRemoteServers.clear();
         opendRemoteServersSockets.clear();
