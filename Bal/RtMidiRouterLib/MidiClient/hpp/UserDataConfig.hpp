@@ -246,6 +246,10 @@ private:
             if (!s.isEmpty()) {
                 midiControlOffNames.append(s);
             }
+            s = prst->midiControlSelect()->portName();
+            if (!s.isEmpty()) {
+                midiControlOffNames.append(s);
+            }
         }
         for (const auto &inputStr : midiControlOffNames) {
             activePreset()->getInputOrCreateByName(inputStr);
@@ -302,12 +306,16 @@ private:
         QList<PresetMidiControl *> midiPresetControlEasyConfigs;
         for (int i=0;i<midiRoutePresets.length();i++){
             const auto itm = midiRoutePresets.at(i);
+
             itm->midiControlOff()->presetUuid = itm->uuid();
             itm->midiControlOn()->presetUuid = itm->uuid();
             itm->midiControlToggle()->presetUuid = itm->uuid();
+            itm->midiControlSelect()->presetUuid = itm->uuid();
+
             midiPresetControlEasyConfigs.append(itm->midiControlOff());
             midiPresetControlEasyConfigs.append(itm->midiControlOn());
             midiPresetControlEasyConfigs.append(itm->midiControlToggle());
+            midiPresetControlEasyConfigs.append(itm->midiControlSelect());
 
         }
         return midiPresetControlEasyConfigs;

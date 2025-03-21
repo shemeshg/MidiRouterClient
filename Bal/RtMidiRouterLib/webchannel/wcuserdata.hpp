@@ -140,8 +140,18 @@ public slots:
     //- {fn}
     void presetOnOff(int presetMidiType, QString presetUuid)
     //-only-file body
-    {        
-        presetOnOffStatus[presetUuid] = presetMidiType;
+    {
+        if (presetMidiType == 3){
+            auto json = userdata.toJsonObject();
+            ApplyConfig ac(wcmidiin, wcmidiout);
+            ac.selectPreset(json, presetOnOffStatus,presetUuid);
+        } else if (presetMidiType == 2){
+            auto json = userdata.toJsonObject();
+            ApplyConfig ac(wcmidiin, wcmidiout);
+            ac.togglePreset(json, presetOnOffStatus,presetUuid);
+        } else  {
+            presetOnOffStatus[presetUuid] = presetMidiType;
+        }
         if (isInPresetOnOff){return;}
         isInPresetOnOff = true;
         QTimer::singleShot(250, [=]() {

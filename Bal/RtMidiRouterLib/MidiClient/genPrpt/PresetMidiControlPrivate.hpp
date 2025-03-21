@@ -40,7 +40,7 @@ public:
 
     
 enum class PresetMidiType {
-        PRESET_OFF, PRESET_ON, PRESET_TOGGLE
+        PRESET_OFF, PRESET_ON, PRESET_TOGGLE, PRESET_SELECT
     };
 Q_ENUM(PresetMidiType)
 

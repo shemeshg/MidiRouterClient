@@ -12,7 +12,7 @@ ary = [
 ]
 
 enumClasss = [
-    EnumClass("PresetMidiType", ["PRESET_OFF", "PRESET_ON", "PRESET_TOGGLE"])
+    EnumClass("PresetMidiType", ["PRESET_OFF", "PRESET_ON", "PRESET_TOGGLE", "PRESET_SELECT"])
 ]
 
 prptClass = PrptClass("PresetMidiControlPrivate", ary, enumClasss)

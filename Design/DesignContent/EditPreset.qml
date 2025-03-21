@@ -13,6 +13,7 @@ ColumnLayout {
         editPresetControlOnId.setMidiControlData(editedPreset.midiControlOn);
         editPresetControlOffId.setMidiControlData(editedPreset.midiControlOff);
         editPresetControlToggleId.setMidiControlData(editedPreset.midiControlToggle);
+        editPresetControlSelectId.setMidiControlData(editedPreset.midiControlSelect);
     }
 
     GroupBox {
@@ -69,6 +70,40 @@ ColumnLayout {
             anchors.left: parent.left
             anchors.right: parent.right
             CoreLabel {
+                text: "<H2>Midi control select</h2>"
+            }
+            EditPresetControl {
+                id: editPresetControlSelectId
+                midiControl: editedPreset.midiControlSelect
+            }
+        }
+    }
+
+    GroupBox {
+
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            CoreLabel {
+                text: "<H2>Midi control toggle</h2>"
+            }
+            EditPresetControl {
+                id: editPresetControlToggleId
+                midiControl: editedPreset.midiControlToggle
+            }
+        }
+    }
+
+    GroupBox {
+
+        Layout.margins:  Constants.font.pixelSize
+        Layout.fillWidth: true
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            CoreLabel {
                 text: "<H2>Midi control on</h2>"
             }
             EditPresetControl {
@@ -94,20 +129,5 @@ ColumnLayout {
             }
         }
     }
-    GroupBox {
 
-        Layout.margins:  Constants.font.pixelSize
-        Layout.fillWidth: true
-        ColumnLayout {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            CoreLabel {
-                text: "<H2>Midi control toggle</h2>"
-            }
-            EditPresetControl {
-                id: editPresetControlToggleId
-                midiControl: editedPreset.midiControlToggle
-            }
-        }
-    }
 }

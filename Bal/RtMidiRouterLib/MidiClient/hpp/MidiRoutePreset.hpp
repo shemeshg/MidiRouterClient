@@ -31,8 +31,6 @@ public:
 
     };
 
-
-
     //- {fn}
     void recreateEasyConfig(QList<PresetMidiControl *> &midiPresetControlEasyConfigs, bool recreatePreseControltOnOff)
     //-only-file body
@@ -70,6 +68,7 @@ public:
         obj["midiControlOn"] = midiControlOn()->genJson();
         obj["midiControlOff"] = midiControlOff()->genJson();
         obj["midiControlToggle"] = midiControlToggle()->genJson();
+        obj["midiControlSelect"] = midiControlSelect()->genJson();
         obj["midiRouteInputs"] = getJsonMidiRouteInputs();
         obj["userControls"] = getJsonUserControls();
         return obj;

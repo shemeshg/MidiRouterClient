@@ -31,6 +31,46 @@ public:
     };
 
     //- {fn}
+    void selectPreset(QJsonObject &json, QMap<QString, int> &presetOnOffStatus,
+            const QString &presetUuid)
+    //-only-file body
+    {
+        auto midiRoutePresets = getJson<QJsonArray>(json["midiRoutePresets"]);
+
+        for (int i = 0; i < midiRoutePresets.size(); ++i) {
+            auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
+            QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
+            if (key ==presetUuid){
+                presetOnOffStatus[key] = 1;
+            } else {
+                presetOnOffStatus[key] = 0;
+            }
+        }
+    }
+
+
+    //- {fn}
+    void togglePreset(QJsonObject &json, QMap<QString, int> &presetOnOffStatus,
+                      const QString &presetUuid)
+    //-only-file body
+    {
+        auto midiRoutePresets = getJson<QJsonArray>(json["midiRoutePresets"]);
+
+        for (int i = 0; i < midiRoutePresets.size(); ++i) {
+            auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
+            QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
+            if (key ==presetUuid){
+                bool isEnable = !getJson<bool>( midiRoutePresetObj["isEnabled"]);
+                if (isEnable) {
+                    presetOnOffStatus[key] = 1;
+                } else {
+                    presetOnOffStatus[key] = 0;
+                }
+            }
+        }
+    }
+
+    //- {fn}
     QJsonObject presetOnOff(QJsonObject &json, QMap<QString, int> &presetOnOffStatus)
     //-only-file body
     {
@@ -46,8 +86,6 @@ public:
                     isMidiControlOn = false;
                 } else if (presetMidiType == 1) {
                     isMidiControlOn = true;
-                } else if (presetMidiType == 2) {
-                    isMidiControlOn = !getJson<bool>( midiRoutePresetObj["isEnabled"]);
                 }
                 midiRoutePresetObj["isEnabled"] = isMidiControlOn;
                 midiRoutePresets[i] =

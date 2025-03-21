@@ -35,6 +35,7 @@ class MidiRoutePresetPrivate : public QObject
     Q_PROPERTY(PresetMidiControl * midiControlOn READ midiControlOn  NOTIFY midiControlOnChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOff READ midiControlOff  NOTIFY midiControlOffChanged )
     Q_PROPERTY(PresetMidiControl * midiControlToggle READ midiControlToggle  NOTIFY midiControlToggleChanged )
+    Q_PROPERTY(PresetMidiControl * midiControlSelect READ midiControlSelect  NOTIFY midiControlSelectChanged )
     Q_PROPERTY(QList<UserControl *> userControls READ userControls  NOTIFY userControlsChanged )
     Q_PROPERTY(QList<MidiRouteInput *> midiRouteInputs READ midiRouteInputs  NOTIFY midiRouteInputsChanged )
     
@@ -96,6 +97,10 @@ void setIsEnabled(const bool newIsEnabled)
 
     
     PresetMidiControl * midiControlToggle() const{return m_midiControlToggle;} 
+    
+
+    
+    PresetMidiControl * midiControlSelect() const{return m_midiControlSelect;} 
     
 
     
@@ -202,6 +207,7 @@ signals:
     void midiControlOnChanged();
     void midiControlOffChanged();
     void midiControlToggleChanged();
+    void midiControlSelectChanged();
     void userControlsChanged();
     void midiRouteInputsChanged();
     
@@ -210,6 +216,7 @@ protected:
     PresetMidiControl * m_midiControlOn = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_ON,this);
     PresetMidiControl * m_midiControlOff = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_OFF,this);
     PresetMidiControl * m_midiControlToggle = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_TOGGLE,this);
+    PresetMidiControl * m_midiControlSelect = new PresetMidiControl(PresetMidiControl::PresetMidiType::PRESET_SELECT,this);
     QList<UserControl *> *m_userControls = new QList<UserControl *>();
     QList<MidiRouteInput *> *m_midiRouteInputs = new QList<MidiRouteInput *>();
     
