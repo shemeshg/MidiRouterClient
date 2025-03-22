@@ -55,10 +55,7 @@ public:
         if (isSaveConfigOnServer) {
             auto d = doc.object();
 
-
-            QTimer::singleShot(1000, [=]() {
-                applyConfig(d);
-            });
+            applyConfig(d);
 
         }
 
