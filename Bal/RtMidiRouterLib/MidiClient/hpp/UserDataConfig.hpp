@@ -187,6 +187,15 @@ public slots:
     }
 
     //- {fn}
+    void movePreset(int idxFrom, int idxTo)
+    //-only-file body
+    {
+        moveItem(*m_midiRoutePresets,idxFrom, idxTo);
+        emit midiRoutePresetsChanged();
+
+    }
+
+    //- {fn}
     void addVirtualPort(QString port)
     //-only-file body
     {
@@ -316,6 +325,8 @@ private:
         }
         return midiPresetControlEasyConfigs;
     }
+
+
 
     //-only-file header
 };

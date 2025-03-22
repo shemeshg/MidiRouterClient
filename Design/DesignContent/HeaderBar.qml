@@ -6,8 +6,7 @@ import Design
 
 RowLayout {
     function selectDefaultItem(isConnected){
-        if (isConnected){
-            console.log(" Constants.balData.defaultHeaderTabSelected  " + Constants.balData.defaultHeaderTabSelected )
+        if (isConnected){            
             if (Constants.balData.defaultHeaderTabSelected === "Login"){
                 btnLoginId.click();
             } else if (Constants.balData.defaultHeaderTabSelected === "VirtualPorts"){
