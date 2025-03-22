@@ -19,6 +19,16 @@ public:
                          Webchannel::WcMidiOut *wcmidiout)
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
+    explicit ApplyConfig(){
+    }
+
+    void init(Webchannel::WcMidiIn *in,
+              Webchannel::WcMidiOut *out)
+    {
+        wcmidiin = in;
+        wcmidiout = out;
+    }
+
     struct DisCnctInPort {
         QString presetUuid;
         QString inPortName;
@@ -32,7 +42,7 @@ public:
 
     //- {fn}
     void selectPreset(QJsonObject &json, QMap<QString, int> &presetOnOffStatus,
-            const QString &presetUuid)
+                      const QString &presetUuid)
     //-only-file body
     {
         auto midiRoutePresets = getJson<QJsonArray>(json["midiRoutePresets"]);
@@ -279,7 +289,7 @@ private:
             } else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
                                     [&midiInputName](const DisCnctInPort &port) {
                                         return port.inPortName == midiInputName;
-                       })) {
+                                    })) {
                 DisCnctInPort port;
                 port.presetUuid = presetUuid;
                 port.inPortName = midiInputName;

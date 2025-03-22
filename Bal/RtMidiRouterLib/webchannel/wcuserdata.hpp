@@ -11,7 +11,7 @@
 #include <QSettings>
 #include "wcmidiin.h"
 #include "wcmidiout.h"
-//- {include-body}
+//- {include-header}
 #include "ApplyConfig.hpp" //- #include "ApplyConfig.h"
 
 //-only-file body //-
@@ -33,7 +33,7 @@ public:
         QObject(parent)
     {
 
-
+        applayConfig.init(wcmidiin,wcmidiout);
         QString str;
         if (isSaveConfigOnServer) {
             str = cashFileRead(cahedFileName);
@@ -115,11 +115,11 @@ public slots:
     QJsonObject applyConfig( QString s)
     //-only-file body
     {
-        ApplyConfig ac(wcmidiin, wcmidiout);
+
         QJsonDocument jsonDoc = QJsonDocument::fromJson(s.toUtf8());
 
         auto o = jsonDoc.object();
-        auto ret = ac.applyConfig(o);
+        auto ret = applayConfig.applyConfig(o);
         setJon(o);
         return ret;
     }
@@ -128,9 +128,9 @@ public slots:
     QJsonObject applyConfig( QJsonObject json)
     //-only-file body
     {
-        ApplyConfig ac(wcmidiin, wcmidiout);
-        auto ret = ac.applyConfig(json);
-        json["criticalError"] = ac.criticalError;
+
+        auto ret = applayConfig.applyConfig(json);
+        json["criticalError"] = applayConfig.criticalError;
         setJon(json);
         return ret;
     }
@@ -143,12 +143,12 @@ public slots:
     {
         if (presetMidiType == 3){
             auto json = userdata.toJsonObject();
-            ApplyConfig ac(wcmidiin, wcmidiout);
-            ac.selectPreset(json, presetOnOffStatus,presetUuid);
+
+            applayConfig.selectPreset(json, presetOnOffStatus,presetUuid);
         } else if (presetMidiType == 2){
             auto json = userdata.toJsonObject();
-            ApplyConfig ac(wcmidiin, wcmidiout);
-            ac.togglePreset(json, presetOnOffStatus,presetUuid);
+
+            applayConfig.togglePreset(json, presetOnOffStatus,presetUuid);
         } else  {
             presetOnOffStatus[presetUuid] = presetMidiType;
         }
@@ -156,8 +156,8 @@ public slots:
         isInPresetOnOff = true;
         QTimer::singleShot(250, [=]() {
             auto json = userdata.toJsonObject();
-            ApplyConfig ac(wcmidiin, wcmidiout);
-            json = ac.presetOnOff(json, presetOnOffStatus);
+
+            json = applayConfig.presetOnOff(json, presetOnOffStatus);
             json["uniqueId"] = uniqueId++;
             applyConfig(json);
             isInPresetOnOff = false;
@@ -175,6 +175,8 @@ signals:
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
+    ApplyConfig applayConfig;
+
     int uniqueId = 1;
     QMap<QString, int> presetOnOffStatus;
     std::atomic<bool> isInPresetOnOff = false;
