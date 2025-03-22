@@ -27,6 +27,7 @@ loadClientPortNumber();
 loadIsAutoConnectClient();
 loadIsSaveConfigOnServer();
 loadDefaultFontSize();
+loadDefaultHeaderTabSelected();
 
 //[[[end]]]
 
@@ -198,6 +199,17 @@ void BalData::saveDefaultFontSize(const QString s)
 {
     settings.setValue("defaultFontSize", s);
     loadDefaultFontSize();
+}
+void BalData::loadDefaultHeaderTabSelected()
+{
+    QString s = settings.value("defaultHeaderTabSelected", "").toString();
+    setDefaultHeaderTabSelected(s);
+}
+
+void BalData::saveDefaultHeaderTabSelected(const QString s)
+{
+    settings.setValue("defaultHeaderTabSelected", s);
+    loadDefaultHeaderTabSelected();
 }
 
 //[[[end]]]

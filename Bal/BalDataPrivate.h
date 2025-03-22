@@ -31,6 +31,7 @@ class BalDataPrivate : public JsAsync
     Q_PROPERTY(bool isAutoConnectClient READ isAutoConnectClient WRITE setIsAutoConnectClient NOTIFY isAutoConnectClientChanged )
     Q_PROPERTY(bool isSaveConfigOnServer READ isSaveConfigOnServer WRITE setIsSaveConfigOnServer NOTIFY isSaveConfigOnServerChanged )
     Q_PROPERTY(QString defaultFontSize READ defaultFontSize WRITE setDefaultFontSize NOTIFY defaultFontSizeChanged )
+    Q_PROPERTY(QString defaultHeaderTabSelected READ defaultHeaderTabSelected WRITE setDefaultHeaderTabSelected NOTIFY defaultHeaderTabSelectedChanged )
     
     QML_ELEMENT
 public:
@@ -190,6 +191,18 @@ void setDefaultFontSize(const QString &newDefaultFontSize)
     }
 
 
+    
+    QString defaultHeaderTabSelected() const{return m_defaultHeaderTabSelected;} 
+    
+void setDefaultHeaderTabSelected(const QString &newDefaultHeaderTabSelected)
+    {
+        if (m_defaultHeaderTabSelected == newDefaultHeaderTabSelected)
+            return;
+        m_defaultHeaderTabSelected = newDefaultHeaderTabSelected;
+        emit defaultHeaderTabSelectedChanged();
+    }
+
+
 
 signals:
     void xChanged();
@@ -206,6 +219,7 @@ signals:
     void isAutoConnectClientChanged();
     void isSaveConfigOnServerChanged();
     void defaultFontSizeChanged();
+    void defaultHeaderTabSelectedChanged();
     
 
 protected:
@@ -226,6 +240,7 @@ private:
     bool m_isAutoConnectClient;
     bool m_isSaveConfigOnServer;
     QString m_defaultFontSize;
+    QString m_defaultHeaderTabSelected;
     
     void ctorClass();
 };

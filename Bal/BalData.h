@@ -44,6 +44,7 @@ void saveClientPortNumber(const int ClientPortNumber);
 void saveIsAutoConnectClient(const bool IsAutoConnectClient);
 void saveIsSaveConfigOnServer(const bool IsSaveConfigOnServer);
 void saveDefaultFontSize(const QString DefaultFontSize);
+void saveDefaultHeaderTabSelected(const QString DefaultHeaderTabSelected);
 
 //[[[end]]]
 
@@ -96,6 +97,7 @@ void loadClientPortNumber();
 void loadIsAutoConnectClient();
 void loadIsSaveConfigOnServer();
 void loadDefaultFontSize();
+void loadDefaultHeaderTabSelected();
 
 //[[[end]]]
 

@@ -238,6 +238,9 @@ Window {
                           {
                               loaderId.sourceComponent = loginId
                               isSubForm = false
+                              if (isClientConnected){
+                                  Constants.balData.saveDefaultHeaderTabSelected("Login");
+                              }
                           }
                  }
             },
@@ -245,7 +248,10 @@ Window {
                 name: "VirtualPorts"
                 when: headerBarId.state === "VirtualPorts"
                 StateChangeScript {
-                          script: loaderId.sourceComponent = virtualPortsId
+                          script: {
+                              loaderId.sourceComponent = virtualPortsId
+                              Constants.balData.saveDefaultHeaderTabSelected("VirtualPorts");
+                          }
                  }
             },
             State {
@@ -255,6 +261,7 @@ Window {
                           script: {
                               loaderId.sourceComponent = presetsId
                               isSubForm = false
+                              Constants.balData.saveDefaultHeaderTabSelected("Presets");
                           }
                  }
             }
@@ -266,6 +273,7 @@ Window {
                           script: {
                               loaderId.sourceComponent = userControlsId
                               isSubForm = false
+                              Constants.balData.saveDefaultHeaderTabSelected("UserControls");
                           }
                  }
             },
@@ -276,6 +284,7 @@ Window {
                           script: {
                               loaderId.sourceComponent = inPortsId
                               isSubForm = false
+                              Constants.balData.saveDefaultHeaderTabSelected("InPorts");
                           }
                  }
             }

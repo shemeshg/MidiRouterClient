@@ -7,7 +7,23 @@ import Design
 RowLayout {
     function selectDefaultItem(isConnected){
         if (isConnected){
-            btnInPortsId.click();
+            console.log(" Constants.balData.defaultHeaderTabSelected  " + Constants.balData.defaultHeaderTabSelected )
+            if (Constants.balData.defaultHeaderTabSelected === "Login"){
+                btnLoginId.click();
+            } else if (Constants.balData.defaultHeaderTabSelected === "VirtualPorts"){
+                btnVirtualPortsId.click();
+            } else if (Constants.balData.defaultHeaderTabSelected === "Presets"){
+                btnPresetsId.click();
+            } else if (Constants.balData.defaultHeaderTabSelected === "UserControls"){
+                btnUserControlsId.click();
+            } else if (Constants.balData.defaultHeaderTabSelected === "InPorts"){
+                btnInPortsId.click();
+            } else
+            {
+                btnInPortsId.click();
+            }
+
+
         } else {
             btnLoginId.click();
         }
