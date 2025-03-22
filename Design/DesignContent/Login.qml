@@ -52,8 +52,7 @@ Column {
                                 Constants.balData.setAsyncServerStatusAndText(
                                             Constants.ServerStatus.STARTING, () => {
                                                 Constants.balData.startClient()
-                                            })
-                                console.log(JSON.stringify(Constants.balData))
+                                            })                                
                             }
                         }
                         CoreButton {
@@ -67,17 +66,6 @@ Column {
                         }
 
 
-                        /*
-                    CoreButton {
-                        text: "test"
-                        onClicked: {
-                            Constants.balData.testDummyDelete(x => {
-                                                                  console.log(
-                                                                      "we have " + x)
-                                                              })
-                        }
-                    }
-                    */
                         Item {
                             visible: isAutoConnectClient.visible
                             Layout.fillWidth: true
