@@ -31,6 +31,26 @@ public:
 
     };
 
+    //- {function} 0 2
+    const QString uuid()
+    //-only-file body
+    {
+        return  uuidPrivate();
+    }
+    //-only-file body
+
+    //- {fn}
+    void setUuid(const QString &str)
+    //-only-file body
+    {
+        setUuidPrivate(str);
+        midiControlOff()->presetUuid = uuidPrivate();
+        midiControlOn()->presetUuid = uuidPrivate();
+        midiControlToggle()->presetUuid = uuidPrivate();
+        midiControlSelect()->presetUuid = uuidPrivate();
+    }
+
+
     //- {fn}
     void recreateEasyConfig(QList<PresetMidiControl *> &midiPresetControlEasyConfigs, bool recreatePreseControltOnOff)
     //-only-file body

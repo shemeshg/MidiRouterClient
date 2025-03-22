@@ -30,7 +30,7 @@ class MidiRoutePresetPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
-    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
+    Q_PROPERTY(QString uuidPrivate READ uuidPrivate WRITE setUuidPrivate NOTIFY uuidPrivateChanged )
     Q_PROPERTY(bool isEnabled READ isEnabled WRITE setIsEnabled NOTIFY isEnabledChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOn READ midiControlOn  NOTIFY midiControlOnChanged )
     Q_PROPERTY(PresetMidiControl * midiControlOff READ midiControlOff  NOTIFY midiControlOffChanged )
@@ -64,14 +64,14 @@ void setName(const QString &newName)
 
 
     
-    QString uuid() const{return m_uuid;} 
+    QString uuidPrivate() const{return m_uuidPrivate;} 
     
-void setUuid(const QString &newUuid)
+void setUuidPrivate(const QString &newUuidPrivate)
     {
-        if (m_uuid == newUuid)
+        if (m_uuidPrivate == newUuidPrivate)
             return;
-        m_uuid = newUuid;
-        emit uuidChanged();
+        m_uuidPrivate = newUuidPrivate;
+        emit uuidPrivateChanged();
     }
 
 
@@ -202,7 +202,7 @@ void setIsEnabled(const bool newIsEnabled)
     
 signals:
     void nameChanged();
-    void uuidChanged();
+    void uuidPrivateChanged();
     void isEnabledChanged();
     void midiControlOnChanged();
     void midiControlOffChanged();
@@ -223,7 +223,7 @@ protected:
 
 private:
     QString m_name ;
-    QString m_uuid ;
+    QString m_uuidPrivate ;
     bool m_isEnabled = false;
     
 };

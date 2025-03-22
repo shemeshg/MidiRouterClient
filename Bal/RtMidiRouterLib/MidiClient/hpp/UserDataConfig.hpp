@@ -307,10 +307,6 @@ private:
         for (int i=0;i<midiRoutePresets.length();i++){
             const auto itm = midiRoutePresets.at(i);
 
-            itm->midiControlOff()->presetUuid = itm->uuid();
-            itm->midiControlOn()->presetUuid = itm->uuid();
-            itm->midiControlToggle()->presetUuid = itm->uuid();
-            itm->midiControlSelect()->presetUuid = itm->uuid();
 
             midiPresetControlEasyConfigs.append(itm->midiControlOff());
             midiPresetControlEasyConfigs.append(itm->midiControlOn());
