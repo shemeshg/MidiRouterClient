@@ -120,7 +120,7 @@ public:
     //- {fn}
     QJsonObject applyConfig(QJsonObject &json)
     //-only-file body
-    {
+    {        
         wcmidiin->restart();
         wcmidiout->restart();
 
@@ -144,6 +144,7 @@ public:
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
+
 
     QStringList inPorts;
     QStringList outPorts;

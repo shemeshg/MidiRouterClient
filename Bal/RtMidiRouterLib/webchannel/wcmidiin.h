@@ -50,6 +50,18 @@ public:
 
     }
 
+    void listenersStop(){
+        for (const auto &i: openedMidiInObj){
+            i.second->listenerRunning = false;
+        }
+    }
+
+    void listenersStart(){
+        for (const auto &i: openedMidiInObj){
+            i.second->listenerRunning = true;
+        }
+    }
+
     Q_INVOKABLE bool msgToServer(const QString &msg);
     Q_INVOKABLE int getPortCount();
     Q_INVOKABLE QString getPortName(int i);
@@ -90,7 +102,7 @@ public:
     }
 
     Q_INVOKABLE void restart(){
-        midiin = std::make_unique<WcMidiInListener>(* dynamic_cast<Webchannel::EmitCommand*>(this));
+        //midiin = std::make_unique<WcMidiInListener>(* dynamic_cast<Webchannel::EmitCommand*>(this));
 
         for (auto  &o: openedMidiInObj){
             o.second->clearRoutingMidiChains();

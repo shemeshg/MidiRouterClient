@@ -33,6 +33,7 @@ private:
     std::unique_ptr<MidiFilterChain> routeFilterChains;
     std::vector<std::unique_ptr<RtMidiWrap::MidiEvent>> defferedMidiEvents;
 public:
+    bool listenerRunning = true;
 
     std::vector<std::unique_ptr<RtMidiWrap::MidiEvent>> &getDefferedMidiEvents(){
         return defferedMidiEvents;

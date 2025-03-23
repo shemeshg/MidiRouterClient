@@ -45,7 +45,7 @@ public:
     Q_INVOKABLE void setNonRegisteredParameterInt( int portNumber,int parameter,int data,QStringList channels);
     Q_INVOKABLE void sendMessage( int portNumber,QStringList message);
     Q_INVOKABLE void restart(){
-        midiout = std::make_unique<RtMidiWrap::MidiOut>();
+        //midiout = std::make_unique<RtMidiWrap::MidiOut>();
         openedMidiOutObj.clear();
     }
 

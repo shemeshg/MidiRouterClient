@@ -54,7 +54,7 @@ public:
 
         if (isSaveConfigOnServer) {
             auto d = doc.object();
-
+            d["uniqueId"] = 0;
             applyConfig(d);
 
         }
@@ -81,6 +81,7 @@ public slots:
     void setJon(QVariant msg)
     //-only-file body
     {
+
         userdata = msg;
         emit userDataChanges(getJon());
     }
@@ -116,7 +117,9 @@ public slots:
         QJsonDocument jsonDoc = QJsonDocument::fromJson(s.toUtf8());
 
         auto o = jsonDoc.object();
+        wcmidiin->listenersStop();
         auto ret = applayConfig.applyConfig(o);
+        wcmidiin->listenersStart();
         setJon(o);
         return ret;
     }
@@ -125,8 +128,9 @@ public slots:
     QJsonObject applyConfig( QJsonObject json)
     //-only-file body
     {
-
+        wcmidiin->listenersStop();
         auto ret = applayConfig.applyConfig(json);
+        wcmidiin->listenersStart();
         json["criticalError"] = applayConfig.criticalError;
         setJon(json);
         return ret;
@@ -138,27 +142,31 @@ public slots:
     void presetOnOff(int presetMidiType, QString presetUuid)
     //-only-file body
     {
+
         if (presetMidiType == 3){
             auto json = userdata.toJsonObject();
-
             applayConfig.selectPreset(json, presetOnOffStatus,presetUuid);
         } else if (presetMidiType == 2){
             auto json = userdata.toJsonObject();
-
             applayConfig.togglePreset(json, presetOnOffStatus,presetUuid);
         } else  {
             presetOnOffStatus[presetUuid] = presetMidiType;
         }
-        if (isInPresetOnOff){return;}
-        isInPresetOnOff = true;
-        QTimer::singleShot(250, [=]() {
-            auto json = userdata.toJsonObject();
 
-            json = applayConfig.presetOnOff(json, presetOnOffStatus);
-            json["uniqueId"] = uniqueId++;
-            applyConfig(json);
+
+
+        if (isInPresetOnOff){return;}
+        wcmidiin->listenersStop();
+        isInPresetOnOff = true;
+        QTimer::singleShot(10, [=]() {
+            auto json = userdata.toJsonObject();
+            auto j = applayConfig.presetOnOff(json, presetOnOffStatus);
+            j["uniqueId"] = uniqueId++;
+            applyConfig(j);
             isInPresetOnOff = false;
         });
+
+
 
 
 

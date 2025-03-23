@@ -125,6 +125,7 @@ void MidiInRouter::proccessChainsAndFilters(RtMidiWrap::MidiEvent &m)
 }
 
 void MidiInRouter::listener(RtMidiWrap::MidiEvent &m){
+    if (!listenerRunning){return;}
     proccess14bitCc(m);
     proccessNrpn(m);
     proccessChainsAndFilters(m);
