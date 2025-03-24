@@ -143,6 +143,14 @@ void delUserControl(int id)
     delListItem<UserControl*>(id);
 }
 
+//- {fn}
+void moveUserControl(int idxFrom, int idxTo)
+//-only-file body
+{
+    moveItem(*m_userControls,idxFrom, idxTo);
+    emit userControlsChanged();
+
+}
 
 //-only-file header
 signals:

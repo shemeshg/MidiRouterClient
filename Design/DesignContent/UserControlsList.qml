@@ -108,6 +108,11 @@ ColumnLayout {
                 isSubForm = true;
                 editControl(modelData)
             }
+            isShowUpBtn: activePreset.userControls.length > 1
+            onUpBtn: {
+                activePreset.moveUserControl(index, index - 1);
+            }
+
         }
     }
 }

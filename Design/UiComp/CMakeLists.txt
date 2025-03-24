@@ -10,6 +10,7 @@ qt6_add_qml_module(UiComp
         "UiBtnDel.qml"
         "UiBtnEdit.qml"
         "UiBtnBack.qml"
+        "UiBtnUp.qml"
     RESOURCES
         "icons/arrow_back_ios_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"
         "icons/add_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg"

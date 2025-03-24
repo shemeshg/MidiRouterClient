@@ -86,9 +86,7 @@ ColumnLayout {
                 Layout.fillWidth: true
             }
 
-            CoreButton {
-                text: "⇑"
-                hooverText: "Move up"
+            UiBtnUp {
                 visible: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets.length > 1
                 onClicked: {
                     Constants.balData.midiClientConnection.userDataConfig.movePreset(index, index - 1);

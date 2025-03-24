@@ -14,11 +14,12 @@ ColumnLayout {
     property bool showEdit: false
     property bool is64Mode: false
     property bool isShowLabel: false
+    property bool isShowUpBtn: false
     signal del()
     signal edit()
     signal setVal(int i, bool isForce);
     signal setName(string s);
-
+    signal upBtn()
 
 
     RowLayout {
@@ -79,6 +80,12 @@ ColumnLayout {
             text: "Send"
             onClicked: {
                 setVal(slider.value, true)
+            }
+        }
+        UiBtnUp {
+            visible: isShowUpBtn
+            onClicked: {
+                upBtn()
             }
         }
     }
