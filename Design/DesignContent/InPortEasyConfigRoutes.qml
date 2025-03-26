@@ -60,6 +60,12 @@ ColumnLayout {
                             midiRouteInput.easyConfig.delEasyConfigRoute(index)
                         }
                     }
+                    UiBtnUp {
+                        visible: midiRouteInput.easyConfig.easyConfigRoutes.length > 1
+                        onClicked: {
+                            midiRouteInput.easyConfig.moveEasyConfig(index, index - 1);
+                        }
+                    }
                 }
                 RowLayout {
 

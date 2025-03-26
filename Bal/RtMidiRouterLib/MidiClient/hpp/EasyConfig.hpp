@@ -70,6 +70,16 @@ public slots:
         addListItem(itm);
     }
 
+
+    //- {fn}
+    void moveEasyConfig(int idxFrom, int idxTo)
+    //-only-file body
+    {
+        moveItem(*m_easyConfigRoutes,idxFrom, idxTo);
+        emit easyConfigRoutesChanged();
+
+    }
+
     //- {fn}
     void setKeyboardSplits(const QList<int> &newKeyboardSplits)
     //-only-file body
