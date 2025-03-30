@@ -31,7 +31,7 @@ if(GEN_HPP)
         ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt
         ${HPP_GEN_FILES}
     )
-    add_custom_target(runScript_XxpCv6OP ALL
+    add_custom_target(runScript_7yV8Csks ALL
         COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Running parseHpp shell script")
@@ -107,7 +107,7 @@ webchannel)
         
 
 if(GEN_HPP)
-  add_dependencies(RtMidiRouterLib runScript_XxpCv6OP)
+  add_dependencies(RtMidiRouterLib runScript_7yV8Csks)
 endif()
         
 # [[[end]]]

@@ -13,5 +13,7 @@ cd Bal/RtMidiRouterLib/MidiClient/genPrpt
 cog -r *.hpp
 
 cd /Volumes/RAM_Disk_4G/MidiRouterClient/Bal
-
 cog -r BalDataPrivate.h BalDataPrivate.cpp BalData.h BalData.cpp
+
+cd /Volumes/RAM_Disk_4G/MidiRouterClient/Bal/RtMidiRouterLib
+cog -r CMakeLists.txt
