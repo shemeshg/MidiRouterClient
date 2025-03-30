@@ -1,3 +1,36 @@
-module DesignContent
+Module DesignContent
+About 1.0 About.qml
+App 1.0 App.qml
+ComboSilder 1.0 ComboSilder.qml
+EditPreset 1.0 EditPreset.qml
+EditPresetControl 1.0 EditPresetControl.qml
 FormGroupBox 1.0 FormGroupBox.qml
-
+HeaderBar 1.0 HeaderBar.qml
+InPortEasyConfig 1.0 InPortEasyConfig.qml
+InPortEasyConfigRoutes 1.0 InPortEasyConfigRoutes.qml
+InPortEasyConfigSplits 1.0 InPortEasyConfigSplits.qml
+InPortMonitor 1.0 InPortMonitor.qml
+InPortRoutes 1.0 InPortRoutes.qml
+InPortSettings 1.0 InPortSettings.qml
+InPorts 1.0 InPorts.qml
+InPortsList 1.0 InPortsList.qml
+InPortsRoutesFilterFnt 1.0 InPortsRoutesFilterFnt.qml
+InPortsRoutesFilterSchedule 1.0 InPortsRoutesFilterSchedule.qml
+InPortsRoutesFilterToConsole 1.0 InPortsRoutesFilterToConsole.qml
+InPortsRoutesFilterToMidi 1.0 InPortsRoutesFilterToMidi.qml
+InPortsRoutesFilterToNetwork 1.0 InPortsRoutesFilterToNetwork.qml
+InPortsRoutesListFilters 1.0 InPortsRoutesListFilters.qml
+InPortsSettings14Bit 1.0 InPortsSettings14Bit.qml
+InPortsSettingsProperate 1.0 InPortsSettingsProperate.qml
+ListPresets 1.0 ListPresets.qml
+LocalNetMidiOut 1.0 LocalNetMidiOut.qml
+Login 1.0 Login.qml
+MidiControlChannel 1.0 MidiControlChannel.qml
+MidiControlData 1.0 MidiControlData.qml
+MidiControlEventType 1.0 MidiControlEventType.qml
+Presets 1.0 Presets.qml
+UserControls 1.0 UserControls.qml
+UserControlsDropdowns 1.0 UserControlsDropdowns.qml
+UserControlsEditControl 1.0 UserControlsEditControl.qml
+UserControlsList 1.0 UserControlsList.qml
+VirtualPorts 1.0 VirtualPorts.qml
