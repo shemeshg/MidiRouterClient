@@ -61,8 +61,9 @@ endif()
         makeDirsStr = ""
         if len(self.makeDirectories) > 0:
             makeDirsStrT = Template("""make_directory(${items})""")
-            makeDirsStr = makeDirsStrT.substitute(items = " ".join(self.makeDirectories))
-        
+            makeDirsStr += "\n".join( [makeDirsStrT.substitute(items = m)  for m in self.makeDirectories] )
+
+
         hppGenFilesTemplatesStr = ""
         if len(self.hppGenFilesTemplates) > 0:
             hppGenFilesTemplatesStr = " ".join(self.hppGenFilesTemplates)
