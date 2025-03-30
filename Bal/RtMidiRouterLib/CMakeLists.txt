@@ -25,11 +25,10 @@ if(GEN_HPP)
     make_directory(${CMAKE_CURRENT_BINARY_DIR}/webchannel)
 
 
-    file(GLOB HPP_GEN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/webchannel/*.hpp"  )
-
     set(HPP_GEN_FILES
         ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt
-        ${HPP_GEN_FILES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/webchannel/ApplyConfig.hpp
+${CMAKE_CURRENT_SOURCE_DIR}/webchannel/wcuserdata.hpp
     )
     add_custom_target(runScript_a850da8f504034f745cd80a1cc3dd4d0f22b35a3cf03c4e4a1c0e9e71653fc3a ALL
         COMMAND python3 ${CMAKE_SOURCE_DIR}/scripts/parseHpp.py ${HPP_GEN_FILES}

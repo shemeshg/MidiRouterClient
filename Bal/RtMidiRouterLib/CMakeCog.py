@@ -68,9 +68,9 @@ endif()
             hppGenFilesTemplatesStr = " ".join(self.hppGenFilesTemplates)
 
         
-        hppGenFilesGlobesStr = ""
-        if len(self.hppGenFilesGlobes) > 0:
-            hppGenFilesGlobesStr = " ".join(self.hppGenFilesGlobes)
+        hppGenFilesGlobesStr = []
+        for globStr in  self.hppGenFilesGlobes:      
+            hppGenFilesGlobesStr.extend(sorted(["${CMAKE_CURRENT_SOURCE_DIR}/" + str(p) for p in Path(globStr).parent.glob(Path(globStr).name )]))
 
         t = Template("""
 SET(GEN_HPP TRUE)
@@ -78,11 +78,9 @@ if(GEN_HPP)
     ${makeDirsStr}
 
 
-    file(GLOB HPP_GEN_FILES ${hppGenFilesGlobesStr}  )
-
     set(HPP_GEN_FILES
         ${hppGenFilesTemplatesStr}
-        ${HPP_GEN_FILES}
+        ${hppGenFilesGlobesStr}
     )
     add_custom_target(${execJobId} ALL
         COMMAND python3 ${parseHppPyPath} ${HPP_GEN_FILES}
@@ -106,7 +104,7 @@ endif()
                      """)
         return t.safe_substitute(makeDirsStr = makeDirsStr, 
                                  hppGenFilesTemplatesStr = hppGenFilesTemplatesStr,
-                                 hppGenFilesGlobesStr = hppGenFilesGlobesStr,
+                                 hppGenFilesGlobesStr = "\n".join(hppGenFilesGlobesStr),
                                  execJobId = self.execJobId,
                                  parseHppPyPath = self.parseHppPyPath)
 
@@ -220,7 +218,7 @@ def getCmake():
     genApp = GenHpp(cmc.exeName)
     genApp.makeDirectories = ["${CMAKE_CURRENT_BINARY_DIR}/webchannel"]
     genApp.hppGenFilesTemplates = ["${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt"]
-    genApp.hppGenFilesGlobes = ['"${CMAKE_CURRENT_SOURCE_DIR}/webchannel/*.hpp"']
+    genApp.hppGenFilesGlobes = ['webchannel/*.hpp']
     genApp.parseHppPyPath = "${CMAKE_SOURCE_DIR}/scripts/parseHpp.py"
 
     s.append(genApp.getStr())
