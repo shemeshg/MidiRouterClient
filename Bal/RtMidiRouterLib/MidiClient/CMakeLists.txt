@@ -36,7 +36,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets WebSockets WebChannel REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets WebSockets WebChannel REQUIRED)
 
 
-add_library(midiClient STATIC
+add_library(MidiClient STATIC
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/Dropdownlist.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/EasyConfigPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/EasyConfigRoutePrivate.h
@@ -93,11 +93,11 @@ ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilter.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRoutersFilter.cpp
 )
 
-  target_link_libraries(midiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
+  target_link_libraries(MidiClient PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebSockets Qt${QT_VERSION_MAJOR}::WebChannel
           )
 
-  target_compile_definitions(midiClient PRIVATE MIDICLIENT_LIBRARY)
+  target_compile_definitions(MidiClient PRIVATE MIDICLIENT_LIBRARY)
 
   if(GEN_HPP)
-    add_dependencies(midiClient run_script01)
+    add_dependencies(MidiClient run_script01)
   endif()

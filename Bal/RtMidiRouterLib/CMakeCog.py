@@ -212,7 +212,7 @@ def getCmake():
     cmc.find_package_qt_components = ["Widgets", "WebSockets", "WebChannel" ]
     s.append(cmc.find_package_qt())
 
-    cmc.subdirectoryItem = [SubdirectoryItem("RtMidiWrap"), SubdirectoryItem("MidiClient","midiClient")]
+    cmc.subdirectoryItem = [SubdirectoryItem("RtMidiWrap"), SubdirectoryItem("MidiClient")]
     s.append(cmc.add_subdirectory())
 
     genApp = GenHpp(cmc.exeName)

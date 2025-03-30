@@ -97,7 +97,7 @@ target_link_libraries(RtMidiRouterLib PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
 Qt${QT_VERSION_MAJOR}::WebSockets
 Qt${QT_VERSION_MAJOR}::WebChannel
 RtMidiWrap
-midiClient) 
+MidiClient) 
 target_compile_definitions(RtMidiRouterLib PRIVATE RTMIDIROUTERLIB_LIBRARY) 
 
 target_include_directories(RtMidiRouterLib PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/MidiClient/GenHpp
