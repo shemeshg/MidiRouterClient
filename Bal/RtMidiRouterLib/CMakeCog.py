@@ -5,6 +5,7 @@ import string
 import glob
 from pathlib import Path
 import re
+import hashlib
 
 class GenHpp:
     execJobId: str
@@ -13,10 +14,9 @@ class GenHpp:
     hppGenFilesTemplates: List[str] = []
     parseHppPyPath = ""
     exeName: str
-    def __init__(self, exeName):
-        length = 8 
-        characters = string.ascii_letters + string.digits 
-        self.execJobId = "runScript_" +  ''.join(secrets.choice(characters) for _ in range(length))
+    def __init__(self, exeName):        
+        hash_object = hashlib.sha256(exeName.encode())
+        self.execJobId = "runScript_" +  hash_object.hexdigest()
         self.exeName = exeName
 
     def add_dependencies(self):
