@@ -1,11 +1,11 @@
 
-qt_add_library(DesignContent STATIC)
-qt6_add_qml_module(DesignContent
-    URI "DesignContent"
-    VERSION 1.0
-    RESOURCE_PREFIX "/qt/qml"
-    QML_FILES
-        About.qml
+    qt_add_library(DesignContent STATIC)
+    qt6_add_qml_module(DesignContent
+        URI "DesignContent"
+        VERSION 1.0
+        RESOURCE_PREFIX "/qt/qml"
+        QML_FILES
+            About.qml
 App.qml
 ComboSilder.qml
 EditPreset.qml
@@ -40,9 +40,10 @@ UserControlsDropdowns.qml
 UserControlsEditControl.qml
 UserControlsList.qml
 VirtualPorts.qml
-    RESOURCES
-        icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
+        RESOURCES
+            icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/ink_selection_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/mop_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
-    )
+        )
+    
