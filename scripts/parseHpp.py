@@ -19,21 +19,21 @@ import re
 import sys
 import concurrent.futures
 
-is_source_map = True
+is_source_map: bool = True
 
 class FileClass:
-    file_path = ""
-    file_id = ""
-    file_content = []
-    original_line_number = 0
+    file_path: str = ""
+    file_id: str = ""
+    file_content: list[str] = []
+    original_line_number: int = 0
 
 class LineClass:
-    filne_name = ""
-    line_number = 0
-    line_text = ""
+    filne_name: str = ""
+    line_number: int = 0
+    line_text: str = ""
 
 
-def update_file_if_needed(file_path, new_content):
+def update_file_if_needed(file_path: str, new_content: str) -> None:
     """
     Checks if the content of the file at file_path is different from new_content.
     If different, deletes the file and writes new_content to it.
@@ -59,7 +59,7 @@ def update_file_if_needed(file_path, new_content):
 
 
 
-def remove_default_assignment(declaration):
+def remove_default_assignment(declaration: str) -> str:
     # Regular expression to match default assignments
     pattern = re.compile(r'\s*=\s*".*?"|\s*=\s*\w+|\s*=\s*\(.*?\)\s*=>\s*\{.*?\}')
     # Replace the default assignments with an empty string
@@ -70,7 +70,7 @@ def remove_default_assignment(declaration):
     
     return result
 
-def replace_next(template, NEXT):
+def replace_next(template: str, NEXT: list[str]) -> str:
     def replacer(match):
         expr = match.group(1)
         if ':' in expr:
@@ -86,7 +86,7 @@ def replace_next(template, NEXT):
     result = pattern.sub(replacer, template)
     return result
 
-def get_string_parts(line, with_quotes=False):
+def get_string_parts(line: str, with_quotes: bool = False) -> list[str]:
     if with_quotes:
         pattern = re.compile(r'(\".*?\"|\S+<.*?>|\S+\s*\*\s*|\S+)')
     else:
@@ -103,7 +103,7 @@ def get_string_parts(line, with_quotes=False):
 
 
 
-def extract_next_value(string):
+def extract_next_value(string: str) -> str | None:
     """
     Extracts the integer value following "{NEXT:" in the given string.
 
@@ -120,31 +120,31 @@ def extract_next_value(string):
         return None
 
 
-is_defining_template = False
-templates_map = {}
-current_template = ""
-def parse_file(input_file):
+is_defining_template: bool = False
+templates_map: dict[str, str] = {}
+current_template: str = ""
+def parse_file(input_file: str) -> None:
     global is_defining_template
     global templates_map
     global current_template
     with open(input_file, 'r') as file:
         lines = file.readlines()
 
-    fileMap = {"null": FileClass()}
-    varsMap = {}
+    fileMap: dict[str, FileClass] = {"null": FileClass()}
+    varsMap: dict[str, str] = {}
 
-    is_only_file = False
-    only_file_id = ""
-    remove_remark = False
-    append_semicolon = False
+    is_only_file: bool = False
+    only_file_id: str = ""
+    remove_remark: bool = False
+    append_semicolon: bool = False
 
-    is_next_text = False
-    next_text = ""
-    next_text_skip_only_files = 1
-    next_only_file_id = ""
+    is_next_text: bool = False
+    next_text: str = ""
+    next_text_skip_only_files: int = 1
+    next_only_file_id: str = ""
 
-    lines_without_templates = []   
-    line_number = 1
+    lines_without_templates: list[LineClass] = []   
+    line_number: int = 1
     for line in lines:
         line_number = line_number + 1
         lstrip_line = line.lstrip()
@@ -169,7 +169,7 @@ def parse_file(input_file):
 
 
 
-    lines = []
+    lines: list[LineClass] = []
     for t in templates_map:
         for i in range(len(lines_without_templates)):
             lstrip_line = lines_without_templates[i].line_text.lstrip()
@@ -266,7 +266,7 @@ def parse_file(input_file):
 
 if __name__ == "__main__":    
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        futures = []
+        futures: list[concurrent.futures.Future] = []
         # Templates should be read none async
         parse_file(sys.argv[1])
         for arg in sys.argv[2:]:

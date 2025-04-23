@@ -1,11 +1,11 @@
-# ver 1.0
 from string import Template
+from typing import List
 
-def initCapital(s):
+def initCapital(s: str) -> str:
     return s[0].upper() + s[1:]
 
-def create_prpt(type_name, name, is_writable=True, is_notify=True, is_list = False, init_val = ""):
-    p = Prpt(type_name, name)
+def create_prpt(type_name: str, name: str, is_writable: bool = True, is_notify: bool = True, is_list: bool = False, init_val: str = "") -> 'Prpt':
+    p: Prpt = Prpt(type_name, name)
     p.is_bindable = False
     p.is_writable = is_writable
     p.is_notify = is_notify
@@ -16,47 +16,47 @@ def create_prpt(type_name, name, is_writable=True, is_notify=True, is_list = Fal
     return p
 
 class EnumClass:
-    class_name = ""
-    class_options = []
+    class_name: str = ""
+    class_options: List[str] = []
 
-    def __init__(self, class_name, class_options):
-        self.class_name = class_name
-        self.class_options = class_options
+    def __init__(self, class_name: str, class_options: List[str]):
+        self.class_name: str = class_name
+        self.class_options: List[str] = class_options
        
-    def public_h_file(self):
-        t = Template(
+    def public_h_file(self) -> str:
+        t: Template = Template(
 """
 enum class ${class_name} {
         ${class_options}
     };
 Q_ENUM(${class_name})
 """)
-        coma_class_options = ", ".join(self.class_options)
+        coma_class_options: str = ", ".join(self.class_options)
         return t.substitute(class_name=self.class_name, class_options=coma_class_options)
     
 
 class Prpt:
-    is_bindable=False
-    is_writable = False
-    is_notify = False
-    is_new_in_contr = False
-    field_type = ""
-    field_name = ""
-    field_name_initCap = ""
-    writable_declare_only = False
-    readable_declare_only = False
-    is_getter_ref = False
-    is_list = False
-    init_val = ""
+    is_bindable: bool = False
+    is_writable: bool = False
+    is_notify: bool = False
+    is_new_in_contr: bool = False
+    field_type: str = ""
+    field_name: str = ""
+    field_name_initCap: str = ""
+    writable_declare_only: bool = False
+    readable_declare_only: bool = False
+    is_getter_ref: bool = False
+    is_list: bool = False
+    init_val: str = ""
     
-    writable_declare_only_template = Template(
+    writable_declare_only_template: Template = Template(
 """
 void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap});
 """)
-    readable_declare_only_template = Template("""${field_type} ${ref_str}${field_name}() ${const_str};""")
+    readable_declare_only_template: Template = Template("""${field_type} ${ref_str}${field_name}() ${const_str};""")
 
 
-    writable_template = Template(
+    writable_template: Template = Template(
 """
 void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap})
     {
@@ -67,74 +67,73 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
     }
 """)
 
-    readable_template = Template("""${field_type} ${ref_str}${field_name}() ${const_str}{return m_${field_name};}""")
+    readable_template: Template = Template("""${field_type} ${ref_str}${field_name}() ${const_str}{return m_${field_name};}""")
    
         
-    
 
-    def __init__(self, field_type, field_name):
-        self.field_type = field_type
-        self.field_name = field_name
-        self.field_name_initCap = initCapital(field_name)
+    def __init__(self, field_type: str, field_name: str):
+        self.field_type: str = field_type
+        self.field_name: str = field_name
+        self.field_name_initCap: str = initCapital(field_name)
 
 
-    def get_Q_OBJECT(self):
-        bindable_template = Template("""BINDABLE bindable${field_name_initCap}""")
-        bindable_txt = ""
+    def get_Q_OBJECT(self) -> str:
+        bindable_template: Template = Template("""BINDABLE bindable${field_name_initCap}""")
+        bindable_txt: str = ""
         if self.is_bindable:
             bindable_txt = bindable_template.substitute(field_name_initCap=self.field_name_initCap)
 
-        writable_template = Template("""WRITE set${field_name_initCap}""")
-        writable_text = ""
+        writable_template: Template = Template("""WRITE set${field_name_initCap}""")
+        writable_text: str = ""
         if self.is_writable:
             writable_text = writable_template.substitute(field_name_initCap = self.field_name_initCap)
 
-        notify_template = Template("""NOTIFY ${field_name}Changed""")
-        notify_text = "CONSTANT"
+        notify_template: Template = Template("""NOTIFY ${field_name}Changed""")
+        notify_text: str = "CONSTANT"
         if self.is_notify:
             notify_text = notify_template.substitute(field_name = self.field_name)
 
-        t = Template("""Q_PROPERTY(${field_type} ${field_name} READ ${field_name} ${writable_text} ${notify_text} ${bindable_txt})
+        t: Template = Template("""Q_PROPERTY(${field_type} ${field_name} READ ${field_name} ${writable_text} ${notify_text} ${bindable_txt})
     """)
 
         return t.substitute(field_type=self.field_type, field_name = self.field_name , field_name_initCap=self.field_name_initCap, 
             bindable_txt=bindable_txt, writable_text=writable_text, notify_text=notify_text)
         
 
-    def public_h_file(self):
-        ampr  = "&"
+    def public_h_file(self) -> str:
+        ampr: str  = "&"
         if self.field_type == "bool" or self.field_type == "int":
             ampr = ""
 
-        bindable_template = Template("""QBindable<${field_type}> bindable${field_name_initCap}() { return &m_${field_name}; }""")
-        bindable_txt = ""
+        bindable_template: Template = Template("""QBindable<${field_type}> bindable${field_name_initCap}() { return &m_${field_name}; }""")
+        bindable_txt: str = ""
         if self.is_bindable:
             bindable_txt = bindable_template.substitute(field_type=self.field_type, field_name=self.field_name,field_name_initCap=self.field_name_initCap)
 
 
-        writable_text = ""
+        writable_text: str = ""
         if self.is_writable:
-            writable_template = self.writable_template
+            writable_template: Template = self.writable_template
             if self.writable_declare_only:
                 writable_template = self.writable_declare_only_template
             writable_text = writable_template.substitute(field_type=self.field_type, field_name = self.field_name , 
                 field_name_initCap=self.field_name_initCap, ampr=ampr)
 
-        const_str = "const"
-        ref_str = ""
+        const_str: str = "const"
+        ref_str: str = ""
         if self.is_getter_ref:
             ref_str = "&"
             const_str = ""
 
-        readable_template = self.readable_template
+        readable_template: Template = self.readable_template
         if self.is_list:
             readable_template = Template("""${field_type} ${ref_str}${field_name}() ${const_str}{return *m_${field_name};}""")
 
         if self.readable_declare_only:
             readable_template = self.readable_declare_only_template        
-        readable_text = readable_template.substitute(field_type=self.field_type, field_name = self.field_name,
+        readable_text: str = readable_template.substitute(field_type=self.field_type, field_name = self.field_name,
                 const_str = const_str, ref_str = ref_str)
-        t = Template(
+        t: Template = Template(
 """
     ${bindable_txt}
     ${readable_text} 
@@ -145,41 +144,41 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             writable_text=writable_text,bindable_txt=bindable_txt,
             readable_text = readable_text, const_str = const_str, ref_str = ref_str)
 
-    def signals_h_file(self):
+    def signals_h_file(self) -> str:
         if self.is_notify:
-            t = Template("""void ${field_name}Changed();
+            t: Template = Template("""void ${field_name}Changed();
     """)
             return t.substitute(field_name = self.field_name )
         else:
             return ""
 
-    def private_h_file(self, class_name):
+    def private_h_file(self, class_name: str) -> str:
         if self.field_type == "int":
             self.init_val = "= 0"
         if self.field_type == "bool":
             self.init_val = "= false"
         
         if self.is_bindable:
-            t = Template("""Q_OBJECT_BINDABLE_PROPERTY(${class_name}, ${field_type}, m_${field_name}, &${class_name}::${field_name}Changed)
+            t: Template = Template("""Q_OBJECT_BINDABLE_PROPERTY(${class_name}, ${field_type}, m_${field_name}, &${class_name}::${field_name}Changed)
     """)            
         else:
-            t = Template("""${field_type} m_${field_name} ${init_val};
+            t: Template = Template("""${field_type} m_${field_name} ${init_val};
     """)    
             if self.is_list:
                 t = Template("""${field_type} *m_${field_name} ${init_val};
     """)    
         return t.substitute(field_name = self.field_name,field_type=self.field_type,class_name=class_name,init_val=self.init_val )
 
-    def destructot_h_file(self):
-        type_in_list = self.field_type.split("<")[1].split(">")[0]
-        t = Template("""clearList<${type_in_list}>();
+    def destructot_h_file(self) -> str:
+        type_in_list: str = self.field_type.split("<")[1].split(">")[0]
+        t: Template = Template("""clearList<${type_in_list}>();
     """)
         return t.substitute(type_in_list=type_in_list)    
 
-    def public_slots_h_file(self):
-        type_in_list = self.field_type.split("<")[1].split(">")[0]
-        type_in_list_no_str = type_in_list.replace("*","");
-        t = Template(
+    def public_slots_h_file(self) -> str:
+        type_in_list: str = self.field_type.split("<")[1].split(">")[0]
+        type_in_list_no_str: str = type_in_list.replace("*","");
+        t: Template = Template(
         """
         template<typename T = ${type_in_list}>
         std::enable_if_t<std::is_same_v<T, ${type_in_list}>, void>
@@ -223,31 +222,32 @@ void set${field_name_initCap}(const ${field_type} ${ampr}new${field_name_initCap
             return *m_${field_name};
         }
 
-        """)
+        """
+        )
         return t.substitute(field_name = self.field_name,field_type=self.field_type,
                             field_name_initCap=self.field_name_initCap,type_in_list=type_in_list,
                              type_in_list_no_str = type_in_list_no_str )
 
 class PrptClass:
-    class_name = ""
-    inhirit_from = "QObject"
-    prptAry = []
-    enumClassAry = []
-    is_hpp = True
-    def __init__(self, class_name, prptAry, enumClassAry, is_hpp = True):
-        self.class_name = class_name
-        self.prptAry = prptAry
-        self.enumClassAry = enumClassAry
-        self.is_hpp = is_hpp
+    class_name: str = ""
+    inhirit_from: str = "QObject"
+    prptAry: List[Prpt] = []
+    enumClassAry: List[EnumClass] = []
+    is_hpp: bool = True
+    def __init__(self, class_name: str, prptAry: List[Prpt], enumClassAry: List[EnumClass], is_hpp: bool = True):
+        self.class_name: str = class_name
+        self.prptAry: List[Prpt] = prptAry
+        self.enumClassAry: List[EnumClass] = enumClassAry
+        self.is_hpp: bool = is_hpp
 
-    def getClassCpp(self):
-        contr_init = [self.inhirit_from + "(parent)"]
+    def getClassCpp(self) -> str:
+        contr_init: List[str] = [self.inhirit_from + "(parent)"]
         for row in self.prptAry:
             if row.is_new_in_contr:
-                contr_template = Template("""m_${field_name}(new ${field_name_type}(this))""")
+                contr_template: Template = Template("""m_${field_name}(new ${field_name_type}(this))""")
                 contr_init.append(contr_template.substitute(field_name = row.field_name, field_name_type = row.field_type.split()[0]) )
-        contr_init_text = ",".join(contr_init)
-        t=Template(
+        contr_init_text: str = ",".join(contr_init)
+        t: Template = Template(
 """ 
  ${class_name}:: ${class_name}(QObject *parent)
     : ${contr_init_text}
@@ -260,8 +260,8 @@ class PrptClass:
             contr_init_text=contr_init_text,
             inhirit_from = self.inhirit_from)
 
-    def getClassHeader(self):
-        t=Template(
+    def getClassHeader(self) -> str:
+        t: Template = Template(
 """
 //-only-file header
 class ${class_name} : public ${inhirit_from}
@@ -303,28 +303,28 @@ private:
             constructor_h_file = self.get_constructor_h_file(),
             inhirit_from = self.inhirit_from)
 
-    def get_q_object_content(self):
-        q_object_content = ""
+    def get_q_object_content(self) -> str:
+        q_object_content: str = ""
         for row in self.prptAry:
             q_object_content = q_object_content + row.get_Q_OBJECT()
         return q_object_content
 
-    def get_public_content(self):
-        public_content = ""
+    def get_public_content(self) -> str:
+        public_content: str = ""
         for row in self.enumClassAry:
             public_content = public_content + row.public_h_file()        
         for row in self.prptAry:
             public_content = public_content + row.public_h_file()
         return public_content
 
-    def get_signals_content(self):
-        signals_content = ""
+    def get_signals_content(self) -> str:
+        signals_content: str = ""
         for row in self.prptAry:
             signals_content = signals_content + row.signals_h_file()
         return signals_content
 
-    def get_private_content(self):
-        private_content = "void ctorClass(); \n"
+    def get_private_content(self) -> str:
+        private_content: str = "void ctorClass(); \n"
         if self.is_hpp:
             private_content = ""
         for row in self.prptAry:
@@ -332,29 +332,29 @@ private:
                 private_content = private_content + row.private_h_file(self.class_name)
         return private_content
 
-    def get_protected_content(self):
-        private_content = ""
+    def get_protected_content(self) -> str:
+        private_content: str = ""
         for row in self.prptAry:
             if row.is_writable == False:
                 private_content = private_content + row.private_h_file(self.class_name)
         return private_content
     
-    def get_public_pointer_list(self):
-        private_content = ""
+    def get_public_pointer_list(self) -> str:
+        private_content: str = ""
         for row in self.prptAry:
             if row.is_list:
                 private_content = private_content + row.public_slots_h_file()
         return private_content
     
-    def get_destructor_h_file(self):
-        private_content = ""
+    def get_destructor_h_file(self) -> str:
+        private_content: str = ""
         for row in self.prptAry:
             if row.is_list:
                 private_content = private_content + row.destructot_h_file()
         return private_content
 
-    def get_constructor_h_file(self):        
-        t = Template("    ${class_name}(QObject *parent);\n")
+    def get_constructor_h_file(self) -> str:        
+        t: Template = Template("    ${class_name}(QObject *parent);\n")
         
         if self.is_hpp:                      
             t = Template("""
@@ -366,21 +366,21 @@ private:
             
 
 """
-ary = []
-p = Prpt("QString",'message')
+ary: List[Prpt] = []
+p: Prpt = Prpt("QString",'message')
 p.is_bindable = False
 p.is_writable = True
 p.is_notify = True
 ary.append(p)
-c = PrptClass("Msg", ary, [])
+c: PrptClass = PrptClass("Msg", ary, [])
 print (c.getClassHeader())
 print ("#####################")
 print (c.getClassCpp())
 print ("#####################")
 
 
-ary = []
-p = Prpt("QString",'firstName')
+ary: List[Prpt] = []
+p: Prpt = Prpt("QString",'firstName')
 p.is_bindable = True
 p.is_writable = True
 p.is_notify = True
@@ -409,8 +409,8 @@ p.is_new_in_contr = False
 p.is_list = True
 ary.append(p)
 
-enumClasss = []
-e = EnumClass("InfoStatus",
+enumClasss: List[EnumClass] = []
+e: EnumClass = EnumClass("InfoStatus",
         ["Idile",
         "Running",
         "CaskFound",

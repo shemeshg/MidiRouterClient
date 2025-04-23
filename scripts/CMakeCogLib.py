@@ -1,7 +1,5 @@
 from string import Template
 from typing import List
-import secrets
-import string
 import glob
 from pathlib import Path
 import re
@@ -13,15 +11,15 @@ class GenHpp:
     makeDirectories: List[str] = []
     hppGenFilesGlobes: List[str] = []
     hppGenFilesTemplates: List[str] = []
-    parseHppPyPath = ""
+    parseHppPyPath: str = ""
     exeName: str
-    def __init__(self, exeName):        
+    def __init__(self, exeName: str):        
         hash_object = hashlib.sha256(exeName.encode())
-        self.execJobId = "runScript_" +  hash_object.hexdigest()
-        self.exeName = exeName
+        self.execJobId: str = "runScript_" +  hash_object.hexdigest()
+        self.exeName: str = exeName
 
-    def add_dependencies(self):
-        t = Template("""
+    def add_dependencies(self) -> str:
+        t: Template = Template("""
 if(GEN_HPP)
   add_dependencies(${exeName} ${execJobId})
 endif()
@@ -29,27 +27,27 @@ endif()
         return t.substitute(exeName = self.exeName, 
                             execJobId = self.execJobId)
 
-    def get_string_parts(self,line, with_quotes=False):
+    def get_string_parts(self, line: str, with_quotes: bool = False) -> List[str]:
         if with_quotes:
-            pattern = re.compile(r'(\".*?\"|\S+<.*?>|\S+\s*\*\s*|\S+)')
+            pattern: re.Pattern = re.compile(r'(\".*?\"|\S+<.*?>|\S+\s*\*\s*|\S+)')
         else:
-            pattern = re.compile(r'\"(.*?)\"|(\S+<.*?>|\S+\s*\*\s*|\S+)')
+            pattern: re.Pattern = re.compile(r'\"(.*?)\"|(\S+<.*?>|\S+\s*\*\s*|\S+)')
 
-        matches = pattern.findall(line)
+        matches: List[tuple] = pattern.findall(line)
 
         if with_quotes:
-            parts = [match for match in matches]
+            parts: List[str] = [match for match in matches]
         else:
-            parts = [match[0] or match[1] for match in matches]
+            parts: List[str] = [match[0] or match[1] for match in matches]
 
         return parts
 
-    def getDefineFiles(self, preAppend = "") -> List[str]:
+    def getDefineFiles(self, preAppend: str = "") -> List[str]:
         defFiles: List[str] = []
         for globStr in self.hppGenFilesGlobes:
             globStr = globStr.replace('${CMAKE_CURRENT_SOURCE_DIR}/','')
             globStr = globStr.replace('"','')
-            files = [str(p) for p in glob.glob(globStr)]
+            files: List[str] = [str(p) for p in glob.glob(globStr)]
             for file in files:
                 with open(file, 'r') as f:                    
                     for line in f:
@@ -58,23 +56,23 @@ endif()
                             defFiles.append(preAppend + self.get_string_parts(line)[2])
         return defFiles
 
-    def getStr(self):
-        makeDirsStr = ""
+    def getStr(self) -> str:
+        makeDirsStr: str = ""
         if len(self.makeDirectories) > 0:
-            makeDirsStrT = Template("""make_directory(${items})""")
+            makeDirsStrT: Template = Template("""make_directory(${items})""")
             makeDirsStr += "\n".join( [makeDirsStrT.substitute(items = m)  for m in self.makeDirectories] )
 
 
-        hppGenFilesTemplatesStr = ""
+        hppGenFilesTemplatesStr: str = ""
         if len(self.hppGenFilesTemplates) > 0:
             hppGenFilesTemplatesStr = " ".join(self.hppGenFilesTemplates)
 
         
-        hppGenFilesGlobesStr = []
+        hppGenFilesGlobesStr: List[str] = []
         for globStr in  self.hppGenFilesGlobes:      
             hppGenFilesGlobesStr.extend(sorted(["${CMAKE_CURRENT_SOURCE_DIR}/" + str(p) for p in Path(globStr).parent.glob(Path(globStr).name )]))
 
-        t = Template("""
+        t: Template = Template("""
 SET(GEN_HPP TRUE)
 if(GEN_HPP)
     ${makeDirsStr}
@@ -113,11 +111,11 @@ endif()
 class SubdirectoryItem:
     folder: str
     exeName: str
-    def __init__(self, folder, exeName = ""):
+    def __init__(self, folder: str, exeName: str = ""):
         if exeName == "":
             exeName = folder 
-        self.folder = folder
-        self.exeName = exeName        
+        self.folder: str = folder
+        self.exeName: str = exeName        
 
 class CMakeCog:
     exeName: str
@@ -126,10 +124,10 @@ class CMakeCog:
     libFiles: List[str] = []
     targetIncludeDirs: List[str] = [] 
 
-    def __init__(self, exeName):
-        self.exeName = exeName
+    def __init__(self, exeName: str):
+        self.exeName: str = exeName
 
-    def libFilesExtendCppAndH(self,path: List[str]):
+    def libFilesExtendCppAndH(self, path: List[str]):
         for p in path:
             self.libFilesExtend(p, ['*.h', '*.cpp']) 
         
@@ -142,25 +140,25 @@ class CMakeCog:
                 self.libFiles.extend(sorted(str(p) for p in path.glob(ext)))
 
 
-    def add_library(self):
-        t = Template("""
+    def add_library(self) -> str:
+        t: Template = Template("""
 add_library(${exeName} ${libType}
   ${libFiles}
 )        
                      """)
-        libFiles = "\n".join(self.libFiles)
+        libFiles: str = "\n".join(self.libFiles)
         return t.safe_substitute(exeName = self.exeName,
                                  libType = self.libType,
                                  libFiles = libFiles)
 
-    def cmake_minimum_required(self):
+    def cmake_minimum_required(self) -> str:
         return """cmake_minimum_required(VERSION 3.14)"""
 
-    def project(self):
-        t = Template("""project(${exeName} LANGUAGES CXX)""")    
+    def project(self) -> str:
+        t: Template = Template("""project(${exeName} LANGUAGES CXX)""")    
         return t.substitute(exeName = self.exeName)
     
-    def CMAKE_CXX_STANDARD(self):
+    def CMAKE_CXX_STANDARD(self) -> str:
         return """
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -172,32 +170,32 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
     find_package_qt_components: List[str] = []
 
-    def find_package_qt(self):
-        t = Template("""
+    def find_package_qt(self) -> str:
+        t: Template = Template("""
 find_package(QT NAMES Qt6 Qt5 COMPONENTS ${components} REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS ${components} REQUIRED)
 """)
         return t.safe_substitute(components = " ".join(self.find_package_qt_components))
 
-    def add_subdirectory(self):
-        t = Template("""add_subdirectory(${folder})""")
+    def add_subdirectory(self) -> str:
+        t: Template = Template("""add_subdirectory(${folder})""")
         return "\n".join([t.substitute(folder=item.folder) for item in self.subdirectoryItem])
 
-    def target_link_libraries(self):
+    def target_link_libraries(self) -> str:
         libs: List[str] = []        
-        t = Template("""target_link_libraries(${exeName} PRIVATE ${libs}) """)        
+        t: Template = Template("""target_link_libraries(${exeName} PRIVATE ${libs}) """)        
         libs.extend(['Qt${QT_VERSION_MAJOR}::' + s for s in self.find_package_qt_components])
         libs.extend([itm.exeName for itm in self.subdirectoryItem])
         return t.substitute(exeName = self.exeName, 
                             libs = "\n".join(libs))
     
-    def target_compile_definitions(self):
-        t = Template("""target_compile_definitions(${exeName} PRIVATE ${exeNameLib}) """)  
-        exeNameLib = self.exeName.upper() + "_LIBRARY"
+    def target_compile_definitions(self) -> str:
+        t: Template = Template("""target_compile_definitions(${exeName} PRIVATE ${exeNameLib}) """)  
+        exeNameLib: str = self.exeName.upper() + "_LIBRARY"
         return t.substitute(exeNameLib = exeNameLib, exeName = self.exeName)
     
-    def target_include_directories(self):
-        t = Template("""
+    def target_include_directories(self) -> str:
+        t: Template = Template("""
 target_include_directories(${exeName} PUBLIC ${targetIncludeDirs})                     
         """)
         return t.substitute(exeName = self.exeName,

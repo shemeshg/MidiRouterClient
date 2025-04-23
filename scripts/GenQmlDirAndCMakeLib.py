@@ -3,8 +3,8 @@ import glob
 from pathlib import Path
 from string import Template
 
-def gen(moduleName, singletons: List[str] = []):
-    cmakeTemplate = """
+def gen(moduleName: str, singletons: List[str] = []) -> None:
+    cmakeTemplate: str = """
     qt_add_library(${moduleName} STATIC)
     qt6_add_qml_module(${moduleName}
         URI "${moduleName}"
@@ -21,14 +21,11 @@ def gen(moduleName, singletons: List[str] = []):
     qmlFiles.extend(sorted(str(p) for p in glob.glob("*.qml")))
     icons: List[str] = []
     icons.extend(sorted(str(p) for p in glob.glob("icons/*.*")))
-    
 
-
-
-    qmlFileLines = []
+    qmlFileLines: List[str] = []
     qmlFileLines.append("Module " + moduleName)
     for f in qmlFiles:
-        t = Template("""${base} 1.0 ${name}""")
+        t: Template = Template("""${base} 1.0 ${name}""")
         if f in singletons:
             t = Template("""singleton  ${base} 1.0 ${name}""")
         qmlFileLines.append(t.substitute(base = Path(f).stem, name = f))
@@ -36,15 +33,15 @@ def gen(moduleName, singletons: List[str] = []):
     with open("qmldir", "w") as file:
         file.write("\n".join(qmlFileLines))
 
-    t = Template(cmakeTemplate)
+    t: Template = Template(cmakeTemplate)
 
     with open("CMakeLists.txt", "w") as file:
-        s = t.substitute(moduleName = moduleName,
-                                    qmlFiles = "\n".join(qmlFiles),
-                                    iconsFolderFiles = "\n".join(icons) )
-        
+        s: str = t.substitute(moduleName = moduleName,
+                              qmlFiles = "\n".join(qmlFiles),
+                              iconsFolderFiles = "\n".join(icons))
+
         for st in singletons:
-            sTemplate = Template("""
+            sTemplate: Template = Template("""
         set_source_files_properties(${st}
             PROPERTIES
                 QT_QML_SINGLETON_TYPE true
