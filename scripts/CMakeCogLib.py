@@ -29,11 +29,11 @@ endif()
 
     def get_string_parts(self, line: str, with_quotes: bool = False) -> List[str]:
         if with_quotes:
-            pattern: re.Pattern = re.compile(r'(\".*?\"|\S+<.*?>|\S+\s*\*\s*|\S+)')
+            pattern: re.Pattern[str] = re.compile(r'(\".*?\"|\S+<.*?>|\S+\s*\*\s*|\S+)')
         else:
-            pattern: re.Pattern = re.compile(r'\"(.*?)\"|(\S+<.*?>|\S+\s*\*\s*|\S+)')
+            pattern: re.Pattern[str] = re.compile(r'\"(.*?)\"|(\S+<.*?>|\S+\s*\*\s*|\S+)')
 
-        matches: List[tuple] = pattern.findall(line)
+        matches: List[str] = pattern.findall(line)
 
         if with_quotes:
             parts: List[str] = [match for match in matches]
@@ -127,13 +127,13 @@ class CMakeCog:
     def __init__(self, exeName: str):
         self.exeName: str = exeName
 
-    def libFilesExtendCppAndH(self, path: List[str]):
+    def libFilesExtendCppAndH(self, path: List[Path]):
         for p in path:
             self.libFilesExtend(p, ['*.h', '*.cpp']) 
         
 
     
-    def libFilesExtend(self, path: str, exts: List[str]):
+    def libFilesExtend(self, path: Path, exts: List[str]):
         path = Path(path)
         if path.is_dir():
             for ext in exts:

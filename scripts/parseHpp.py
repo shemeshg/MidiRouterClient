@@ -18,6 +18,7 @@ import os
 import re
 import sys
 import concurrent.futures
+from typing import Match
 
 is_source_map: bool = True
 
@@ -71,19 +72,19 @@ def remove_default_assignment(declaration: str) -> str:
     return result
 
 def replace_next(template: str, NEXT: list[str]) -> str:
-    def replacer(match):
-        expr = match.group(1)
+    def replacer(match: Match[str]) -> str:
+        expr: str = match.group(1)
         if ':' in expr:
-            parts = expr.split(':')
-            start = int(parts[0]) if parts[0] else 0
-            end = int(parts[1]) if parts[1] else len(NEXT)
+            parts: list[str] = expr.split(':')
+            start: int = int(parts[0]) if parts[0] else 0
+            end: int = int(parts[1]) if parts[1] else len(NEXT)
             return ' '.join(NEXT[start:end])
         else:
-            index = int(expr)
+            index: int = int(expr)
             return NEXT[index]
-    
-    pattern = re.compile(r'\{NEXT\[(.*?)\]\}')
-    result = pattern.sub(replacer, template)
+
+    pattern: re.Pattern[str] = re.compile(r'\{NEXT\[(.*?)\]\}')
+    result: str = pattern.sub(replacer, template)
     return result
 
 def get_string_parts(line: str, with_quotes: bool = False) -> list[str]:
@@ -128,7 +129,7 @@ def parse_file(input_file: str) -> None:
     global templates_map
     global current_template
     with open(input_file, 'r') as file:
-        lines = file.readlines()
+        raw_lines: list[str] = file.readlines()
 
     fileMap: dict[str, FileClass] = {"null": FileClass()}
     varsMap: dict[str, str] = {}
@@ -145,9 +146,9 @@ def parse_file(input_file: str) -> None:
 
     lines_without_templates: list[LineClass] = []   
     line_number: int = 1
-    for line in lines:
+    for raw_line in raw_lines:
         line_number = line_number + 1
-        lstrip_line = line.lstrip()
+        lstrip_line = raw_line.lstrip()
         if lstrip_line.startswith("//-template"):
             parts = get_string_parts(lstrip_line)
             is_defining_template = True
@@ -158,11 +159,11 @@ def parse_file(input_file: str) -> None:
                 is_defining_template = False
                 current_template = ""
             else:
-                templates_map[current_template] += line  
+                templates_map[current_template] += raw_line  
         else:         
             l = LineClass()
             l.line_number = line_number
-            l.line_text = line
+            l.line_text = raw_line
             l.filne_name = input_file
             lines_without_templates.append(l)
 
@@ -266,7 +267,7 @@ def parse_file(input_file: str) -> None:
 
 if __name__ == "__main__":    
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        futures: list[concurrent.futures.Future] = []
+        futures: list[concurrent.futures.Future[None]] = []
         # Templates should be read none async
         parse_file(sys.argv[1])
         for arg in sys.argv[2:]:
