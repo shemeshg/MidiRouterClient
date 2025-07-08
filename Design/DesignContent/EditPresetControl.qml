@@ -27,6 +27,8 @@ ColumnLayout {
 
             Component.onCompleted: {
                 let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]                
+                list.push(midiControl.outputPortnName);
+                list = [...new Set(list)];
                 var index = list.indexOf(midiControl.portName);
 
                 presetMidiControlOnPortNameId.model = list

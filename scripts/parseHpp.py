@@ -18,7 +18,7 @@ import os
 import re
 import sys
 import concurrent.futures
-from typing import Match
+from typing import Match, Union
 
 is_source_map: bool = True
 
@@ -104,7 +104,7 @@ def get_string_parts(line: str, with_quotes: bool = False) -> list[str]:
 
 
 
-def extract_next_value(string: str) -> str | None:
+def extract_next_value(string: str) -> Union[str, None]:
     """
     Extracts the integer value following "{NEXT:" in the given string.
 

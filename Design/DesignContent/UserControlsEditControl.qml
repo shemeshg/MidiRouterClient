@@ -80,6 +80,8 @@ ColumnLayout {
 
                 Component.onCompleted: {
                     let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+                    list.push(control.outputPortnName);
+                    list = [...new Set(list)];
                     var index = list.indexOf(control.outputPortnName);
                     portName.model = list
                     if (index !== -1) {

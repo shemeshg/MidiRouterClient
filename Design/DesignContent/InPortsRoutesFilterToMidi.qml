@@ -52,7 +52,9 @@ ColumnLayout {
             
 
             Component.onCompleted: {
-                let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]                
+                let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
+                list.push(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
+                list = [...new Set(list)];
                 var index = list.indexOf(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
                 nameId.model = list
                 if (index !== -1) {
