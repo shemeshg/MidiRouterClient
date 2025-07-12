@@ -11,20 +11,24 @@ CoreComboBox {
     valueRole: "value"
     required property string cmbVal
     
-    Component.onCompleted: {
+    function setOnCompleted() {
         let list = [{value: "", text: ""},
                     ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.map(item => ({ value: item, text: item }))
             ]
         if (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(cmbVal) === -1){
             list.push({ value: cmbVal, text: "❌ " + cmbVal })
         }
-        
-        
+
+
         var index = list.findIndex(item => item.value === cmbVal);
         cmb.model = list
         if (index !== -1) {
             currentIndex = index;
         }
+    }
+
+    Component.onCompleted: {
+        setOnCompleted()
     }
 
 }

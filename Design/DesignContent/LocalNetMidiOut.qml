@@ -51,22 +51,16 @@ RowLayout{
 
     }
 
-    CoreComboBox {
+    ComboBoxOutport {
         visible: !isNetMode
         id: nameId
         Layout.fillWidth: true
-        model:
-            [...new Set(
-                ["",toDestinationName, ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-                )]
+        cmbVal: toDestinationName
+
 
         onActivated: {
-            toDestinationName = currentText
+            toDestinationName = currentValue
             userEdited()
-            var index = model.indexOf(toDestinationName);
-            if (index !== -1) {
-                currentIndex = index;
-            }
         }
 
         Component.onCompleted: {
@@ -111,13 +105,8 @@ RowLayout{
             onActivated: {
                 toDestinationName = `${serverName.text}:${serverPort.text}/${remotePorts.currentText}`
                 userEdited()
-                nameId.model = [...new Set(
-                                    ["",toDestinationName, ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-                                    )]
-                var index = nameId.model.indexOf(toDestinationName);
-                if (index !== -1) {
-                    nameId.currentIndex = index;
-                }
+                nameId.cmbVal = toDestinationName
+                nameId.setOnCompleted();
             }
         }
     }
