@@ -5,7 +5,7 @@
 # git push origin 2.0.5
 mkdir deploye
 cd deploye
-~/Qt/6.8.2/macos/bin/qt-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../MidiRouterClient
+~/Qt/6.9.1/macos/bin/qt-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../MidiRouterClient
 cmake --build .
 cmake --install .
 
