@@ -34,3 +34,4 @@ UserControlsDropdowns 1.0 UserControlsDropdowns.qml
 UserControlsEditControl 1.0 UserControlsEditControl.qml
 UserControlsList 1.0 UserControlsList.qml
 VirtualPorts 1.0 VirtualPorts.qml
+ComboBoxOutport 1.0 ComboBoxOutport.qml

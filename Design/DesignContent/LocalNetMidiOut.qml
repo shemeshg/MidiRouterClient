@@ -54,7 +54,7 @@ RowLayout{
     CoreComboBox {
         visible: !isNetMode
         id: nameId
-        Layout.fillWidth: true        
+        Layout.fillWidth: true
         model:
             [...new Set(
                 ["",toDestinationName, ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]

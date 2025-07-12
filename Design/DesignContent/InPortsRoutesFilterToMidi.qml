@@ -46,21 +46,11 @@ ColumnLayout {
         CoreLabel {
             text: "Port name"
         }
-        CoreComboBox {
+        ComboBoxOutport {
             id: nameId
             Layout.fillWidth: true
-            
+            cmbVal: inPortsRoutesLoaderId.filterObj.baseMidiRouteInput
 
-            Component.onCompleted: {
-                let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]
-                list.push(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
-                list = [...new Set(list)];
-                var index = list.indexOf(inPortsRoutesLoaderId.filterObj.baseMidiRouteInput);
-                nameId.model = list
-                if (index !== -1) {
-                    currentIndex = index;
-                }
-            }
             onActivated: {
                 doSave();
             }

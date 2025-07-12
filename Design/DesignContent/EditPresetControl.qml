@@ -7,7 +7,7 @@ ColumnLayout {
     required property var midiControl;
 
     function setMidiControlData(control) {
-        control.portName = presetMidiControlOnPortNameId.currentText;
+        control.portName = presetMidiControlOnPortNameId.currentValue;
         control.eventTypeId = presetMidiControlOnEventTypeId.currentValue;
         control.channel = presetMidiControlOnChannelId.currentValue;
         presetMidiControlOnData1Id.accepted();
@@ -20,23 +20,10 @@ ColumnLayout {
         CoreLabel {
             text: "Port name"
         }
-        CoreComboBox {
+        ComboBoxOutport {
             id: presetMidiControlOnPortNameId
             Layout.fillWidth: true
-            
-
-            Component.onCompleted: {
-                let list = ["", ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts]                
-                list.push(midiControl.outputPortnName);
-                list = [...new Set(list)];
-                var index = list.indexOf(midiControl.portName);
-
-                presetMidiControlOnPortNameId.model = list
-                if (index !== -1) {
-                    currentIndex = index;
-                }
-                
-            }
+            cmbVal: midiControl.outputPortnName
 
             onActivated: {
                 editPresetId.save()
