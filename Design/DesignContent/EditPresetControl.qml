@@ -23,7 +23,7 @@ ColumnLayout {
         ComboBoxOutport {
             id: presetMidiControlOnPortNameId
             Layout.fillWidth: true
-            cmbVal: midiControl.outputPortnName
+            cmbVal: midiControl.portName
 
             onActivated: {
                 editPresetId.save()
