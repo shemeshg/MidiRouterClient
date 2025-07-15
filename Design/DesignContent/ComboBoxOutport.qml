@@ -16,7 +16,7 @@ CoreComboBox {
                     ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.map(item => ({ value: item, text: item }))
             ]
         if (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(cmbVal) === -1){
-            list.push({ value: cmbVal, text: "❌ " + cmbVal })
+            list.push({ value: cmbVal, text: "❗ " + cmbVal })
         }
 
 
