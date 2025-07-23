@@ -43,7 +43,7 @@ public:
         userControlObj["nrpnControl"] = nrpnControl();
         userControlObj["outputPortnName"] = outputPortnName();
         userControlObj["isShowDropdown"] = isShowDropdown();
-        userControlObj["dropdownListId"] = dropdownListId();
+        userControlObj["dropdownListUuid"] = dropdownListUuid();
         userControlObj["isSendOnPresetChange"] = isSendOnPresetChange();
         return userControlObj;
     }

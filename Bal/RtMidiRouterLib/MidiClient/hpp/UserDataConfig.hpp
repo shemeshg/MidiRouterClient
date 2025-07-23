@@ -3,15 +3,15 @@
 //-only-file header //-
 #pragma once
 #include <QFile>
-//- #include "../genPrpt/UserDataConfigPrivate.h"
 //-only-file body //-
 //- #include "UserDataConfig.h"
 #include <QSettings>
-//- #include "MidiClientUtil.h"
 //- #include "UserConfigParseJson.h"
+//- {include-header}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+//- {include-header}
+#include "../genPrpt/UserDataConfigPrivate.hpp" //- #include "../genPrpt/UserDataConfigPrivate.h"
 //-only-file null
-#include "../genPrpt/UserDataConfigPrivate.hpp"
-#include "MidiClientUtil.hpp"
 #include "UserConfigParseJson.hpp"
 //-only-file header
 
@@ -212,12 +212,16 @@ public slots:
     }
 
     //- {fn}
-    void addDropdownList(QString name, QString data)
+    void addDropdownList(QString name, QString data, QString uuiud)
     //-only-file body
     {
         Dropdownlist *d = new Dropdownlist(this);
         d->setName(name);
         d->setData(data);
+        if (uuiud.isEmpty()){
+            uuiud = getUuId();
+        }
+        d->setUuid(uuiud);
         addListItem(d);
     }
 
@@ -275,6 +279,7 @@ private:
             QJsonObject obj;
             obj["name"] = itm->name();
             obj["data"] = itm->data();
+            obj["uuid"] = itm->uuid();
             ary.append(obj);
         }
         return ary;

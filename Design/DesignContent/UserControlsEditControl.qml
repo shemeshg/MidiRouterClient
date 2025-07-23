@@ -209,16 +209,17 @@ ColumnLayout {
                 Layout.fillWidth: true
                 textRole: "text"
                 valueRole: "value"
-                model: [{value: -1, name: ""}, ...Constants.balData.midiClientConnection.userDataConfig.dropdownlists.map((item, index) => ({
-                                                                                                                                                value: index,
-                                                                                                                                                text: item.name
-                                                                                                                                            }))]
+                model: [{value: -1, name: ""}, ...Constants.balData.midiClientConnection.
+                    userDataConfig.dropdownlists.map((item, index) => ({
+                             value: item.uuid,
+                             text: item.name
+                   }))]
                 Component.onCompleted: {
-                    currentIndex = model.findIndex(item => item.value === control.dropdownListId);
+                    currentIndex = model.findIndex(item => item.value === control.dropdownListUuid);
                 }
 
                 onActivated: {
-                    control.dropdownListId = currentValue
+                    control.dropdownListUuid = currentValue
                 }
             }
         }

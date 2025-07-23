@@ -45,13 +45,13 @@ ColumnLayout {
 
                     let retList = [];
 
-                    if (ddlists.length > 0 &&
-                            controlModelData.dropdownListId >= 0 && controlModelData.dropdownListId < ddlists.length) {
-                        retList = ddlists[controlModelData.dropdownListId].data.trim().split("\n")
-                        .map((row,idx)=>{
-                                return {text: row, value: idx}
-                             });
+                    const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
+                    if (theEntryFound) {
+                        retList = theEntryFound.data.trim().split("\n").map((row, idx) => {
+                            return { text: row, value: idx };
+                        });
                     }
+
 
                     for (let i = retList.length; retList.length <= controlModelData.maxVal; i++) {
                         retList.push({ text: i.toString(), value: i });

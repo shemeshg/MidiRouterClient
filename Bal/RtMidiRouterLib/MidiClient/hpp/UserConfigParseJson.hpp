@@ -77,7 +77,8 @@ private:
         for (const auto &value : array) {
             auto obj = getJson<QJsonObject>(value);
             userDataConfig->addDropdownList(getJson<QString>(obj["name"]),
-                                            getJson<QString>(obj["data"]));
+                                            getJson<QString>(obj["data"]),
+                                            getJson<QString>(obj["uuid"]));
         }
     }
 
@@ -260,7 +261,7 @@ private:
         fst.setField<QString>(&UserControl::setOutputPortnName, "outputPortnName");
         fst.setField<bool>(&UserControl::setIsShowDropdown, "isShowDropdown");
         fst.setField<bool>(&UserControl::setIsSendOnPresetChange, "isSendOnPresetChange");
-        fst.setField<double>(&UserControl::setDropdownListId, "dropdownListId");
+        fst.setField<QString>(&::UserControl::setDropdownListUuid, "dropdownListUuid");
     }
 
     //- {fn}

@@ -20,7 +20,7 @@ ColumnLayout {
             }
             UiBtnAdd {
                 onClicked: {
-                    Constants.balData.midiClientConnection.userDataConfig.addDropdownList("new list","")
+                    Constants.balData.midiClientConnection.userDataConfig.addDropdownList("new list","","")
                 }
             }
         }

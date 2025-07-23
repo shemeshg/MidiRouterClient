@@ -82,7 +82,7 @@ QtObject {
                             "outputPortnName": "0_Scarlett 2i4 USB",
                             "isShowDropdown": true,
                             "isSendOnPresetChange": false,
-                            "dropdownListId": 0
+                            "dropdownListUuid": ""
                         }],
                     "uuid": "0f8ac474-40b9-4097-b992-0b68bad0e084"
                 },

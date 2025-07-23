@@ -20,6 +20,7 @@ cog.outl(prptClass.getClassHeader(),
 class Dropdownlist : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString uuid READ uuid WRITE setUuid NOTIFY uuidChanged )
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged )
     Q_PROPERTY(QString data READ data WRITE setData NOTIFY dataChanged )
     
@@ -33,6 +34,18 @@ public:
     }
 
     
+    
+    QString uuid() const{return m_uuid;} 
+    
+void setUuid(const QString &newUuid)
+    {
+        if (m_uuid == newUuid)
+            return;
+        m_uuid = newUuid;
+        emit uuidChanged();
+    }
+
+
     
     QString name() const{return m_name;} 
     
@@ -61,6 +74,7 @@ void setData(const QString &newData)
     
     
 signals:
+    void uuidChanged();
     void nameChanged();
     void dataChanged();
     
@@ -69,6 +83,7 @@ protected:
     
 
 private:
+    QString m_uuid ;
     QString m_name ;
     QString m_data ;
     
