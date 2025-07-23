@@ -56,12 +56,13 @@ ColumnLayout {
             valueRole: "value"
             model: cmbModel
             onActivated: {
-                slider.value = currentIndex
-                setVal(currentIndex, false)
+                slider.value = currentValue
+                setVal(currentValue, false)
             }
 
             Component.onCompleted: {
-                currentIndex = val;
+                var index = cmbModel.findIndex(item => item.value === slider.value);
+                currentIndex = index;
             }
         }
         UiBtnEdit {
@@ -97,8 +98,10 @@ ColumnLayout {
             from: fromVal
             value: val
             to: toVal
+            stepSize: 1
             onMoved: {
-                cmb.currentIndex = value
+                var index = cmbModel.findIndex(item => item.value === slider.value);
+                cmb.currentIndex = index
                 setVal(value, false)
             }
         }

@@ -48,12 +48,13 @@ ColumnLayout {
                     const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
                     if (theEntryFound) {
                         retList = theEntryFound.data.trim().split("\n").map((row, idx) => {
-                            return { text: row, value: idx };
+                            return { text: row, value: idx + controlModelData.minVal };
                         });
                     }
 
 
-                    for (let i = retList.length; retList.length <= controlModelData.maxVal; i++) {
+                    for (let i = retList.length + controlModelData.minVal;
+                         i <= controlModelData.maxVal; i++) {
                         retList.push({ text: i.toString(), value: i });
                     }
                     return retList;
