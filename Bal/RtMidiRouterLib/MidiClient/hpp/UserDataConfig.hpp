@@ -6,6 +6,7 @@
 //-only-file body //-
 //- #include "UserDataConfig.h"
 #include <QSettings>
+#include <QCoreApplication>
 //- #include "UserConfigParseJson.h"
 //- {include-header}
 #include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
@@ -129,6 +130,8 @@ public slots:
         objUserConfig["dropdownlists"] = getDropdownList(dropdownlists());
         objUserConfig["virtualInPorts"] = getListToJsonAry(virtualInPorts());
         objUserConfig["midiRoutePresets"] = getJsonMidiRoutePresets(midiRoutePresets());
+        objUserConfig["appVer"] = QCoreApplication::applicationVersion();
+
         return objUserConfig;
 
     }
