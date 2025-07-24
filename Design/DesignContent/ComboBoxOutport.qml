@@ -15,7 +15,7 @@ CoreComboBox {
         let list = [{value: "", text: ""},
                     ...Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.map(item => ({ value: item, text: item }))
             ]
-        if (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(cmbVal) === -1){
+        if (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(cmbVal) === -1 && cmbVal){
             list.push({ value: cmbVal, text: "❗ " + cmbVal })
         }
 
