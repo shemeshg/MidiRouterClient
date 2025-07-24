@@ -1,6 +1,6 @@
-# MIDI Router Configuration (Markdown Format)
+# MIDI Router Configuration (AI integration)
 
-This document provides a human-readable configuration for the [MIDI Router Client](https://sourceforge.net/projects/midi-router-client/). It is designed to assist AI agents—like Copilot—in understanding the current configuration and helping users make updates to the [`MidiRouterClient.json`](./MidiRouterClient.json) file located in this folder.
+This document provides a human-readable configuration reference for the [MIDI Router Client](https://sourceforge.net/projects/midi-router-client/). It is designed to assist AI agents—like Copilot—in understanding the current configuration and helping users make updates to the `MidiRouterClient.json` file added to context.
 
 ---
 
