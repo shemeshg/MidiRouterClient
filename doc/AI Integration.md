@@ -8,21 +8,13 @@ This document provides a human-readable configuration reference for the [MIDI Ro
 
 - [Presets Overview](#presets-overview)
 - [Port Connectivity Requirements](#port-connectivity-requirements)
-- [MIDI Router Chains and Filters](#midi-router-chains-and-filters)
-  - [midiRouterChains](#midirouterchains)
-  - [midiRoutersFilters](#midiroutersfilters)
-    - [Filter Type 4: FILTER_AND_TRANSFORM](#filter-type-4-filter_and_transform)
-    - [Filter Type 0: TO_MIDI_DESTINATION](#filter-type-0-to_midi_destination)
+- [MIDI Router Chains and Filters](MIDI%20Router%20Chains%20and%20Filters.md)
 - [Preset Activation via MIDI Commands](#preset-activation-via-midi-commands)
   - [MIDI Event Type Mapping](#midi-event-type-mapping)
 - [Preset MIDI Control Configuration](#preset-midi-control-configuration)
-- [Preset User Controls](#preset-user-controls)
+- [Preset User Controls](Preset%20Controls.md)
 - [Shared Dropdown Lists](#shared-dropdown-lists)
-- [EasyConfig Routing](#easyconfig-routing)
-  - [Network Destination Format](#network-destination-format)
-  - [Keyboard Split Routing](#keyboard-split-routing)
-  - [CC to NRPN Example](#cc-to-nrpn-example)
-  - [Split to Destination Example](#split-to-destination-example)
+- [EasyConfig Routing](EasyConfig%20Routing.md)
 - [Notes](#notes)
   - [🧼 Filter Simplification Rule](#-filter-simplification-rule)
   - [🔗 Auto-Generated Routing Chains](#-auto-generated-routing-chains)
@@ -67,73 +59,12 @@ For routing to function correctly, the specified input and output ports must exi
   ]
 }
 ```
+
 ---
 
 ## MIDI Router Chains and Filters
 
-### `midiRouterChains`
-
-`midiRouterChains` define the routing logic for MIDI events. Each chain consists of a sequence of `midiRoutersFilters` that process and transform MIDI data as it passes through.
-
-### `midiRoutersFilters`
-
-`midiRoutersFilters` apply conditions and transformations to MIDI events. Below are details for the two main filter types found in the configuration:
-
-#### Filter Type 4: FILTER_AND_TRANSFORM
-
-This filter type allows for both filtering and transforming MIDI event data. The transformation notation is:
-
-- `[[fromStart, fromEnd, toStart, toEnd]]` — maps the range `fromStart` to `fromEnd` onto `toStart` to `toEnd`.
-- `[[fromStart, fromEnd, toStart]]` — short form, where `toEnd = toStart + (fromEnd - fromStart)`.
-- `[[value1, value2]]` — maps `value1` to `value2`.
-- `[[value]]` — equivalent to `[[value, value]]`, a single value mapping.
-
-**Parameters:**
-- `conditionAction`: Controls event deletion:
-  - `0` (DO_NOT_DELETE): Always pass the event.
-  - `1` (DELETE_IF_NOT_MET_CONDITION): Delete if filter conditions are not met.
-  - `2` (DELETE_IF_MET_CONDITION): Delete if filter conditions are met.
-- `filterChannel`: MIDI channel(s) to filter, using the notation above.
-- `filterData1`: Data1 byte filter and transformation, using the notation above.
-- `filterData2`: Data2 byte filter and transformation, using the notation above.
-- `filterEvents`: List of MIDI event types to filter (e.g., `[8]` for Note On).
-- `filterType`: Set to `4` for this filter.
-- `name`: Filter name.
-- `uuid`: Unique identifier.
-
-**Example:**
-```json
-{
-  "conditionAction": 1,
-  "filterChannel": "[[6, 6]]",
-  "filterData1": "[[19, 74, 19]]",
-  "filterData2": "[[0, 127, 0, 255]]",
-  "filterEvents": "[[8], [9]]",
-  "filterType": 4,
-  "name": "EasyConfig",
-  "uuid": "a0ceaa75-1273-46b5-8159-30f41e0e1251"
-}
-```
-This filter applies to channel 6, transforms data1 from 19–74 to 19–(19+55), and data2 from 0–127 to 0–255, for Note On (8) and Note Off (9) events. If the condition is not met, the event is deleted.
-
-#### Filter Type 0: TO_MIDI_DESTINATION
-
-This filter type routes MIDI events to a specific MIDI destination.
-
-**Parameters:**
-- `filterType`: Set to `0` for this filter.
-- `midiInputName`: Name of the MIDI input port.
-- `uuid`: Unique identifier.
-
-**Example:**
-```json
-{
-  "filterType": 0,
-  "midiInputName": "0_Scarlett 2i4 USB",
-  "uuid": "ae0a5872-a825-43f4-bb0e-ed4fa1700112"
-}
-```
-This filter routes events from the specified input port to the MIDI destination.
+The content for this section has been moved to [MIDI Router Chains and Filters](MIDI%20Router%20Chains%20and%20Filters.md).
 
 ---
 
@@ -206,44 +137,7 @@ Presets can be controlled with MIDI events—**On**, **Off**, **Select** (On and
 
 ## Preset User Controls
 
-Each preset may include interactive controls such as sliders, optionally paired with dropdowns if `isShowDropdown` is true.
-
-Only the controls from the currently selected preset (`_activePresetID`) are presented in the UI—controls from other enabled presets are not shown.
-
-```json
-"userControls": [
-  {
-    "ccId": 0,
-    "channelId": 1,
-    "description": "Description",
-    "dropdownListUuid": "50fda87a-6c8b-46b2-a104-1c2026b2dd58",
-    "eventType": 0,
-    "inputVal": 1,
-    "is64Mode": false,
-    "isSendOnPresetChange": false,
-    "isShowDropdown": true,
-    "maxVal": 127,
-    "minVal": 0,
-    "nrpnControl": 0,
-    "outputPortnName": "",
-    "uuid": "cc12cc7a-e1f1-4066-ad7c-66e76f6798b1"
-  }
-]
-```
-
-- `userControls` are interactive UI sliders.
-- If `isShowDropdown` is true, a dropdown is shown **in addition to** the slider.
-- `eventType` behavior:
-  - `0` = CC → uses `ccId`
-  - `1` = Program Change → ignores `ccId` and `nrpnControl`
-  - `2` = NRPN → uses `nrpnControl`
-- `channelId` is the MIDI channel for output.
-- If `outputPortnName` is empty or disconnected, the control is not effective.
-- `is64Mode` represents value `64` as center/zero (used in bipolar ranges).
-- Dropdowns:
-  - Values from `minVal` to `maxVal` are mapped to list items based on `dropdownListUuid`.
-  - If the list is too short, missing entries are shown as numeric values starting from `minVal`.
-  - Dropdown entries are stored as `\n`-separated text.
+The content for this section has been moved to [Preset Controls](Preset%20Controls.md).
 
 ---
 
@@ -267,133 +161,7 @@ Dropdown lists are globally defined and shared across all presets—there is no 
 
 ## EasyConfig Routing
 
-EasyConfig routes are designed to spare users from manually configuring low-level routing logic via `midiRouterChains` and `midiRoutersFilters`.
-
-- 🧠 AI agents should **always prefer modifying `easyConfigRoutes`** when possible, rather than altering `midiRouterChains` or `midiRoutersFilters`.
-- 🧮 Filters in `midiRoutersFilters` may involve computation of linear transformations. These are **powerful but complex**, and should be reserved for advanced scenarios or absolute necessity.
-
-### Network Destination Format
-
-Routing destinations may include **network port addresses**, formatted as:
-
-```
-<address>:<port>/<destinationName>
-```
-
-Example:
-
-```json
-"toDestinationName": "localhost:12345/0_Scarlett 2i4 USB"
-```
-
-- This defines a network-based output port.
-- AI agents **cannot determine** whether these network ports exist or are reachable.
-- When assisting users, the agent should clarify that such ports might be available—depending on network configuration—but cannot verify their existence.
-
-### Keyboard Split Routing
-
-`easyConfigRoutes` may use `splitRangeId` to route **from** a keyboard split zone:
-
-```json
-"splitRangeId": 1
-```
-
-Keyboard splits are defined with:
-
-```json
-"keyboardSplits": [34, 74],
-"zoneNames": ["Split 0", "Split 1", "Split 2"]
-```
-
-These define three split zones:
-
-| Split ID | Range     |
-|----------|-----------|
-| 0        | 0–34      |
-| 1        | 35–74     |
-| 2        | 75–127    |
-
-- `splitRangeId` is **from** a split zone.
-
-### CC to NRPN Example
-
-Here's a real-world example of routing a **Control Change (CC)** event to **NRPN**, using channel 6 for both, and mapping a value range from 0–127 to 0–255:
-
-```json
-{
-  "midiRoutePresets": [
-    {
-      "midiRouteInputs": [
-        {
-          "midiInputName": "0_Launch Control XL",
-          "easyConfig": {
-            "easyConfigRoutes": [
-              {
-                "fromCcOrNrpnEnd": 127,
-                "fromCcOrNrpnStart": 0,
-                "fromChannel": 6,
-                "fromData1": -1,
-                "fromSelectedMidiEventTypeId": 5,
-                "splitRangeId": -1,
-                "toCcOrNrpnEnd": 255,
-                "toCcOrNrpnStart": 0,
-                "toChannel": 6,
-                "toData1": 8,
-                "toDestinationName": "localhost:12345/0_Scarlett 2i4 USB",
-                "toSelectedMidiEventTypeId": 7,
-                "transpose": 0,
-                "uuid": "d3bc0cb8-0de6-43ec-94c5-91b4a6ed7c6d"
-              }
-            ],
-            "keyboardSplits": [],
-            "zoneNames": []
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-This transformation reflects a common pattern where NRPN values accommodate extended 8-bit ranges (0–255), exceeding standard CC ranges (0–127).
-
-### Split to Destination Example
-
-```json
-{
-  "midiRoutePresets": [
-    {
-      "midiRouteInputs": [
-        {
-          "midiInputName": "0_Launch Control XL",
-          "easyConfig": {
-            "easyConfigRoutes": [
-              {
-                "fromCcOrNrpnEnd": 127,
-                "fromCcOrNrpnStart": 0,
-                "fromChannel": 6,
-                "fromData1": -1,
-                "fromSelectedMidiEventTypeId": 5,
-                "splitRangeId": -1,
-                "toCcOrNrpnEnd": 255,
-                "toCcOrNrpnStart": 0,
-                "toChannel": 6,
-                "toData1": 8,
-                "toDestinationName": "localhost:12345/0_Scarlett 2i4 USB",
-                "toSelectedMidiEventTypeId": 7,
-                "transpose": 0,
-                "uuid": "d3bc0cb8-0de6-43ec-94c5-91b4a6ed7c6d"
-              }
-            ],
-            "keyboardSplits": [],
-            "zoneNames": []
-          }
-        }
-      ]
-    }
-  ]
-}
-```
+The content for this section has been moved to [EasyConfig Routing](EasyConfig%20Routing.md).
 
 ---
 
