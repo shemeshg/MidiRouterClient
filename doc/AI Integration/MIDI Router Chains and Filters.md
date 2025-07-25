@@ -65,3 +65,73 @@ This filter type routes MIDI events to a specific MIDI destination.
 }
 ```
 This filter routes events from the specified input port to the MIDI destination.
+
+### Filter Type 1: TO_CONSOLE
+
+This filter type logs MIDI events to the console.
+
+**Parameters:**
+- `filterType`: Set to `1` for this filter.
+- `logTo`: Specifies the logging destination:
+  - `0` (CLIENT): Log to the client console.
+  - `1` (SERVER): Log to the server console.
+- `userdata`: Additional user-defined data in JSON format.
+- `uuid`: Unique identifier.
+
+**Example:**
+```json
+{
+  "filterType": 1,
+  "logTo": 0,
+  "userdata": "{}",
+  "uuid": "5cdfecdb-901f-4c33-aead-4162df83d43d"
+}
+```
+
+### Filter Type 2: TO_NETWORK
+
+This filter type routes MIDI events to a network destination.
+
+**Parameters:**
+- `filterType`: Set to `2` for this filter.
+- `midiInputName`: Name of the MIDI input port.
+- `serverName`: Name of the target server.
+- `serverPort`: Port number of the target server.
+- `uuid`: Unique identifier.
+
+**Example:**
+```json
+{
+  "filterType": 2,
+  "midiInputName": "midiportname",
+  "serverName": "localhost",
+  "serverPort": 12345,
+  "uuid": "cfa306c0-84c8-4071-b68d-9f6e109cca2c"
+}
+```
+
+### Filter Type 3: SCHEDULE_TO
+
+This filter type holds MIDI events and schedules them to be sent at a specific time based on the `DefferedType` and `defferedTo` parameters. It requires MIDI clock events to function correctly.
+
+**Parameters:**
+- `filterType`: Set to `3` for this filter.
+- `defferedType`: Specifies the scheduling type:
+  - `0` (IN_SPP): Schedule relative to the current Song Position Pointer (SPP).
+  - `1` (IN_BAR): Schedule relative to the current bar.
+  - `2` (AT_SPP): Schedule at a specific SPP.
+  - `3` (AT_BAR): Schedule at a specific bar.
+  - `4` (QUANTIZE_SPP): Quantize to the nearest SPP.
+  - `5` (QUANTIZE_BAR): Quantize to the nearest bar.
+- `defferedTo`: Number of units to defer the event.
+- `uuid`: Unique identifier.
+
+**Example:**
+```json
+{
+  "defferedTo": 0,
+  "defferedType": 0,
+  "filterType": 3,
+  "uuid": "e557fe19-a75d-4ad1-89eb-e3f9e683cfb8"
+}
+```
