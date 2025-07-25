@@ -222,4 +222,4 @@ Dropdown list values are stored as entries separated by newline characters (`\n`
 
 | Version | Date       | Changes Made                                                                                                   |
 |---------|------------|---------------------------------------------------------------------------------------------------------------|
-| v1.0    | 2025-07-23 | ⚠️ Application version 2.3.0 introduces changes that break compatibility with previous user controls. This may result in JSON configuration errors or data loss. AI agents should be able to repair configurations using guidance from this document. |
+| v1.0    | 2025-07-23 | ⚠️ Application version 2.3.0 introduces changes that break compatibility with previous user controls.  |
