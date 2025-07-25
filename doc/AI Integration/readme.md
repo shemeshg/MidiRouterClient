@@ -8,20 +8,22 @@ This document provides a human-readable configuration reference for the [MIDI Ro
 
 - [Presets Overview](#presets-overview)
 - [Port Connectivity Requirements](#port-connectivity-requirements)
-- [MIDI Router Chains and Filters](#MIDI-Router-Chains-and-Filters)
+- [MIDI Router Chains and Filters](#midi-router-chains-and-filters)
 - [Preset Activation via MIDI Commands](#preset-activation-via-midi-commands)
   - [MIDI Event Type Mapping](#midi-event-type-mapping)
 - [Preset MIDI Control Configuration](#preset-midi-control-configuration)
 - [Preset User Controls](Preset%20Controls.md)
 - [Shared Dropdown Lists](#shared-dropdown-lists)
-- [EasyConfig Routing](#EasyConfig-Routing)
+- [EasyConfig Routing](#easyconfig-routing)
+- [Input Settings](#input-settings)
 - [Notes](#notes)
-  - [🧼 Filter Simplification Rule](#-filter-simplification-rule)
-  - [🔗 Auto-Generated Routing Chains](#-auto-generated-routing-chains)
-  - [🔌 Port Connectivity Note](#-port-connectivity-note)
-  - [📝 Dropdown Explanation Policy](#-dropdown-explanation-policy)
+  - [🧼 Filter Simplification Rule](#%f0%9f%a7%bc-filter-simplification-rule)
+  - [🔗 Auto-Generated Routing Chains](#%f0%9f%94%97-auto-generated-routing-chains)
+  - [🔌 Port Connectivity Note](#%f0%9f%94%8c-port-connectivity-note)
+  - [📝 Dropdown Explanation Policy](#%f0%9f%93%9d-dropdown-explanation-policy)
 - [Version Tag](#version-tag)
 - [Change Log](#change-log)
+
 
 ---
 
@@ -165,62 +167,7 @@ The content for this section has been moved to [EasyConfig Routing](EasyConfig%2
 
 ## Input Settings
 
-The `midiRouteInputs` section defines settings for each MIDI input port. These settings include monitoring, ignored MIDI message types, clock routing, and 14-bit CC configurations.
-
-### Parameters:
-- `monitor`: Controls monitoring of the input port.
-  - `isMonitored`: Boolean indicating if the input is monitored.
-  - `logLen`: Number of recent events to log.
-- `ignoreTypes`: Specifies which MIDI message types to ignore.
-  - `midiSense`: Ignore Active Sensing messages.
-  - `midiSysex`: Ignore System Exclusive (SysEx) messages.
-  - `midiTime`: Ignore MIDI Time Code messages.
-- `midiInputName`: Name of the MIDI input port.
-- `midiRouteClock`: Configures clock routing for the input port.
-  - `fromSppPos`: Starting Song Position Pointer (SPP) position.
-  - `propegateInputs`: List of input ports to propagate clock events to.
-    - `midiInputName`: Name of the propagated input port.
-  - `timeSig`: Time signature numerator.
-  - `timeSigDivBy`: Time signature denominator.
-- `cc14bitAry`: Configures 14-bit CC messages.
-  - `cc`: Control Change number.
-  - `channel`: MIDI channel.
-
-### Example:
-```json
-{
-  "midiRouteInputs": [
-    {
-      "monitor": {
-        "isMonitored": false,
-        "logLen": 2
-      },
-      "ignoreTypes": {
-        "midiSense": true,
-        "midiSysex": true,
-        "midiTime": true
-      },
-      "midiInputName": "0_Launch Control XL",
-      "midiRouteClock": {
-        "fromSppPos": 0,
-        "propegateInputs": [
-          {
-            "midiInputName": "0_Launch Control XL HUI"
-          }
-        ],
-        "timeSig": 4,
-        "timeSigDivBy": 4
-      },
-      "cc14bitAry": [
-        {
-          "cc": 5,
-          "channel": 1
-        }
-      ]
-    }
-  ]
-}
-```
+The content for this section has been moved to [Input Settings](InputSettings.md).
 
 ---
 
