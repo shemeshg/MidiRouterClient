@@ -1,4 +1,4 @@
-# MIDI Router Configuration (AI integration)
+# MIDI Router Configuration (AI Integration)
 
 This document provides a human-readable configuration reference for the [MIDI Router Client](https://sourceforge.net/projects/midi-router-client/). It is designed to assist AI agents—like Copilot—in understanding the current configuration and helping users make updates to the `MidiRouterClient.json` file added to context.
 
@@ -23,7 +23,6 @@ This document provides a human-readable configuration reference for the [MIDI Ro
   - [📝 Dropdown Explanation Policy](#%f0%9f%93%9d-dropdown-explanation-policy)
 - [Version Tag](#version-tag)
 - [Change Log](#change-log)
-
 
 ---
 
@@ -165,6 +164,8 @@ Dropdown lists are globally defined and shared across all presets—there is no 
 
 The content for this section has been moved to [EasyConfig Routing](EasyConfig%20Routing.md).
 
+---
+
 ## Input Settings
 
 The content for this section has been moved to [Input Settings](InputSettings.md).
@@ -206,9 +207,6 @@ If a user control uses a dropdown, mention the dropdown's name, but do not show 
 Dropdown list values are stored as entries separated by newline characters (`\n`).
 
 ---
-
-
-
 
 ## 🏷️ Version Tag
 
