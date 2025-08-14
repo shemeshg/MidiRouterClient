@@ -180,7 +180,7 @@ qt_finalize_executable(midi-router-client)
 qt_generate_deploy_qml_app_script(
     TARGET midi-router-client
     OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
+    # NO_UNSUPPORTED_PLATFORM_ERROR
 )
 
 # Call the deployment script on "cmake --install".
