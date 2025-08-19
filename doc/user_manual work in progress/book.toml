@@ -1,5 +1,5 @@
-[title]
-title = "MIDI Router User Manual"
-
-[build]
-incremental = true
+[book]
+authors = ["shemeshg"]
+language = "en"
+src = "src"
+title = "MIDI Router Client documentation"
