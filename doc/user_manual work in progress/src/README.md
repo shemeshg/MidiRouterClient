@@ -1,4 +1,4 @@
-![Alt text](//a.fsdn.com/allura/p/midi-router-client/icon?1755199273?&amp;w=90) 
+![Midi Router Client Icon](//a.fsdn.com/allura/p/midi-router-client/icon?1755199273?&amp;w=90) 
 # [Midi Router Client](https://sourceforge.net/projects/midi-router-client/)
 
 Create routes from anywhere to anywhere
