@@ -1,12 +1,8 @@
 # Configuration
 
-A prioritized overview to help you get started quickly.
-
-## Configuration anatomy
-
 Configuration contain iformattion about
 
-- Current connected inputs and outputs
+- List of current connected inputs and outputs
 - `Presets` - settings for connected and not connected ports,
     - routing
     - user controls

@@ -1,12 +1,20 @@
 # Presets
 
-Presets are containers for user configurations. You can toggle them via mouse click or MIDI event. 
-Each preset defines it's own settings for all available inputs.
+Presets are containers for user-defined input configurations. They can be activated via mouse click or MIDI event, offering flexible and dynamic control.
 
+Each preset holds its own distinct settings across all available input channels.
 
-## Notes
+## Usage Notes
 
-While multiple presets can be active, it's often best to use only one at a time—especially when  custom input settings  like 14-bit or clock routing applied.
-This will avoid confusion about which input config is in effect.
+While multiple presets can be active at once, it's generally recommended to use only one at a time—especially when applying advanced input configurations such as 14-bit resolution or clock routing.
 
-## Reference
+Using a single preset helps maintain clarity and avoids potential conflicts between overlapping input settings.
+
+## MIDI Preset Activation Modes
+
+when the assigned MIDI event is received
+
+- **select** — Activates the selected preset and disables all others.
+- **toggle** — Enables or disables the current preset.
+- **on** — Enables the preset.
+- **off** — Disables the preset.

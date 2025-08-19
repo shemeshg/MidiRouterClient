@@ -6,6 +6,6 @@
 
 - [Installation](guide/installation.md)
 - [Configuration](guide/configuration.md)
-- [Preset](guide/preset.md)
-
+- [Presets](guide/preset.md)
+- [In ports](guide/inport.md)
 # Reference Guide
