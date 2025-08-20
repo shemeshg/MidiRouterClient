@@ -135,6 +135,8 @@ Column {
                 nameFilters: ["json (*.json)"]
 
             }
+
+
             CoreLabel {
                 Layout.leftMargin:   Constants.font.pixelSize
                 Layout.rightMargin:   Constants.font.pixelSize
@@ -144,6 +146,7 @@ Column {
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
             }
+
 
 
             CoreLabel{
@@ -162,12 +165,26 @@ Column {
             }
 
 
+
             CoreLabel {
                 Layout.leftMargin:   Constants.font.pixelSize
                 Layout.rightMargin:   Constants.font.pixelSize
                 text: Constants.balData.qtVer()
             }
 
+            CoreLabel{
+                Layout.leftMargin:   Constants.font.pixelSize
+                Layout.rightMargin:   Constants.font.pixelSize
+                color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
+                text: "<h2>ⓘ</h2>"
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: () => {
+                                   Qt.openUrlExternally("https://shemeshg.github.io/MidiRouterClient-mdbook/");
+                               }
+                }
+            }
 
             CoreLabel {
                 Layout.leftMargin:   Constants.font.pixelSize
