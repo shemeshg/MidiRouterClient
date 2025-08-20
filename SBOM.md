@@ -1,6 +1,6 @@
 # Software Bill of Materials (SBOM)
 
-## ore Dependencies
+## Core Dependencies
 - [Qt Quick and QT6 Open Source](https://www.qt.io/)
 - [Qt Web Channel](https://doc.qt.io/qt-6/qtwebchannel-index.html)  
   _Included in full Qt open source install._
