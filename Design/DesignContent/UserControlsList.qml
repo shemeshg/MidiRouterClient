@@ -100,13 +100,14 @@ ColumnLayout {
 
                       }
             onSetName: (s)=>{
+
                 modelData.description = s;
                        }
             onDel: {
                 activePreset.delUserControl(index)
             }
             onEdit: {
-                isSubForm = true;
+                isSubForm = true;                             
                 editControl(modelData)
             }
             isShowUpBtn: activePreset.userControls.length > 1

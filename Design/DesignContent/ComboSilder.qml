@@ -61,7 +61,7 @@ ColumnLayout {
             }
 
             Component.onCompleted: {
-                var index = cmbModel.findIndex(item => item.value === slider.value.toString());
+                var index = cmbModel.findIndex(item => item.value.toString() === slider.value.toString());
                 currentIndex = index;
             }
         }
@@ -100,7 +100,7 @@ ColumnLayout {
             to: toVal
             stepSize: 1
             onMoved: {                
-                var index = cmbModel.findIndex(item => item.value === slider.value.toString());
+                var index = cmbModel.findIndex(item => item.value.toString() === slider.value.toString());
                 cmb.currentIndex = index
                 setVal(value, false)
             }
