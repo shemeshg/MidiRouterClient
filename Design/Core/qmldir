@@ -5,6 +5,7 @@ CoreComboBox 1.0 CoreComboBox.qml
 CoreGroupBox 1.0 CoreGroupBox.qml
 CoreLabel 1.0 CoreLabel.qml
 CoreLabelSelect 1.0 CoreLabelSelect.qml
+CoreLink 1.0 CoreLink.qml
 CoreSlider 1.0 CoreSlider.qml
 CoreSwitch 1.0 CoreSwitch.qml
 singleton  CoreSystemPalette 1.0 CoreSystemPalette.qml

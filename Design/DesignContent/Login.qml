@@ -233,17 +233,15 @@ Column {
                             Constants.balData.saveIsSaveConfigOnServer(checked)
                         }
                     }
-                    CoreLabel{
+                    CoreLink{
                         id: hyperlinkBtn
-                        color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
+
                         text: "link"
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: () => {
-                                           Constants.balData.openCashFolder()
-                                       }
-                        }
+
+                        onClicked: () => {
+                                       Constants.balData.openCashFolder()
+                                   }
+
                     }
                 }
             }

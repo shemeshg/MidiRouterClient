@@ -149,19 +149,17 @@ Column {
 
 
 
-            CoreLabel{
+            CoreLink{
                 Layout.leftMargin:   Constants.font.pixelSize
                 Layout.rightMargin:   Constants.font.pixelSize
                 id: hyperlinkBtn
-                color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
+
                 text: "Midi Router Client " + Qt.application.version
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: () => {
-                                   Qt.openUrlExternally("https://sourceforge.net/projects/midi-router-client/");
-                               }
-                }
+
+                onClicked: () => {
+                               Qt.openUrlExternally("https://sourceforge.net/projects/midi-router-client/");
+                           }
+
             }
 
 
@@ -172,18 +170,16 @@ Column {
                 text: Constants.balData.qtVer()
             }
 
-            CoreLabel{
+            CoreLink{
                 Layout.leftMargin:   Constants.font.pixelSize
                 Layout.rightMargin:   Constants.font.pixelSize
-                color: CoreSystemPalette.isDarkTheme ? "Light blue" : "Dark blue"
+
                 text: "<h2>ⓘ</h2>"
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: () => {
-                                   Qt.openUrlExternally("https://shemeshg.github.io/MidiRouterClient-mdbook/");
-                               }
-                }
+
+                onClicked: () => {
+                               Qt.openUrlExternally("https://shemeshg.github.io/MidiRouterClient-mdbook/");
+                           }
+
             }
 
             CoreLabel {

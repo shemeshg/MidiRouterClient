@@ -16,6 +16,7 @@ CoreComboBox.qml
 CoreGroupBox.qml
 CoreLabel.qml
 CoreLabelSelect.qml
+CoreLink.qml
 CoreSlider.qml
 CoreSwitch.qml
 CoreSystemPalette.qml
