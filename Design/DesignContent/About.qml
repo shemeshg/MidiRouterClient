@@ -62,58 +62,6 @@ Column {
 
 
 
-
-
-
-            RowLayout {
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
-                CoreLabel {
-                    text: "Font size (Empty for default, requires reopen) "
-                    color: CoreSystemPalette.text
-                }
-                CoreTextField {
-                    id: defaultFontSize
-                    text: Constants.balData.defaultFontSize
-                    Layout.fillWidth: true
-                }
-                CoreButton {
-                    text: "set"
-                    onClicked: {
-                        Constants.balData.saveDefaultFontSize(defaultFontSize.text)
-                    }
-                }
-            }
-            RowLayout {
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
-                CoreButton {
-                    text: "Download client settings"
-                    onClicked: {
-                        fileDialogDownload.open()
-                    }
-                    icon.source: Qt.resolvedUrl(
-                                     "icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
-
-                    icon.color: CoreSystemPalette.buttonText
-                    palette.buttonText: CoreSystemPalette.buttonText
-                }
-            }
-            RowLayout {
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
-                CoreButton {
-                    text: "Upload client settings"
-                    onClicked: {
-                        fileDialogUpload.open();
-                    }
-                    icon.source: Qt.resolvedUrl(
-                                     "icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
-
-                    icon.color: CoreSystemPalette.buttonText
-                    palette.buttonText: CoreSystemPalette.buttonText
-                }
-            }
             FileDialog {
                 id: fileDialogDownload
                 title: "Please choose a .json file to download"
@@ -136,55 +84,94 @@ Column {
 
             }
 
-
-            CoreLabel {
+            ColumnLayout {
                 Layout.leftMargin:   Constants.font.pixelSize
                 Layout.rightMargin:   Constants.font.pixelSize
-                text: `
-                <h2>About</h2>
-                `
-                wrapMode: Text.WordWrap
-                Layout.fillWidth: true
-            }
+                RowLayout {
+
+                    CoreLabel {
+                        text: "Font size (Empty for default, requires reopen) "
+                        color: CoreSystemPalette.text
+                    }
+                    CoreTextField {
+                        id: defaultFontSize
+                        text: Constants.balData.defaultFontSize
+                        Layout.fillWidth: true
+                    }
+                    CoreButton {
+                        text: "set"
+                        onClicked: {
+                            Constants.balData.saveDefaultFontSize(defaultFontSize.text)
+                        }
+                    }
+                }
+                RowLayout {
+                    CoreButton {
+                        text: "Download client settings"
+                        onClicked: {
+                            fileDialogDownload.open()
+                        }
+                        icon.source: Qt.resolvedUrl(
+                                         "icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
+
+                        icon.color: CoreSystemPalette.buttonText
+                        palette.buttonText: CoreSystemPalette.buttonText
+                    }
+                }
+                RowLayout {
+                    CoreButton {
+                        text: "Upload client settings"
+                        onClicked: {
+                            fileDialogUpload.open();
+                        }
+                        icon.source: Qt.resolvedUrl(
+                                         "icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg")
+
+                        icon.color: CoreSystemPalette.buttonText
+                        palette.buttonText: CoreSystemPalette.buttonText
+                    }
+                }
 
 
 
-            CoreLink{
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
-                id: hyperlinkBtn
-
-                text: "Midi Router Client " + Qt.application.version
-
-                onClicked: () => {
-                               Qt.openUrlExternally("https://sourceforge.net/projects/midi-router-client/");
-                           }
-
-            }
+                CoreLabel {
+                    text: `
+                    <h2>About</h2>
+                    `
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                }
 
 
 
-            CoreLabel {
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
-                text: Constants.balData.qtVer()
-            }
+                CoreLink{
+                    id: hyperlinkBtn
 
-            CoreLink{
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
+                    text: "Midi Router Client " + Qt.application.version
 
-                text: "<h2>ⓘ</h2>"
+                    onClicked: () => {
+                                   Qt.openUrlExternally("https://sourceforge.net/projects/midi-router-client/");
+                               }
 
-                onClicked: () => {
-                               Qt.openUrlExternally("https://shemeshg.github.io/MidiRouterClient-mdbook/");
-                           }
+                }
 
-            }
 
-            CoreLabel {
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
+
+                CoreLabel {
+                    text: Constants.balData.qtVer()
+                }
+
+                CoreLink{
+
+                    text: "<h2>ⓘ</h2>"
+
+                    onClicked: () => {
+                                   Qt.openUrlExternally("https://shemeshg.github.io/MidiRouterClient-mdbook/");
+                               }
+
+                }
+
+                CoreLabel {
                 text: `
                 <h2>License</h2>
                 <p>Copyright 2020 shemeshg</p>
@@ -195,7 +182,7 @@ Column {
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
             }
-
+            }
             Item {
                 Layout.fillHeight: true
             }
