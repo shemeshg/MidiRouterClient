@@ -39,6 +39,7 @@ ColumnLayout {
             Layout.rightMargin: Constants.font.pixelSize
             Layout.fillWidth: true
             property bool fromKeyOnOff: [1,2,3].indexOf( fromEvent.currentIndex) > -1
+            property bool toKeyOnOff: [1,2,3].indexOf( toEvent.currentIndex) > -1
             property bool fromEventIsCc: [5,7].indexOf( fromEvent.currentValue) > -1
             property bool toEventIsCc: [5,7].indexOf( toEvent.currentValue) > -1
             property bool toEventIsPc: [8].indexOf( toEvent.currentValue) > -1
@@ -85,6 +86,12 @@ ColumnLayout {
                                 // auto the other
                                 modelData.toSelectedMidiEventTypeId = currentValue
                                 toEvent.currentIndex = currentIndex
+
+
+                                if (fromKeyOnOff) {
+                                    modelData.fromCcOrNrpnStart = 0
+                                    modelData.fromCcOrNrpnEnd = 127
+                                }
                             }
                         }
                     }
@@ -196,6 +203,10 @@ ColumnLayout {
                             }
                             onActivated: {
                                 modelData.toSelectedMidiEventTypeId = currentValue
+                                if (toKeyOnOff) {
+                                    modelData.toCcOrNrpnStart = 0
+                                    modelData.toCcOrNrpnEnd = 127
+                                }
                             }
                         }
                     }
