@@ -225,7 +225,7 @@ public slots:
     void setEasyConfigChain(EasyConfig *easyConfig,EasyConfigRoute *easyConfigRoute)
     //-only-file body
     {
-        setName("EasyConfig");
+        setName(easyConfigRoute->description());
         setIsEasyConfig(true);
 
         auto const toDestinationName = easyConfigRoute->toDestinationName();

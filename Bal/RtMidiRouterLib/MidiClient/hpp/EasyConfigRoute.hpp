@@ -44,6 +44,7 @@ public:
 
         setToDestinationName("");
         setUuid(getUuId());
+        setDescription("EasyConfigRoute");
 
     };
 
@@ -106,6 +107,7 @@ public:
         obj["toChannel"] = toChannel();
         obj["toData1"] = toData1();
         obj["toDestinationName"] = toDestinationName();
+        obj["description"] = description();
         return obj;
     }
 

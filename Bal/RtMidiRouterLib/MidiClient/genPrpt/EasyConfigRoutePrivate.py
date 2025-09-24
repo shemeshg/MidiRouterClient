@@ -17,6 +17,7 @@ ary = [
     create_prpt("int", 'toChannel'),
     create_prpt("int", 'toData1'),
     create_prpt("QString", 'toDestinationName'),
+    create_prpt("QString", 'description')
 ]
 
 enumClasss = [

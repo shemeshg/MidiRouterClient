@@ -30,11 +30,23 @@ ColumnLayout {
             }
         }
     }
+    CoreTextField {
+        Layout.margins:  Constants.font.pixelSize
+        id: filterByDescription
+        Layout.fillWidth: true
+        placeholderText: "RegEx filter by description ex. tag1|tag2"
 
+    }
+
+    function testFilterByDescription(userInput) {
+        const searchRegExp = new RegExp(filterByDescription.text);
+        return searchRegExp.test(userInput);
+    }
 
     Repeater {
         model: midiRouteInput.easyConfig.easyConfigRoutes
         GroupBox {
+            visible: testFilterByDescription(modelData.description)
             Layout.leftMargin: Constants.font.pixelSize
             Layout.rightMargin: Constants.font.pixelSize
             Layout.fillWidth: true
@@ -45,6 +57,17 @@ ColumnLayout {
             property bool toEventIsPc: [8].indexOf( toEvent.currentValue) > -1
             ColumnLayout {
                 width: parent.width
+                RowLayout {
+                    CoreTextField {
+                        Layout.fillWidth: true
+                        text: modelData.description
+                        onTextEdited: ()=>{
+                                          modelData.description = text
+                                      }
+                        placeholderText: "Enter EasyConfig Description"
+                    }
+                }
+
                 RowLayout {
 
                     CoreLabel {
