@@ -34,6 +34,7 @@ class EasyConfigRoutePrivate : public QObject
     Q_PROPERTY(int toChannel READ toChannel WRITE setToChannel NOTIFY toChannelChanged )
     Q_PROPERTY(int toData1 READ toData1 WRITE setToData1 NOTIFY toData1Changed )
     Q_PROPERTY(QString toDestinationName READ toDestinationName WRITE setToDestinationName NOTIFY toDestinationNameChanged )
+    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged )
     
     QML_ELEMENT
 public:
@@ -214,6 +215,18 @@ void setToDestinationName(const QString &newToDestinationName)
 
 
     
+    QString description() const{return m_description;} 
+    
+void setDescription(const QString &newDescription)
+    {
+        if (m_description == newDescription)
+            return;
+        m_description = newDescription;
+        emit descriptionChanged();
+    }
+
+
+    
     
     
 signals:
@@ -231,6 +244,7 @@ signals:
     void toChannelChanged();
     void toData1Changed();
     void toDestinationNameChanged();
+    void descriptionChanged();
     
 
 protected:
@@ -251,6 +265,7 @@ private:
     int m_toChannel = 0;
     int m_toData1 = 0;
     QString m_toDestinationName ;
+    QString m_description ;
     
 };
 //-only-file null

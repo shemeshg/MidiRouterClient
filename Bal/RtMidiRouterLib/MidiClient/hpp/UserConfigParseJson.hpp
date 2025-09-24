@@ -237,6 +237,7 @@ private:
         fst.setField<int>(&EasyConfigRoute::setToChannel, "toChannel");
         fst.setField<int>(&EasyConfigRoute::setToData1, "toData1");
         fst.setField<QString>(&EasyConfigRoute::setToDestinationName, "toDestinationName");
+        fst.setField<QString>(&EasyConfigRoute::setDescription, "description");
         fst.setField<int>(&EasyConfigRoute::setToSelectedMidiEventTypeId, "toSelectedMidiEventTypeId");
         fst.setField<int>(&EasyConfigRoute::setTranspose, "transpose");
     }
