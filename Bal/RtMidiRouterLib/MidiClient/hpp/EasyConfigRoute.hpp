@@ -198,10 +198,10 @@ public:
             toCcOrNrpnStart() != -1){
 
             if (fromCcOrNrpnStart() == fromCcOrNrpnEnd() &&
-                toCcOrNrpnStart() == toCcOrNrpnEnd() && fromCcOrNrpnStart() == toCcOrNrpnStart()) {
+                toCcOrNrpnStart() == toCcOrNrpnEnd() ) {
                 data2Filter = QString{"[[%0 %1]]"}
-                                  .arg(fromData1())
-                                  .arg(toData1());
+                                  .arg(fromCcOrNrpnStart())
+                                  .arg(toCcOrNrpnEnd());
             } else {
                 data2Filter = QString{"[[%0, %1, %2, %3]]"}
                                   .arg(fromCcOrNrpnStart())
