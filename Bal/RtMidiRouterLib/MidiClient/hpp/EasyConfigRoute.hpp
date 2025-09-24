@@ -198,7 +198,7 @@ public:
             toCcOrNrpnStart() != -1){
 
             if (fromCcOrNrpnStart() == fromCcOrNrpnEnd() &&
-                toCcOrNrpnStart() == toCcOrNrpnEnd()) {
+                toCcOrNrpnStart() == toCcOrNrpnEnd() && fromCcOrNrpnStart() == toCcOrNrpnStart()) {
                 data2Filter = QString{"[[%0 %1]]"}
                                   .arg(fromData1())
                                   .arg(toData1());
