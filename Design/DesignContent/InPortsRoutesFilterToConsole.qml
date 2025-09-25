@@ -47,6 +47,7 @@ ColumnLayout {
         }
         CoreComboBox {
             id:logTo
+            enabled: inPortsRoutesLoaderId.isEnabled
             Layout.fillWidth: true
             textRole: "text"
             valueRole: "value"
@@ -69,6 +70,7 @@ ColumnLayout {
         }
         CoreTextArea {
             id: userdata
+            enabled: inPortsRoutesLoaderId.isEnabled
             Layout.fillWidth: true
             text: inPortsRoutesLoaderId.filterObj.userdata
             property bool processing: true

@@ -59,6 +59,7 @@ ColumnLayout {
             }
             CoreTextField {
                 id: name
+                enabled: inPortsRoutesLoaderId.isEnabled
                 Layout.fillWidth: true
                 text: inPortsRoutesLoaderId.filterObj.name
                 onTextEdited: {
@@ -72,6 +73,7 @@ ColumnLayout {
             }
             CoreComboBox {
                 id:conditionAction
+                enabled: inPortsRoutesLoaderId.isEnabled
                 Layout.fillWidth: true
                 textRole: "text"
                 valueRole: "value"
@@ -94,6 +96,7 @@ ColumnLayout {
             }
             CoreTextField {
                 id: filterChannel
+                enabled: inPortsRoutesLoaderId.isEnabled
                 Layout.fillWidth: true
                 text: inPortsRoutesLoaderId.filterObj.filterChannel
                 onTextEdited: {
@@ -106,6 +109,7 @@ ColumnLayout {
                 text: "Filter Event"
             }
             CoreTextField {
+                enabled: inPortsRoutesLoaderId.isEnabled
                 id: filterEvents
                 Layout.fillWidth: true
                 text: inPortsRoutesLoaderId.filterObj.filterEvents
@@ -119,6 +123,7 @@ ColumnLayout {
                 text: "Filter Data1"
             }
             CoreTextField {
+                enabled: inPortsRoutesLoaderId.isEnabled
                 id: filterData1
                 Layout.fillWidth: true
                 text: inPortsRoutesLoaderId.filterObj.filterData1
@@ -132,6 +137,7 @@ ColumnLayout {
                 text: "Filter Data2"
             }
             CoreTextField {
+                enabled: inPortsRoutesLoaderId.isEnabled
                 id: filterData2
                 Layout.fillWidth: true
                 text: inPortsRoutesLoaderId.filterObj.filterData2

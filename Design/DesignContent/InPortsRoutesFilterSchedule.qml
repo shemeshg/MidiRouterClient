@@ -48,6 +48,7 @@ ColumnLayout {
         }
         CoreComboBox {
             id:defferedType
+            enabled: inPortsRoutesLoaderId.isEnabled
             Layout.fillWidth: true
             textRole: "text"
             valueRole: "value"
@@ -74,6 +75,7 @@ ColumnLayout {
             text: "Deffered To"
         }
         CoreTextField {
+            enabled: inPortsRoutesLoaderId.isEnabled
             id: defferedTo
             text: inPortsRoutesLoaderId.filterObj.defferedTo
             onTextEdited: {

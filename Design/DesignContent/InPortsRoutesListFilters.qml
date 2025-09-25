@@ -198,6 +198,7 @@ ColumnLayout {
                             UiBtnEdit {
                                 onClicked: {
                                     inPortsRoutesLoaderId.filterObj = modelData;
+                                    inPortsRoutesLoaderId.isEnabled = chainEnabled;
                                     if (currentMidiRoutersFilter.filterType === Constants.FilterType.TO_MIDI_DESTINATION){
                                         inPortRoutesId.state = "InPortsRoutesFilterToMidi"
                                     } else if (currentMidiRoutersFilter.filterType === Constants.FilterType.TO_CONSOLE){

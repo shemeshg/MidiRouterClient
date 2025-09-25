@@ -50,7 +50,7 @@ ColumnLayout {
                 text: "Server name"
             }
             CoreTextField {
-
+                enabled: inPortsRoutesLoaderId.isEnabled
                 text: serverName
                 onTextEdited: ()=>{
                                   serverName = text
@@ -64,6 +64,7 @@ ColumnLayout {
                 text: "Server port"
             }
             CoreTextField {
+                enabled: inPortsRoutesLoaderId.isEnabled
                 text: serverPort
                 onTextEdited: ()=>{
                                   serverPort = Number(text)
@@ -77,6 +78,7 @@ ColumnLayout {
                 text: "Midi port"
             }
             CoreTextField {
+                enabled: inPortsRoutesLoaderId.isEnabled
                 id: baseMidiRouteInput
                 text: midiPort
                 onTextEdited: ()=>{
@@ -88,6 +90,7 @@ ColumnLayout {
         }
         RowLayout {
             CoreButton {
+                enabled: inPortsRoutesLoaderId.isEnabled
                 text: "Query remote midi ports: "
                 onClicked: {
                     Constants.balData.queryRemoteMidiPorts(serverName,serverPort, (result)=>{
@@ -109,6 +112,7 @@ ColumnLayout {
                     text: modelData
                 }
                 CoreButton {
+                    enabled: inPortsRoutesLoaderId.isEnabled
                     text: "select"
                     onClicked: {
                         baseMidiRouteInput.text = modelData

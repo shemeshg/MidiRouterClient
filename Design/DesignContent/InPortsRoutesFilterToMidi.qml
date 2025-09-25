@@ -50,7 +50,7 @@ ColumnLayout {
             id: nameId
             Layout.fillWidth: true
             cmbVal: inPortsRoutesLoaderId.filterObj.baseMidiRouteInput
-
+            enabled: inPortsRoutesLoaderId.isEnabled
             onActivated: {
                 doSave();
             }
