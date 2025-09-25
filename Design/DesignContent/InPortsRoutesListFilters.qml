@@ -79,6 +79,17 @@ ColumnLayout {
     }
 
 
+    CoreTextField {
+        Layout.margins:  Constants.font.pixelSize
+        id: filterByDescription
+        Layout.fillWidth: true
+        placeholderText: "RegEx filter by description ex. tag1|tag2"
+    }
+    function testFilterByDescription(userInput) {
+        const searchRegExp = new RegExp(filterByDescription.text,"i");
+        return searchRegExp.test(userInput);
+    }
+
     Repeater {
         model: midiRouteInput.midiRouterChains
 
@@ -87,6 +98,9 @@ ColumnLayout {
             Layout.margins:  Constants.font.pixelSize
             Layout.fillWidth: true
             property var currentChain: modelData
+            property bool chainEnabled : !modelData.isEasyConfig && !modelData.isRunForPresetOnAndOff
+
+            visible: testFilterByDescription(modelData.name)
             ColumnLayout {
 
                 anchors.left: parent.left
@@ -102,6 +116,7 @@ ColumnLayout {
                         onTextEdited: ()=>{
                                         modelData.name = text
                                       }
+                        enabled: chainEnabled
                     }
 
                     Item {
@@ -109,6 +124,7 @@ ColumnLayout {
                     }
                     UiBtnDel {
                         onClicked: midiRouteInput.delMidiRouterChain(index);
+                        enabled: chainEnabled
                     }
                     CoreLabel {
                         text: `${modelData.isEasyConfig ? "auto EasyConfig" : ""}  ${modelData.isRunForPresetOnAndOff?
@@ -142,8 +158,10 @@ ColumnLayout {
                             text: modelData.text
                             enabled: !modelData.text.startsWith("-")
                         }
+                        enabled: chainEnabled
                     }
                     UiBtnAdd {
+                        enabled: chainEnabled
                         onClicked: {
                             if (addFilterCombo.currentValue === "midi"){
                                 modelData.addFilterMidiDestination("")
@@ -197,6 +215,7 @@ ColumnLayout {
                                 onClicked: {
                                     currentChain.delMidiRoutersFilter(index)
                                 }
+                                enabled: chainEnabled
                             }
                             CoreLabel {
                                 text: getFilterTypeString(modelData.filterType) + ": "

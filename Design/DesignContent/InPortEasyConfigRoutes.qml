@@ -39,7 +39,7 @@ ColumnLayout {
     }
 
     function testFilterByDescription(userInput) {
-        const searchRegExp = new RegExp(filterByDescription.text);
+        const searchRegExp = new RegExp(filterByDescription.text,"i");
         return searchRegExp.test(userInput);
     }
 
