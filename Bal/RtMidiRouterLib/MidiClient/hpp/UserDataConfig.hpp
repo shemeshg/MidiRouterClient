@@ -71,8 +71,6 @@ public:
     //-only-file body
     {
 
-
-
         UserConfigParseJson userConfigParseJson;
         QJsonObject j;
         if (jsonData.isArray()) {

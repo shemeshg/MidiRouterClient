@@ -25,7 +25,7 @@ Window {
 
     property bool isSubForm: false
     property bool isEasyConfigForm: false
-    property string aboutPreviousStr: ""
+    property string aboutPreviousStr: "InPorts"
 
     onIsClientConnectedChanged: ()=>{
                                         headerBarId.selectDefaultItem(isClientConnected)
@@ -34,6 +34,11 @@ Window {
     Component.onCompleted: {
         CoreSystemPalette.font = Constants.font
         Constants.balData.onApplicationStarted()
+        if (Constants.balData.midiClientConnection.userDataConfig.criticalErrorMsg){
+            loaderId.sourceComponent = aboutId
+            headerBarId.state = "About"
+            isSubForm = true
+        }
     }
 
     Component.onDestruction: {

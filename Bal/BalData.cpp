@@ -258,6 +258,7 @@ void BalData::applyConfig(const QJSValue &callback)
 
 void BalData::uploadJson(QString filePath, const QJSValue &callback)
 {
+    mcc->midiClientConnection->userDataConfig()->setCriticalErrorMsg("");
     QFile file(QUrl(filePath).toLocalFile());
     if (file.exists()) {
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {

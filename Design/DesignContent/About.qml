@@ -38,6 +38,7 @@ Column {
                     anchors.right: parent.right
 
                     UiBtnBack {
+                        visible: !Constants.balData.midiClientConnection.userDataConfig.criticalErrorMsg
                         onClicked: {
                             headerBarId.state = aboutPreviousStr
                             isSubForm = false
@@ -131,8 +132,18 @@ Column {
                         palette.buttonText: CoreSystemPalette.buttonText
                     }
                 }
+                RowLayout {
+                    CoreLink{
+                        text: "Link to booted server config " +
+                              ( Constants.balData.midiClientConnection.userDataConfig.criticalErrorMsg ?
+                                  "Deleting this file will reset the server configuration to default." : "")
 
+                        onClicked: () => {
+                                       Constants.balData.openCashFolder()
+                                   }
 
+                    }
+                }
 
                 CoreLabel {
                     text: `
