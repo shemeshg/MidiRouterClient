@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Core
-import QtQuick.Dialogs
+import Qt.labs.platform
 import UiComp
 
 Column {
