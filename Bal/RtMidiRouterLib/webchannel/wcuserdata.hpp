@@ -39,7 +39,60 @@ public:
             str = cashFileRead(cahedFileName);
         }
         if (str.isEmpty()){
-            str = "{}";
+            str = R"(
+{
+    "_activePresetID": 0,
+    "appVer": "2.4.0",
+    "connectedInPorts": [
+    ],
+    "connectedOutPorts": [
+    ],
+    "dropdownlists": [],
+    "midiRoutePresets": [
+        {
+            "isEnabled": true,
+            "midiControlOff": {
+                "channel": -1,
+                "data1": -1,
+                "data2": -1,
+                "eventTypeId": 0,
+                "portName": "",
+                "presetMidiType": 0
+            },
+            "midiControlOn": {
+                "channel": -1,
+                "data1": -1,
+                "data2": -1,
+                "eventTypeId": 0,
+                "portName": "",
+                "presetMidiType": 1
+            },
+            "midiControlSelect": {
+                "channel": -1,
+                "data1": -1,
+                "data2": -1,
+                "eventTypeId": 0,
+                "portName": "",
+                "presetMidiType": 3
+            },
+            "midiControlToggle": {
+                "channel": -1,
+                "data1": -1,
+                "data2": -1,
+                "eventTypeId": 0,
+                "portName": "",
+                "presetMidiType": 2
+            },
+            "midiRouteInputs": [],
+            "name": "Preset 0",
+            "userControls": [],
+            "uuid": "f4c3edd5-446d-464b-91eb-20cb375e57b3"
+        }
+    ],
+    "uniqueId": "f58983da-9054-4273-9a74-7d7f8158cd3e",
+    "virtualInPorts": []
+}
+            )";
         }
 
 

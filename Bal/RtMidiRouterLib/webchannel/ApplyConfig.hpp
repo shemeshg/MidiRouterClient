@@ -208,10 +208,16 @@ private:
         if (!json["midiRoutePresets"].isArray()){return;}
         auto midiRoutePresetsObj = getJson<QJsonArray>(json["midiRoutePresets"]);
 
+        int activePresetId = 0;
+        if (json["_activePresetID"].isDouble()){
+        activePresetId = getJson<int>(json["_activePresetID"]);
+        }
+
+        int currentPresetId = 0;
         for (auto const &midiRoutePreset : midiRoutePresetsObj) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePreset);
             bool isEnabled = getJson<bool>(midiRoutePresetObj["isEnabled"]);
-            setMidiRouteInputs(midiRoutePresetObj, isEnabled);
+            setMidiRouteInputs(midiRoutePresetObj, isEnabled, currentPresetId == activePresetId);
             // send user control if required
             if (isEnabled) {
                 auto userControlsObj = getJson<QJsonArray>(midiRoutePresetObj["userControls"]);
@@ -272,7 +278,7 @@ private:
     }
 
     //- {fn}
-    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled)
+    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled, bool isDefaultPreset)
     //-only-file body
     {
 
@@ -286,7 +292,7 @@ private:
             QString presetUuid = getJson<QString>(midiRoutePresetObj["uuid"]);
             if (inPorts.contains(midiInputName)) {
                 setInportSettings(midiRouteInputObj, midiInputName, isEnabled,
-                                  presetUuid);
+                                  presetUuid, isDefaultPreset);
             } else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
                                     [&midiInputName](const DisCnctInPort &port) {
                                         return port.inPortName == midiInputName;
@@ -438,14 +444,14 @@ private:
 
     //- {fn}
     void setInportSettings(QJsonObject &midiRouteInputObj, QString &midiInputName,
-                           bool isEnabled, QString presetUuid)
+                           bool isEnabled, QString presetUuid, bool isDefaultPreset)
     //-only-file body
     {
         int portNumber = wcmidiin->getPortNumber(midiInputName);
 
         wcmidiin->openPort(portNumber);
 
-        if (isEnabled) {
+        if (isEnabled && isDefaultPreset) {
             setInputPortParams(portNumber, midiRouteInputObj, midiInputName,
                                presetUuid);
         }

@@ -136,7 +136,7 @@ Column {
                     CoreLink{
                         text: "Link to booted server config " +
                               ( Constants.balData.midiClientConnection.userDataConfig.criticalErrorMsg ?
-                                  "Deleting this file will reset the server configuration to default." : "")
+                                  "Close application first and delete this file to reset the server configuration to default." : "")
 
                         onClicked: () => {
                                        Constants.balData.openCashFolder()
