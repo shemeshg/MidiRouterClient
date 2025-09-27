@@ -1,5 +1,5 @@
 #!/bin/sh
-# git tag 2.0.5
+# git tag 2.5.0
 # git push --tags 
 # or
 # git push origin 2.0.5
