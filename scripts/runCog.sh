@@ -6,6 +6,7 @@ if [ ! -d ".venv" ]; then
     python3 -m venv .venv
     source .venv/bin/activate
     pip install cogapp
+    pip install Jinja2
 else
     source .venv/bin/activate
 fi
@@ -25,4 +26,7 @@ cog -r CMakeLists.txt
 
 cd "$script_dir/.."
 cd Bal/RtMidiRouterLib/MidiClient
+cog -r CMakeLists.txt
+
+cd "$script_dir/.."
 cog -r CMakeLists.txt
