@@ -36,7 +36,7 @@ ColumnLayout {
         }
         CoreLabel {
             visible: isShowLabel
-            text: is64Mode ? val - Math.floor ((toVal + 1 )) / 2 : val
+            text: is64Mode ? val - Math.floor ((fromVal + toVal + 1 )) / 2 : val
         }
 
         CoreComboBox {

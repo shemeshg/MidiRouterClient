@@ -55,7 +55,10 @@ ColumnLayout {
 
                     for (let i = retList.length + controlModelData.minVal;
                          i <= controlModelData.maxVal; i++) {
-                        retList.push({ text: i.toString(), value: i });
+                        retList.push({ text: (modelData.is64Mode ?
+                                                  (i - Math.floor ((modelData.minVal + modelData.maxVal + 1 )) / 2).toString() + " - " + i:
+                                                  i.toString()
+                                              ), value: i });
                     }
                     return retList;
                 }
