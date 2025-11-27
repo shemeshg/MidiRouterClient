@@ -3,16 +3,20 @@ import os
 
 max_score = 100
 test_name = "Python Challenge"
-template_dict = {"APP_NAME": "midi-router-client",
-           "APP_VER": "2.5.0",
-           "QT_COMPONENTS": [ "Quick","Widgets","WebSockets","WebChannel","Svg","Concurrent", "QuickControls2", "QuickWidgets"],
+template_dict = {
+           "APP_VER": "2.5.1",
+           "APP_NAME": "midi-router-client",
            "APP_DESCRIPTION": "Midi router client",
            "APP_VENDOR": "shemeshg",
            "APP_IDENTIFIER": "com.shemeshg.midirouterclient",
-           "APP_CONTACT":"https://github.com/shemeshg",
-           "QML_DIRS": ["Design","Bal"],
+           "APP_CONTACT":"https://github.com/shemeshg",           
            "MAIN_QML_URI": "MainQml",
+
            "CPACK_DEBIAN_PACKAGE_DEPENDS": ["libasound2-dev"],
+
+           "QML_DIRS": ["Design","Bal"],
+
+           "QT_COMPONENTS": [ "Quick","Widgets","WebSockets","WebChannel","Svg","Concurrent", "QuickControls2", "QuickWidgets"],
            "add_subdirectory_lib": ["Bal"],
            "add_subdirectory_qt": ["Design/Design", "Design/DesignContent", "Design/Core","Design/UiComp"]
            }
