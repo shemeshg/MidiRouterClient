@@ -77,6 +77,13 @@ ColumnLayout {
                 }
 
             }
+            CoreTextField {
+                visible: midiControl.eventTypeId === 7 //NRPN event type
+                text: midiControl.data1
+                onTextEdited: {
+                    midiControl.data1 = (!isNaN(text) && text.trim() !== "") ? Number(text) : -1;
+                }
+            }
         }
         RowLayout {
             CoreLabel {
@@ -91,8 +98,13 @@ ColumnLayout {
                 onActivated: {
                     editPresetId.save()
                 }
-
-
+            }
+            CoreTextField {
+                visible: midiControl.eventTypeId === 7 //NRPN event type
+                text: midiControl.data2
+                onTextEdited: {
+                    midiControl.data2 = (!isNaN(text) && text.trim() !== "") ? Number(text) : -1;
+                }
             }
         }
     }
