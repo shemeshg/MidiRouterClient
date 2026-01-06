@@ -152,6 +152,22 @@ void moveUserControl(int idxFrom, int idxTo)
 
 }
 
+//- {fn}
+void delInputByName(QString midiInputName)
+//-only-file body
+{
+    int idx = 0;
+    for (MidiRouteInput *input : midiRouteInputs()) {
+        if (input->midiInputName() == midiInputName) {
+            delListItem<MidiRouteInput*>(idx);
+            return;
+        }
+        idx++;
+    }
+
+}
+
+
 //-only-file header
 signals:
 
@@ -168,6 +184,7 @@ QJsonArray getJsonMidiRouteInputs()
     }
     return obj;
 }
+
 
 
 //- {fn}
