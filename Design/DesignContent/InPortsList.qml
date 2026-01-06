@@ -71,7 +71,10 @@ ColumnLayout {
     }
 
     CoreLabel {
+        Layout.topMargin: Constants.font.pixelSize
+        Layout.leftMargin: Constants.font.pixelSize
         text: "<h3>Not connected</h3>"
+        visible: getDisconnectedPorts().length > 0
     }
     Repeater {
         model: getDisconnectedPorts()
