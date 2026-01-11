@@ -69,7 +69,7 @@ ColumnLayout {
                 }
             }
             CoreLabel {
-                text: modelData
+                text: (hasRoutesWithMissingOutput(modelData) ? "❗ " : "") + modelData
             }
         }
     }
@@ -94,6 +94,30 @@ ColumnLayout {
             return 0;
         }
     }
+
+    function hasRoutesWithMissingOutput(inputName) {
+        const config = Constants.balData.midiClientConnection.userDataConfig;
+        const routeInput = config.activePreset.midiRouteInputs
+            .find(r => r?.midiInputName === inputName);
+
+        const chains = routeInput?.midiRouterChains;
+        if (!chains) return false;
+
+        for (const chain of chains) {
+            const outputPorts = chain.midiRoutersFilters
+                .filter(f => f.filterType === 0)
+                .map(f => f.baseMidiRouteInput);
+
+            for (const port of outputPorts) {
+                if (config.connectedOutPorts.indexOf(port) === -1) {
+                    return true; // missing output found
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     function getDisconnectedPorts(){
         let currentPresetInputs = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.map(row=>{return row.midiInputName})
