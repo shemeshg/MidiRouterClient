@@ -35,7 +35,8 @@ ColumnLayout {
                 }
             }
             CoreButton {
-                text: "Routes"
+                implicitWidth: Constants.font.pixelSize * 10
+                text: "Routes " + ( getRoutesCount(modelData) > 0 ? "(" + getRoutesCount(modelData) +")" : "")
                 onClicked: {
                     inPortsLoaderId.inPortName = modelData;
                     isSubForm = true
@@ -43,12 +44,20 @@ ColumnLayout {
                 }
             }
             CoreButton {
-                text: "EasyConfig"
+                implicitWidth: Constants.font.pixelSize * 12
+                text: "EasyConfig " + ( getEasyConfigCount(modelData) > 0 ? "(" + getEasyConfigCount(modelData) +")" : "")
                 onClicked: {
                     isSubForm = true
                     inPortsLoaderId.inPortName = modelData;
                     isEasyConfigForm = true
                     inPortsId.state = "InPortEasyConfig";
+                }
+            }
+
+            CoreButton {
+                text: "Del"
+                onClicked: {
+                    Constants.balData.midiClientConnection.userDataConfig.activePreset.delInputByName(modelData)
                 }
             }
             CoreButton {
@@ -64,6 +73,28 @@ ColumnLayout {
             }
         }
     }
+
+    function getEasyConfigCount(inputName){
+        let currentEasyConfigRoutesLen = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.
+        filter(row=>{return row?.midiInputName === inputName})?.[0]?.easyConfig.easyConfigRoutes.length
+        if (currentEasyConfigRoutesLen){
+            return currentEasyConfigRoutesLen;
+        } else {
+            return 0;
+        }
+    }
+
+    function getRoutesCount(inputName){
+        let currentRoutesLen = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.
+        filter(row=>{return row?.midiInputName === inputName})?.[0]?.midiRouterChains.
+        filter(row=>{return !row.isEasyConfig && !row.isRunForPresetOnAndOff}).length
+        if (currentRoutesLen){
+            return currentRoutesLen;
+        } else {
+            return 0;
+        }
+    }
+
     function getDisconnectedPorts(){
         let currentPresetInputs = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.map(row=>{return row.midiInputName})
 
@@ -90,7 +121,8 @@ ColumnLayout {
                 }
             }
             CoreButton {
-                text: "Routes"
+                implicitWidth: Constants.font.pixelSize * 10
+                text: "Routes " + ( getRoutesCount(modelData) > 0 ? "(" + getRoutesCount(modelData) +")" : "")
                 onClicked: {
                     inPortsLoaderId.inPortName = modelData;
                     isSubForm = true
@@ -98,7 +130,8 @@ ColumnLayout {
                 }
             }
             CoreButton {
-                text: "EasyConfig"
+                implicitWidth: Constants.font.pixelSize * 12
+                text: "EasyConfig " + ( getEasyConfigCount(modelData) > 0 ? "(" + getEasyConfigCount(modelData) +")" : "")
                 onClicked: {
                     isSubForm = true
                     inPortsLoaderId.inPortName = modelData;
