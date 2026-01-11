@@ -113,7 +113,7 @@ ColumnLayout {
                 }
             }
             CoreLabel {
-                text: "❗ " + modelData
+                text: modelData
             }
         }
     }
