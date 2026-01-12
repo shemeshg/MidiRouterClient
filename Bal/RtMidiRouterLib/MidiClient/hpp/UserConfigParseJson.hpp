@@ -330,6 +330,9 @@ private:
                         getJson<QString>(filterJsonObj["filterData1"]),
                         getJson<QString>(filterJsonObj["filterData2"]));
                     item->setUuid(uuid);
+                } else if (filterType == static_cast<int>(MidiRoutersFilter::FilterType::SWITCH_DATA1_DATA2)){
+                    auto item = midiRouterChain->addFilterSwitchData1Data2();
+                    item->setUuid(uuid);
                 }
                 else {
                     throw std::runtime_error("Unexpected JSON format");

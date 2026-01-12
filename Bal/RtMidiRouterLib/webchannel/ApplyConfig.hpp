@@ -4,9 +4,9 @@
 #pragma once
 #include "wcmidiin.h"
 #include "wcmidiout.h"
-#include <QJsonValueRef>
-#include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValueRef>
 //-only-file body //-
 //- #include "ApplyConfig.h"
 #include <QUuid>
@@ -19,12 +19,9 @@ public:
                          Webchannel::WcMidiOut *wcmidiout)
         : wcmidiin{wcmidiin}, wcmidiout{wcmidiout} {}
 
-    explicit ApplyConfig(){
-    }
+    explicit ApplyConfig() {}
 
-    void init(Webchannel::WcMidiIn *in,
-              Webchannel::WcMidiOut *out)
-    {
+    void init(Webchannel::WcMidiIn *in, Webchannel::WcMidiOut *out) {
         wcmidiin = in;
         wcmidiout = out;
     }
@@ -50,14 +47,13 @@ public:
         for (int i = 0; i < midiRoutePresets.size(); ++i) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
             QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
-            if (key ==presetUuid){
+            if (key == presetUuid) {
                 presetOnOffStatus[key] = 1;
             } else {
                 presetOnOffStatus[key] = 0;
             }
         }
     }
-
 
     //- {fn}
     void togglePreset(QJsonObject &json, QMap<QString, int> &presetOnOffStatus,
@@ -69,8 +65,8 @@ public:
         for (int i = 0; i < midiRoutePresets.size(); ++i) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePresets[i]);
             QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
-            bool isEnable = getJson<bool>( midiRoutePresetObj["isEnabled"]);
-            if (key ==presetUuid){
+            bool isEnable = getJson<bool>(midiRoutePresetObj["isEnabled"]);
+            if (key == presetUuid) {
 
                 if (isEnable) {
                     presetOnOffStatus[key] = 0;
@@ -88,7 +84,8 @@ public:
     }
 
     //- {fn}
-    QJsonObject presetOnOff(QJsonObject &json, QMap<QString, int> &presetOnOffStatus)
+    QJsonObject presetOnOff(QJsonObject &json,
+                            QMap<QString, int> &presetOnOffStatus)
     //-only-file body
     {
         auto midiRoutePresets = getJson<QJsonArray>(json["midiRoutePresets"]);
@@ -107,7 +104,6 @@ public:
                 midiRoutePresetObj["isEnabled"] = isMidiControlOn;
                 midiRoutePresets[i] =
                     midiRoutePresetObj; // Update the array with the modified object
-
             }
         }
 
@@ -120,7 +116,7 @@ public:
     //- {fn}
     QJsonObject applyConfig(QJsonObject &json)
     //-only-file body
-    {        
+    {
         wcmidiin->restart();
         wcmidiout->restart();
 
@@ -141,10 +137,10 @@ public:
 
     //-only-file header
     bool criticalError = false;
+
 private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
-
 
     QStringList inPorts;
     QStringList outPorts;
@@ -156,7 +152,8 @@ private:
         TO_CONSOLE,
         TO_NETWORK,
         SCHEDULE_TO,
-        FILTER_AND_TRANSFORM
+        FILTER_AND_TRANSFORM,
+        SWITCH_DATA1_DATA2
     };
 
     //- {fn}
@@ -190,7 +187,9 @@ private:
     {
         QStringList inHwPortNames = getInHwPortNames(inPortsMap);
 
-        if (!json["virtualInPorts"].isArray()){return;}
+        if (!json["virtualInPorts"].isArray()) {
+            return;
+        }
         auto virtualInPorts = getJson<QJsonArray>(json["virtualInPorts"]);
 
         for (const auto &itm : virtualInPorts) {
@@ -205,26 +204,31 @@ private:
     void setMidiRoutePresets(QJsonObject &json)
     //-only-file body
     {
-        if (!json["midiRoutePresets"].isArray()){return;}
+        if (!json["midiRoutePresets"].isArray()) {
+            return;
+        }
         auto midiRoutePresetsObj = getJson<QJsonArray>(json["midiRoutePresets"]);
 
         int activePresetId = 0;
-        if (json["_activePresetID"].isDouble()){
-        activePresetId = getJson<int>(json["_activePresetID"]);
+        if (json["_activePresetID"].isDouble()) {
+            activePresetId = getJson<int>(json["_activePresetID"]);
         }
 
         int currentPresetId = 0;
         for (auto const &midiRoutePreset : midiRoutePresetsObj) {
             auto midiRoutePresetObj = getJson<QJsonObject>(midiRoutePreset);
             bool isEnabled = getJson<bool>(midiRoutePresetObj["isEnabled"]);
-            setMidiRouteInputs(midiRoutePresetObj, isEnabled, currentPresetId == activePresetId);
+            setMidiRouteInputs(midiRoutePresetObj, isEnabled,
+                               currentPresetId == activePresetId);
             // send user control if required
             if (isEnabled) {
-                auto userControlsObj = getJson<QJsonArray>(midiRoutePresetObj["userControls"]);
+                auto userControlsObj =
+                    getJson<QJsonArray>(midiRoutePresetObj["userControls"]);
                 for (const auto &ctrl : userControlsObj) {
                     auto ctrlObj = ctrl.toObject();
                     if (getJson<bool>(ctrlObj["isSendOnPresetChange"])) {
-                        QString outputPortnName = getJson<QString>(ctrlObj["outputPortnName"]);
+                        QString outputPortnName =
+                            getJson<QString>(ctrlObj["outputPortnName"]);
                         if (outputPortnName.isEmpty()) {
                             continue;
                         }
@@ -234,27 +238,22 @@ private:
                         }
                         wcmidiout->openPort(portNumber);
                         int eventType = getJson<int>(ctrlObj["eventType"]);
-                        QStringList channelIds{ QString::number( getJson<int>(ctrlObj["channelId"])) };
-                        if (eventType == 0) {                            
-                            wcmidiout->sendControlChange(portNumber,
-                                                         getJson<int>(ctrlObj["ccId"]),
-                                                         getJson<int>(ctrlObj["inputVal"]),
-                                                         {channelIds});
+                        QStringList channelIds{
+                                               QString::number(getJson<int>(ctrlObj["channelId"]))};
+                        if (eventType == 0) {
+                            wcmidiout->sendControlChange(
+                                portNumber, getJson<int>(ctrlObj["ccId"]),
+                                getJson<int>(ctrlObj["inputVal"]), {channelIds});
                         } else if (eventType == 1) {
-                            wcmidiout->sendProgramChange(portNumber,
-                                                         getJson<int>(ctrlObj["inputVal"]),
-                                                         channelIds);
+                            wcmidiout->sendProgramChange(
+                                portNumber, getJson<int>(ctrlObj["inputVal"]), channelIds);
                         } else if (eventType == 2) {
                             wcmidiout->setNonRegisteredParameterInt(
-                                portNumber,
-                                getJson<int>(ctrlObj["nrpnControl"]),
-                                getJson<int>(ctrlObj["inputVal"]),
-                                channelIds);
+                                portNumber, getJson<int>(ctrlObj["nrpnControl"]),
+                                getJson<int>(ctrlObj["inputVal"]), channelIds);
                         } else {
                             throw std::runtime_error("Unexpected JSON format");
                         }
-
-
                     }
                 }
             }
@@ -278,16 +277,18 @@ private:
     }
 
     //- {fn}
-    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled, bool isDefaultPreset)
+    void setMidiRouteInputs(QJsonObject &midiRoutePresetObj, bool isEnabled,
+                            bool isDefaultPreset)
     //-only-file body
     {
 
-        auto midiRouteInputsObj = getJson<QJsonArray>(midiRoutePresetObj["midiRouteInputs"]);
+        auto midiRouteInputsObj =
+            getJson<QJsonArray>(midiRoutePresetObj["midiRouteInputs"]);
 
         for (auto it = midiRouteInputsObj.begin(); it != midiRouteInputsObj.end();
              ++it) {
             auto midiRouteInputObj = it->toObject();
-            auto midiInputName = getJson<QString>( midiRouteInputObj["midiInputName"]);
+            auto midiInputName = getJson<QString>(midiRouteInputObj["midiInputName"]);
 
             QString presetUuid = getJson<QString>(midiRoutePresetObj["uuid"]);
             if (inPorts.contains(midiInputName)) {
@@ -296,14 +297,13 @@ private:
             } else if (!std::any_of(disCnctInPorts.begin(), disCnctInPorts.end(),
                                     [&midiInputName](const DisCnctInPort &port) {
                                         return port.inPortName == midiInputName;
-                                    })) {
+                       })) {
                 DisCnctInPort port;
                 port.presetUuid = presetUuid;
                 port.inPortName = midiInputName;
                 disCnctInPorts.append(port);
             }
         }
-
     }
 
     //- {fn}
@@ -323,8 +323,10 @@ private:
 
         wcmidiin->clearPropegateClockPort(portNumber);
 
-        auto midiRouteClockObj = getJson<QJsonObject>(midiRouteInputObj["midiRouteClock"]);
-        auto propegateInputsAry = getJson<QJsonArray>(midiRouteClockObj["propegateInputs"]);
+        auto midiRouteClockObj =
+            getJson<QJsonObject>(midiRouteInputObj["midiRouteClock"]);
+        auto propegateInputsAry =
+            getJson<QJsonArray>(midiRouteClockObj["propegateInputs"]);
         for (const auto &propegateInput : propegateInputsAry) {
             auto propegateInputObj = getJson<QJsonObject>(propegateInput);
             auto outPortName = getJson<QString>(propegateInputObj["midiInputName"]);
@@ -344,8 +346,7 @@ private:
         wcmidiin->clearCc14Bit(portNumber);
         for (const auto &cc14 : cc14bitAry) {
             auto cc14Obj = getJson<QJsonObject>(cc14);
-            wcmidiin->addCc14Bit(portNumber,
-                                 getJson<int>( cc14Obj["channel"]),
+            wcmidiin->addCc14Bit(portNumber, getJson<int>(cc14Obj["channel"]),
                                  getJson<int>(cc14Obj["cc"]));
         }
     }
@@ -377,7 +378,6 @@ private:
                 int outPortNumber =
                     wcmidiout->getPortNumber(getJson<QString>(filter["midiInputName"]));
 
-
                 if (outPortNumber >= 0) {
                     wcmidiin->routingActionAddSendPortByNumber(portNumber, chainId,
                                                                outPortNumber);
@@ -393,17 +393,15 @@ private:
             } else if (getJson<int>(filter["filterType"]) ==
                        static_cast<int>(FilterType::SCHEDULE_TO)) {
 
-                wcmidiin->routingActionAddDeferedEvent(portNumber, chainId,
-                                                       getJson<int>(filter["defferedType"]),
-                                                       getJson<double>(filter["defferedTo"]));
+                wcmidiin->routingActionAddDeferedEvent(
+                    portNumber, chainId, getJson<int>(filter["defferedType"]),
+                    getJson<double>(filter["defferedTo"]));
             } else if (getJson<int>(filter["filterType"]) ==
                        static_cast<int>(FilterType::TO_NETWORK)) {
                 QString remotePortName = getJson<QString>(filter["midiInputName"]);
                 auto ok = wcmidiin->routingActionAddSendRemoteServerByRemotePortName(
-                    portNumber, chainId,
-                    getJson<QString>(filter["serverName"]),
-                    getJson<int>(filter["serverPort"]),
-                    remotePortName);
+                    portNumber, chainId, getJson<QString>(filter["serverName"]),
+                    getJson<int>(filter["serverPort"]), remotePortName);
                 if (ok == -1) {
                     qDebug() << "Could not add remote Port for some reason";
                 }
@@ -416,6 +414,9 @@ private:
                     stringToJsonArray(getJson<QString>(filter["filterData1"])),
                     stringToJsonArray(getJson<QString>(filter["filterData2"])),
                     getJson<int>(filter["conditionAction"]));
+            } else if (getJson<int>(filter["filterType"]) ==
+                       static_cast<int>(FilterType::SWITCH_DATA1_DATA2)) {
+                wcmidiin->routingActionAddSwitchData1Data2(portNumber, chainId);
             }
         }
     }
@@ -426,14 +427,16 @@ private:
                               QString &midiInputName)
     //-only-file body
     {
-        auto midiRouterChains = getJson<QJsonArray>( midiRouteInputObj["midiRouterChains"]);
+        auto midiRouterChains =
+            getJson<QJsonArray>(midiRouteInputObj["midiRouterChains"]);
         for (const auto &midiRouterChain : midiRouterChains) {
 
             //
             QJsonObject midiRouterChainObj = getJson<QJsonObject>(midiRouterChain);
-            if (isEnabled || getJson<bool>(midiRouterChainObj["isRunForPresetOnAndOff"])) {
+            if (isEnabled ||
+                getJson<bool>(midiRouterChainObj["isRunForPresetOnAndOff"])) {
                 QJsonArray midiRoutersFilters =
-                    getJson<QJsonArray>( midiRouterChainObj["midiRoutersFilters"]);
+                    getJson<QJsonArray>(midiRouterChainObj["midiRoutersFilters"]);
                 if (midiRoutersFilters.size() > 0) {
                     setInputChainFilters(midiInputName, midiRoutersFilters, portNumber,
                                          midiRouterChainObj);
@@ -444,7 +447,8 @@ private:
 
     //- {fn}
     void setInportSettings(QJsonObject &midiRouteInputObj, QString &midiInputName,
-                           bool isEnabled, QString presetUuid, bool isDefaultPreset)
+                           bool isEnabled, QString presetUuid,
+                           bool isDefaultPreset)
     //-only-file body
     {
         int portNumber = wcmidiin->getPortNumber(midiInputName);
@@ -493,84 +497,73 @@ private:
 
     //-only-file header
 
-
-    template<typename T = QJsonArray>
+    template <typename T = QJsonArray>
     std::enable_if_t<std::is_same_v<T, QJsonArray>, QJsonArray>
-    getJson(QJsonValueRef obj)
-    {
-        if (obj.isArray()){
+    getJson(QJsonValueRef obj) {
+        if (obj.isArray()) {
             return obj.toArray();
         } else {
             QJsonArray tmp;
-            qDebug()<<"Critical AppConfig json error";
+            qDebug() << "Critical AppConfig json error";
             criticalError = true;
             return tmp;
         }
     }
 
-
-    template<typename T = QJsonObject>
+    template <typename T = QJsonObject>
     std::enable_if_t<std::is_same_v<T, QJsonObject>, QJsonObject>
-    getJson(QJsonValueRef obj)
-    {
-        if (obj.isObject()){
+    getJson(QJsonValueRef obj) {
+        if (obj.isObject()) {
             return obj.toObject();
         } else {
             QJsonObject tmp;
-            qDebug()<<"Critical AppConfig json error";
+            qDebug() << "Critical AppConfig json error";
             criticalError = true;
             return tmp;
         }
     }
 
-
-    template<typename T = QString>
+    template <typename T = QString>
     std::enable_if_t<std::is_same_v<T, QString>, QString>
-    getJson(QJsonValueRef obj)
-    {
-        if(obj.isString()){
+    getJson(QJsonValueRef obj) {
+        if (obj.isString()) {
             return obj.toString();
         } else {
-            qDebug()<<"Critical AppConfig json error";
+            qDebug() << "Critical AppConfig json error";
             criticalError = true;
             return "";
         }
     }
 
-    template<typename T = bool>
-    std::enable_if_t<std::is_same_v<T, bool>, bool>
-    getJson(QJsonValueRef obj)
-    {
-        if(obj.isBool()){
+    template <typename T = bool>
+    std::enable_if_t<std::is_same_v<T, bool>, bool> getJson(QJsonValueRef obj) {
+        if (obj.isBool()) {
             return obj.toBool();
         } else {
-            qDebug()<<"Critical AppConfig json error";
+            qDebug() << "Critical AppConfig json error";
             criticalError = true;
             return false;
         }
     }
 
-    template<typename T = double>
+    template <typename T = double>
     std::enable_if_t<std::is_same_v<T, double>, double>
-    getJson(QJsonValueRef obj)
-    {
-        if(obj.isDouble()){
+    getJson(QJsonValueRef obj) {
+        if (obj.isDouble()) {
             return obj.toDouble();
         } else {
-            qDebug()<<"Critical AppConfig json error";
+            qDebug() << "Critical AppConfig json error";
             criticalError = true;
             return 0;
         }
     }
 
-    template<typename T = int>
-    std::enable_if_t<std::is_same_v<T, int>, int>
-    getJson(QJsonValueRef obj)
-    {
-        if(obj.isDouble()){
+    template <typename T = int>
+    std::enable_if_t<std::is_same_v<T, int>, int> getJson(QJsonValueRef obj) {
+        if (obj.isDouble()) {
             return obj.toDouble();
         } else {
-            qDebug()<<"Critical AppConfig json error";
+            qDebug() << "Critical AppConfig json error";
             criticalError = true;
             return 0;
         }

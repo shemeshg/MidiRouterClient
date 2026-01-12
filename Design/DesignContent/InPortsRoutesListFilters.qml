@@ -18,6 +18,8 @@ ColumnLayout {
             return "SCHEDULE_TO";
         case Constants.FilterType.FILTER_AND_TRANSFORM:
             return "FILTER_AND_TRANSFORM";
+        case Constants.FilterType.SWITCH_DATA1_DATA2:
+            return "SWITCH_DATA1_DATA2";            
         default:
             return "UNKNOWN";
         }
@@ -151,6 +153,7 @@ ColumnLayout {
                             { value: "network",  text: "Network" },
                             { text: "- Filter and modify" },
                             { value: "fnt" ,text: "Filter and transform" },
+                            { value: "sd1n2" ,text: "Switch data1 and data2" },
                             { value: "schedule" ,text: "Schedule" },
                         ]
 
@@ -178,6 +181,8 @@ ColumnLayout {
                                                                 "[[0,16,0]]",
                                                                 "[[0,127,0]]",
                                                                 "[[0,127,0]]" )
+                            } else if (addFilterCombo.currentValue === "sd1n2"){
+                                modelData.addFilterSwitchData1Data2();
                             }
 
                         }
@@ -196,6 +201,7 @@ ColumnLayout {
                         RowLayout {
                             property var currentMidiRoutersFilter: modelData
                             UiBtnEdit {
+                                visible: currentMidiRoutersFilter?.filterType !== Constants.FilterType.SWITCH_DATA1_DATA2
                                 onClicked: {
                                     inPortsRoutesLoaderId.filterObj = modelData;
                                     inPortsRoutesLoaderId.isEnabled = chainEnabled;

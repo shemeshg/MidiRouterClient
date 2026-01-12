@@ -22,6 +22,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/hpp/FilterAndTransform.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/hpp/FilterMidiDestination.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/hpp/FilterNetworkDestination.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/hpp/FilterSchedule.hpp
+${CMAKE_CURRENT_SOURCE_DIR}/hpp/FilterSwitchData1Data2.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/hpp/FilterToConsle.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/hpp/MidiClientConnection.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/hpp/MidiClientUtil.hpp
@@ -40,6 +41,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/FilterAndTransformPrivate.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/FilterMidiDestinationPrivate.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/FilterNetworkDestinationPrivate.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/FilterSchedulePrivate.hpp
+${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/FilterSwitchData1Data2Private.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/FilterToConslePrivate.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/MidiClientConnectionPrivate.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/genPrpt/MidiRouteInputCc14bit.hpp
@@ -87,6 +89,8 @@ ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterNetworkDestination.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterNetworkDestination.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSchedule.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSchedule.h
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSwitchData1Data2.cpp
+${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterSwitchData1Data2.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterToConsle.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/FilterToConsle.h
 ${CMAKE_CURRENT_BINARY_DIR}/GenHpp/MidiClientConnection.cpp
@@ -116,6 +120,7 @@ ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterAndTransformPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterMidiDestinationPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterNetworkDestinationPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterSchedulePrivate.h
+${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterSwitchData1Data2Private.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/FilterToConslePrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiClientConnectionPrivate.h
 ${CMAKE_CURRENT_BINARY_DIR}/genPrpt/MidiRouteInputCc14bit.h

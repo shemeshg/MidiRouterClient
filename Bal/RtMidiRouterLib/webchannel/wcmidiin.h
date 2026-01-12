@@ -157,6 +157,13 @@ public:
         openedMidiInObj[portNumber]->getRouteFilterChains()->chains[chainId]->addLogData(*this,(LOG_TO)logto, userdata.toStdString());
         return (int)openedMidiInObj[portNumber]->getRouteFilterChains()->chains.size() - 1;
     }
+
+    Q_INVOKABLE int routingActionAddSwitchData1Data2(int portNumber, int chainId){
+        openedMidiInObj[portNumber]->getRouteFilterChains()->chains[chainId]->addSwitchData1Data2();
+        return (int)openedMidiInObj[portNumber]->getRouteFilterChains()->chains.size() - 1;
+    }
+
+
     Q_INVOKABLE int routingActionAddDeferedEvent(int portNumber, int chainId, int defferedEventType,double defferedTo){
         openedMidiInObj[portNumber]->getRouteFilterChains()->chains[chainId]->addDeferedEvent((RtMidiWrap::DEFFERED_EVENT_TYPE)defferedEventType,defferedTo );
         return (int)openedMidiInObj[portNumber]->getRouteFilterChains()->chains.size() - 1;

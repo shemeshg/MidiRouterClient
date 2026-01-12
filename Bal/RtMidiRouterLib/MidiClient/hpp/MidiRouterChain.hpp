@@ -17,6 +17,8 @@
 //- {include-header}
 #include "FilterSchedule.hpp" //- #include "FilterSchedule.h"
 //- {include-header}
+#include "FilterSwitchData1Data2.hpp" //- #include "FilterSwitchData1Data2.h"
+//- {include-header}
 #include "FilterToConsle.hpp" //- #include "FilterToConsle.h"
 //- {include-header}
 #include "PresetMidiControl.hpp" //- #include "PresetMidiControl.h"
@@ -146,6 +148,18 @@ public slots:
         emit midiRoutersFiltersChanged();
         return f;
     }
+
+    //- {fn}
+    FilterSwitchData1Data2* addFilterSwitchData1Data2()
+    //-only-file body
+    {
+        auto f = new FilterSwitchData1Data2(this);
+        m_midiRoutersFilters.append(QVariant::fromValue(f));
+        emit midiRoutersFiltersChanged();
+        return f;
+    }
+
+
 
     //- {fn}
     FilterAndTransform* addFilterAndTransform(QString name, FilterAndTransform::ConditionAction conditionAction, QString filterChannel,

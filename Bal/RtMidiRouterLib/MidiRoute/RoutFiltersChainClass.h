@@ -4,6 +4,7 @@
 #include "filters/logdata.h"
 #include "filters/defferedevent.h"
 #include "filters/SendRemoteServer.h"
+#include "filters/SwitchData1Data2.h"
 
 namespace MidiRoute {
 
@@ -58,7 +59,9 @@ public:
                                                                         )));
     }
 
-
+    void addSwitchData1Data2(){
+        filterMidiChannelMsgAry.push_back(std::make_unique<SwitchData1Data2>());
+    }
 
 
 };

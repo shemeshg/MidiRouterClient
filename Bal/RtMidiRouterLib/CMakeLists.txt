@@ -65,6 +65,7 @@ libs/websocket/websockettransport.cpp
 MidiRoute/filters/FilterMidiChannelMsg.h
 MidiRoute/filters/SendRemoteServer.h
 MidiRoute/filters/SignalSlot.h
+MidiRoute/filters/SwitchData1Data2.h
 MidiRoute/filters/defferedevent.h
 MidiRoute/filters/logdata.h
 MidiRoute/filters/sendmidiport.h
@@ -73,9 +74,7 @@ MidiRoute/RoutFiltersChainClass.h
 MidiRoute/midifilterchain.h
 MidiRoute/midiroute.h
 MidiRoute/rangemap.h
-MidiRoute/routefilterchain.h
 MidiRoute/routfilter.h
-MidiRoute/RouteFilterChain.cpp
 MidiRoute/midiroute.cpp
 MidiRoute/rangemap.cpp
 webchannel/EmitCommand.h

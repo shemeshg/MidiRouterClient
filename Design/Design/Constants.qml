@@ -56,7 +56,8 @@ QtObject {
         TO_CONSOLE,
         TO_NETWORK,
         SCHEDULE_TO,
-        FILTER_AND_TRANSFORM
+        FILTER_AND_TRANSFORM,
+        SWITCH_DATA1_DATA2
     }
 
     enum LogTo {

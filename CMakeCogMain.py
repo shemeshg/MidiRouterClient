@@ -4,7 +4,7 @@ import os
 max_score = 100
 test_name = "Python Challenge"
 template_dict = {
-           "APP_VER": "2.7.0",
+           "APP_VER": "2.8.0",
            "APP_NAME": "midi-router-client",
            "APP_DESCRIPTION": "Midi router client",
            "APP_VENDOR": "shemeshg",
