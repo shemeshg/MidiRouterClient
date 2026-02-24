@@ -20,10 +20,21 @@ ColumnLayout {
         }
     }
 
+    CoreTextField {
+        Layout.margins:  Constants.font.pixelSize
+        id: filterByDescription
+        Layout.fillWidth: true
+        placeholderText: "RegEx filter by description ex. tag1|tag2"
+    }
+    function testFilterByDescription(userInput) {
+        const searchRegExp = new RegExp(filterByDescription.text,"i");
+        return searchRegExp.test(userInput);
+    }
 
     Repeater {
         model: Constants.balData.midiClientConnection.userDataConfig.connectedInPorts
         RowLayout {
+            visible: testFilterByDescription(getInputDescription(modelData) + modelData)
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
             CoreButton {
@@ -71,8 +82,36 @@ ColumnLayout {
             CoreLabel {
                 text: (hasRoutesWithMissingOutput(modelData) ? "❗ " : "") + modelData
             }
+            CoreTextArea {
+                text: getInputDescription(modelData)
+                Layout.fillWidth: true
+                onTextEdited: ()=>{
+                                  setInputDescription( modelData,text )
+                              }
+            }                  
         }
     }
+
+    function getInputDescription(inputName){
+            let inputAlreadyCreated = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.
+        filter(row=>{return row?.midiInputName === inputName})?.[0]
+        if (inputAlreadyCreated){
+            return inputAlreadyCreated.description;
+        } else {
+            return "";
+        }
+    }
+
+    function setInputDescription(inputName, description){
+            let inputAlreadyCreated = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.
+        filter(row=>{return row?.midiInputName === inputName})?.[0]
+        if (inputAlreadyCreated){
+            inputAlreadyCreated.description = description;
+        } else {
+            let in_port =Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName)
+            in_port.description = description
+        }
+    }    
 
     function getEasyConfigCount(inputName){
         let currentEasyConfigRoutesLen = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.
@@ -136,6 +175,7 @@ ColumnLayout {
         RowLayout {
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
+            visible: testFilterByDescription(getInputDescription(modelData) + modelData)
             CoreButton {
                 text: "Settings"
                 onClicked: {
@@ -172,6 +212,13 @@ ColumnLayout {
             CoreLabel {
                 text: modelData
             }
+            CoreTextArea {
+                text: getInputDescription(modelData)
+                Layout.fillWidth: true
+                onTextEdited: ()=>{
+                                  setInputDescription( modelData,text )
+                              }
+            }            
         }
     }
 

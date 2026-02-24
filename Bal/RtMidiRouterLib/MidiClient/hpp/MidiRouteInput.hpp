@@ -51,6 +51,7 @@ public:
     {
         QJsonObject obj;
         obj["uuid"] = uuid();
+        obj["description"] = description();
         obj["midiInputName"] = midiInputName();
         obj["ignoreTypes"] = getJsonIgnoreTypes();
         obj["midiRouteClock"] = getJsonMidiRouteClock();

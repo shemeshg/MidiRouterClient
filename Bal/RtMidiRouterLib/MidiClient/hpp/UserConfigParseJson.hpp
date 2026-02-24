@@ -409,6 +409,11 @@ private:
         fstIgnoreType.setField<bool>(&MidiRouteInput::setIgnoreTypesMidiSense,
                                      "midiSense");
 
+        if (midirouteInputJsonObj["description"].isString()){
+          fst.setField<QString>(&MidiRouteInput::setDescription, "description");
+        }
+
+
         auto midiRouteClock =
             getJson<QJsonObject>(midirouteInputJsonObj["midiRouteClock"]);
         FieldSetter fstMidiRouteClock(midiRouteInput, midiRouteClock);

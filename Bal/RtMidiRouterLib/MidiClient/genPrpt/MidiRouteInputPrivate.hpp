@@ -40,6 +40,7 @@ class MidiRouteInputPrivate : public QObject
     Q_PROPERTY(QList<MidiRouterChain *> midiRouterChains READ midiRouterChains  NOTIFY midiRouterChainsChanged )
     Q_PROPERTY(Monitor * monitor READ monitor  NOTIFY monitorChanged )
     Q_PROPERTY(EasyConfig * easyConfig READ easyConfig  NOTIFY easyConfigChanged )
+    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged )
     
     QML_ELEMENT
 public:
@@ -178,6 +179,18 @@ void setMidiRouteClockPropegateInputs(const QStringList &newMidiRouteClockPropeg
     
 
     
+    QString description() const{return m_description;} 
+    
+void setDescription(const QString &newDescription)
+    {
+        if (m_description == newDescription)
+            return;
+        m_description = newDescription;
+        emit descriptionChanged();
+    }
+
+
+    
     
         template<typename T = MidiRouteInputCc14bit *>
         std::enable_if_t<std::is_same_v<T, MidiRouteInputCc14bit *>, void>
@@ -280,6 +293,7 @@ signals:
     void midiRouterChainsChanged();
     void monitorChanged();
     void easyConfigChanged();
+    void descriptionChanged();
     
 
 protected:
@@ -299,6 +313,7 @@ private:
     int m_midiRouteClockTimeSigDivBy = 0;
     int m_midiRouteClockFromSppPos = 0;
     QStringList m_midiRouteClockPropegateInputs = {};
+    QString m_description ;
     
 };
 //-only-file null
