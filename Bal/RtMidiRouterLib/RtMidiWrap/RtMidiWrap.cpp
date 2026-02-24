@@ -73,10 +73,11 @@ std::vector<std::string> getCompiledApi(){
 
     std::string IMidiInOut::getPortName(unsigned int portNumber){
 
-        return std::to_string(unqIdPortNumber(portNumber)) + "_" + extractAlsaNameIfRequired(p_midi->getPortName(portNumber));
+        return std::to_string(unqIdPortNumber(portNumber)) + "_" + extractAlsaNameIfRequiredForPortNumber(portNumber);
     }
 
     std::string IMidiInOut::extractAlsaNameIfRequired(const std::string& input) {
+        #ifdef __linux__
         // Regex pattern to match the desired part
         std::regex pattern(R"((.*):(.* \d+:\d+$))");
         std::smatch match;
@@ -94,9 +95,14 @@ std::vector<std::string> getCompiledApi(){
             
             return namePart;
         }
-    
-        // Return an empty string if the pattern does not match
+        #endif
+
         return input;
+    }
+
+    std::string IMidiInOut::extractAlsaNameIfRequiredForPortNumber(unsigned int portNumber)
+    {
+        return extractAlsaNameIfRequired(p_midi->getPortName(portNumber));
     }
     
     
@@ -127,9 +133,9 @@ std::vector<std::string> getCompiledApi(){
     {
         //unsigned int nPorts = this->getPortCount();
         unsigned unqId = 0;
-        std::string portnameWithoutUnqIdx = extractAlsaNameIfRequired(p_midi->getPortName(portNumber));
+        std::string portnameWithoutUnqIdx = extractAlsaNameIfRequiredForPortNumber(portNumber);
         for ( unsigned i=0; i<portNumber; i++ ) {
-          if ( extractAlsaNameIfRequired(p_midi->getPortName(i)) == portnameWithoutUnqIdx){
+          if ( extractAlsaNameIfRequiredForPortNumber(i) == portnameWithoutUnqIdx){
                 unqId ++;
           }
         }
