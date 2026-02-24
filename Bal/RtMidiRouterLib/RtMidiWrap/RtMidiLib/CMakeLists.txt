@@ -58,6 +58,7 @@ if(LINUX)
      list(APPEND OsSpecificLibs
          winmm
          )
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DRTMIDI_DO_NOT_ENSURE_UNIQUE_PORTNAMES")
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__WINDOWS_MM__")
  endif()
 
