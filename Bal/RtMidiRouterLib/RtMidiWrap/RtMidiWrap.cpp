@@ -1,6 +1,7 @@
 //#include <string>
 //#include <map>
 //#include "RtMidi.h"
+
 #include "RtMidiWrap.h"
 #include <regex>
 
@@ -126,9 +127,11 @@ std::vector<std::string> getCompiledApi(){
     {
         //unsigned int nPorts = this->getPortCount();
         unsigned unqId = 0;
-        std::string portnameWithoutUnqIdx = p_midi->getPortName(portNumber);
+        std::string portnameWithoutUnqIdx = extractAlsaNameIfRequired(p_midi->getPortName(portNumber));
         for ( unsigned i=0; i<portNumber; i++ ) {
-          if ( p_midi->getPortName(i) == portnameWithoutUnqIdx){unqId ++;}
+          if ( extractAlsaNameIfRequired(p_midi->getPortName(i)) == portnameWithoutUnqIdx){
+                unqId ++;
+          }
         }
         return unqId;
     }
