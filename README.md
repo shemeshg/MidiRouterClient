@@ -8,33 +8,7 @@ Midi Router Client is an advanced, cross-platform tool designed to route and man
 
 ## Install
 
-### MacOs
-
-* install using:
-  
-```bash
-brew install --cask midi-router-client/
-```
-
-* *Must* fix signature:
-  
-```bash
-codesign --force --deep --sign - /Applications/midi-router-client.app/
-```
-
-* *Must* fix authorizations:
-
-```bash  
-xattr -c /Applications/midi-router-client.app/
-```
-
-### Windows
-
-Run NSIS installer
-
-### Linux
-
-Run deb installer
+<https://shemeshg.github.io/MidiRouterClient-mdbook/guide/installation.html>
 
 ## Project setup
 
