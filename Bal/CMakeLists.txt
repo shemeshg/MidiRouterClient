@@ -18,7 +18,7 @@ qt6_add_qml_module(Bal
 
 
 
-target_link_libraries(Bal PRIVATE Qt6::Concurrent Qt6::Gui RtMidiRouterLib)
-target_include_directories(Bal PRIVATE
+target_link_libraries(Bal PUBLIC Qt6::Concurrent Qt6::Gui RtMidiRouterLib)
+target_include_directories(Bal PUBLIC
 ${CMAKE_BINARY_DIR}
     )
