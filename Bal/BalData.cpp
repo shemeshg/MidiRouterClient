@@ -180,7 +180,7 @@ void BalData::saveIsAutoConnectClient(const bool s)
 }
 void BalData::loadIsSaveConfigOnServer()
 {
-    bool s = settings.value("isSaveConfigOnServer", false).toBool();
+    bool s = settings.value("isSaveConfigOnServer", true).toBool();
     setIsSaveConfigOnServer(s);
 }
 
