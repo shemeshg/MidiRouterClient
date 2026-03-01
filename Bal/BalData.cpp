@@ -114,7 +114,7 @@ void BalData::saveHeight(const int s)
 }
 void BalData::loadReqServerPortNumber()
 {
-    int s = settings.value("reqServerPortNumber", 12345).toInt();
+    int s = settings.value("reqServerPortNumber", 0).toInt();
     setReqServerPortNumber(s);
 }
 

@@ -6,12 +6,9 @@
 #include <QIcon>
 #include "Bal/BalData.h"
 
-struct AppConfig {
-    bool headless = false;
-    int port = 0;
-};
 
-AppConfig parseArguments(int argc, char *argv[]) {
+
+bool parseArgumentsIsRunHeadless(int argc, char *argv[]) {
     QCoreApplication tempApp(argc, argv);
 
     QCommandLineParser parser;
@@ -19,33 +16,26 @@ AppConfig parseArguments(int argc, char *argv[]) {
 
     QCommandLineOption headlessOption(
         QStringList() << "headless",
-        "Run in headless mode on the specified port.",
-        "port"
+        "Run in headless mode on the specified port by the gui.",
+        ""
         );
 
     parser.addOption(headlessOption);
 
     parser.process(tempApp);
 
-    AppConfig cfg;
     if (parser.isSet(headlessOption)) {
-        cfg.headless = true;
-        bool ok = false;
-        cfg.port = parser.value(headlessOption).toInt(&ok);
-        if (!ok || cfg.port <= 0) {
-            qWarning() << "Invalid port number for --headless";
-            exit(1);
-        }
+        return true;
     }
 
-    return cfg;
+    return false;
 }
 
-int runHeadless(int argc, char *argv[], const AppConfig &cfg) {
+int runHeadless(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
 
     BalData bl;
-    bl.startServer(cfg.port);
+    bl.startServer(bl.reqServerPortNumber());
 
     return app.exec();
 }
@@ -75,10 +65,10 @@ int main(int argc, char *argv[]) {
 #ifdef Q_OS_WIN
     return runGui(argc, argv);
 #endif
-    AppConfig cfg = parseArguments(argc, argv);
+    bool isRunHeadless = parseArgumentsIsRunHeadless(argc, argv);
 
-    if (cfg.headless)
-        return runHeadless(argc, argv, cfg);
+    if (isRunHeadless)
+        return runHeadless(argc, argv);
     else
         return runGui(argc, argv);
 }
