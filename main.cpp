@@ -72,6 +72,9 @@ int runGui(int argc, char *argv[]) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef Q_OS_WIN
+    return runGui(argc, argv);
+#endif
     AppConfig cfg = parseArguments(argc, argv);
 
     if (cfg.headless)
