@@ -118,13 +118,7 @@ public:
     virtual ~WcUserData()
     //-only-file body
     {
-        isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
-        if (isSaveConfigOnServer) {
-            auto o = userdata.toJsonObject();
-            QJsonDocument jsonDoc(o);
-            QString s = jsonDoc.toJson(QJsonDocument::Compact);
-            cashFileWrite(cahedFileName, s);            
-        }
+        saveConfigOnServerIfRquired();
     }
 
     //-only-file header
@@ -174,6 +168,9 @@ public slots:
         auto ret = applayConfig.applyConfig(o);
         wcmidiin->listenersStart();
         setJon(o);
+
+        saveConfigOnServerIfRquired();
+
         return ret;
     }
 
@@ -292,6 +289,15 @@ private:
     QSettings settings{"shemeshg", "MidiRouterClient"};
     bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", false).toBool();
 
+    void saveConfigOnServerIfRquired(){
+        isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
+        if (isSaveConfigOnServer) {
+            auto o = userdata.toJsonObject();
+            QJsonDocument jsonDoc(o);
+            QString s = jsonDoc.toJson(QJsonDocument::Compact);
+            cashFileWrite(cahedFileName, s);
+        }
+    }
 };
 
 
