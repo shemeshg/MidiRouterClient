@@ -9,10 +9,12 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QSettings>
+#include "throttle.hpp"
 #include "wcmidiin.h"
 #include "wcmidiout.h"
 //- {include-header}
 #include "ApplyConfig.hpp" //- #include "ApplyConfig.h"
+#include "throtle.hpp" //- #include "throtle.h"
 
 //-only-file body //-
 //- #include "wcuserdata.h"
@@ -113,7 +115,7 @@ public:
 
         }
 
-        bindTimerForSaveThrottle();
+
 
     }
 
@@ -172,7 +174,7 @@ public slots:
         wcmidiin->listenersStart();
         setJon(o);
 
-        requestSave();
+        thrtlRequestSave.trigger();
 
 
         return ret;
@@ -235,6 +237,10 @@ private:
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
     ApplyConfig applayConfig;
+    Throttle thrtlRequestSave{1000, [=](){
+                                             saveConfigOnServerIfRquired();
+                    }};
+
 
     int uniqueId = 1;
     QMap<QString, int> presetOnOffStatus;
@@ -306,45 +312,7 @@ private:
         }
     }
 
-    bool m_saveAllowed = true;
-    bool m_pendingSave = false;
-    QTimer m_throttleTimer;
-    qint64 m_lastSaveTime = 0;
 
-    //- {fn}
-    void bindTimerForSaveThrottle()
-    //-only-file body
-    {
-        m_throttleTimer.setInterval(1000);
-        m_throttleTimer.setSingleShot(true);
-
-        connect(&m_throttleTimer, &QTimer::timeout, this, [this] {
-            m_saveAllowed = true;
-
-            if (m_pendingSave) {
-                m_pendingSave = false;
-                requestSave();   // triggers immediate save if allowed
-            }
-        });
-    }
-
-    //- {fn}
-    void requestSave()
-    //-only-file body
-    {
-        qint64 now = QDateTime::currentMSecsSinceEpoch();
-
-        if (m_saveAllowed && (now - m_lastSaveTime >= 1000)) {
-            // Allowed → run immediately
-            m_saveAllowed = false;
-            m_lastSaveTime = now;
-            saveConfigOnServerIfRquired();
-            m_throttleTimer.start();
-        } else {
-            // Not allowed → queue one save
-            m_pendingSave = true;
-        }
-    }
 
     //-only-file header
 };
