@@ -93,6 +93,7 @@ public:
     "virtualInPorts": []
 }
             )";
+
         }
 
 
@@ -111,6 +112,8 @@ public:
             applyConfig(d);
 
         }
+
+        bindTimerForSaveThrottle();
 
     }
 
@@ -169,7 +172,8 @@ public slots:
         wcmidiin->listenersStart();
         setJon(o);
 
-        saveConfigOnServerIfRquired();
+        requestSave();
+
 
         return ret;
     }
@@ -289,7 +293,10 @@ private:
     QSettings settings{"shemeshg", "MidiRouterClient"};
     bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", false).toBool();
 
-    void saveConfigOnServerIfRquired(){
+    //- {fn}
+    void saveConfigOnServerIfRquired()
+    //-only-file body
+    {
         isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
         if (isSaveConfigOnServer) {
             auto o = userdata.toJsonObject();
@@ -298,6 +305,48 @@ private:
             cashFileWrite(cahedFileName, s);
         }
     }
+
+    bool m_saveAllowed = true;
+    bool m_pendingSave = false;
+    QTimer m_throttleTimer;
+    qint64 m_lastSaveTime = 0;
+
+    //- {fn}
+    void bindTimerForSaveThrottle()
+    //-only-file body
+    {
+        m_throttleTimer.setInterval(1000);
+        m_throttleTimer.setSingleShot(true);
+
+        connect(&m_throttleTimer, &QTimer::timeout, this, [this] {
+            m_saveAllowed = true;
+
+            if (m_pendingSave) {
+                m_pendingSave = false;
+                requestSave();   // triggers immediate save if allowed
+            }
+        });
+    }
+
+    //- {fn}
+    void requestSave()
+    //-only-file body
+    {
+        qint64 now = QDateTime::currentMSecsSinceEpoch();
+
+        if (m_saveAllowed && (now - m_lastSaveTime >= 1000)) {
+            // Allowed → run immediately
+            m_saveAllowed = false;
+            m_lastSaveTime = now;
+            saveConfigOnServerIfRquired();
+            m_throttleTimer.start();
+        } else {
+            // Not allowed → queue one save
+            m_pendingSave = true;
+        }
+    }
+
+    //-only-file header
 };
 
 
