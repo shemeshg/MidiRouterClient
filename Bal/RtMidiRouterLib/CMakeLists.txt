@@ -28,6 +28,7 @@ if(GEN_HPP)
     set(HPP_GEN_FILES
         ${CMAKE_SOURCE_DIR}/scripts/hppTemplates.txt
         ${CMAKE_CURRENT_SOURCE_DIR}/webchannel/ApplyConfig.hpp
+${CMAKE_CURRENT_SOURCE_DIR}/webchannel/throttle.hpp
 ${CMAKE_CURRENT_SOURCE_DIR}/webchannel/wcuserdata.hpp
     )
     add_custom_target(runScript_a850da8f504034f745cd80a1cc3dd4d0f22b35a3cf03c4e4a1c0e9e71653fc3a ALL
@@ -88,6 +89,8 @@ webchannel/wcmidiin.cpp
 webchannel/wcmidiout.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/webchannel/ApplyConfig.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/webchannel/ApplyConfig.h
+${CMAKE_CURRENT_BINARY_DIR}/webchannel/throttle.cpp
+${CMAKE_CURRENT_BINARY_DIR}/webchannel/throttle.h
 ${CMAKE_CURRENT_BINARY_DIR}/webchannel/wcuserdata.cpp
 ${CMAKE_CURRENT_BINARY_DIR}/webchannel/wcuserdata.h
 )        
