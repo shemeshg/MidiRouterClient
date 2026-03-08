@@ -213,6 +213,15 @@ public slots:
     }
 
     //- {fn}
+    void moveDropdownList(int idxFrom, int idxTo)
+    //-only-file body
+    {
+        moveItem(*m_dropdownlists,idxFrom, idxTo);
+        emit dropdownlistsChanged();
+
+    }
+
+    //- {fn}
     void addDropdownList(QString name, QString data, QString uuiud)
     //-only-file body
     {

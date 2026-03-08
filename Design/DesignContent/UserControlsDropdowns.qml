@@ -64,6 +64,12 @@ ColumnLayout {
                         Constants.balData.midiClientConnection.userDataConfig.delDropdownList(index)
                     }
                 }
+                UiBtnUp {
+                    visible: Constants.balData.midiClientConnection.userDataConfig.dropdownlists.length > 1
+                    onClicked: {
+                        Constants.balData.midiClientConnection.userDataConfig.moveDropdownList(index, index - 1);
+                    }
+                }
 
             }
             ColumnLayout {
