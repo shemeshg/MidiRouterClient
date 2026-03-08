@@ -37,30 +37,6 @@ ColumnLayout {
         RowLayout {
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
-            CoreSwitch {
-                text: ""
-                checked: modelData.isEnabled
-                onToggled: {
-                    modelData.isEnabled = checked;
-                    Constants.balData.applyConfig(() => {
-                    });
-                }
-            }
-            UiBtnEdit {
-                onClicked: {
-                    presetsLoaderId.presetIndex = index;
-                    isSubForm = true
-                    presets.state = "EditPreset";
-
-                }
-            }
-            CoreLabel {
-                text: modelData.name
-            }
-            CoreLabel {
-                text: "*"
-                visible: index === Constants.balData.midiClientConnection.userDataConfig.activePresetID
-            }
             CoreButton {
                 hooverText: "select"
                 icon.name: "select"
@@ -76,16 +52,43 @@ ColumnLayout {
                     });
                 }
             }
+            CoreSwitch {
+                text: ""
+                checked: modelData.isEnabled
+                onToggled: {
+                    modelData.isEnabled = checked;
+                    Constants.balData.applyConfig(() => {
+                    });
+                }
+            }
+
+            CoreLabel {
+                text: modelData.name
+            }
+            CoreLabel {
+                text: "*"
+                visible: index === Constants.balData.midiClientConnection.userDataConfig.activePresetID
+            }
+
+
+            Item {
+                Layout.fillWidth: true
+            }
+
             UiBtnDel {
                 visible: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets.length > 1 && index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
                 onClicked: {
                     Constants.balData.midiClientConnection.userDataConfig.deletePreset(index);
                 }
             }
-            Item {
-                Layout.fillWidth: true
-            }
+            UiBtnEdit {
+                onClicked: {
+                    presetsLoaderId.presetIndex = index;
+                    isSubForm = true
+                    presets.state = "EditPreset";
 
+                }
+            }
             UiBtnUp {
                 visible: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets.length > 1
                 onClicked: {
