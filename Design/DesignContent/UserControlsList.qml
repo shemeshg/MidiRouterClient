@@ -16,7 +16,7 @@ ColumnLayout {
 
         let tokenFound = false;
         let match;
-        console.log("Checking for " + description)
+
         while ((match = tokenRegex.exec(description)) !== null) {
 
             // CC

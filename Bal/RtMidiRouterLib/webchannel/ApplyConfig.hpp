@@ -237,6 +237,28 @@ private:
                             continue;
                         }
                         wcmidiout->openPort(portNumber);
+
+                        if (  getJson<bool>(ctrlObj["isShowDropdown"])){
+                            auto array = getJson<QJsonArray>(json["dropdownlists"]);
+                            QStringList ddItems{};
+                            for (const auto &value : array) {
+                                auto obj = getJson<QJsonObject>(value);
+                                if (getJson<QString>(obj["uuid"]) == getJson<QString>(ctrlObj["dropdownListUuid"])){
+                                    ddItems = getJson<QString>(obj["data"]).split("\n");
+                                }
+                            }
+                            int inputVal = getJson<int>(ctrlObj["inputVal"]);
+                            if (ddItems.length() > inputVal){
+                                QStringList channelIds{
+                                                       QString::number(getJson<int>(ctrlObj["channelId"]))};
+                                if(parseMidiTokens(ddItems[inputVal], channelIds, portNumber)){
+                                    continue;
+                                }
+                            }
+
+                        }
+
+
                         int eventType = getJson<int>(ctrlObj["eventType"]);
                         QStringList channelIds{
                                                QString::number(getJson<int>(ctrlObj["channelId"]))};
@@ -259,6 +281,58 @@ private:
             }
         }
     }
+
+
+    //- {fn}
+    bool parseMidiTokens(const QString &description, const QStringList &channelIds, const int portNumber)
+    //-only-file body
+    {
+        bool tokenFound = false;
+        // Combined regex to preserve order of appearance
+        QRegularExpression re(
+            R"(\b(?:CC-(\d+)-(\d+)|PC-(\d+)|NRPN-(\d+)-(\d+))\b)"
+            );
+
+        QRegularExpressionMatchIterator it = re.globalMatch(description);
+
+        while (it.hasNext()) {
+            QRegularExpressionMatch m = it.next();
+
+            // --- CC-x-y ---
+            if (m.captured(1).length() && m.captured(2).length()) {
+                int cc1 = m.captured(1).toInt();
+                int cc2 = m.captured(2).toInt();
+                wcmidiout->sendControlChange(
+                    portNumber, cc1,
+                    cc2, {channelIds});
+                tokenFound = true;
+                continue;
+            }
+
+            // --- PC-x ---
+            if (m.captured(3).length()) {
+                int pc = m.captured(3).toInt();
+                wcmidiout->sendProgramChange(
+                    portNumber, pc, channelIds);
+                tokenFound = true;
+                continue;
+            }
+
+            // --- NRPN-x-y ---
+            if (m.captured(4).length() && m.captured(5).length()) {
+                int n1 = m.captured(4).toInt();
+                int n2 = m.captured(5).toInt();
+                wcmidiout->setNonRegisteredParameterInt(
+                    portNumber, n1,
+                    n2, channelIds);
+                tokenFound = true;
+                continue;
+            }
+        }
+        return tokenFound;
+    }
+
+
 
     //- {fn}
     bool getBoolIgnoreTypes(QJsonObject &midiRouteInputObj, QString name)
