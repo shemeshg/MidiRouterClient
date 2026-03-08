@@ -9,6 +9,51 @@ ColumnLayout {
     property var activePreset: ({})
     signal editControl(var s);
 
+
+    function parseMidiTokens(description, portNumber, aryChannelId) {
+        // One combined regex that captures ANY token in order
+        const tokenRegex = /\b(CC-(\d+)-(\d+)|PC-(\d+)|NRPN-(\d+)-(\d+))\b/g;
+
+        let tokenFound = false;
+        let match;
+        console.log("Checking for " + description)
+        while ((match = tokenRegex.exec(description)) !== null) {
+
+            // CC
+            if (match[2] !== undefined && match[3] !== undefined) {
+                const cc1 = Number(match[2]);
+                const cc2 = Number(match[3]);
+                doCC(cc1, cc2);
+                Constants.balData.sendControlChange(
+                   portNumber, cc1, cc2, aryChannelId,()=>{} )
+
+                tokenFound = true;
+                continue;
+            }
+
+            // PC
+            if (match[4] !== undefined) {
+                const pc = Number(match[4]);
+                Constants.balData.sendProgramChange(portNumber, pc, aryChannelId,()=>{})
+                tokenFound = true;
+                continue;
+            }
+
+            // NRPN
+            if (match[5] !== undefined && match[6] !== undefined) {
+                const n1 = Number(match[5]);
+                const n2 = Number(match[6]);
+                Constants.balData.setNonRegisteredParameterInt(
+                    portNumber, n1, n2, aryChannelId, ()=>{})
+                tokenFound = true;
+                continue;
+            }
+        }
+        return tokenFound;
+    }
+
+
+
     GroupBox {
         Layout.fillWidth: true
         Layout.margins:  Constants.font.pixelSize
@@ -89,6 +134,10 @@ ColumnLayout {
                 if (portNumber === -1){
                               return;
                           }
+
+
+                if (parseMidiTokens(cmbSliderId.cmbModel[cmbSliderId.val].text , portNumber,  [modelData.channelId.toString()])){return;}
+
                 if (modelData.eventType === 0){
                     Constants.balData.sendControlChange(
                        portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )

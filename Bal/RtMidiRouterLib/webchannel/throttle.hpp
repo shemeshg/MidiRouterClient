@@ -5,6 +5,7 @@
 #include <functional>
 #include <QTimer>
 
+
 //-only-file body //-
 //- #include "throttle.h"
 #include <QDateTime>
@@ -71,5 +72,5 @@ private:
         });
     }
 
-
+    //-only-file header
 };
