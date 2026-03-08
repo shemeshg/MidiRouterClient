@@ -206,6 +206,7 @@ ColumnLayout {
                 text: "Dropdown"
             }
             CoreComboBox {
+                id: ddCmbCtrl
                 Layout.fillWidth: true
                 textRole: "text"
                 valueRole: "value"
@@ -221,8 +222,64 @@ ColumnLayout {
                 onActivated: {
                     control.dropdownListUuid = currentValue
                 }
+
+            }
+            UiBtnAdd {
+                visible: control.dropdownListUuid === "-1"
+                onClicked: {
+                    Constants.balData.midiClientConnection.userDataConfig.addDropdownList("new list","","")
+                    ddCmbCtrl.currentIndex = ddCmbCtrl.model.length - 1
+                    ddCmbCtrl.activated(true)
+
+                }
             }
         }
     }
+    function findDropdownByUuid(uuid) {
+        const list = Constants.balData.midiClientConnection.userDataConfig.dropdownlists
+
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].uuid === uuid) {
+                return list[i]     // return the object
+            }
+        }
+
+        return null
+    }
+
+
+    Loader {
+        id: loaderDropDownEdit
+        Layout.fillWidth: true
+        active: control.isShowDropdown && findDropdownByUuid(control.dropdownListUuid)
+        sourceComponent: Component {
+            ColumnLayout {
+
+                property var currentDd: findDropdownByUuid(control.dropdownListUuid)
+                RowLayout {
+                    CoreLabel { text: "name:" }
+                    CoreTextField {
+                        text:  currentDd.name
+                        Layout.fillWidth: true
+                        onTextEdited: ()=>{
+                                          currentDd.name = text
+                                          ddCmbCtrl.displayText = text
+                        }
+                    }
+                }
+                CoreTextArea {
+                    text:  currentDd.data
+                    Layout.fillWidth: true
+                    onTextEdited: ()=>{
+                        currentDd.data = text
+                    }
+                }
+
+            }
+
+        }
+    }
+
+
 
 }
