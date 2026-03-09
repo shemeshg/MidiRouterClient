@@ -15,6 +15,7 @@ ColumnLayout {
     property bool is64Mode: false
     property bool isShowLabel: false
     property bool isShowUpBtn: false
+    property bool outputPortnNameMissing: false
     signal del()
     signal edit()
     signal setVal(int i, bool isForce);
@@ -26,7 +27,10 @@ ColumnLayout {
         id: row
 
 
-
+        CoreLabel {
+            visible: outputPortnNameMissing
+            text: "❗ "
+        }
         CoreTextField {
             text: name
             Layout.fillWidth: true

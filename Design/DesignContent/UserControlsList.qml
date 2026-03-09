@@ -127,6 +127,7 @@ ColumnLayout {
             name: modelData.description
             is64Mode: modelData.is64Mode
             isShowLabel: true
+            outputPortnNameMissing: (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(modelData.outputPortnName) === -1)
             cmbModel: []
             onSetVal: (i, isForce)=>{
                     if (i=== modelData.inputVal && !isForce){return;}
