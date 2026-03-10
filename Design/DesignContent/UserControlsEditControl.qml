@@ -275,6 +275,10 @@ ColumnLayout {
                     }
                 }
 
+                Item {
+                    height: Constants.font.pixelSize * 10
+                }
+
             }
 
         }
