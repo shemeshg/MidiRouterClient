@@ -1,6 +1,7 @@
 Module DesignContent
 About 1.0 About.qml
 App 1.0 App.qml
+ComboBoxOutport 1.0 ComboBoxOutport.qml
 ComboSilder 1.0 ComboSilder.qml
 EditPreset 1.0 EditPreset.qml
 EditPresetControl 1.0 EditPresetControl.qml
@@ -22,6 +23,7 @@ InPortsRoutesFilterToNetwork 1.0 InPortsRoutesFilterToNetwork.qml
 InPortsRoutesListFilters 1.0 InPortsRoutesListFilters.qml
 InPortsSettings14Bit 1.0 InPortsSettings14Bit.qml
 InPortsSettingsProperate 1.0 InPortsSettingsProperate.qml
+InputMonitorDialog 1.0 InputMonitorDialog.qml
 ListPresets 1.0 ListPresets.qml
 LocalNetMidiOut 1.0 LocalNetMidiOut.qml
 Login 1.0 Login.qml
@@ -34,4 +36,3 @@ UserControlsDropdowns 1.0 UserControlsDropdowns.qml
 UserControlsEditControl 1.0 UserControlsEditControl.qml
 UserControlsList 1.0 UserControlsList.qml
 VirtualPorts 1.0 VirtualPorts.qml
-ComboBoxOutport 1.0 ComboBoxOutport.qml

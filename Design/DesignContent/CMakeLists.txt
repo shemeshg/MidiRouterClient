@@ -7,6 +7,7 @@
         QML_FILES
             About.qml
 App.qml
+ComboBoxOutport.qml
 ComboSilder.qml
 EditPreset.qml
 EditPresetControl.qml
@@ -28,6 +29,7 @@ InPortsRoutesFilterToNetwork.qml
 InPortsRoutesListFilters.qml
 InPortsSettings14Bit.qml
 InPortsSettingsProperate.qml
+InputMonitorDialog.qml
 ListPresets.qml
 LocalNetMidiOut.qml
 Login.qml
@@ -40,10 +42,10 @@ UserControlsDropdowns.qml
 UserControlsEditControl.qml
 UserControlsList.qml
 VirtualPorts.qml
-ComboBoxOutport.qml
         RESOURCES
             icons/download_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/ink_selection_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/mop_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
         )
+    

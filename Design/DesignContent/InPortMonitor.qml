@@ -11,8 +11,16 @@ ColumnLayout {
     Component.onCompleted: {
         inputName = inPortsLoaderId.inPortName
         midiRouteInput = Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName)
+        openMonitorDialogIfRequired()
     }
 
+    function openMonitorDialogIfRequired(){
+        monitorDialog.close()
+        if (midiRouteInput.monitor.isMonitored){
+            monitorDialog.inputName = inputName
+            monitorDialog.open()
+        }
+    }
 
     GroupBox {
         Layout.margins:  Constants.font.pixelSize
@@ -56,6 +64,9 @@ ColumnLayout {
                 Constants.balData.applyConfig(() => {
                     console.log("client says we have finished applay config");
                 });
+
+                openMonitorDialogIfRequired()
+
             }
         }
         CoreTextField {

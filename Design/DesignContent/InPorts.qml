@@ -5,6 +5,10 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 Column {
+    InputMonitorDialog {
+        id: monitorDialog
+    }
+
     ColumnLayout {
         width: parent.width
         id: scrollerWidthId
