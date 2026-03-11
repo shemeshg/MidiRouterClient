@@ -26,8 +26,7 @@ ColumnLayout {
             UiBtnBack {
                 onClicked: {
                     isSubForm = false
-                    inPortsId.state = "InPortsList";
-                    console.log(JSON.stringify(midiRouteInput.monitor.isMonitored))
+                    inPortsId.state = "InPortsList";                
                 }
             }
             Item {
