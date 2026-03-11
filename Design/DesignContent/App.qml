@@ -27,8 +27,17 @@ Window {
     property bool isEasyConfigForm: false
     property string aboutPreviousStr: "InPorts"
 
+
+    InputMonitorDialog {
+        id: monitorDialog
+    }
+
+
     onIsClientConnectedChanged: ()=>{
-                                        headerBarId.selectDefaultItem(isClientConnected)
+                                    headerBarId.selectDefaultItem(isClientConnected)
+                                    if (!isClientConnected){
+                                        monitorDialog.close()
+                                    }
                                 }
 
     Component.onCompleted: {

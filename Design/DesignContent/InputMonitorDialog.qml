@@ -17,24 +17,40 @@ Dialog {
         property var midiRouteInput: ({})
         active: midiRouteInput.monitor !== undefined
         sourceComponent:
-            ColumnLayout{
-            CoreLabel {
-                text: inputName
-            }
-            
-            Repeater {
-                id: dialogRepeater
-                Layout.leftMargin:   Constants.font.pixelSize
-                Layout.rightMargin:   Constants.font.pixelSize
-                model: midiRouteInput.monitor.logItems
-                RowLayout {
-                    
-                    CoreTextArea {
-                        Layout.fillWidth: true
-                        readOnly: true
-                        text: modelData
+            Column {
+                width: monitorDialog.width - 30
+                height: monitorDialog.height
+            ScrollView {
+                contentHeight: cl.height
+                contentWidth: cl.width
+                width: parent.width
+                height: parent.height
+                ColumnLayout {
+                    width: parent.width
+                    id: scrollerWidthId
+                    Layout.fillWidth: true
+                }
+                ColumnLayout{
+                    id: cl
+                    CoreLabel {
+                        text: inputName
+                    }
+                    Repeater {
+                        id: dialogRepeater
+                        Layout.leftMargin:   Constants.font.pixelSize
+                        Layout.rightMargin:   Constants.font.pixelSize
+                        model: midiRouteInput.monitor.logItems
+                        RowLayout {
+
+                            CoreTextArea {
+                                Layout.fillWidth: true
+                                readOnly: true
+                                text: modelData
+                            }
+                        }
                     }
                 }
+
             }
         }
     }
@@ -43,7 +59,7 @@ Dialog {
     
     onOpened: {
         ldrId.inputName = monitorDialog.inputName
-        ldrId.midiRouteInput = Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName)                
+        ldrId.midiRouteInput = Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName)
     }
     //focus: true
     contentWidth: parent.width * 0.75
