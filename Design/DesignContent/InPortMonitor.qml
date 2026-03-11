@@ -16,7 +16,7 @@ ColumnLayout {
 
     function openMonitorDialogIfRequired(){
         monitorDialog.close()
-        if (midiRouteInput.monitor.isMonitored){
+        if (Constants.balData.isMonitorInExternalDialog && midiRouteInput.monitor.isMonitored){
             monitorDialog.inputName = inputName
             monitorDialog.open()
         }

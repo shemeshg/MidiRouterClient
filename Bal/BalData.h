@@ -43,6 +43,7 @@ void saveIsAutoStartServer(const bool IsAutoStartServer);
 void saveClientPortNumber(const int ClientPortNumber);
 void saveIsAutoConnectClient(const bool IsAutoConnectClient);
 void saveIsSaveConfigOnServer(const bool IsSaveConfigOnServer);
+void saveIsMonitorInExternalDialog(const bool IsMonitorInExternalDialog);
 void saveDefaultFontSize(const QString DefaultFontSize);
 void saveDefaultHeaderTabSelected(const QString DefaultHeaderTabSelected);
 
@@ -96,6 +97,7 @@ void loadIsAutoStartServer();
 void loadClientPortNumber();
 void loadIsAutoConnectClient();
 void loadIsSaveConfigOnServer();
+void loadIsMonitorInExternalDialog();
 void loadDefaultFontSize();
 void loadDefaultHeaderTabSelected();
 
