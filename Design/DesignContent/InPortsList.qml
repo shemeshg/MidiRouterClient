@@ -72,7 +72,7 @@ ColumnLayout {
                 }
             }
             CoreButton {
-                text: "Monitor"
+                text: "Monitor" + (isMonitored(modelData) ? " (*)": "")
                 onClicked: {
                     inPortsLoaderId.inPortName = modelData;
                     isSubForm = true
@@ -100,6 +100,15 @@ ColumnLayout {
         } else {
             return "";
         }
+    }
+
+    function isMonitored(inputName){
+        let inputAlreadyCreated = Constants.balData.midiClientConnection.userDataConfig.activePreset.midiRouteInputs.
+            filter(row=>{return row?.midiInputName === inputName})?.[0]
+        if (inputAlreadyCreated){
+            return inputAlreadyCreated.monitor.isMonitored;
+        }
+        return false;
     }
 
     function setInputDescription(inputName, description){
