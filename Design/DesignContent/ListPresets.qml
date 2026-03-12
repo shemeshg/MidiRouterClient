@@ -62,17 +62,12 @@ ColumnLayout {
                 }
             }
 
-            CoreLabel {
+            CoreTextField {
                 text: modelData.name
-            }
-            CoreLabel {
-                text: "*"
-                visible: index === Constants.balData.midiClientConnection.userDataConfig.activePresetID
-            }
-
-
-            Item {
                 Layout.fillWidth: true
+                onTextEdited: ()=>{
+                                 modelData.name = text;
+                              }
             }
 
             UiBtnDel {
