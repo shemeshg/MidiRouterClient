@@ -38,9 +38,33 @@ ColumnLayout {
                               setName(text)
                           }
         }
-        CoreLabel {
+        CoreTextField {
             visible: isShowLabel
+            Layout.preferredWidth: Constants.font.pixelSize * (text.length + 1)
             text: is64Mode ? val - Math.floor ((fromVal + toVal + 1 )) / 2 : val
+            onTextEdited: ()=>{
+
+                              if (is64Mode){
+                                  const offset = Math.floor((fromVal + toVal + 1)) / 2
+                                  const rawInt = Number(text) + offset
+
+                                  let index = cmbModel.findIndex(item => item.value.toString() === rawInt.toString());
+                                  if (index === -1){return;}
+                                  cmb.currentIndex = index
+
+                                  setVal(rawInt, false)
+                                  slider.value = rawInt
+                              } else {
+                                  let index = cmbModel.findIndex(item => item.value.toString() === text);
+                                  if (index === -1){return;}
+                                  cmb.currentIndex = index
+
+                                  setVal(Number(text), false)
+                                  slider.value = Number(text)
+                              }
+
+
+                          }
         }
 
         CoreComboBox {

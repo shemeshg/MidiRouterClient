@@ -25,7 +25,7 @@ ColumnLayout {
                 const cc2 = Number(match[3]);
                 doCC(cc1, cc2);
                 Constants.balData.sendControlChange(
-                   portNumber, cc1, cc2, aryChannelId,()=>{} )
+                            portNumber, cc1, cc2, aryChannelId,()=>{} )
 
                 tokenFound = true;
                 continue;
@@ -44,7 +44,7 @@ ColumnLayout {
                 const n1 = Number(match[5]);
                 const n2 = Number(match[6]);
                 Constants.balData.setNonRegisteredParameterInt(
-                    portNumber, n1, n2, aryChannelId, ()=>{})
+                            portNumber, n1, n2, aryChannelId, ()=>{})
                 tokenFound = true;
                 continue;
             }
@@ -75,7 +75,7 @@ ColumnLayout {
     }
 
 
-    Repeater {        
+    Repeater {
         model: activePreset.userControls
         ComboSilder {
             Layout.leftMargin:  Constants.font.pixelSize
@@ -93,8 +93,8 @@ ColumnLayout {
                     const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
                     if (theEntryFound) {
                         retList = theEntryFound.data.trim().split("\n").map((row, idx) => {
-                            return { text: row, value: idx + controlModelData.minVal };
-                        });
+                                                                                return { text: row, value: idx + controlModelData.minVal };
+                                                                            });
                     }
 
 
@@ -113,7 +113,7 @@ ColumnLayout {
             property int portNumber: -1
             Component.onCompleted: {
                 Constants.balData.getPortNumber(modelData.outputPortnName,(i)=>{
-                                                 portNumber = i;
+                                                    portNumber = i;
                                                 })
 
                 cmbSliderId.cmbModel = getCmbModel(modelData)
@@ -130,37 +130,38 @@ ColumnLayout {
             outputPortnNameMissing: (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(modelData.outputPortnName) === -1)
             cmbModel: []
             onSetVal: (i, isForce)=>{
-                    if (i=== modelData.inputVal && !isForce){return;}
-                    modelData.inputVal = i;
-                if (portNumber === -1){
+                          //isForece, means send cmd although control already set to that value
+                          if (i=== modelData.inputVal && !isForce){return;}
+                          modelData.inputVal = i;
+                          if (portNumber === -1){
                               return;
                           }
 
 
-                if (parseMidiTokens(cmbSliderId.cmbModel[cmbSliderId.val].text , portNumber,  [modelData.channelId.toString()])){return;}
+                          if (parseMidiTokens(cmbSliderId.cmbModel[cmbSliderId.val].text , portNumber,  [modelData.channelId.toString()])){return;}
 
-                if (modelData.eventType === 0){
-                    Constants.balData.sendControlChange(
-                       portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
-                } else if (modelData.eventType === 1){
-                    Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
-                } else if (modelData.eventType === 2){
-                    Constants.balData.setNonRegisteredParameterInt(
-                        portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
+                          if (modelData.eventType === 0){
+                              Constants.balData.sendControlChange(
+                                  portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
+                          } else if (modelData.eventType === 1){
+                              Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
+                          } else if (modelData.eventType === 2){
+                              Constants.balData.setNonRegisteredParameterInt(
+                                  portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
 
-                }
+                          }
 
 
                       }
             onSetName: (s)=>{
 
-                modelData.description = s;
+                           modelData.description = s;
                        }
             onDel: {
                 activePreset.delUserControl(index)
             }
             onEdit: {
-                isSubForm = true;                             
+                isSubForm = true;
                 editControl(modelData)
             }
             isShowUpBtn: activePreset.userControls.length > 1
