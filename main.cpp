@@ -11,8 +11,7 @@
 enum class RunMode {
     Gui,
     Headless,
-    ApplyDefaultPreset,
-    ApplyFirstRegexFoundPreset
+    ApplyDefaultPreset
 };
 
 
@@ -27,6 +26,9 @@ public:
     }
 
     bool isRemoteAddress = false;
+    bool isRegexPresetName = false;
+    QString regexPresetName;
+
     QString serverName;      // optional
     int portNumber;
     QString presetName;   // optional
@@ -79,11 +81,15 @@ public:
 
         if (parser.isSet(headlessOption)) {
             mode = RunMode::Headless;
-        } else if (parser.isSet(presetNameOption)) {
-            mode = RunMode::ApplyFirstRegexFoundPreset;
         } else if (parser.isSet(applyOption)) {
             mode = RunMode::ApplyDefaultPreset;
+            if (parser.isSet(presetNameOption)) {
+                isRegexPresetName = true;
+                regexPresetName = parser.value(presetNameOption);
+            }
         }
+
+
 
         if (parser.isSet(addressOption)) {
             isRemoteAddress = true;
@@ -110,6 +116,10 @@ public:
 
     int runApplyDefaultPreset(int argc, char *argv[]){
         QCoreApplication app(argc, argv);
+        if (hasError){
+            qDebug()<<errorMessage;
+            return 1;
+        }
         BalData bl;
 
         if (isRemoteAddress){
@@ -138,7 +148,21 @@ public:
             "(function(result) { QuitHelper.quit(); })"
             );
 
+
+        if (isRegexPresetName){
+            if (bl.midiClientConnection()->userDataConfig()->activatePresetByRegex(regexPresetName)){
+                qDebug()<<"Found preset"<<bl.midiClientConnection()->userDataConfig()->activePreset()->name()
+                         <<" for " <<regexPresetName;
+            } else {
+                qDebug()<<"Coudnot find regex"<<regexPresetName;
+                return 1;
+
+            }
+        }
+
         bl.applyConfigEngine(callback, &engine);
+
+
 
         return app.exec();
 
@@ -205,7 +229,6 @@ int main(int argc, char *argv[]) {
 
     ParsedArguments parsedArgs;
     parsedArgs.parseArgumentsMain(argc, argv);
-
 
     if (parsedArgs.mode == RunMode::Headless)
         return parsedArgs.runHeadless(argc, argv);
