@@ -13,7 +13,7 @@ class BalData : public BalDataPrivate
 public:
     explicit BalData(QObject *parent = nullptr);
 
-
+    void startClient(const QString &serverName, int portNumber);
 public slots:
     QString qtVer() {
         return "App:" + QString(PROJECT_VER) + " qt:" + qVersion();
@@ -65,6 +65,7 @@ void setAsyncServerStatusAndText(MidiClientConnection::ServerStatus serverStatus
 void stopClient();
 void testDummyDelete(const QJSValue &callback);
 void applyConfig(const QJSValue &callback);
+void applyConfigEngine(const QJSValue &callback, QJSEngine *engine);
 void uploadJson(QString filePath, const QJSValue &callback);
 void getPortNumber(const QString &midiPortName, const QJSValue &callback);
 void setNonRegisteredParameterInt( int portNumber,int parameter,int data,QStringList channels,const QJSValue &callback);
@@ -73,6 +74,7 @@ void sendProgramChange( int portNumber,int program,QStringList channels,const QJ
 MidiClientConnection *midiClientConnection() { return mcc->midiClientConnection; }
 
 void startClient();
+
 
 private:
 QSettings settings{"shemeshg", "MidiRouterClient"};
@@ -103,7 +105,6 @@ void loadDefaultHeaderTabSelected();
 
 //[[[end]]]
 
-void startClient(const QString &serverName, int portNumber);
 
 
 MidiServerClass *msc= new MidiServerClass(this);

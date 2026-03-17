@@ -5,7 +5,7 @@
 # ]]]
 cmake_minimum_required(VERSION 3.16)
 
-project(midi-router-client VERSION 2.19.0 LANGUAGES CXX)
+project(midi-router-client VERSION 2.20.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
@@ -55,7 +55,7 @@ set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's co
 
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
-    main.cpp
+    main.cpp quithelper.cpp ParsedArguments.cpp
     MANUAL_FINALIZATION
     ${APP_ICON_MACOSX}
 )

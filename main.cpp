@@ -4,41 +4,11 @@
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QIcon>
-#include "Bal/BalData.h"
+#include "ParsedArguments.h"
 
 
 
-bool parseArgumentsIsRunHeadless(int argc, char *argv[]) {
-    QCoreApplication tempApp(argc, argv);
 
-    QCommandLineParser parser;
-    parser.addHelpOption();
-
-    QCommandLineOption headlessOption(
-        QStringList() << "headless",
-        "Run in headless mode on the specified port by the gui.",
-        ""
-        );
-
-    parser.addOption(headlessOption);
-
-    parser.process(tempApp);
-
-    if (parser.isSet(headlessOption)) {
-        return true;
-    }
-
-    return false;
-}
-
-int runHeadless(int argc, char *argv[]) {
-    QCoreApplication app(argc, argv);
-
-    BalData bl;
-    bl.startServer(bl.reqServerPortNumber());
-
-    return app.exec();
-}
 
 int runGui(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
@@ -65,10 +35,14 @@ int main(int argc, char *argv[]) {
 #ifdef Q_OS_WIN
     return runGui(argc, argv);
 #endif
-    bool isRunHeadless = parseArgumentsIsRunHeadless(argc, argv);
 
-    if (isRunHeadless)
-        return runHeadless(argc, argv);
-    else
+    ParsedArguments parsedArgs;
+    parsedArgs.parseArgumentsMain(argc, argv);
+
+    if (parsedArgs.mode == RunMode::Headless)
+        return parsedArgs.runHeadless(argc, argv);
+    else if (parsedArgs.mode == RunMode::ApplyDefaultPreset) {
+        return parsedArgs.runApplyDefaultPreset(argc, argv);
+    }
         return runGui(argc, argv);
 }

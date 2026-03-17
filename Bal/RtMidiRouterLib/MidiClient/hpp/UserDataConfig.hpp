@@ -115,6 +115,29 @@ public:
 
     }
 
+    //- {fn}
+    bool activatePresetByRegex(const QString &pattern)
+    //-only-file body
+    {
+        QRegularExpression re(pattern);
+        if (!re.isValid())
+            return false;
+
+        const auto &presets = midiRoutePresets();
+
+        for (int i = 0; i < presets.size(); ++i) {
+            const QString name = presets.at(i)->name();
+
+            if (re.match(name).hasMatch()) {
+                setActivePreset(i, true);
+                return true;   // found and activated
+            }
+        }
+
+        return false; // no match found
+    }
+
+
     //-only-file header
 public slots:
     //- {fn}
@@ -148,6 +171,7 @@ public slots:
     }
 
 
+
     //- {fn}
     void setActivePreset(int id, bool setEnable)
     //-only-file body
@@ -157,7 +181,7 @@ public slots:
         for (int i = 0; i < midiRoutePresets().size(); i++) {
             if (i != id) {
                 if (setEnable) {
-                    midiRoutePresets().at(i)->setIsEnabled(false);
+                    midiRoutePresets().at(i)->setIsEnabled(false);                    
                 }
             } else {
 
