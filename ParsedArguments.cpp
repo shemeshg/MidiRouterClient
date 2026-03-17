@@ -4,12 +4,11 @@
 
 #ifndef Q_OS_WIN
 #include <csignal>
-#endif
-
 void handleSigInt(int sig) {
     std::signal(sig, SIG_DFL);
     QCoreApplication::quit();
 }
+#endif
 
 
 void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
