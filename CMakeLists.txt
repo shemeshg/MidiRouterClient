@@ -55,7 +55,7 @@ set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's co
 
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
-    main.cpp
+    main.cpp quithelper.cpp
     MANUAL_FINALIZATION
     ${APP_ICON_MACOSX}
 )

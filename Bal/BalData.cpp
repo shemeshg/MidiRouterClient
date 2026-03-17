@@ -265,6 +265,21 @@ void BalData::applyConfig(const QJSValue &callback)
     QJsonDocument jsonDoc(json);
     QString s=jsonDoc.toJson(QJsonDocument::Compact);
     mcc->invokeMethod("wcuserdata", "applyConfig", {s}, true, callback, qjsEngine(this));
+}
+
+void BalData::applyConfigEngine(const QJSValue &callback, QJSEngine *engine )
+{
+    if (midiClientConnection()->serverStatus() != MidiClientConnectionPrivate::ServerStatus::RUNNING){
+        qDebug()<<"Not connected";
+        return;
+    }
+    auto json = mcc->midiClientConnection->userDataConfig()->genJson();
+
+    QJsonDocument jsonDoc(json);
+    QString s=jsonDoc.toJson(QJsonDocument::Compact);
+
+
+    mcc->invokeMethod("wcuserdata", "applyConfig", {s}, true, callback, engine);
 
 }
 
