@@ -13,7 +13,7 @@ class BalData : public BalDataPrivate
 public:
     explicit BalData(QObject *parent = nullptr);
 
-
+    void startClient(const QString &serverName, int portNumber);
 public slots:
     QString qtVer() {
         return "App:" + QString(PROJECT_VER) + " qt:" + qVersion();
@@ -75,6 +75,7 @@ MidiClientConnection *midiClientConnection() { return mcc->midiClientConnection;
 
 void startClient();
 
+
 private:
 QSettings settings{"shemeshg", "MidiRouterClient"};
 
@@ -104,7 +105,6 @@ void loadDefaultHeaderTabSelected();
 
 //[[[end]]]
 
-void startClient(const QString &serverName, int portNumber);
 
 
 MidiServerClass *msc= new MidiServerClass(this);

@@ -6,6 +6,7 @@
 #include <QIcon>
 #include "Bal/BalData.h"
 #include "quithelper.h"
+#include <QHostInfo>
 
 enum class RunMode {
     Gui,
@@ -25,7 +26,8 @@ public:
     explicit ParsedArguments(){
     }
 
-    QString address;      // optional
+    bool isRemoteAddress = false;
+    QString serverName;      // optional
     int portNumber;
     QString presetName;   // optional
 
@@ -82,6 +84,21 @@ public:
         } else if (parser.isSet(applyOption)) {
             mode = RunMode::ApplyDefaultPreset;
         }
+
+        if (parser.isSet(addressOption)) {
+            isRemoteAddress = true;
+            QString addr = parser.value(addressOption);
+            if (isValidAddress(addr)){
+                const QStringList parts = addr.split(':');
+                serverName = parts[0];
+                portNumber = parts[1].toInt();
+
+            } else {
+                hasError = true;
+                errorMessage = QString("Invalid address format: '%1'. Expected ip:port").arg(addr);
+                return;
+            }
+        }
     }
 
     int runHeadless(int argc, char *argv[]) {
@@ -95,7 +112,16 @@ public:
         QCoreApplication app(argc, argv);
         BalData bl;
 
-        bl.startClient();
+        if (isRemoteAddress){
+            bl.startClient(serverName,portNumber);
+        } else {
+            bl.startClient();
+        }
+        if (bl.midiClientConnection()->serverStatus() != MidiClientConnection::ServerStatus::RUNNING){
+            return 1;
+        }
+
+
         QJSEngine engine;
 
         QuitHelper quitHelper;
@@ -119,6 +145,30 @@ public:
 
     }
 private:
+    bool isValidAddress(const QString &addr)
+    {
+        const QStringList parts = addr.split(':');
+        if (parts.size() != 2)
+            return false;
+
+        const QString host = parts[0];
+        const QString portStr = parts[1];
+
+        // Validate port
+        bool ok = false;
+        int port = portStr.toInt(&ok);
+        if (!ok || port < 1 || port > 65535)
+            return false;
+
+        // Try IP first
+        QHostAddress ip;
+        if (ip.setAddress(host))
+            return true;
+
+        // Try hostname
+        QHostInfo info = QHostInfo::fromName(host);
+        return (info.error() == QHostInfo::NoError);
+    }
 
 };
 
