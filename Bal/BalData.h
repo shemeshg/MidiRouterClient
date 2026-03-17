@@ -3,6 +3,9 @@
 #include "RtMidiRouterLib/MidiClientClass.h"
 #include "RtMidiRouterLib/MidiServerClass.h"
 #include "config.h"
+#include <QSettings>
+#include <QFutureWatcher>
+#include <QtConcurrent>
 
 class BalData : public BalDataPrivate
 
@@ -121,6 +124,20 @@ QJsonArray getListToJsonAry(const QStringList &sl)
         ary.append(itm);
     }
     return ary;
+}
+
+template<typename T>
+void makeAsync(const QJSValue &callback, std::function<T()> func)
+{
+    auto *watcher = new QFutureWatcher<T>(this);
+    QObject::connect(watcher, &QFutureWatcher<T>::finished, this, [this, watcher, callback]() {
+        T returnValue = watcher->result();
+        QJSValue cbCopy(callback);
+        QJSEngine *engine = qjsEngine(this);
+        cbCopy.call(QJSValueList{engine->toScriptValue(returnValue)});
+        watcher->deleteLater();
+    });
+    watcher->setFuture(QtConcurrent::run([=]() { return func(); }));
 }
 
 };

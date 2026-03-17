@@ -125,7 +125,7 @@ ary.append(p)
 enumClasss = []
 
 classBalDataPrivate = PrptClass("BalDataPrivate", ary, enumClasss)
-classBalDataPrivate.inhirit_from = "JsAsync"
+#classBalDataPrivate.inhirit_from = "JsAsync"
 
 
 localStore = LclStor(ary)    

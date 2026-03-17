@@ -1,7 +1,6 @@
 #include "ParsedArguments.h"
-#include <ranges>      // std::views, std::ranges::transform
-#include <algorithm>   // std::ranges::transform
-
+#include "Bal/BalData.h"
+#include "quithelper.h"
 
 void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
     QCoreApplication tempApp(argc, argv);

@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QObjectComputedProperty>
 #include <QQmlEngine>
-#include "JsAsync.h"
+
 
 /*[[[cog
 import cog
@@ -14,7 +14,7 @@ cog.outl(classBalDataPrivate.getClassHeader(),
         dedent=True, trimblanklines=True)
 
 ]]] */
-class BalDataPrivate : public JsAsync
+class BalDataPrivate : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged )

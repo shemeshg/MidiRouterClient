@@ -79,9 +79,10 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
         qvm["nrpnData"] = m.nrpnData;
 
         QJsonArray dataArray;
-        foreach (const int data, m.data) {
+        for (const auto &data : m.data) {
             dataArray.append(data);
         }
+
         qvm["data"] = dataArray;
 
         QJsonDocument doc;

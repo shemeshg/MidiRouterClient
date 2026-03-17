@@ -9,12 +9,13 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QSettings>
-#include "throttle.hpp"
+
 #include "wcmidiin.h"
 #include "wcmidiout.h"
 //- {include-header}
 #include "ApplyConfig.hpp" //- #include "ApplyConfig.h"
-#include "throtle.hpp" //- #include "throtle.h"
+//- {include-header}
+#include "throttle.hpp" //- #include "throttle.h"
 
 //-only-file body //-
 //- #include "wcuserdata.h"

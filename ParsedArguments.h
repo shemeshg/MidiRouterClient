@@ -1,6 +1,5 @@
 #pragma once
-#include "Bal/BalData.h"
-#include "quithelper.h"
+
 #include <QHostInfo>
 
 enum class RunMode {

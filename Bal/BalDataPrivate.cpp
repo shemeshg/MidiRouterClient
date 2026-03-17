@@ -11,7 +11,7 @@ cog.outl(classBalDataPrivate.getClassCpp(),
 
 ]]] */
  BalDataPrivate:: BalDataPrivate(QObject *parent)
-    : JsAsync(parent)
+    : QObject(parent)
 {
     ctorClass();
 }

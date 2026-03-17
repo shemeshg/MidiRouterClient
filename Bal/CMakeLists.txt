@@ -12,7 +12,6 @@ qt6_add_qml_module(Bal
       BalData.cpp
       BalDataPrivate.h
       BalDataPrivate.cpp        
-      JsAsync.h
       ${CMAKE_BINARY_DIR}/config.h
 )
 
