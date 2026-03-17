@@ -1,4 +1,7 @@
 #include "ParsedArguments.h"
+#include <ranges>      // std::views, std::ranges::transform
+#include <algorithm>   // std::ranges::transform
+
 
 void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
     QCoreApplication tempApp(argc, argv);
@@ -14,7 +17,7 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
 
     QString applyDesc = "Apply a preset (local or remote).\n"
                         "  --address <address>      Remote address (ip:port).\n"
-                        "  --preset-name <preset>   Preset name to apply.";
+                        "  --preset-name <preset>   Preset name (regex) to apply, use \"\" to list presets ";
     QCommandLineOption applyOption(
         QStringList() << "apply",
         applyDesc
@@ -49,6 +52,7 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
         mode = RunMode::ApplyDefaultPreset;
         if (parser.isSet(presetNameOption)) {
             isRegexPresetName = true;
+
             regexPresetName = parser.value(presetNameOption);
         }
     }
@@ -114,15 +118,25 @@ int ParsedArguments::runApplyDefaultPreset(int argc, char *argv[]){
 
 
     if (isRegexPresetName){
-        if (!bl.midiClientConnection()->userDataConfig()->activatePresetByRegex(regexPresetName)){
-            qDebug()<<"Coudnot find regex"<<regexPresetName;
+
+        if (!bl.midiClientConnection()->userDataConfig()->activatePresetByRegex(regexPresetName) || regexPresetName.isEmpty()){
+            qDebug()<<"Coudnot find preset for regex"<<regexPresetName;
+
+
+            QStringList names;
+            for (auto *p : bl.midiClientConnection()->userDataConfig()->midiRoutePresets())
+                names << p->name();
+
+            qDebug()<<"Presets: "<<names;
+
+
             return 1;
 
         }
     }
 
     quitHelper.onApplyFinished = [&](){
-        qDebug()<<"Connected inputs"<<bl.midiClientConnection()->userDataConfig()->connectedInPorts();
+        qDebug()<<"Connected inputs: "<<bl.midiClientConnection()->userDataConfig()->connectedInPorts();
     };
 
     qDebug()<<"Apply preset"<<bl.midiClientConnection()->userDataConfig()->activePreset()->name();
