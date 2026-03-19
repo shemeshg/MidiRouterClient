@@ -56,7 +56,6 @@ set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's co
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
     cli/main.cpp
-
     MANUAL_FINALIZATION
     ${APP_ICON_MACOSX}
 )
@@ -64,8 +63,6 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
 if(WINDOWS)
     target_sources(${CMAKE_PROJECT_NAME} PRIVATE cli/CliWinService.cpp)
 endif()
-
-
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
