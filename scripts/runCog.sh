@@ -21,6 +21,10 @@ cd MidiRouterClientCli/Bal
 cog -r BalDataPrivate.h BalDataPrivate.cpp BalData.h BalData.cpp
 
 cd "$script_dir/.."
+cd MidiRouterClientCli
+cog -r CMakeLists.txt
+
+cd "$script_dir/.."
 cd MidiRouterClientCli/Bal/RtMidiRouterLib
 cog -r CMakeLists.txt
 
