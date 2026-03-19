@@ -274,7 +274,6 @@ private:
 
         QDir dir(cacheFolderPath);
         QString filePath = dir.filePath(fileName);
-        qDebug()<<"filePath"<<filePath;
         QFile file(filePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
@@ -295,7 +294,6 @@ private:
 
         QDir dir(cacheFolderPath);
         QString filePath = dir.filePath(fileName);
-        qDebug()<<"filePath read"<<filePath;
 
         QString fileContent;
         // Check if the file exists
@@ -312,9 +310,9 @@ private:
 
     //-only-file header
     #ifdef Q_OS_WIN
-        QSettings settings{QSettings::Scope::SystemScope, "shemeshg", "MidiRouterClient"};
+    QSettings settings{QSettings::IniFormat, QSettings::SystemScope,"shemeshg", "MidiRouterClient"};
     #else
-        QSettings settings{"shemeshg", "MidiRouterClient"};
+    QSettings settings{"shemeshg", "MidiRouterClient"};
     #endif
 
 

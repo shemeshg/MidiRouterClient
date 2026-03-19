@@ -80,11 +80,11 @@ void startClient();
 
 
 private:
-#ifdef Q_OS_WIN
-QSettings settings{QSettings::Scope::SystemScope, "shemeshg", "MidiRouterClient"};
-#else
-QSettings settings{"shemeshg", "MidiRouterClient"};
-#endif
+   #ifdef Q_OS_WIN
+    QSettings settings{QSettings::IniFormat, QSettings::SystemScope,"shemeshg", "MidiRouterClient"};
+   #else
+    QSettings settings{"shemeshg", "MidiRouterClient"};
+   #endif
 
 /*[[[cog
 import cog
