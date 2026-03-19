@@ -266,7 +266,12 @@ private:
     void cashFileWrite(const QString &fileName, QString &fileContent)
     //-only-file body
     {
+        #ifdef Q_OS_WIN
+        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+        #else
         QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        #endif
+
         QString filePath = cacheFolderPath + QDir::separator() + fileName;
         QFile file(filePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -280,7 +285,13 @@ private:
     QString cashFileRead(const QString &fileName)
     //-only-file body
     {
+        #ifdef Q_OS_WIN
+        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+        #else
         QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        #endif
+
+
         QString filePath = cacheFolderPath + QDir::separator() + fileName;
 
         QString fileContent;
