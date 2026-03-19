@@ -80,7 +80,7 @@ void startClient();
 
 
 private:
-QSettings settings{"shemeshg", "MidiRouterClient"};
+QSettings settings{QSettings::Scope::SystemScope, "shemeshg", "MidiRouterClient"};
 
 /*[[[cog
 import cog

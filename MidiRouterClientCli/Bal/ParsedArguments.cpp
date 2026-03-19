@@ -2,13 +2,13 @@
 #include "BalData.h"
 #include "quithelper.h"
 
-#ifndef Q_OS_WIN
+
 #include <csignal>
 void handleSigInt(int sig) {
     std::signal(sig, SIG_DFL);
     QCoreApplication::quit();
 }
-#endif
+
 
 
 void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
@@ -87,10 +87,9 @@ int ParsedArguments::runHeadless(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     BalData bl;
     bl.startServer(bl.reqServerPortNumber());
-    #ifndef Q_OS_WIN
+
     std::signal(SIGINT, handleSigInt);  //for ^c
     std::signal(SIGTERM, handleSigInt); //for systemd
-    #endif
     return app.exec();
 }
 

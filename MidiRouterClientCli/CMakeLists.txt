@@ -55,10 +55,15 @@ set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's co
 
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
-    cli/main.cpp 
+    cli/main.cpp
+
     MANUAL_FINALIZATION
     ${APP_ICON_MACOSX}
 )
+
+if(WINDOWS)
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE cli/CliWinService.cpp)
+endif()
 
 
 
