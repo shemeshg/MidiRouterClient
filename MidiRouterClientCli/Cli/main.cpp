@@ -20,5 +20,7 @@ int main(int argc, char *argv[]) {
 
     CliWinService service(L"MidiRouterCli");
     service.run();
+    #else
+         return parsedArgs.runHeadless(argc, argv);
     #endif
 }

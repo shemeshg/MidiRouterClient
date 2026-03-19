@@ -87,6 +87,7 @@ int ParsedArguments::runHeadless(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     BalData bl;
     bl.startServer(bl.reqServerPortNumber());
+    qDebug()<<"Port is"<<bl.reqServerPortNumber();
 
     std::signal(SIGINT, handleSigInt);  //for ^c
     std::signal(SIGTERM, handleSigInt); //for systemd
