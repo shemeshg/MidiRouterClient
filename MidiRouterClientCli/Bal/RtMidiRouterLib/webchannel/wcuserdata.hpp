@@ -316,7 +316,7 @@ private:
     #endif
 
 
-    bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", false).toBool();
+    bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
 
     //- {fn}
     void saveConfigOnServerIfRquired()
