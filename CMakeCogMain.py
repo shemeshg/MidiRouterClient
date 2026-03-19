@@ -12,15 +12,16 @@ template_dict = {
 
            "CPACK_DEBIAN_PACKAGE_DEPENDS": ["libasound2-dev"],
 
-           "QML_DIRS": ["Design","Bal"],
+           "QML_DIRS": ["Design","MidiRouterClientCli/Bal"],
 
            "QT_COMPONENTS": [ "Quick","Widgets","WebSockets","WebChannel","Svg","Concurrent", "QuickControls2", "QuickWidgets"],
-           "add_subdirectory_lib": ["Bal"],
+           "add_subdirectory_lib": ["MidiRouterClientCli/Bal"],
            "add_subdirectory_qt": ["Design/Design", "Design/DesignContent", "Design/Core","Design/UiComp"]
            }
 
 template_dict["add_subdirectory_lib_target"] = [os.path.basename(path) for path in template_dict["add_subdirectory_lib"]]
 template_dict["add_subdirectory_qt_target"] = [os.path.basename(path) + "plugin" for path in template_dict["add_subdirectory_qt"]]
+template_dict["add_subdirectory_qt_target"].append("Balplugin")
 
 environment = Environment(loader=FileSystemLoader("."))
 template = environment.get_template("CMakeCogMain.j2")

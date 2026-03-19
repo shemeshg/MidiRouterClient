@@ -17,15 +17,15 @@ cd Bal/RtMidiRouterLib/MidiClient/genPrpt
 cog -r *.hpp
 
 cd "$script_dir/.."
-cd Bal
+cd MidiRouterClientCli/Bal
 cog -r BalDataPrivate.h BalDataPrivate.cpp BalData.h BalData.cpp
 
 cd "$script_dir/.."
-cd Bal/RtMidiRouterLib
+cd MidiRouterClientCli/Bal/RtMidiRouterLib
 cog -r CMakeLists.txt
 
 cd "$script_dir/.."
-cd Bal/RtMidiRouterLib/MidiClient
+cd MidiRouterClientCli/Bal/RtMidiRouterLib/MidiClient
 cog -r CMakeLists.txt
 
 cd "$script_dir/.."

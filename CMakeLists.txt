@@ -49,7 +49,7 @@ endif()
     
     
 
-list(APPEND QML_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}/Design  ${CMAKE_CURRENT_SOURCE_DIR}/Bal )
+list(APPEND QML_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}/Design  ${CMAKE_CURRENT_SOURCE_DIR}/MidiRouterClientCli/Bal )
 set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's code model" FORCE)
 
 
@@ -149,7 +149,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 
-add_subdirectory(Bal)
+add_subdirectory(MidiRouterClientCli/Bal)
 add_subdirectory(Design/Design)
 add_subdirectory(Design/DesignContent)
 add_subdirectory(Design/Core)
@@ -169,6 +169,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     DesignContentplugin
     Coreplugin
     UiCompplugin
+    Balplugin
     )
 include(CPack)
 include(GNUInstallDirs)

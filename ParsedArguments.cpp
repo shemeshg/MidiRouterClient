@@ -1,5 +1,5 @@
 #include "ParsedArguments.h"
-#include "Bal/BalData.h"
+#include "MidiRouterClientCli/Bal/BalData.h"
 #include "quithelper.h"
 
 #ifndef Q_OS_WIN
