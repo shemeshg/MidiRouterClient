@@ -272,7 +272,9 @@ private:
         QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         #endif
 
-        QString filePath = cacheFolderPath + QDir::separator() + fileName;
+        QDir dir(cacheFolderPath);
+        QString filePath = dir.filePath(fileName);
+        qDebug()<<"filePath"<<filePath;
         QFile file(filePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
@@ -291,8 +293,9 @@ private:
         QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         #endif
 
-
-        QString filePath = cacheFolderPath + QDir::separator() + fileName;
+        QDir dir(cacheFolderPath);
+        QString filePath = dir.filePath(fileName);
+        qDebug()<<"filePath read"<<filePath;
 
         QString fileContent;
         // Check if the file exists
