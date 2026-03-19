@@ -5,7 +5,7 @@
 # ]]]
 cmake_minimum_required(VERSION 3.16)
 
-project(midi-router-client VERSION 2.21.0 LANGUAGES CXX)
+project(midi-router-client VERSION 2.22.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
@@ -49,13 +49,13 @@ endif()
     
     
 
-list(APPEND QML_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}/Design  ${CMAKE_CURRENT_SOURCE_DIR}/Bal )
+list(APPEND QML_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}/Design  ${CMAKE_CURRENT_SOURCE_DIR}/MidiRouterClientCli/Bal )
 set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Import paths for Qt Creator's code model" FORCE)
 
 
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
-    main.cpp quithelper.cpp ParsedArguments.cpp
+    main.cpp 
     MANUAL_FINALIZATION
     ${APP_ICON_MACOSX}
 )
@@ -149,7 +149,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 
-add_subdirectory(Bal)
+add_subdirectory(MidiRouterClientCli/Bal)
 add_subdirectory(Design/Design)
 add_subdirectory(Design/DesignContent)
 add_subdirectory(Design/Core)
@@ -169,6 +169,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     DesignContentplugin
     Coreplugin
     UiCompplugin
+    Balplugin
     )
 include(CPack)
 include(GNUInstallDirs)

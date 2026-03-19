@@ -13,6 +13,7 @@ qt6_add_qml_module(Bal
       BalDataPrivate.h
       BalDataPrivate.cpp        
       ${CMAKE_BINARY_DIR}/config.h
+      quithelper.cpp ParsedArguments.cpp
 )
 
 
