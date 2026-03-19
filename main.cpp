@@ -4,7 +4,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QIcon>
-#include "ParsedArguments.h"
+#include "MidiRouterClientCli/Bal/ParsedArguments.h"
 
 
 
