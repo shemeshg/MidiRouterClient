@@ -22,6 +22,10 @@ public:
         return serverIsRunning;
     }
 
+    void setConfigFilePath(const QString &s){
+        isCustomConfigFilePath = true;
+        customConfigFilePath = s;
+    }
     const QString getConfigFilePath();
     const bool getIsSaveConfigOnServer();
 
@@ -30,7 +34,8 @@ private:
     bool serverIsRunning = false;
     QWebSocketServer *server;
 
-
+    bool isCustomConfigFilePath = false;
+    QString customConfigFilePath;
 
 
 };

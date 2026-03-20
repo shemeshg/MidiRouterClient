@@ -71,6 +71,9 @@ void MidiServerClass::stop()
 
 const QString MidiServerClass::getConfigFilePath()
 {
+    if (isCustomConfigFilePath) {
+        return customConfigFilePath;
+    }
 #ifdef Q_OS_WIN
     QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
 #else
@@ -83,6 +86,7 @@ const QString MidiServerClass::getConfigFilePath()
 
 const bool MidiServerClass::getIsSaveConfigOnServer()
 {
+    if (isCustomConfigFilePath) {return true;}
 #ifdef Q_OS_WIN
     QSettings settings{QSettings::IniFormat, QSettings::SystemScope,"shemeshg", "MidiRouterClient"};
 #else

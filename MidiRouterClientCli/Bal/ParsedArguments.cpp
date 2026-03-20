@@ -101,11 +101,11 @@ int ParsedArguments::runHeadless(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     BalData bl;
     if (isNoneDefaultServerConfigFile){
-        qDebug()<<"setserver config"<<noneDefaultServerConfigFile<< "todo";
+        bl.setServerConfigFilePath(noneDefaultServerConfigFile);
     }
     qDebug()<<"Server confg file"<< bl.getServerConfigFilePath();
     bl.startServer(bl.reqServerPortNumber());
-    qDebug()<<"Port is"<<bl.reqServerPortNumber();
+    qDebug()<<"Port"<<bl.reqServerPortNumber();
 
     std::signal(SIGINT, handleSigInt);  //for ^c
     std::signal(SIGTERM, handleSigInt); //for systemd

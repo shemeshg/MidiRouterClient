@@ -21,6 +21,11 @@ public:
     const QString getServerConfigFilePath(){
         return msc->getConfigFilePath();
     }
+
+    void setServerConfigFilePath(const QString &s){
+        msc->setConfigFilePath(s);
+    }
+
 public slots:
     QString qtVer() {
         return "App:" + QString(PROJECT_VER) + " qt:" + qVersion();
