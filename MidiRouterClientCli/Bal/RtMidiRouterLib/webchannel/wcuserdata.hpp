@@ -27,11 +27,14 @@ class WcUserData : public QObject
     Q_OBJECT
 public:
     //- {function} 1 1
-    explicit WcUserData(Webchannel::WcMidiIn *wcmidiin,
+    explicit WcUserData(bool isSaveConfigOnServer, QString configFilePath  ,Webchannel::WcMidiIn *wcmidiin,
                         Webchannel::WcMidiOut *wcmidiout,
                         QObject *parent)
     //-only-file body
-        :wcmidiin{wcmidiin},
+        :
+        isSaveConfigOnServer{isSaveConfigOnServer},
+        configFilePath{configFilePath},
+        wcmidiin{wcmidiin},
         wcmidiout{wcmidiout},
         QObject(parent)
     {
@@ -39,7 +42,7 @@ public:
         applayConfig.init(wcmidiin,wcmidiout);
         QString str;
         if (isSaveConfigOnServer) {
-            str = cashFileRead(cahedFileName);
+            str = cashFileRead();
         }
         if (str.isEmpty()){
             str = R"(
@@ -235,6 +238,8 @@ signals:
     bool userDataChanges(QVariant msg);
     void applicationQuitSignal();
 private:
+    const bool isSaveConfigOnServer;
+    const QString configFilePath;
     Webchannel::WcMidiIn *wcmidiin;
     Webchannel::WcMidiOut *wcmidiout;
     ApplyConfig applayConfig;
@@ -259,21 +264,14 @@ private:
         return list;
     }
 
-    //-only-file header
-    const QString cahedFileName = "midiRouterClient.json";
+
 
     //- {fn}
-    void cashFileWrite(const QString &fileName, QString &fileContent)
+    void cashFileWrite(QString &fileContent)
     //-only-file body
     {
-        #ifdef Q_OS_WIN
-        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
-        #else
-        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-        #endif
+        QString filePath = configFilePath;
 
-        QDir dir(cacheFolderPath);
-        QString filePath = dir.filePath(fileName);
         QFile file(filePath);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
@@ -283,17 +281,10 @@ private:
     }
 
     //- {fn}
-    QString cashFileRead(const QString &fileName)
+    QString cashFileRead()
     //-only-file body
     {
-        #ifdef Q_OS_WIN
-        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
-        #else
-        QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-        #endif
-
-        QDir dir(cacheFolderPath);
-        QString filePath = dir.filePath(fileName);
+        QString filePath = configFilePath;
 
         QString fileContent;
         // Check if the file exists
@@ -308,26 +299,17 @@ private:
         return fileContent;
     }
 
-    //-only-file header
-    #ifdef Q_OS_WIN
-    QSettings settings{QSettings::IniFormat, QSettings::SystemScope,"shemeshg", "MidiRouterClient"};
-    #else
-    QSettings settings{"shemeshg", "MidiRouterClient"};
-    #endif
 
-
-    bool isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
 
     //- {fn}
     void saveConfigOnServerIfRquired()
     //-only-file body
-    {
-        isSaveConfigOnServer = settings.value("isSaveConfigOnServer", true).toBool();
+    {        
         if (isSaveConfigOnServer) {
             auto o = userdata.toJsonObject();
             QJsonDocument jsonDoc(o);
             QString s = jsonDoc.toJson(QJsonDocument::Compact);
-            cashFileWrite(cahedFileName, s);
+            cashFileWrite(s);
         }
     }
 

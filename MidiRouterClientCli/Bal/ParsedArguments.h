@@ -19,9 +19,15 @@ public:
     explicit ParsedArguments(){
     }
 
+    bool isCustomServerPort = false;
+    int customServerPort = 0;
+
     bool isRemoteAddress = false;
     bool isRegexPresetName = false;
     QString regexPresetName;
+
+    bool isNoneDefaultServerConfigFile = false;
+    QString noneDefaultServerConfigFile;
 
     QString serverName;      // optional
     int portNumber;

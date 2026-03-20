@@ -19,7 +19,10 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
 
     QCommandLineOption headlessOption(
         QStringList() << "headless",
-        "Run in headless mode on the specified port by the gui.",
+        "Run in headless mode on the specified port by the gui.\n"
+        "  --config-file  <path>    Full path to config file.\n"
+        "  --server-port  <path>    serevr port."
+        ,
         ""
         );
 
@@ -45,17 +48,41 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
         );
     presetNameOption.setFlags(QCommandLineOption::HiddenFromHelp);
 
+    QCommandLineOption configFileOption(
+        QStringList() << "config-file",
+        "    headless option to config file.",
+        "config file"
+        );
+    configFileOption.setFlags(QCommandLineOption::HiddenFromHelp);
+
+    QCommandLineOption serverPortOption(
+        QStringList() << "server-port",
+        "    server-port.",
+        "port"
+        );
+    serverPortOption.setFlags(QCommandLineOption::HiddenFromHelp);
+
     parser.addOption(headlessOption);
     parser.addOption(applyOption);
     parser.addOption(addressOption);
     parser.addOption(presetNameOption);
-
+    parser.addOption(configFileOption);
+    parser.addOption(serverPortOption);
 
     parser.process(tempApp);
 
 
     if (parser.isSet(headlessOption)) {
         mode = RunMode::Headless;
+        if (parser.isSet(configFileOption)) {
+            isNoneDefaultServerConfigFile = true;
+            noneDefaultServerConfigFile = parser.value(configFileOption);
+        }
+
+        if (parser.isSet(serverPortOption)) {
+            isCustomServerPort = true;
+            customServerPort = parser.value(serverPortOption).toInt();
+        }
     } else if (parser.isSet(applyOption)) {
         mode = RunMode::ApplyDefaultPreset;
         if (parser.isSet(presetNameOption)) {
@@ -86,8 +113,19 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
 int ParsedArguments::runHeadless(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     BalData bl;
-    bl.startServer(bl.reqServerPortNumber());
-    qDebug()<<"Port is"<<bl.reqServerPortNumber();
+    if (isNoneDefaultServerConfigFile){
+        bl.setServerConfigFilePath(noneDefaultServerConfigFile);
+    }
+    qDebug()<<"Server confg file"<< bl.getServerConfigFilePath();
+    int portNumber = 0;
+    if (isCustomServerPort){
+        portNumber = customServerPort;
+    } else {
+        portNumber = bl.reqServerPortNumber();
+    }
+
+    bl.startServer(portNumber);
+    qDebug()<<"Port"<<portNumber;
 
     std::signal(SIGINT, handleSigInt);  //for ^c
     std::signal(SIGTERM, handleSigInt); //for systemd
