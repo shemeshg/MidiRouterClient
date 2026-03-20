@@ -17,6 +17,10 @@ public:
     explicit BalData(QObject *parent = nullptr);
 
     void startClient(const QString &serverName, int portNumber);
+
+    const QString getServerConfigFilePath(){
+        return msc->getConfigFilePath();
+    }
 public slots:
     QString qtVer() {
         return "App:" + QString(PROJECT_VER) + " qt:" + qVersion();

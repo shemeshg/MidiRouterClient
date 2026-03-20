@@ -23,6 +23,9 @@ public:
     bool isRegexPresetName = false;
     QString regexPresetName;
 
+    bool isNoneDefaultServerConfigFile = false;
+    QString noneDefaultServerConfigFile;
+
     QString serverName;      // optional
     int portNumber;
     QString presetName;   // optional

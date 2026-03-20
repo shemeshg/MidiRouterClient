@@ -8,6 +8,10 @@
 #include "webchannel/wcmidiin.h"
 #include "webchannel/wcuserdata.h"
 
+#include <QDir>
+#include <QSettings>
+#include <QStandardPaths>
+
 using namespace Webchannel;
 
 
@@ -34,7 +38,10 @@ void MidiServerClass::start(int portNumber)
     channel->registerObject(QStringLiteral("wcmidiout"), wcmidiout);
     WcMidiIn *wcmidiin = new WcMidiIn(server); //NOLINT
     channel->registerObject(QStringLiteral("wcmidiin"), wcmidiin);
-    WcUserData *wcuserdata = new WcUserData(wcmidiin, wcmidiout, server); //NOLINT
+    WcUserData *wcuserdata = new WcUserData(
+        getIsSaveConfigOnServer(),
+        getConfigFilePath(),
+        wcmidiin, wcmidiout, server); //NOLINT
     channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
     //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
 
@@ -60,4 +67,27 @@ void MidiServerClass::stop()
         delete server;
         serverIsRunning = false;
     }
+}
+
+const QString MidiServerClass::getConfigFilePath()
+{
+#ifdef Q_OS_WIN
+    QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+#else
+    QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+#endif
+    QDir dir(cacheFolderPath);
+    QString filePath = dir.filePath("midiRouterClient.json");
+    return filePath;
+}
+
+const bool MidiServerClass::getIsSaveConfigOnServer()
+{
+#ifdef Q_OS_WIN
+    QSettings settings{QSettings::IniFormat, QSettings::SystemScope,"shemeshg", "MidiRouterClient"};
+#else
+    QSettings settings{"shemeshg", "MidiRouterClient"};
+#endif
+
+    return settings.value("isSaveConfigOnServer", true).toBool();
 }
