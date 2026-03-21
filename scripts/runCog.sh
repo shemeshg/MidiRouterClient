@@ -13,7 +13,7 @@ fi
 
 
 cd "$script_dir/.."
-cd Bal/RtMidiRouterLib/MidiClient/genPrpt
+cd MidiRouterClientCli/Bal/RtMidiRouterLib/MidiClient/genPrpt
 cog -r *.hpp
 
 cd "$script_dir/.."

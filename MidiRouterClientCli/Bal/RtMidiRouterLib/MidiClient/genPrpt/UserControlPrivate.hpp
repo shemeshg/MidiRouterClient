@@ -255,7 +255,7 @@ private:
     int m_nrpnControl = 0;
     QString m_outputPortnName ;
     bool m_isShowDropdown = false;
-    QString m_dropdownListUuid ;
+    QString m_dropdownListUuid = "-1";
     
 };
 //-only-file null

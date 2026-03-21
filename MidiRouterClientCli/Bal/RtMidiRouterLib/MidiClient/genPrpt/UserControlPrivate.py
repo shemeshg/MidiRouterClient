@@ -16,7 +16,7 @@ ary = [
     create_prpt("int", 'nrpnControl'),
     create_prpt("QString", 'outputPortnName'),        
     create_prpt("bool", 'isShowDropdown'),
-    create_prpt("QString", 'dropdownListUuid'),
+    create_prpt("QString", 'dropdownListUuid', init_val='= "-1"'),
 ]
 
 enumClasss = [

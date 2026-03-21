@@ -222,7 +222,6 @@ ColumnLayout {
                 onActivated: {
                     control.dropdownListUuid = currentValue
                 }
-
             }
             UiBtnAdd {
                 visible: control.dropdownListUuid === "-1"
