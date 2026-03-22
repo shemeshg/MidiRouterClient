@@ -28,9 +28,9 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
-          # ARM64 does NOT have qtwebsockets
-          modules: ${{ matrix.arch == 'arm64' && 'qtsvg' || 'qtwebsockets qtsvg' }}
+          modules: "${{ matrix.arch == 'arm64' && 'qtsvg' || 'qtwebsockets qtsvg' }}"
           cache: true
+
 
       - name: Configure
         run: |
