@@ -2,6 +2,7 @@
 //#include <QStringList>
 //#include <QVariantMap>
 //#include <string>
+#include <QTimer>
 
 //#include "RtMidiWrap/playmidiout.h"
 namespace Webchannel {
@@ -158,21 +159,32 @@ bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsStri
     bool tokenFound = false;
     // Combined regex to preserve order of appearance
     QRegularExpression re(
-        R"(\b(?:CC-(\d+)-(\d+)|PC-(\d+)|NRPN-(\d+)-(\d+))\b)"
+        R"(\b(?:CC-(\d+)-(\d+)|PC-(\d+)|NRPN-(\d+)-(\d+)|WAIT-(\d+)|NOTE-ON-(\d+)-(\d+)|NOTE-OFF-(\d+)-(\d+))\b)"
         );
 
     QRegularExpressionMatchIterator it = re.globalMatch(commandsString);
 
+    int accumulatedDelay = 0;
     while (it.hasNext()) {
         QRegularExpressionMatch m = it.next();
+
+        // --- WAIT-x ---
+        if (m.captured(6).length()) {
+            int waitMs = m.captured(6).toInt();
+            accumulatedDelay += waitMs;
+            tokenFound = true;
+            continue;
+        }
 
         // --- CC-x-y ---
         if (m.captured(1).length() && m.captured(2).length()) {
             int cc1 = m.captured(1).toInt();
             int cc2 = m.captured(2).toInt();
-            sendControlChange(
-                portNumber, cc1,
-                cc2, {channels});
+
+            QTimer::singleShot(accumulatedDelay, this, [=]() {
+                sendControlChange(portNumber, cc1, cc2, channels);
+            });
+
             tokenFound = true;
             continue;
         }
@@ -180,8 +192,11 @@ bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsStri
         // --- PC-x ---
         if (m.captured(3).length()) {
             int pc = m.captured(3).toInt();
-            sendProgramChange(
-                portNumber, pc, channels);
+
+            QTimer::singleShot(accumulatedDelay, this, [=]() {
+                sendProgramChange(portNumber, pc, channels);
+            });
+
             tokenFound = true;
             continue;
         }
@@ -190,9 +205,41 @@ bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsStri
         if (m.captured(4).length() && m.captured(5).length()) {
             int n1 = m.captured(4).toInt();
             int n2 = m.captured(5).toInt();
-            setNonRegisteredParameterInt(
-                portNumber, n1,
-                n2, channels);
+
+            QTimer::singleShot(accumulatedDelay, this, [=]() {
+                setNonRegisteredParameterInt(portNumber, n1, n2, channels);
+            });
+
+            tokenFound = true;
+            continue;
+        }
+
+        // NOTE-ON-x-y
+        if (m.captured(7).length() && m.captured(8).length()) {
+            QString note = m.captured(7);
+            int velocity = m.captured(8).toInt();
+
+            QStringList noteList = { note };
+
+            QTimer::singleShot(accumulatedDelay, this, [=]() {
+                playNote(portNumber, noteList, channels, velocity);
+            });
+
+            tokenFound = true;
+            continue;
+        }
+
+        // NOTE-OFF-x-y
+        if (m.captured(9).length() && m.captured(10).length()) {
+            QString note = m.captured(9);
+            int velocity = m.captured(10).toInt();
+
+            QStringList noteList = { note };
+
+            QTimer::singleShot(accumulatedDelay, this, [=]() {
+                stopNote(portNumber, noteList, channels, velocity);
+            });
+
             tokenFound = true;
             continue;
         }
