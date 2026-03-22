@@ -16,18 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Match QtPass + install-qt-action test.yml
-      - uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: ${{ matrix.arch == 'arm64' && 'amd64_arm64' || 'x64' }}
-
-      - name: Use Python 3.10 (required for aqtinstall)
+      # IMPORTANT: Python must be set BEFORE install-qt-action
+      - name: Use Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
+      # Activate MSVC environment
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.arch == 'arm64' && 'amd64_arm64' || 'x64' }}
 
-      # Install Qt exactly like the test workflow
+      # Install Qt (now runs under Python 3.10)
       - uses: jurplel/install-qt-action@v4
         with:
           version: "${{ matrix.arch == 'arm64' && '6.9.3' || '6.10.3' }}"
