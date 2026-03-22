@@ -13,32 +13,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Activate MSVC environment (required for Qt + CMake)
+      - name: Use Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x64
 
-      # Install Qt using the same pinned versions as the official test.yml
-      - uses: jurplel/install-qt-action@v4
-        with:
-          version: '6.10.3'
-          host: windows
-          target: desktop
-          arch: win64_msvc2019_64
-          cache: true
-          aqtversion: '==3.2.0'
-          py7zrversion: '==0.20.5'
+      - name: Install aqtinstall (pinned)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "aqtinstall==3.2.0" "py7zr==0.20.5"
 
-      # Configure with CMake
+      - name: Install Qt 6.10.3 (x64, MSVC)
+        run: |
+          python -m aqt install-qt windows desktop 6.10.3 win64_msvc2019_64 --outputdir Qt
+
       - name: Configure
         run: |
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ^
-                -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ^
+                -DCMAKE_PREFIX_PATH="%CD%\..\Qt\6.10.3\msvc2019_64" ^
                 ..
 
-      # Build
       - name: Build
         run: |
           cd build
