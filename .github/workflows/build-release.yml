@@ -20,12 +20,12 @@ jobs:
         run: |
           mkdir -p build-macos
           cd build-macos
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. -DCMAKE_PREFIX_PATH=$(brew --prefix qt@6) ../
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. -DCMAKE_PREFIX_PATH=$(brew --prefix qt@6) -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" ../
       
       - name: Build MidiRouterClient
         run: |
           cd build-macos
-          cmake --build .
+          cmake --build . --parallel $(sysctl -n hw.ncpu)
       
       - name: Install MidiRouterClient
         run: |
@@ -67,9 +67,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libasound2-dev
       
-      - name: Install Qt6 (latest)
+      - name: Install Qt6 latest
         run: |
           sudo apt-get install -y qt6-base-dev qt6-declarative-dev qt6-websockets-dev qt6-svg-dev qt6-tools-dev cmake
+          qt6_version=$(dpkg -l | grep "qt6-base-dev" | awk '{print $3}')
+          echo "Installed Qt6 version: $qt6_version"
       
       - name: Set up cross-compilation for ARM64
         if: matrix.arch == 'arm64'
@@ -85,7 +87,7 @@ jobs:
       - name: Build MidiRouterClient
         run: |
           cd build-linux-${{ matrix.arch }}
-          cmake --build .
+          cmake --build . --parallel $(nproc)
       
       - name: Install MidiRouterClient
         run: |
@@ -106,8 +108,8 @@ jobs:
         if: matrix.arch == 'arm64'
         run: |
           cd build-linux-${{ matrix.arch }}
-          mv midi-router-client-*.deb $(ls midi-router-client-*.deb | sed 's/.deb/-ARM.deb/')
-          mv midi-router-client-*.zip $(ls midi-router-client-*.zip | sed 's/.zip/-ARM.zip/')
+          for file in midi-router-client-*.deb; do mv "$file" "${file%.deb}-ARM.deb"; done
+          for file in midi-router-client-*.zip; do mv "$file" "${file%.zip}-ARM.zip"; done
       
       - name: Upload DEB artifacts
         uses: actions/upload-artifact@v4
@@ -129,14 +131,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install Qt6 (latest)
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.8'
+          version: '6.7'
           host: 'windows'
           target: 'desktop'
           arch: 'win64_msvc2019_64'
           modules: 'qtwebsockets qtsvg'
+          cache: true
       
       - name: Configure MidiRouterClient
         run: |
@@ -147,7 +150,7 @@ jobs:
       - name: Build MidiRouterClient
         run: |
           cd build-windows-${{ matrix.arch }}
-          cmake --build .
+          cmake --build . --parallel %NUMBER_OF_PROCESSORS%
       
       - name: Install MidiRouterClient
         run: |
@@ -169,8 +172,8 @@ jobs:
         shell: pwsh
         run: |
           cd build-windows-${{ matrix.arch }}
-          Get-ChildItem "midi-router-client-*.exe" | Rename-Item -NewName { $_.Name -replace '.exe','-ARM.exe' }
-          Get-ChildItem "midi-router-client-*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','-ARM.zip' }
+          Get-ChildItem "midi-router-client-*.exe" | ForEach-Object { Rename-Item -Path $_.FullName -NewName ($_.Name -replace '.exe','-ARM.exe') }
+          Get-ChildItem "midi-router-client-*.zip" | ForEach-Object { Rename-Item -Path $_.FullName -NewName ($_.Name -replace '.zip','-ARM.zip') }
       
       - name: Upload NSIS artifacts
         uses: actions/upload-artifact@v4
@@ -192,14 +195,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install Qt6 (latest)
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.8'
+          version: '6.7'
           host: 'windows'
           target: 'desktop'
           arch: 'win64_msvc2019_64'
           modules: 'qtwebsockets qtsvg'
+          cache: true
       
       - name: Configure MidiRouterClientCli
         run: |
@@ -210,7 +214,7 @@ jobs:
       - name: Build MidiRouterClientCli
         run: |
           cd build-windows-cli-${{ matrix.arch }}
-          cmake --build .
+          cmake --build . --parallel %NUMBER_OF_PROCESSORS%
       
       - name: Install MidiRouterClientCli
         run: |
@@ -227,7 +231,7 @@ jobs:
         shell: pwsh
         run: |
           cd build-windows-cli-${{ matrix.arch }}
-          Get-ChildItem "midi-router-client-cli-*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','-ARM.zip' }
+          Get-ChildItem "midi-router-client-cli-*.zip" | ForEach-Object { Rename-Item -Path $_.FullName -NewName ($_.Name -replace '.zip','-ARM.zip') }
       
       - name: Upload ZIP artifacts
         uses: actions/upload-artifact@v4
