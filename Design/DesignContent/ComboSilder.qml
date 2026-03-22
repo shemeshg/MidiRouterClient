@@ -73,7 +73,7 @@ ColumnLayout {
                 let a = cmbModel.reduce((max, item) => {
                                             return item.text.length > max ? item.text.length : max;
                                           }, 0);
-                a = a < 5 ? 5: a;
+                a = Math.max(5, Math.min(a, 20));
                 return Constants.font.pixelSize * a;
 
             }
