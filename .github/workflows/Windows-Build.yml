@@ -3,82 +3,30 @@ name: Windows Build
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   build-windows:
     runs-on: windows-latest
     strategy:
       matrix:
         arch: [x64, arm64]
-
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # DO NOT install Python manually — let install-qt-action use its own Python
-      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
         with:
-          arch: ${{ matrix.arch == 'arm64' && 'amd64_arm64' || 'x64' }}
+          version: '6.5.2' # Specify your required Qt version
+          # On Windows, you might need to specify the architecture/compiler
+          arch: ${{ matrix.os == 'windows-latest' && 'win64_msvc2019_64' || '' }}
 
-      - uses: jurplel/install-qt-action@v4
-        with:
-          version: "${{ matrix.arch == 'arm64' && '6.9.3' || '6.10.3' }}"
-          host: windows
-          target: desktop
-          arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
-          cache: true
-          aqtversion: '==3.2.0'
-          py7zrversion: '==0.20.5'
+      - name: Install Ninja (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y ninja-build
 
-      - name: Install NSIS
-        run: choco install nsis -y
-
-      - name: Configure
-        run: |
-          mkdir build-windows-${{ matrix.arch }}
-          cd build-windows-${{ matrix.arch }}
-          cmake -DCMAKE_BUILD_TYPE=Release ^
-                -DCMAKE_INSTALL_PREFIX=. ^
-                -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ^
-                ../
+      - name: Configure CMake
+        run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: |
-          cd build-windows-${{ matrix.arch }}
-          cmake --build . --parallel %NUMBER_OF_PROCESSORS%
-
-      - name: Install
-        run: |
-          cd build-windows-${{ matrix.arch }}
-          cmake --install .
-
-      - name: Package NSIS
-        run: |
-          cd build-windows-${{ matrix.arch }}
-          cpack -G NSIS
-
-      - name: Package ZIP
-        run: |
-          cd build-windows-${{ matrix.arch }}
-          cpack -G ZIP
-
-      - name: Rename ARM64 artifacts
-        if: matrix.arch == 'arm64'
-        shell: pwsh
-        run: |
-          cd build-windows-arm64
-          Get-ChildItem "midi-router-client-*.exe" | Rename-Item -NewName { $_.Name -replace '.exe','-ARM.exe' }
-          Get-ChildItem "midi-router-client-*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','-ARM.zip' }
-
-      - name: Upload NSIS
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-${{ matrix.arch }}-nsis
-          path: build-windows-${{ matrix.arch }}/*.exe
-
-      - name: Upload ZIP
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-${{ matrix.arch }}-zip
-          path: build-windows-${{ matrix.arch }}/*.zip
+        run: cmake --build build --config Release
