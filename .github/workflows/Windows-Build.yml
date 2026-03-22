@@ -21,6 +21,11 @@ jobs:
       - name: Install NSIS
         run: choco install nsis -y
 
+      - name: List ARM64 modules
+        if: matrix.arch == 'arm64'
+        run: python -m aqt list-qt windows desktop --modules 6.10.3 win64_msvc2019_arm64
+
+
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
@@ -28,7 +33,6 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
-          modules: "${{ matrix.arch == 'arm64' && 'qtsvg' || 'qtwebsockets qtsvg' }}"
           cache: true
 
 
