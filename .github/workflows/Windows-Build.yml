@@ -21,9 +21,6 @@ jobs:
           # On Windows, you might need to specify the architecture/compiler
           arch: ${{ matrix.os == 'windows-latest' && 'win64_msvc2019_64' || '' }}
 
-      - name: Install Ninja (Linux)
-        if: runner.os == 'Linux'
-        run: sudo apt-get install -y ninja-build
 
       - name: Configure CMake
         run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
