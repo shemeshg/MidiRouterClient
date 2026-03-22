@@ -1,107 +1,45 @@
-name: CI
+name: Windows Qt Minimal
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: action/
-
-      - run: |
-          cd action
-          npm ci || npm install
-        shell: bash
-
-      - run: |
-          cd action
-          npm run lint
-
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - windows-2022
-        aqtversion:
-          - null  # use whatever the default is
-        src-doc-examples:
-          - false
-        qt:
-          - version: "6.7.0"
-            requested: "6.7.0"
-            modules: qtwebengine qtpositioning qtwebchannel
-        cache:
-          - cached
-        include:
-          - os: windows-latest
-            dir: '/'
-            qt:
-              version: "6.7.0"
-              requested: "6.7.0"
-              modules: qtwebengine qtpositioning qtwebchannel
-          - os: windows-11-arm
-            skip-test-project: true
-            qt:
-              version: "6.8.1"
-              requested: "6.8.1"
-              modules: qtpositioning qtwebchannel
-
+  build-windows:
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # Activate MSVC environment (required for Qt + CMake)
+      - uses: ilammy/msvc-dev-cmd@v1
         with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: action/
+          arch: x64
 
-      - run: |
-          cd action
-          npm ci || npm install
-        shell: bash
-
-      - run: |
-          cd action
-          npm run build
-
-      - name: Install Qt with options and default aqtversion
-        if: ${{ !matrix.aqtversion && matrix.qt.version }}
-        uses: ./
+      # Install Qt using the same pinned versions as the official test.yml
+      - uses: jurplel/install-qt-action@v4
         with:
-          dir: ${{ matrix.dir }}
-          modules: ${{ matrix.qt.modules }}
-          version: ${{ matrix.qt.requested }}
-          tools: tools_qtcreator_gui,qt.tools.qtcreator_gui
-          cache: ${{ matrix.cache == 'cached' }}
+          version: '6.10.3'
+          host: windows
+          target: desktop
+          arch: win64_msvc2019_64
+          cache: true
+          aqtversion: '==3.2.0'
+          py7zrversion: '==0.20.5'
 
-
-      - name: Test QT_ROOT_DIR
-        if: ${{ matrix.qt.version }}
-        shell: bash
+      # Configure with CMake
+      - name: Configure
         run: |
-          set -x
-          # Check that QT_ROOT_DIR contains a qmake of some kind
-          ls "${QT_ROOT_DIR}/bin/" | grep qmake
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ^
+                -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ^
+                ..
 
-      - name: Configure test project on windows
-        if: ${{ matrix.qt.version && startsWith(matrix.os, 'windows') && !matrix.skip-test-project }}
-        env:
-          QT_VERSION: ${{ matrix.qt.version }}
+      # Build
+      - name: Build
         run: |
-          cd tests/TestWithModules
-          for /f "delims=" %%d in ( 'vswhere.exe -latest -property installationPath' ) do @( call "%%d\VC\Auxiliary\Build\vcvars64.bat" )
-          IF "%QT_VERSION:~0,1%"=="5" ( dir %Qt5_DIR% ) ELSE ( dir %QT_ROOT_DIR%\lib\cmake )
-          qmake
-          cmake -S . -B ./build
-        shell: cmd
-
-
+          cd build
+          cmake --build . --parallel %NUMBER_OF_PROCESSORS%
