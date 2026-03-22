@@ -21,7 +21,7 @@ jobs:
       - name: Install Qt6 (latest 6.x)
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.*'
+          version: 'latest'
           host: 'windows'
           target: 'desktop'
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
