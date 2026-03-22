@@ -16,32 +16,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Activate MSVC environment (QtPass does this)
+      # Match QtPass + install-qt-action test.yml
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch == 'arm64' && 'amd64_arm64' || 'x64' }}
 
-      # Python 3.10 avoids pip hangs
-      - name: Install Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install NSIS
-        run: choco install nsis -y
-
-      # Install Qt (QtPass style: simple, no module listing)
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v4
+      # Install Qt exactly like the test workflow
+      - uses: jurplel/install-qt-action@v4
         with:
           version: "${{ matrix.arch == 'arm64' && '6.9.3' || '6.10.3' }}"
           host: windows
           target: desktop
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
-          modules: "${{ matrix.arch == 'arm64' && '' || 'qtwebsockets qtsvg' }}"
           cache: true
 
-      # Configure with CMake
+      - name: Install NSIS
+        run: choco install nsis -y
+
       - name: Configure
         run: |
           mkdir build-windows-${{ matrix.arch }}
@@ -51,31 +42,26 @@ jobs:
                 -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ^
                 ../
 
-      # Build
       - name: Build
         run: |
           cd build-windows-${{ matrix.arch }}
           cmake --build . --parallel %NUMBER_OF_PROCESSORS%
 
-      # Install
       - name: Install
         run: |
           cd build-windows-${{ matrix.arch }}
           cmake --install .
 
-      # Package NSIS
       - name: Package NSIS
         run: |
           cd build-windows-${{ matrix.arch }}
           cpack -G NSIS
 
-      # Package ZIP
       - name: Package ZIP
         run: |
           cd build-windows-${{ matrix.arch }}
           cpack -G ZIP
 
-      # Rename ARM64 artifacts (your logic)
       - name: Rename ARM64 artifacts
         if: matrix.arch == 'arm64'
         shell: pwsh
@@ -84,7 +70,6 @@ jobs:
           Get-ChildItem "midi-router-client-*.exe" | Rename-Item -NewName { $_.Name -replace '.exe','-ARM.exe' }
           Get-ChildItem "midi-router-client-*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','-ARM.zip' }
 
-      # Upload artifacts
       - name: Upload NSIS
         uses: actions/upload-artifact@v4
         with:
