@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.5.2' # Specify your required Qt version
           # On Windows, you might need to specify the architecture/compiler
