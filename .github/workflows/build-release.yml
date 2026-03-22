@@ -20,7 +20,7 @@ jobs:
         run: |
           mkdir -p build-macos
           cd build-macos
-          ~/Qt/6.9.1/macos/bin/qt-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. -DCMAKE_PREFIX_PATH=$(brew --prefix qt@6) ../
       
       - name: Build MidiRouterClient
         run: |
@@ -67,7 +67,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libasound2-dev
       
-      - name: Install Qt6
+      - name: Install Qt6 (latest)
         run: |
           sudo apt-get install -y qt6-base-dev qt6-declarative-dev qt6-websockets-dev qt6-svg-dev qt6-tools-dev cmake
       
@@ -129,15 +129,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install Qt6
-        run: |
-          choco install qt -y
+      - name: Install Qt6 (latest)
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          modules: 'qtwebsockets qtsvg'
       
       - name: Configure MidiRouterClient
         run: |
           mkdir build-windows-${{ matrix.arch }}
           cd build-windows-${{ matrix.arch }}
-          qt-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ../
       
       - name: Build MidiRouterClient
         run: |
@@ -187,15 +192,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install Qt6
-        run: |
-          choco install qt -y
+      - name: Install Qt6 (latest)
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          modules: 'qtwebsockets qtsvg'
       
       - name: Configure MidiRouterClientCli
         run: |
           mkdir build-windows-cli-${{ matrix.arch }}
           cd build-windows-cli-${{ matrix.arch }}
-          qt-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. ../MidiRouterClientCli
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=. -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ../MidiRouterClientCli
       
       - name: Build MidiRouterClientCli
         run: |
