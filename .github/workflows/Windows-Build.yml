@@ -18,6 +18,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: List available Qt versions for Windows
+        run: |
+          python -m aqt list-qt windows desktop
+
       - name: Install Qt6 (latest 6.x)
         uses: jurplel/install-qt-action@v3
         with:
