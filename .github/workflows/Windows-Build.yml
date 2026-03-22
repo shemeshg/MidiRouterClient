@@ -35,6 +35,9 @@ jobs:
           target: desktop
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
           cache: true
+          aqtversion: '==3.2.0'
+          py7zrversion: '==0.20.5'
+
 
       - name: Install NSIS
         run: choco install nsis -y
