@@ -110,6 +110,7 @@ public:
         openedMidiOutObj[portNumber]->sendSysex( qStringListToVectorByte(data));
     }
 
+    Q_INVOKABLE bool sendEmbededCommandsSequence(int portNumber, QString commandsString,  QStringList channels);
 private:
     // For general requests like midi list ports
     std::unique_ptr<RtMidiWrap::MidiOut> midiout;

@@ -363,6 +363,16 @@ void BalData::sendProgramChange(int portNumber, int program, QStringList channel
     mcc->invokeMethod("wcmidiout", "sendProgramChange", a, false, callback, qjsEngine(this));
 }
 
+void BalData::sendEmbededCommandsSequence(int portNumber, QString commandsString, QStringList channels, const QJSValue &callback)
+{
+    QJsonArray a = {portNumber, commandsString};
+    QJsonArray b = QJsonArray::fromStringList( channels);
+    if (!channels.isEmpty()){
+        a.append(b);
+    }
+    mcc->invokeMethod("wcmidiout", "sendEmbededCommandsSequence", a, true, callback, qjsEngine(this));
+}
+
 void BalData::testDummyDelete(const QJSValue &callback)
 {
     mcc->invokeMethod("wcmidiout", "getPortCount", {}, true, callback, qjsEngine(this));

@@ -10,48 +10,6 @@ ColumnLayout {
     signal editControl(var s);
 
 
-    function parseMidiTokens(description, portNumber, aryChannelId) {
-        // One combined regex that captures ANY token in order
-        const tokenRegex = /\b(CC-(\d+)-(\d+)|PC-(\d+)|NRPN-(\d+)-(\d+))\b/g;
-
-        let tokenFound = false;
-        let match;
-
-        while ((match = tokenRegex.exec(description)) !== null) {
-
-            // CC
-            if (match[2] !== undefined && match[3] !== undefined) {
-                const cc1 = Number(match[2]);
-                const cc2 = Number(match[3]);
-                doCC(cc1, cc2);
-                Constants.balData.sendControlChange(
-                            portNumber, cc1, cc2, aryChannelId,()=>{} )
-
-                tokenFound = true;
-                continue;
-            }
-
-            // PC
-            if (match[4] !== undefined) {
-                const pc = Number(match[4]);
-                Constants.balData.sendProgramChange(portNumber, pc, aryChannelId,()=>{})
-                tokenFound = true;
-                continue;
-            }
-
-            // NRPN
-            if (match[5] !== undefined && match[6] !== undefined) {
-                const n1 = Number(match[5]);
-                const n2 = Number(match[6]);
-                Constants.balData.setNonRegisteredParameterInt(
-                            portNumber, n1, n2, aryChannelId, ()=>{})
-                tokenFound = true;
-                continue;
-            }
-        }
-        return tokenFound;
-    }
-
 
 
     GroupBox {
@@ -138,18 +96,25 @@ ColumnLayout {
                           }
 
 
-                          if (parseMidiTokens(cmbSliderId.cmbModel[cmbSliderId.val].text , portNumber,  [modelData.channelId.toString()])){return;}
 
-                          if (modelData.eventType === 0){
-                              Constants.balData.sendControlChange(
-                                  portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
-                          } else if (modelData.eventType === 1){
-                              Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
-                          } else if (modelData.eventType === 2){
-                              Constants.balData.setNonRegisteredParameterInt(
-                                  portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
 
-                          }
+                          Constants.balData.sendEmbededCommandsSequence(
+                                      portNumber, cmbSliderId.cmbModel[cmbSliderId.val].text , [modelData.channelId.toString()],(isFound)=>{
+                                              if(isFound){
+                                                  return;
+                                              } else {
+                                                  if (modelData.eventType === 0){
+                                                      Constants.balData.sendControlChange(
+                                                          portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
+                                                  } else if (modelData.eventType === 1){
+                                                      Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
+                                                  } else if (modelData.eventType === 2){
+                                                      Constants.balData.setNonRegisteredParameterInt(
+                                                          portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
+
+                                                  }
+                                              }
+                                      } )
 
 
                       }

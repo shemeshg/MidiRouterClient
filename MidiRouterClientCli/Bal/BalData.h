@@ -83,6 +83,9 @@ void getPortNumber(const QString &midiPortName, const QJSValue &callback);
 void setNonRegisteredParameterInt( int portNumber,int parameter,int data,QStringList channels,const QJSValue &callback);
 void sendControlChange( int portNumber,int controller,int value,QStringList channels,const QJSValue &callback);
 void sendProgramChange( int portNumber,int program,QStringList channels,const QJSValue &callback);
+void sendEmbededCommandsSequence(int portNumber, QString commandsString, QStringList channels,const QJSValue &callback);
+
+
 MidiClientConnection *midiClientConnection() { return mcc->midiClientConnection; }
 
 void startClient();

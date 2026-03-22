@@ -2,6 +2,7 @@
 //#include <QStringList>
 //#include <QVariantMap>
 //#include <string>
+
 //#include "RtMidiWrap/playmidiout.h"
 namespace Webchannel {
 WcMidiOut::WcMidiOut(QObject *parent) : QObject(parent)
@@ -150,6 +151,53 @@ void WcMidiOut::sendMessage( int portNumber,QStringList message){
     openPort(portNumber);
     auto msg = qStringListToVectorByte(message);
     openedMidiOutObj[portNumber]->midiout->sendMessage( &msg);
+}
+
+bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsString, QStringList channels)
+{
+    bool tokenFound = false;
+    // Combined regex to preserve order of appearance
+    QRegularExpression re(
+        R"(\b(?:CC-(\d+)-(\d+)|PC-(\d+)|NRPN-(\d+)-(\d+))\b)"
+        );
+
+    QRegularExpressionMatchIterator it = re.globalMatch(commandsString);
+
+    while (it.hasNext()) {
+        QRegularExpressionMatch m = it.next();
+
+        // --- CC-x-y ---
+        if (m.captured(1).length() && m.captured(2).length()) {
+            int cc1 = m.captured(1).toInt();
+            int cc2 = m.captured(2).toInt();
+            sendControlChange(
+                portNumber, cc1,
+                cc2, {channels});
+            tokenFound = true;
+            continue;
+        }
+
+        // --- PC-x ---
+        if (m.captured(3).length()) {
+            int pc = m.captured(3).toInt();
+            sendProgramChange(
+                portNumber, pc, channels);
+            tokenFound = true;
+            continue;
+        }
+
+        // --- NRPN-x-y ---
+        if (m.captured(4).length() && m.captured(5).length()) {
+            int n1 = m.captured(4).toInt();
+            int n2 = m.captured(5).toInt();
+            setNonRegisteredParameterInt(
+                portNumber, n1,
+                n2, channels);
+            tokenFound = true;
+            continue;
+        }
+    }
+    return tokenFound;
 }
 
 }
