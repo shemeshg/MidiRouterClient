@@ -28,6 +28,7 @@ jobs:
           host: 'windows'
           target: 'desktop'
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
+          # ARM64 does NOT have qtwebsockets
           modules: ${{ matrix.arch == 'arm64' && 'qtsvg' || 'qtwebsockets qtsvg' }}
           cache: true
 
@@ -59,3 +60,23 @@ jobs:
         run: |
           cd build-windows-${{ matrix.arch }}
           cpack -G ZIP
+
+      - name: Rename ARM64 artifacts
+        if: matrix.arch == 'arm64'
+        shell: pwsh
+        run: |
+          cd build-windows-arm64
+          Get-ChildItem "midi-router-client-*.exe" | Rename-Item -NewName { $_.Name -replace '.exe','-ARM.exe' }
+          Get-ChildItem "midi-router-client-*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','-ARM.zip' }
+
+      - name: Upload NSIS
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-${{ matrix.arch }}-nsis
+          path: build-windows-${{ matrix.arch }}/*.exe
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-${{ matrix.arch }}-zip
+          path: build-windows-${{ matrix.arch }}/*.zip
