@@ -21,6 +21,12 @@ jobs:
         with:
           arch: ${{ matrix.arch == 'arm64' && 'amd64_arm64' || 'x64' }}
 
+      - name: Use Python 3.10 (required for aqtinstall)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+
       # Install Qt exactly like the test workflow
       - uses: jurplel/install-qt-action@v4
         with:
