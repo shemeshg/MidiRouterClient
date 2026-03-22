@@ -5,37 +5,32 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       matrix:
         arch: [x64, arm64]
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      
-      - name: Install aqtinstall
-        run: pip install aqtinstall
-      
-      - name: List available Qt versions for Windows
-        run: python -m aqt list-qt windows desktop
-      
 
-      - name: Install Qt6 (latest available for Windows)
+      - name: Install NSIS
+        run: choco install nsis -y
+
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.10.3'
           host: 'windows'
           target: 'desktop'
           arch: ${{ matrix.arch == 'arm64' && 'win64_msvc2019_arm64' || 'win64_msvc2019_64' }}
-          modules: 'qtwebsockets qtsvg'
+          modules: ${{ matrix.arch == 'arm64' && 'qtsvg' || 'qtwebsockets qtsvg' }}
           cache: true
-      
-      
+
       - name: Configure
         run: |
           mkdir build-windows-${{ matrix.arch }}
@@ -44,43 +39,23 @@ jobs:
                 -DCMAKE_INSTALL_PREFIX=. ^
                 -DCMAKE_PREFIX_PATH="${{ env.Qt6_DIR }}" ^
                 ../
-      
+
       - name: Build
         run: |
           cd build-windows-${{ matrix.arch }}
           cmake --build . --parallel %NUMBER_OF_PROCESSORS%
-      
+
       - name: Install
         run: |
           cd build-windows-${{ matrix.arch }}
           cmake --install .
-      
+
       - name: Package NSIS
         run: |
           cd build-windows-${{ matrix.arch }}
           cpack -G NSIS
-      
+
       - name: Package ZIP
         run: |
           cd build-windows-${{ matrix.arch }}
           cpack -G ZIP
-      
-      - name: Rename ARM64 artifacts
-        if: matrix.arch == 'arm64'
-        shell: pwsh
-        run: |
-          cd build-windows-arm64
-          Get-ChildItem "midi-router-client-*.exe" | Rename-Item -NewName { $_.Name -replace '.exe','-ARM.exe' }
-          Get-ChildItem "midi-router-client-*.zip" | Rename-Item -NewName { $_.Name -replace '.zip','-ARM.zip' }
-      
-      - name: Upload NSIS
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-${{ matrix.arch }}-nsis
-          path: build-windows-${{ matrix.arch }}/*.exe
-      
-      - name: Upload ZIP
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-${{ matrix.arch }}-zip
-          path: build-windows-${{ matrix.arch }}/*.zip
