@@ -64,9 +64,7 @@ ColumnLayout {
                                   slider.value = rawInt
                               } else {
                                   let index = cmbModel.findIndex(item => item.value.toString() === value.toString());
-                                     console.log("yes")
                                   if (index === -1){return;}
-                                     console.log("yes2")
                                   cmb.currentIndex = index
 
                                   setVal(Number(value), false)
