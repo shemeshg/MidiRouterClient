@@ -123,7 +123,7 @@ void addUserControl()
     uc->setMaxVal(127);
     uc->setMinVal(0);
     uc->setDropdownListUuid("-1");
-    uc->setEventType(UserControl::EventType::CC);
+    uc->setEventType(UserControl::EventType::PROGRAM_CHANGE);
     uc->setChannelId(1);
     uc->setCcId(0);
     uc->setNrpnControl(0);
