@@ -56,17 +56,20 @@ ColumnLayout {
                                   const offset = Math.floor((fromVal + toVal + 1)) / 2
                                   const rawInt = Number(value) + offset
 
+                                if (cmbModel.length !== 0){
                                   let index = cmbModel.findIndex(item => item.value.toString() === rawInt.toString());
                                   if (index === -1){return;}
                                   cmb.currentIndex = index
+                                }
 
                                   setVal(rawInt, false)
                                   slider.value = rawInt
                               } else {
+                                if (cmbModel.length !== 0){
                                   let index = cmbModel.findIndex(item => item.value.toString() === value.toString());
                                   if (index === -1){return;}
                                   cmb.currentIndex = index
-
+                                }
                                   setVal(Number(value), false)
                                   slider.value = Number(value)
                               }

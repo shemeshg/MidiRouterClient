@@ -38,6 +38,21 @@ ColumnLayout {
         ComboSilder {
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
+
+            function sendEvent(){
+                if (modelData.eventType === 0){
+                    Constants.balData.sendControlChange(
+                        portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
+                } else if (modelData.eventType === 1){
+                    Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
+                } else if (modelData.eventType === 2){
+                    Constants.balData.setNonRegisteredParameterInt(
+                        portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
+
+                }
+            }
+
+
             function getCmbModel(controlModelData){
 
                 let ddlists = Constants.balData.
@@ -98,23 +113,20 @@ ColumnLayout {
                           }
 
 
-                          Constants.balData.sendEmbededCommandsSequence(
-                                      portNumber, cmbSliderId.cmbModel[cmbSliderId.val].fullText , [modelData.channelId.toString()],(isFound)=>{
-                                              if(isFound){
-                                                  return;
-                                              } else {
-                                                  if (modelData.eventType === 0){
-                                                      Constants.balData.sendControlChange(
-                                                          portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
-                                                  } else if (modelData.eventType === 1){
-                                                      Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
-                                                  } else if (modelData.eventType === 2){
-                                                      Constants.balData.setNonRegisteredParameterInt(
-                                                          portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
-
+                          if (modelData.isShowDropdown) {
+                              Constants.balData.sendEmbededCommandsSequence(
+                                          portNumber, cmbSliderId.cmbModel[cmbSliderId.val].fullText , [modelData.channelId.toString()],(isFound)=>{
+                                                  if(isFound){
+                                                      return;
+                                                  } else {
+                                                    sendEvent()
                                                   }
-                                              }
-                                      } )
+                                          } )
+                          } else {
+                              sendEvent()
+                          }
+
+
 
 
                       }
