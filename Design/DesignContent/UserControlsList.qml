@@ -51,7 +51,9 @@ ColumnLayout {
                     const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
                     if (theEntryFound) {
                         retList = theEntryFound.data.trim().split("\n").map((row, idx) => {
-                                                                                return { text: row, value: idx + controlModelData.minVal };
+                                                                                return { text: row.trim().split("|")[0],
+                                                                                    fullText: row,
+                                                                                    value: idx + controlModelData.minVal };
                                                                             });
                     }
 
@@ -96,10 +98,8 @@ ColumnLayout {
                           }
 
 
-
-
                           Constants.balData.sendEmbededCommandsSequence(
-                                      portNumber, cmbSliderId.cmbModel[cmbSliderId.val].text , [modelData.channelId.toString()],(isFound)=>{
+                                      portNumber, cmbSliderId.cmbModel[cmbSliderId.val].fullText , [modelData.channelId.toString()],(isFound)=>{
                                               if(isFound){
                                                   return;
                                               } else {
