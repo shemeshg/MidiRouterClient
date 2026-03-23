@@ -18,6 +18,7 @@ CoreLabel.qml
 CoreLabelSelect.qml
 CoreLink.qml
 CoreSlider.qml
+CoreSpinBox.qml
 CoreSwitch.qml
 CoreSystemPalette.qml
 CoreTextArea.qml

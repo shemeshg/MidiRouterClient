@@ -38,15 +38,23 @@ ColumnLayout {
                               setName(text)
                           }
         }
-        CoreTextField {
+        CoreSpinBox {
             visible: isShowLabel
-            Layout.preferredWidth: Constants.font.pixelSize * (text.length + 1)
-            text: is64Mode ? val - Math.floor ((fromVal + toVal + 1 )) / 2 : val
-            onTextEdited: ()=>{
+            editable: true
+            Layout.preferredWidth: Constants.font.pixelSize * (textFromValue(value).length + 3)
+            value : is64Mode ? val - Math.floor ((fromVal + toVal + 1 )) / 2 : val
+            from: is64Mode
+                  ? fromVal - Math.floor((fromVal + toVal + 1) / 2)
+                  : fromVal
+
+            to:   is64Mode
+                  ? toVal - Math.floor((fromVal + toVal + 1) / 2)
+                  : toVal
+            onValueModified: ()=>{
 
                               if (is64Mode){
                                   const offset = Math.floor((fromVal + toVal + 1)) / 2
-                                  const rawInt = Number(text) + offset
+                                  const rawInt = Number(value) + offset
 
                                   let index = cmbModel.findIndex(item => item.value.toString() === rawInt.toString());
                                   if (index === -1){return;}
@@ -55,12 +63,14 @@ ColumnLayout {
                                   setVal(rawInt, false)
                                   slider.value = rawInt
                               } else {
-                                  let index = cmbModel.findIndex(item => item.value.toString() === text);
+                                  let index = cmbModel.findIndex(item => item.value.toString() === value.toString());
+                                     console.log("yes")
                                   if (index === -1){return;}
+                                     console.log("yes2")
                                   cmb.currentIndex = index
 
-                                  setVal(Number(text), false)
-                                  slider.value = Number(text)
+                                  setVal(Number(value), false)
+                                  slider.value = Number(value)
                               }
 
 
