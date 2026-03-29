@@ -59,10 +59,25 @@ private:
         // Delay server start until event loop is running
         QTimer::singleShot(0, [] {
             instance->worker->startServer(instance->worker->reqServerPortNumber());
+
+            if (!instance->worker->isServerRunning()) {
+                // Report failure
+                instance->status.dwCurrentState = SERVICE_STOPPED;
+                instance->status.dwWin32ExitCode = ERROR_SERVICE_SPECIFIC_ERROR;
+                SetServiceStatus(instance->statusHandle, &instance->status);
+
+                instance->app->quit();
+                return;
+            }
+
+            // SUCCESS — now tell SCM we are running
+            instance->status.dwCurrentState = SERVICE_RUNNING;
+            SetServiceStatus(instance->statusHandle, &instance->status);
         });
 
+
         // Report running
-        instance->status.dwCurrentState = SERVICE_RUNNING;
+        instance->status.dwCurrentState = SERVICE_START_PENDING;
         SetServiceStatus(instance->statusHandle, &instance->status);
 
         // BLOCK on Qt event loop

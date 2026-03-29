@@ -88,7 +88,7 @@ const bool MidiServerClass::getIsSaveConfigOnServer()
 {
     if (isCustomConfigFilePath) {return true;}
 #ifdef Q_OS_WIN
-    QSettings settings{QSettings::IniFormat, QSettings::SystemScope,"shemeshg", "MidiRouterClient"};
+    QSettings settings{QSettings::IniFormat, QSettings::UserScope,"shemeshg", "MidiRouterClient"};
 #else
     QSettings settings{"shemeshg", "MidiRouterClient"};
 #endif
