@@ -126,6 +126,11 @@ int ParsedArguments::runHeadless(int argc, char *argv[]) {
 
     bl.startServer(portNumber);
     qDebug()<<"Port"<<portNumber;
+    if (!bl.isServerRunning()){
+        qDebug()<<"Could not start server, is port already used?";
+        return 1;
+    }
+
 
     std::signal(SIGINT, handleSigInt);  //for ^c
     std::signal(SIGTERM, handleSigInt); //for systemd
