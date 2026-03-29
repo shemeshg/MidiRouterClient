@@ -74,11 +74,9 @@ const QString MidiServerClass::getConfigFilePath()
     if (isCustomConfigFilePath) {
         return customConfigFilePath;
     }
-#ifdef Q_OS_WIN
-    QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
-#else
-    QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-#endif
+
+    QString cacheFolderPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+
     QDir dir(cacheFolderPath);
     QString filePath = dir.filePath("midiRouterClient.json");
     return filePath;

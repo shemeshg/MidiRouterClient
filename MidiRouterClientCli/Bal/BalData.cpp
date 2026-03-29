@@ -35,12 +35,7 @@ loadDefaultHeaderTabSelected();
 }
 
 void BalData::openCashFolder(){
-    #ifdef Q_OS_WIN
-    QDesktopServices::openUrl(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)));
-    #else
-    QDesktopServices::openUrl(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)));
-    #endif
-    
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)));
 }
 
 void BalData::queryRemoteMidiPorts(QString serverName, QString serverPort, const QJSValue &callback)
