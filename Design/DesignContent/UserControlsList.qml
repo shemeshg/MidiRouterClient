@@ -42,16 +42,34 @@ ColumnLayout {
             function sendEvent(){
                 if (modelData.eventType === 0){
                     Constants.balData.sendControlChange(
-                        portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
+                                portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
                 } else if (modelData.eventType === 1){
                     Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
                 } else if (modelData.eventType === 2){
                     Constants.balData.setNonRegisteredParameterInt(
-                        portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
+                                portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
 
                 }
             }
 
+            function getPrePostAnyData(controlModelData, constStr){
+                let ddlists = Constants.balData.
+                midiClientConnection.
+                userDataConfig.dropdownlists;
+
+                const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
+
+                if (theEntryFound) {
+                    const theEntryFoundData = theEntryFound.data.trim().split("\n")
+                    .filter(line => line.startsWith(constStr) )
+                    .map(line => line.replace(constStr, "").trim())
+                    .join(" ");
+
+                    return theEntryFoundData
+
+                }
+                return ""
+            }
 
             function getCmbModel(controlModelData){
 
@@ -64,12 +82,17 @@ ColumnLayout {
                     let retList = [];
 
                     const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
+
                     if (theEntryFound) {
-                        retList = theEntryFound.data.trim().split("\n").map((row, idx) => {
-                                                                                return { text: row.trim().split("|")[0],
-                                                                                    fullText: row,
-                                                                                    value: idx + controlModelData.minVal };
-                                                                            });
+                        const theEntryFoundData = theEntryFound.data.trim().split("\n")
+                        .filter(line => !line.startsWith("PRE-ANY") && !line.startsWith("POST-ANY"))
+                        .join("\n");
+
+                        retList = theEntryFoundData.trim().split("\n").map((row, idx) => {
+                                                                               return { text: row.trim().split("|")[0],
+                                                                                   fullText: row,
+                                                                                   value: idx + controlModelData.minVal };
+                                                                           });
                     }
 
 
@@ -114,14 +137,30 @@ ColumnLayout {
 
 
                           if (modelData.isShowDropdown) {
+                              const preAnyData = getPrePostAnyData(modelData,"PRE-ANY")
+                              const postAnyData = getPrePostAnyData(modelData,"POST-ANY")
+
+                              if (preAnyData){
+                                  Constants.balData.sendEmbededCommandsSequence(
+                                      portNumber,preAnyData,
+                                      [modelData.channelId.toString()],
+                                      (isFound)=>{})
+                              }
+
                               Constants.balData.sendEmbededCommandsSequence(
-                                          portNumber, cmbSliderId.cmbModel[cmbSliderId.val].fullText , [modelData.channelId.toString()],(isFound)=>{
-                                                  if(isFound){
-                                                      return;
-                                                  } else {
-                                                    sendEvent()
-                                                  }
-                                          } )
+
+                                  portNumber,cmbSliderId.cmbModel[cmbSliderId.val].fullText , [modelData.channelId.toString()],(isFound)=>{
+                                      if(!isFound){
+                                          sendEvent()
+                                      }
+                                      if (postAnyData){
+                                          Constants.balData.sendEmbededCommandsSequence(
+                                              portNumber,postAnyData,
+                                              [modelData.channelId.toString()],
+                                              (isFound)=>{})
+                                      }
+
+                                  } )
                           } else {
                               sendEvent()
                           }

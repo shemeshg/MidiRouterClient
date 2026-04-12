@@ -238,6 +238,7 @@ private:
                         }
                         wcmidiout->openPort(portNumber);
 
+                        QStringList postAnyItems;
                         if (  getJson<bool>(ctrlObj["isShowDropdown"])){
                             auto array = getJson<QJsonArray>(json["dropdownlists"]);
                             QStringList ddItems{};
@@ -247,13 +248,36 @@ private:
                                     ddItems = getJson<QString>(obj["data"]).split("\n");
                                 }
                             }
+
+                            QStringList preAnyItems;
+                            QStringList ddItemsCleanItems;
+                            for (const QString &item : ddItems) {
+                                if (item.startsWith("PRE-ANY")) {
+                                    preAnyItems << item.mid(QString("PRE-ANY").length()).trimmed();
+                                }
+                                else if (item.startsWith("POST-ANY")) {
+                                    postAnyItems << item.mid(QString("POST-ANY").length()).trimmed();
+                                }
+                                else {
+                                    ddItemsCleanItems << item;
+                                }
+                            }
+
+                            QStringList channelIds{
+                                                   QString::number(getJson<int>(ctrlObj["channelId"]))};
+                            if (preAnyItems.length() >0){
+                                wcmidiout->sendEmbededCommandsSequence(portNumber,preAnyItems.join(" "),channelIds);
+                            }
+
                             int inputVal = getJson<int>(ctrlObj["inputVal"]);
-                            if (ddItems.length() > inputVal){
-                                QStringList channelIds{
-                                                       QString::number(getJson<int>(ctrlObj["channelId"]))};
+                            if (ddItemsCleanItems.length() > inputVal){
+
                                 if(
-                                    wcmidiout->sendEmbededCommandsSequence(portNumber,ddItems[inputVal],channelIds)
+                                    wcmidiout->sendEmbededCommandsSequence(portNumber,ddItemsCleanItems[inputVal],channelIds)
                                     ){
+                                    if (postAnyItems.length() >0){
+                                        wcmidiout->sendEmbededCommandsSequence(portNumber,postAnyItems.join(" "),channelIds);
+                                    }
                                     continue;
                                 }
                             }
@@ -277,6 +301,10 @@ private:
                                 getJson<int>(ctrlObj["inputVal"]), channelIds);
                         } else {
                             throw std::runtime_error("Unexpected JSON format");
+                        }
+
+                        if (postAnyItems.length() >0){
+                            wcmidiout->sendEmbededCommandsSequence(portNumber,postAnyItems.join(" "),channelIds);
                         }
                     }
                 }

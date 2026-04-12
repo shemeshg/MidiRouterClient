@@ -181,9 +181,13 @@ bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsStri
             int cc1 = m.captured(1).toInt();
             int cc2 = m.captured(2).toInt();
 
-            QTimer::singleShot(accumulatedDelay, this, [=]() {
+            if (accumulatedDelay == 0){
                 sendControlChange(portNumber, cc1, cc2, channels);
-            });
+            } else {
+                QTimer::singleShot(accumulatedDelay, this, [=]() {
+                    sendControlChange(portNumber, cc1, cc2, channels);
+                });
+            }
 
             tokenFound = true;
             continue;
@@ -193,9 +197,13 @@ bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsStri
         if (m.captured(3).length()) {
             int pc = m.captured(3).toInt();
 
-            QTimer::singleShot(accumulatedDelay, this, [=]() {
+            if (accumulatedDelay == 0){
                 sendProgramChange(portNumber, pc, channels);
-            });
+            } else {
+                QTimer::singleShot(accumulatedDelay, this, [=]() {
+                    sendProgramChange(portNumber, pc, channels);
+                });
+            }
 
             tokenFound = true;
             continue;
@@ -206,9 +214,14 @@ bool WcMidiOut::sendEmbededCommandsSequence(int portNumber, QString commandsStri
             int n1 = m.captured(4).toInt();
             int n2 = m.captured(5).toInt();
 
-            QTimer::singleShot(accumulatedDelay, this, [=]() {
+            if (accumulatedDelay == 0){
                 setNonRegisteredParameterInt(portNumber, n1, n2, channels);
-            });
+            } else {
+                QTimer::singleShot(accumulatedDelay, this, [=]() {
+                    setNonRegisteredParameterInt(portNumber, n1, n2, channels);
+                });
+            }
+
 
             tokenFound = true;
             continue;
