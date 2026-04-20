@@ -208,12 +208,18 @@ Window {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 CoreButton {
-                    text: "Apply"
+                    id: applyBtn
+                    text: "&Save"
                     visible: Constants.balData.midiClientConnection.serverStatus
                              === Constants.ServerStatus.RUNNING
                     onClicked: {
                         Constants.balData.applyConfig(() => {
                         });
+                    }
+                    Shortcut {
+                        enabled: applyBtn.visible && applyBtn.enabled
+                        sequences: ["Ctrl+S"]
+                        onActivated: applyBtn.click()
                     }
                 }
 
@@ -226,8 +232,9 @@ Window {
                 }
 
                 CoreButton {
+                    id: moreBtn
                     text: "⋮"
-                    hooverText: "About and settings"
+                    hooverText: "<b>⌘,</b> About and settings"
                     onClicked: {
                         if (headerBarId.state === "About" ){
                             headerBarId.state = aboutPreviousStr
@@ -238,6 +245,11 @@ Window {
                             headerBarId.state = "About"
                             isSubForm = true
                         }
+                    }
+                    Shortcut {
+                        enabled: moreBtn.visible && moreBtn.enabled
+                        sequences: ["Ctrl+,"]
+                        onActivated: moreBtn.click()
                     }
                 }
             }
