@@ -192,7 +192,7 @@ void BalData::saveIsSaveConfigOnServer(const bool s)
 }
 void BalData::loadIsMonitorInExternalDialog()
 {
-    bool s = settings.value("isMonitorInExternalDialog", true).toBool();
+    bool s = settings.value("isMonitorInExternalDialog", false).toBool();
     setIsMonitorInExternalDialog(s);
 }
 

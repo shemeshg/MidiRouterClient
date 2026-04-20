@@ -62,7 +62,7 @@ ColumnLayout {
             onToggled: {
                 midiRouteInput.monitor.isMonitored = checked;
                 Constants.balData.applyConfig(() => {
-                    console.log("client says we have finished applay config");
+                    //console.log("client says we have finished applay config");
                 });
 
                 openMonitorDialogIfRequired()
@@ -74,7 +74,7 @@ ColumnLayout {
             onTextEdited: {
                 midiRouteInput.monitor.logLen = Number(text) > 0 ? Number(text) : 1
                 Constants.balData.applyConfig(() => {
-                    console.log("client says we have finished applay config");
+                    //console.log("client says we have finished applay config");
                 });
             }
         }
