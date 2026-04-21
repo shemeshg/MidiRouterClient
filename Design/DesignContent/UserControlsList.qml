@@ -62,20 +62,7 @@ ColumnLayout {
             Layout.rightMargin:  Constants.font.pixelSize
             visible: testFilterByDescription(modelData.description)
 
-            function sendEvent(){
-                if (modelData.eventType === 0){
-                    Constants.balData.sendControlChange(
-                                portNumber, modelData.ccId, modelData.inputVal, [modelData.channelId.toString()],()=>{} )
-                } else if (modelData.eventType === 1){
-                    Constants.balData.sendProgramChange(portNumber, modelData.inputVal, [modelData.channelId.toString()],()=>{})
-                } else if (modelData.eventType === 2){
-                    Constants.balData.setNonRegisteredParameterInt(
-                                portNumber, modelData.nrpnControl, modelData.inputVal, [modelData.channelId.toString()], ()=>{})
-
-                }
-            }
-
-            function getPrePostAnyData(controlModelData, constStr){
+            function getDdAnyData(controlModelData){
                 let ddlists = Constants.balData.
                 midiClientConnection.
                 userDataConfig.dropdownlists;
@@ -84,15 +71,13 @@ ColumnLayout {
 
                 if (theEntryFound) {
                     const theEntryFoundData = theEntryFound.data.trim().split("\n")
-                    .filter(line => line.startsWith(constStr) )
-                    .map(line => line.replace(constStr, "").trim())
-                    .join(" ");
-
                     return theEntryFoundData
 
                 }
-                return ""
+                return []
             }
+
+
 
             function getCmbModel(controlModelData){
 
@@ -158,39 +143,23 @@ ColumnLayout {
                               return;
                           }
 
-
-                          if (modelData.isShowDropdown) {
-                              const preAnyData = getPrePostAnyData(modelData,"PRE-ANY")
-                              const postAnyData = getPrePostAnyData(modelData,"POST-ANY")
-
-                              if (preAnyData){
-                                  Constants.balData.sendEmbededCommandsSequence(
-                                      portNumber,preAnyData,
-                                      [modelData.channelId.toString()],
-                                      (isFound)=>{})
-                              }
-
-                              Constants.balData.sendEmbededCommandsSequence(
-
-                                  portNumber,cmbSliderId.cmbModel[cmbSliderId.val].fullText , [modelData.channelId.toString()],(isFound)=>{
-                                      if(!isFound){
-                                          sendEvent()
-                                      }
-                                      if (postAnyData){
-                                          Constants.balData.sendEmbededCommandsSequence(
-                                              portNumber,postAnyData,
-                                              [modelData.channelId.toString()],
-                                              (isFound)=>{})
-                                      }
-
-                                  } )
-                          } else {
-                              sendEvent()
+                          let ccOrnrpnControl = -1;
+                          if (modelData.eventType === 0){
+                              ccOrnrpnControl = modelData.ccId;
+                          } else if (modelData.eventType === 2){
+                              ccOrnrpnControl = modelData.nrpnControl;
                           }
 
-
-
-
+                          Constants.balData.sendUserControl(
+                              modelData.outputPortnName,
+                              [modelData.channelId.toString()],
+                              modelData.isShowDropdown,
+                              getDdAnyData(modelData),
+                              cmbSliderId.val,
+                              modelData.eventType,
+                             ccOrnrpnControl,
+                              ()=>{}
+                              )
                       }
             onSetName: (s)=>{
 

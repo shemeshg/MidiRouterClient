@@ -196,7 +196,25 @@ public slots:
         return ret;
     }
 
-
+    //- {fn}
+    void sendUserControl(const QString &outputPortnName,
+                         const QStringList &channelIds,
+                         const bool isShowDropdown,
+                         const QStringList &ddItems,
+                         const int inputVal,
+                         const int eventType,
+                         const int ccOrnrpnControl)
+    //-only-file body
+    {
+        applayConfig.sendUserControl(outputPortnName,
+                                     channelIds,
+                                     isShowDropdown,
+                                     ddItems,
+                                     inputVal,
+                                     eventType,
+                                     ccOrnrpnControl
+                                     );
+    }
 
     //- {fn}
     void presetOnOff(int presetMidiType, QString presetUuid)

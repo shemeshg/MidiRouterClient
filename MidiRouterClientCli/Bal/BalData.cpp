@@ -346,14 +346,27 @@ void BalData::sendProgramChange(int portNumber, int program, QStringList channel
     mcc->invokeMethod("wcmidiout", "sendProgramChange", a, false, callback, qjsEngine(this));
 }
 
-void BalData::sendEmbededCommandsSequence(int portNumber, QString commandsString, QStringList channels, const QJSValue &callback)
+
+void BalData::sendUserControl(const QString &outputPortnName,
+                              const QStringList &channelIds,
+                              const bool isShowDropdown,
+                              const QStringList &ddItems,
+                              const int inputVal,
+                              const int eventType,
+                              const int ccOrnrpnControl,
+                              const QJSValue &callback)
 {
-    QJsonArray a = {portNumber, commandsString};
-    QJsonArray b = QJsonArray::fromStringList( channels);
-    if (!channels.isEmpty()){
-        a.append(b);
-    }
-    mcc->invokeMethod("wcmidiout", "sendEmbededCommandsSequence", a, true, callback, qjsEngine(this));
+    QJsonArray params = {};
+    params.append(outputPortnName);
+    params.append(QJsonArray::fromStringList( channelIds));
+    params.append(isShowDropdown);
+    params.append(QJsonArray::fromStringList( ddItems));
+    params.append(inputVal);
+    params.append(eventType);
+    params.append(ccOrnrpnControl);
+
+
+    mcc->invokeMethod("wcuserdata", "sendUserControl", params, false, callback, qjsEngine(this));
 }
 
 void BalData::testDummyDelete(const QJSValue &callback)
