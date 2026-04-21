@@ -10,17 +10,10 @@ ColumnLayout {
     property var midiRouteInput: ({})
     Component.onCompleted: {
         inputName = inPortsLoaderId.inPortName
-        midiRouteInput = Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName)
-        openMonitorDialogIfRequired()
+        midiRouteInput = Constants.balData.midiClientConnection.userDataConfig.activePreset.getInputOrCreateByName(inputName)        
     }
 
-    function openMonitorDialogIfRequired(){
-        monitorDialog.close()
-        if (Constants.balData.isMonitorInExternalDialog && midiRouteInput.monitor.isMonitored){
-            monitorDialog.inputName = inputName
-            monitorDialog.open()
-        }
-    }
+
 
     GroupBox {
         Layout.margins:  Constants.font.pixelSize
@@ -65,7 +58,6 @@ ColumnLayout {
                     //console.log("client says we have finished applay config");
                 });
 
-                openMonitorDialogIfRequired()
 
             }
         }
@@ -91,7 +83,17 @@ ColumnLayout {
                        }
 
         }
+        CoreButton {
+            hooverText: "open in new window"
+            text: "⧉"
 
+            onClicked: ()=>{
+                           var d = monitorDialogComponent.createObject(loaderId);
+                           d.inputName = inputName
+                           d.open();
+                       }
+
+        }
     }
     Repeater {
         Layout.leftMargin:   Constants.font.pixelSize

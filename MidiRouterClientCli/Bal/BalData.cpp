@@ -26,7 +26,6 @@ loadIsAutoStartServer();
 loadClientPortNumber();
 loadIsAutoConnectClient();
 loadIsSaveConfigOnServer();
-loadIsMonitorInExternalDialog();
 loadDefaultFontSize();
 loadDefaultHeaderTabSelected();
 
@@ -189,17 +188,6 @@ void BalData::saveIsSaveConfigOnServer(const bool s)
 {
     settings.setValue("isSaveConfigOnServer", s);
     loadIsSaveConfigOnServer();
-}
-void BalData::loadIsMonitorInExternalDialog()
-{
-    bool s = settings.value("isMonitorInExternalDialog", false).toBool();
-    setIsMonitorInExternalDialog(s);
-}
-
-void BalData::saveIsMonitorInExternalDialog(const bool s)
-{
-    settings.setValue("isMonitorInExternalDialog", s);
-    loadIsMonitorInExternalDialog();
 }
 void BalData::loadDefaultFontSize()
 {

@@ -32,8 +32,15 @@ Dialog {
                 }
                 ColumnLayout{
                     id: cl
-                    CoreLabel {
-                        text: inputName
+                    RowLayout {
+                        CoreLabel {
+                            text: inputName
+                        }
+                        CoreLabel {
+                            text: midiRouteInput.monitor.isMonitored ? " (*)" : ""
+                            color: CoreSystemPalette.buttonText
+
+                        }
                     }
                     Repeater {
                         id: dialogRepeater

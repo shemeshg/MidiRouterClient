@@ -27,10 +27,13 @@ Window {
     property bool isEasyConfigForm: false
     property string aboutPreviousStr: "InPorts"
 
-
-    InputMonitorDialog {
-        id: monitorDialog
+    Component {
+        id: monitorDialogComponent
+        InputMonitorDialog {
+        }
     }
+
+
 
 
     onIsClientConnectedChanged: ()=>{

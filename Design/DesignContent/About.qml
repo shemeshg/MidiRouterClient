@@ -106,15 +106,6 @@ Column {
                         }
                     }
                 }
-                CoreSwitch {
-                    id: isMonitorInExternalDialog
-                    text: "Monitor in external dialog"
-                    onToggled: {
-                        Constants.balData.saveIsMonitorInExternalDialog(checked)
-                    }
-
-                    checked: Constants.balData.isMonitorInExternalDialog
-                }
                 RowLayout {
                     CoreButton {
                         text: "Download client settings"

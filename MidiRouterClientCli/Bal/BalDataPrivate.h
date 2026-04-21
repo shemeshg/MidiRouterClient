@@ -30,7 +30,6 @@ class BalDataPrivate : public QObject
     Q_PROPERTY(int clientPortNumber READ clientPortNumber WRITE setClientPortNumber NOTIFY clientPortNumberChanged )
     Q_PROPERTY(bool isAutoConnectClient READ isAutoConnectClient WRITE setIsAutoConnectClient NOTIFY isAutoConnectClientChanged )
     Q_PROPERTY(bool isSaveConfigOnServer READ isSaveConfigOnServer WRITE setIsSaveConfigOnServer NOTIFY isSaveConfigOnServerChanged )
-    Q_PROPERTY(bool isMonitorInExternalDialog READ isMonitorInExternalDialog WRITE setIsMonitorInExternalDialog NOTIFY isMonitorInExternalDialogChanged )
     Q_PROPERTY(QString defaultFontSize READ defaultFontSize WRITE setDefaultFontSize NOTIFY defaultFontSizeChanged )
     Q_PROPERTY(QString defaultHeaderTabSelected READ defaultHeaderTabSelected WRITE setDefaultHeaderTabSelected NOTIFY defaultHeaderTabSelectedChanged )
     
@@ -181,18 +180,6 @@ void setIsSaveConfigOnServer(const bool newIsSaveConfigOnServer)
 
 
     
-    bool isMonitorInExternalDialog() const{return m_isMonitorInExternalDialog;} 
-    
-void setIsMonitorInExternalDialog(const bool newIsMonitorInExternalDialog)
-    {
-        if (m_isMonitorInExternalDialog == newIsMonitorInExternalDialog)
-            return;
-        m_isMonitorInExternalDialog = newIsMonitorInExternalDialog;
-        emit isMonitorInExternalDialogChanged();
-    }
-
-
-    
     QString defaultFontSize() const{return m_defaultFontSize;} 
     
 void setDefaultFontSize(const QString &newDefaultFontSize)
@@ -231,7 +218,6 @@ signals:
     void clientPortNumberChanged();
     void isAutoConnectClientChanged();
     void isSaveConfigOnServerChanged();
-    void isMonitorInExternalDialogChanged();
     void defaultFontSizeChanged();
     void defaultHeaderTabSelectedChanged();
     
@@ -253,7 +239,6 @@ private:
     int m_clientPortNumber;
     bool m_isAutoConnectClient;
     bool m_isSaveConfigOnServer;
-    bool m_isMonitorInExternalDialog;
     QString m_defaultFontSize;
     QString m_defaultHeaderTabSelected;
     
