@@ -33,11 +33,34 @@ ColumnLayout {
     }
 
 
+    CoreTextField {
+        Layout.margins:  Constants.font.pixelSize
+        id: filterByDescription
+        Layout.fillWidth: true
+        placeholderText: "RegEx filter by description ex. tag1|tag2 (⏎ - send 1st)"
+        onAccepted: {
+            for (let i = 0; i < controlRepeater.count; i++) {
+                let item = controlRepeater.itemAt(i)
+                if (item && item.visible) {
+                    item.setVal(item.val, true)
+                    break
+                }
+            }
+        }
+    }
+
+    function testFilterByDescription(userInput) {
+        const searchRegExp = new RegExp(filterByDescription.text,"i");
+        return searchRegExp.test(userInput);
+    }
+
     Repeater {
+        id: controlRepeater
         model: activePreset.userControls
         ComboSilder {
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
+            visible: testFilterByDescription(modelData.description)
 
             function sendEvent(){
                 if (modelData.eventType === 0){
