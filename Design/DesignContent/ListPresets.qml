@@ -30,13 +30,43 @@ ColumnLayout {
             }
         }
     }
+
+    CoreTextField {
+        Layout.margins:  Constants.font.pixelSize
+        id: filterByDescription
+        Layout.fillWidth: true
+        placeholderText: "RegEx filter by description ex. tag1|tag2 (⏎ - select 1st)"
+        onAccepted: {
+            for (let i = 0; i < presetRepeater.count; i++) {
+                let item = presetRepeater.itemAt(i)
+                if (item && item.visible) {
+                    item.selectPreset()
+                    break
+                }
+            }
+        }
+    }
+
+    function testFilterByDescription(userInput) {
+        const searchRegExp = new RegExp(filterByDescription.text,"i");
+        return searchRegExp.test(userInput);
+    }
+
     Repeater {
+        id: presetRepeater
         Layout.fillWidth: true
         model: Constants.balData.midiClientConnection.userDataConfig.midiRoutePresets
 
         RowLayout {
+            function selectPreset(){
+                Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index, true);
+                Constants.balData.applyConfig(() => {
+                });
+            }
+
             Layout.leftMargin:  Constants.font.pixelSize
             Layout.rightMargin:  Constants.font.pixelSize
+            visible: testFilterByDescription(modelData.name)
             CoreButton {
                 hooverText: "select"
                 icon.name: "select"
@@ -47,9 +77,7 @@ ColumnLayout {
 
                 visible: index !== Constants.balData.midiClientConnection.userDataConfig.activePresetID
                 onClicked: {
-                    Constants.balData.midiClientConnection.userDataConfig.setActivePreset(index, true);
-                    Constants.balData.applyConfig(() => {
-                    });
+                    selectPreset();
                 }
             }
             CoreSwitch {
