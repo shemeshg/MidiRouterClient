@@ -336,6 +336,7 @@ private:
                         } else {
                             qDebug() << "Critical AppConfig json error";
                             criticalError = true;
+                            return;
                         }
 
                         sendUserControl(outputPortnName,
