@@ -101,7 +101,9 @@ public:
                 portNumber, ccOrnrpnControl,
                 inputVal, channelIds);
         } else {
-            throw std::runtime_error("Unexpected JSON format");
+            qDebug() << "Critical AppConfig json error";
+            criticalError = true;
+            return;
         }
 
         if (postAnyItems.length() >0){
@@ -332,7 +334,8 @@ private:
                         }  else if (eventType == 2) {
                             ccOrnrpnControl = getJson<int>(ctrlObj["nrpnControl"]);
                         } else {
-                            throw std::runtime_error("Unexpected JSON format");
+                            qDebug() << "Critical AppConfig json error";
+                            criticalError = true;
                         }
 
                         sendUserControl(outputPortnName,
