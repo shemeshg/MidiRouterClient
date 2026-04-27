@@ -3,6 +3,7 @@ import Design
 import Core
 import QtQuick.Layouts
 import QtQuick.Controls
+import UiComp
 
 Column {
     ColumnLayout {
@@ -136,6 +137,11 @@ Column {
                         }
                     }
                 }
+            }
+
+            ConnBookmarks {
+                id: connBookmarks
+                Layout.margins: Constants.font.pixelSize
             }
 
             FormGroupBox {
