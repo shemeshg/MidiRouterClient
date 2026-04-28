@@ -57,6 +57,7 @@ void saveIsAutoConnectClient(const bool IsAutoConnectClient);
 void saveIsSaveConfigOnServer(const bool IsSaveConfigOnServer);
 void saveDefaultFontSize(const QString DefaultFontSize);
 void saveDefaultHeaderTabSelected(const QString DefaultHeaderTabSelected);
+void saveConnBookmarksList(const QString ConnBookmarksList);
 
 //[[[end]]]
 
@@ -125,6 +126,7 @@ void loadIsAutoConnectClient();
 void loadIsSaveConfigOnServer();
 void loadDefaultFontSize();
 void loadDefaultHeaderTabSelected();
+void loadConnBookmarksList();
 
 //[[[end]]]
 

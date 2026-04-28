@@ -142,6 +142,7 @@ Column {
             ConnBookmarks {
                 id: connBookmarks
                 Layout.margins: Constants.font.pixelSize
+
             }
 
             FormGroupBox {

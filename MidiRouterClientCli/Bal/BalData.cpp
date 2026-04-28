@@ -28,6 +28,7 @@ loadIsAutoConnectClient();
 loadIsSaveConfigOnServer();
 loadDefaultFontSize();
 loadDefaultHeaderTabSelected();
+loadConnBookmarksList();
 
 //[[[end]]]
 
@@ -210,6 +211,17 @@ void BalData::saveDefaultHeaderTabSelected(const QString s)
 {
     settings.setValue("defaultHeaderTabSelected", s);
     loadDefaultHeaderTabSelected();
+}
+void BalData::loadConnBookmarksList()
+{
+    QString s = settings.value("connBookmarksList", "[]").toString();
+    setConnBookmarksList(s);
+}
+
+void BalData::saveConnBookmarksList(const QString s)
+{
+    settings.setValue("connBookmarksList", s);
+    loadConnBookmarksList();
 }
 
 //[[[end]]]

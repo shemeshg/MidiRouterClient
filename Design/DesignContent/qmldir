@@ -3,6 +3,7 @@ About 1.0 About.qml
 App 1.0 App.qml
 ComboBoxOutport 1.0 ComboBoxOutport.qml
 ComboSilder 1.0 ComboSilder.qml
+ConnBookmarks 1.0 ConnBookmarks.qml
 EditPreset 1.0 EditPreset.qml
 EditPresetControl 1.0 EditPresetControl.qml
 FormGroupBox 1.0 FormGroupBox.qml

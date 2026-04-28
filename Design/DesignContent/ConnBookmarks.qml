@@ -7,8 +7,17 @@ import UiComp
 
 ColumnLayout {
     id: connBookmarks
-    property var connBookmarksList: []
 
+
+
+    property var connBookmarksList: JSON.parse(Constants.balData.connBookmarksList)
+    Component.onDestruction: {
+        Constants.balData.saveConnBookmarksList(JSON.stringify(connBookmarksList))
+    }
+
+    Component.onCompleted: {
+        connBookmarksListRepeater.model = [...connBookmarksList]
+    }
 
     function moveItemSplice(arr, from, to) {
         const size = arr.length;
@@ -54,23 +63,17 @@ ColumnLayout {
 
 
                     onClicked: {
+                        Constants.balData.stopClient()
+                        Constants.balData.isAutoConnectClient = false;
+                        Constants.balData.isClientConnectLocal = false;
+                        Constants.balData.clientServerName = connBookmarksList[index].server
+                        Constants.balData.clientPortNumber = connBookmarksList[index].port
 
-                        console.log("connected");
+                        Constants.balData.setAsyncServerStatusAndText(
+                                    Constants.ServerStatus.STARTING, () => {
+                                        Constants.balData.startClient()
+                                    })
                     }
-                }
-                CoreTextField {
-                    text: modelData.server
-                    Layout.fillWidth: true
-                    onTextEdited: ()=>{
-                                    connBookmarksList[index].server = text
-                                  }
-                }
-                CoreTextField {
-                    text: modelData.port
-                    Layout.fillWidth: true
-                    onTextEdited: ()=>{
-                                    connBookmarksList[index].port = Number(text)
-                                  }
                 }
                 CoreTextField {
                     text: modelData.name
@@ -79,6 +82,21 @@ ColumnLayout {
                                     connBookmarksList[index].name = text
                                   }
                 }
+                CoreTextField {
+                    text: modelData.server
+
+                    onTextEdited: ()=>{
+                                    connBookmarksList[index].server = text
+                                  }
+                }
+                CoreTextField {
+                    text: modelData.port
+
+                    onTextEdited: ()=>{
+                                    connBookmarksList[index].port = Number(text)
+                                  }
+                }
+
                 UiBtnDel {
                     visible: (connBookmarksList.length > 1 ) ||
                              connBookmarksList.length === 1

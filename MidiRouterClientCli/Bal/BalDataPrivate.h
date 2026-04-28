@@ -32,6 +32,7 @@ class BalDataPrivate : public QObject
     Q_PROPERTY(bool isSaveConfigOnServer READ isSaveConfigOnServer WRITE setIsSaveConfigOnServer NOTIFY isSaveConfigOnServerChanged )
     Q_PROPERTY(QString defaultFontSize READ defaultFontSize WRITE setDefaultFontSize NOTIFY defaultFontSizeChanged )
     Q_PROPERTY(QString defaultHeaderTabSelected READ defaultHeaderTabSelected WRITE setDefaultHeaderTabSelected NOTIFY defaultHeaderTabSelectedChanged )
+    Q_PROPERTY(QString connBookmarksList READ connBookmarksList WRITE setConnBookmarksList NOTIFY connBookmarksListChanged )
     
     QML_ELEMENT
 public:
@@ -203,6 +204,18 @@ void setDefaultHeaderTabSelected(const QString &newDefaultHeaderTabSelected)
     }
 
 
+    
+    QString connBookmarksList() const{return m_connBookmarksList;} 
+    
+void setConnBookmarksList(const QString &newConnBookmarksList)
+    {
+        if (m_connBookmarksList == newConnBookmarksList)
+            return;
+        m_connBookmarksList = newConnBookmarksList;
+        emit connBookmarksListChanged();
+    }
+
+
 
 signals:
     void xChanged();
@@ -220,6 +233,7 @@ signals:
     void isSaveConfigOnServerChanged();
     void defaultFontSizeChanged();
     void defaultHeaderTabSelectedChanged();
+    void connBookmarksListChanged();
     
 
 protected:
@@ -241,6 +255,7 @@ private:
     bool m_isSaveConfigOnServer;
     QString m_defaultFontSize;
     QString m_defaultHeaderTabSelected;
+    QString m_connBookmarksList;
     
     void ctorClass();
 };
