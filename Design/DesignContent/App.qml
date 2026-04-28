@@ -38,9 +38,6 @@ Window {
 
     onIsClientConnectedChanged: ()=>{
                                     headerBarId.selectDefaultItem(isClientConnected)
-                                    if (!isClientConnected){
-                                        monitorDialog.close()
-                                    }
                                 }
 
     Component.onCompleted: {

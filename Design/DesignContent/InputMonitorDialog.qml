@@ -10,7 +10,16 @@ Dialog {
     popupType: Popup.Window
     modal: false
     property string inputName: ""
-    
+    property bool isClientConnected : {
+        return Constants.balData.midiClientConnection.serverStatus
+                === Constants.ServerStatus.RUNNING;
+    }
+    onIsClientConnectedChanged: ()=>{
+                                    if (!isClientConnected ){
+                                        monitorDialog.close()
+                                    }
+                                }
+
     Loader {
         id: ldrId
         property string inputName: ""

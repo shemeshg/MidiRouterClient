@@ -31,11 +31,8 @@ ColumnLayout {
         }
         UiBtnAdd {
             onClicked: {
-                connBookmarksList = connBookmarksList.map(row =>{
-                                                              row.isSelected = false;
-                                                                return row;
-                                                          })
-                connBookmarksList.push({name:"new bookmark", isSelected: true})
+
+                connBookmarksList.push({server: "localhost", port: 9999, name:"new bookmark"})
                 connBookmarksListRepeater.model = [...connBookmarksList]
             }
         }
@@ -56,20 +53,24 @@ ColumnLayout {
                     palette.buttonText: CoreSystemPalette.buttonText
 
 
-                    visible: !modelData.isSelected
                     onClicked: {
-                        connBookmarksList = connBookmarksList.map((row, i) => {
-                            if ( i === index ){
-                                row.isSelected  = true
-                              }
-                              else {
-                                  row.isSelected  = false;
-                              }
-                            return row
 
-                        });
-                        connBookmarksListRepeater.model = [...connBookmarksList]
+                        console.log("connected");
                     }
+                }
+                CoreTextField {
+                    text: modelData.server
+                    Layout.fillWidth: true
+                    onTextEdited: ()=>{
+                                    connBookmarksList[index].server = text
+                                  }
+                }
+                CoreTextField {
+                    text: modelData.port
+                    Layout.fillWidth: true
+                    onTextEdited: ()=>{
+                                    connBookmarksList[index].port = Number(text)
+                                  }
                 }
                 CoreTextField {
                     text: modelData.name
@@ -79,7 +80,7 @@ ColumnLayout {
                                   }
                 }
                 UiBtnDel {
-                    visible: (connBookmarksList.length > 1 && !modelData.isSelected) ||
+                    visible: (connBookmarksList.length > 1 ) ||
                              connBookmarksList.length === 1
                     onClicked: {
 
