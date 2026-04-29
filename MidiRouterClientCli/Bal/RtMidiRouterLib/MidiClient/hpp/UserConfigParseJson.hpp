@@ -413,6 +413,11 @@ private:
           fst.setField<QString>(&MidiRouteInput::setDescription, "description");
         }
 
+        QJsonObject monitorObj = getJson<QJsonObject>(midirouteInputJsonObj["monitor"]);
+        Monitor *monitor = midiRouteInput->monitor();
+        FieldSetter fstMonitor(monitor, monitorObj);
+        fstMonitor.setField<bool>(&Monitor::setIsMonitored,"isMonitored");
+        fstMonitor.setField<int>(&Monitor::setLogLen,"logLen");
 
         auto midiRouteClock =
             getJson<QJsonObject>(midirouteInputJsonObj["midiRouteClock"]);
