@@ -122,7 +122,9 @@ void MidiClientClass::dataToClient(const QJsonArray& message)
             auto  itemObj = QJsonDocument::fromJson(str.toUtf8());
 
             auto inputObj = midiClientConnection->userDataConfig()->activePreset()->getInputOrCreateByName(itemObj["portName"].toString());
-            inputObj->monitor()->addLogItem(str);
+            if (!inputObj->monitor()->logItems().contains(str)) {
+                inputObj->monitor()->addLogItem(str);
+            }
         }
     }
 
