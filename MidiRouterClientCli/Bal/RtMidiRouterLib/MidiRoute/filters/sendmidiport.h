@@ -29,7 +29,7 @@ public:
     void doFilter(RtMidiWrap::MidiEvent &in) override{
          if (in.processNrpn && in.passedThrouFilter){
              vector<BYTE> c;
-             c.push_back(in.channel);
+             c.push_back(in.channel());
              signalClass->doSetNonRegisteredParameterInt(in.nrpnControl, in.nrpnData, c);
          } else {
             signalClass->doSendMessage(in.data);

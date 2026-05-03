@@ -12,11 +12,11 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
     in.passedThrouFilter = true;
 
     bool passedFromFilter = true;
-    if (in.msgtype == RtMidiWrap::MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES){
+    if (in.msgtype() == RtMidiWrap::MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES){
         in.eventStatus = RtMidiWrap::EVENT_STATUS::DELETED;
         return;
     }
-    if (in.msgtype == RtMidiWrap::MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES ){
+    if (in.msgtype() == RtMidiWrap::MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES ){
         std::vector<BYTE> sndVector{};
         for (unsigned i=0; i<in.data.size(); i++)
                 sndVector.push_back(in.data[i]);
@@ -33,7 +33,7 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
             new_command = fromCommand.getVal((float)old_command);
         }
 
-        int old_channel = in.channel;
+        int old_channel = in.channel();
         int new_channel = old_channel;
         passedFromFilter = passedFromFilter && fromChannel.isInRange( old_channel);
         if ( fromChannel.isInRange( old_channel) ){new_channel = fromChannel.getVal((float)old_channel);}
@@ -91,8 +91,7 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
                     in.nrpnData = new_data2;
                     in.processNrpn = true;
 
-                    in.data = sndVector;
-                    in.updateProperties();
+                    in.data = sndVector;                    
                     return;
                 }
 
@@ -123,8 +122,7 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
                 }
 
 
-                in.data = sndVector;
-                in.updateProperties();
+                in.data = sndVector;                
             }
 
 
