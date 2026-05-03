@@ -6,6 +6,7 @@ import QtQuick.Controls
 import UiComp
 
 ColumnLayout {
+    property alias cmb: cmb
     property int val: 0
     property int fromVal: 0
     property int toVal: 127
