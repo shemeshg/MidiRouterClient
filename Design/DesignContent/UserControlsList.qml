@@ -60,23 +60,7 @@ ColumnLayout {
         ColumnLayout {
             visible: testFilterByDescription(modelData.description)
             property var favBtnsList: []
-            Flow {
-                Layout.fillWidth: true
-                Layout.leftMargin:  Constants.font.pixelSize
-                Layout.rightMargin:  Constants.font.pixelSize
-                spacing: Constants.font.pixelSize
-                Repeater {
-                    model: favBtnsList
-                    CoreButton {
-                        text: modelData.text
-                        hooverText: modelData.value
-                        onClicked: {
-                            cmbSliderId.cmb.currentIndex = modelData.idx
-                            cmbSliderId.setVal(cmbSliderId.cmb.currentValue, true)
-                        }
-                    }
-                }
-            }
+
 
             ComboSilder {
                 Layout.leftMargin:  Constants.font.pixelSize
@@ -217,6 +201,25 @@ ColumnLayout {
                 }
 
             }
+            Flow {
+                Layout.fillWidth: true
+                Layout.leftMargin:  Constants.font.pixelSize
+                Layout.rightMargin:  Constants.font.pixelSize
+                //Layout.bottomMargin:  Constants.font.pixelSize
+                spacing: Constants.font.pixelSize
+                Repeater {
+                    model: favBtnsList
+                    CoreButton {
+                        text: modelData.text
+                        hooverText: modelData.value
+                        onClicked: {
+                            cmbSliderId.cmb.currentIndex = modelData.idx
+                            cmbSliderId.setVal(cmbSliderId.cmb.currentValue, true)
+                        }
+                    }
+                }
+            }
+
         }
 
     }
