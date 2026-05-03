@@ -1,10 +1,6 @@
 #include "wcmidiout.h"
-//#include <QStringList>
-//#include <QVariantMap>
-//#include <string>
 #include <QTimer>
 
-//#include "RtMidiWrap/playmidiout.h"
 namespace Webchannel {
 WcMidiOut::WcMidiOut(QObject *parent) : QObject(parent)
 {
