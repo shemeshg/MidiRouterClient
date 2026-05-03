@@ -14,7 +14,7 @@ void MidiInRouter::proccess14bitCc(RtMidiWrap::MidiEvent &m)
     {        
         constexpr int bit14ModChannel = 1000;
         int channelCc = m.channel * bit14ModChannel + m.data1;
-        if(m.command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
+        if(m.command() == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
                 channelCc == cc14item ){
 
             msbForCc14Bit[channelCc] = m.data2;
@@ -22,7 +22,7 @@ void MidiInRouter::proccess14bitCc(RtMidiWrap::MidiEvent &m)
         }
 
         constexpr int bit14ModCc = 32;
-        if(m.command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
+        if(m.command() == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
                 channelCc == cc14item + bit14ModCc){
             m.cc14bitLsb = m.data2;
             m.data1 = m.data1 - bit14ModCc;
@@ -40,21 +40,21 @@ void MidiInRouter::proccessNrpn(RtMidiWrap::MidiEvent &m)
     constexpr int NrpnCc6 = 6;
     constexpr int NrpnCc38 = 38;
     constexpr int max7bit=128;
-    if (m.command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
+    if (m.command() == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
             m.data1 == NrpnCc99){
         NrpnContainer nrpnC;
         nrpnC.nrpnCtrlMsb = m.data2;
         nrpnPack[m.channel] = std::move(nrpnC);
     }
-    else if (m.command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
+    else if (m.command() == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
             m.data1 == NrpnCc98){
         nrpnPack[m.channel].nrpnCtrlLsb = m.data2;
     }
-    else if (m.command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
+    else if (m.command() == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
             m.data1 == NrpnCc6){
         nrpnPack[m.channel].nrpnDataMsb = m.data2;
     }
-    else if (m.command == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
+    else if (m.command() == RtMidiWrap::CommonStatic::MIDI_CHANNEL_MESSAGES::controlchange &&
             m.data1 == NrpnCc38){
         nrpnPack[m.channel].nrpnDataLsb = m.data2;
 

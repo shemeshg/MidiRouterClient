@@ -6,9 +6,10 @@
 typedef unsigned char BYTE;
 
 namespace RtMidiWrap {
-enum MIDI_MSG_TYPE {
+enum class MIDI_MSG_TYPE {
     MIDI_CHANNEL_MESSAGES = 0,
-    MIDI_SYSTEM_MESSAGES = 1
+    MIDI_SYSTEM_MESSAGES = 1,
+    DELETED = 2
 };
 
 class CommonStatic {

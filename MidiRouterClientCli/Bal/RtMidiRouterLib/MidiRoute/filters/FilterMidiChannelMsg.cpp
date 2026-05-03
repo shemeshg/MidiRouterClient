@@ -12,11 +12,11 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
     in.passedThrouFilter = true;
 
     bool passedFromFilter = true;
-    if (in.msgtype == RtMidiWrap::MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES){
+    if (in.msgtype() == RtMidiWrap::MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES){
         in.eventStatus = RtMidiWrap::EVENT_STATUS::DELETED;
         return;
     }
-    if (in.msgtype == RtMidiWrap::MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES ){
+    if (in.msgtype() == RtMidiWrap::MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES ){
         std::vector<BYTE> sndVector{};
         for (unsigned i=0; i<in.data.size(); i++)
                 sndVector.push_back(in.data[i]);

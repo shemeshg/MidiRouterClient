@@ -33,11 +33,35 @@ public:
     std::vector< BYTE> &data;
     double deltatime;
     int channel = 0;
-    int command = 0;
-    std::string commandStr;
+
+
+    const std::string commandStr() const {
+       if (msgtype() == MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES &&
+            mapMIDI_CHANNEL_MESSAGES.count(command()) > 0
+            ) {
+
+            return mapMIDI_CHANNEL_MESSAGES.at(command());
+       } else if (msgtype() == MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES &&
+                  mapMIDI_SYSTEM_MESSAGES.count(command()) > 0
+                  )  {
+           return mapMIDI_SYSTEM_MESSAGES.at(command());
+       } else {
+           return "";
+       }
+    }
+     int command() const{
+        int l_command = 0;
+        if (msgtype() == MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES) {
+            l_command = data[0] >> 4;
+        } else if (msgtype() == MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES)  {
+            l_command = data[0];
+        }
+        return l_command;
+    }
+
     int data1 = 0;
     int data2 = 0;
-    MIDI_MSG_TYPE msgtype = MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES;
+
     int portNumber;
     std::string &portName;
 
@@ -59,6 +83,19 @@ public:
 
     bool hasNrpn(){
         return nrpnControl != -1;
+    }
+
+    const MIDI_MSG_TYPE msgtype() const{
+        if (eventStatus == EVENT_STATUS::DELETED) {
+            return MIDI_MSG_TYPE::DELETED;
+        }
+        constexpr int sysMsgLowBound=240;
+        if (data[0]<sysMsgLowBound){
+            return MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES;
+        } else {
+            return MIDI_MSG_TYPE::MIDI_SYSTEM_MESSAGES;
+        }
+
     }
 };
 }
