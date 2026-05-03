@@ -163,6 +163,7 @@ bool WcMidiOut::sendEmbededCommandsSequence(
         \b(?:
             CC-(?<cc1>\d+)-(?<cc2>\d+) |
             PC-(?<pc>\d+) |
+            RAW-(?<raw>[A-Fa-f0-9]{2}(?:_[A-Fa-f0-9]{2})*) |
             NRPN-(?<nrpn1>\d+)-(?<nrpn2>\d+) |
             WAIT-(?<wait>\d+) |
             NOTE-ON-(?<noteOn>\d+)-(?<velOn>\d+) |
@@ -206,6 +207,32 @@ bool WcMidiOut::sendEmbededCommandsSequence(
             int pc = m.captured("pc").toInt();
 
             auto send = [=]() { sendProgramChange(portNumber, pc, channels); };
+
+            (accumulatedDelay == 0)
+                ? send()
+                : QTimer::singleShot(accumulatedDelay, this, send);
+
+            tokenFound = true;
+            continue;
+        }
+
+        // RAW-x
+        if (m.captured("raw").length()) {
+            QString hexString = m.captured("raw");
+
+            auto send = [=]() {
+                std::vector<BYTE> message;
+                const auto parts = hexString.split('_', Qt::SkipEmptyParts);
+                for (const QString& part : parts) {
+                    bool ok;
+                    int value = part.toInt(&ok, 16);
+                    if (ok && value >= 0 && value <= 0xFF)
+                        message.push_back(value);
+                }
+
+                openPort(portNumber);
+                openedMidiOutObj[portNumber]->midiout->sendMessage( &message);
+            };
 
             (accumulatedDelay == 0)
                 ? send()
