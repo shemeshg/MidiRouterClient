@@ -32,7 +32,14 @@ public:
 
     std::vector< BYTE> &data;
     double deltatime;
-    int channel = 0;
+    const int channel() const {
+        int i_channel = 0;
+        if (msgtype() == MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES) {
+            constexpr int channelMask = 0xf;
+            i_channel = (data[0] & channelMask) + 1;
+        }
+        return i_channel;
+    }
 
 
     const std::string commandStr() const {

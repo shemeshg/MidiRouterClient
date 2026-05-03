@@ -68,7 +68,7 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
 
         qvm["portNumber"] = m.portNumber;
         qvm["deltatime"] = m.deltatime;
-        qvm["channel"] = m.channel;
+        qvm["channel"] = m.channel();
         qvm["msgtype"] = (int)m.msgtype();
         qvm["command"] = m.command();
         qvm["commandStr"] = QString::fromStdString(m.commandStr());
@@ -106,7 +106,7 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
         std::cout<<m.portName<<" ";
         std::cout<<m.portNumber<<" ";
         std::cout<<m.deltatime<<" ";
-        std::cout<<m.channel<<" ";
+        std::cout<<m.channel()<<" ";
         std::cout<<m.commandStr()<<" ";
         std::cout<<m.data1<<" ";
         std::cout<<m.data2<<" "<<std::endl;

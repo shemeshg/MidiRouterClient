@@ -33,7 +33,7 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
             new_command = fromCommand.getVal((float)old_command);
         }
 
-        int old_channel = in.channel;
+        int old_channel = in.channel();
         int new_channel = old_channel;
         passedFromFilter = passedFromFilter && fromChannel.isInRange( old_channel);
         if ( fromChannel.isInRange( old_channel) ){new_channel = fromChannel.getVal((float)old_channel);}
