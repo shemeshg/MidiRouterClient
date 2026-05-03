@@ -214,6 +214,7 @@ ColumnLayout {
                         hooverText: modelData.value
                         onClicked: {
                             cmbSliderId.cmb.currentIndex = modelData.idx
+                            cmbSliderId.slider.value = cmbSliderId.cmb.currentValue
                             cmbSliderId.setVal(cmbSliderId.cmb.currentValue, true)
                         }
                     }

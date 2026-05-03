@@ -7,6 +7,7 @@ import UiComp
 
 ColumnLayout {
     property alias cmb: cmb
+    property alias slider: slider
     property int val: 0
     property int fromVal: 0
     property int toVal: 127
