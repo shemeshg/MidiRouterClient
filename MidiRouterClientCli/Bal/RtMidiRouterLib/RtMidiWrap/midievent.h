@@ -25,7 +25,6 @@ class MidiEvent:public CommonStatic
 public:
     MidiEvent(double deltatime, std::vector< BYTE> &data,int portNumber, std::string &portName);
 
-    void updateProperties();
     EVENT_STATUS eventStatus = EVENT_STATUS::OK;
 
     int cc14bitLsb = 0;
@@ -56,7 +55,7 @@ public:
            return "";
        }
     }
-     int command() const{
+    const int command() const{
         int l_command = 0;
         if (msgtype() == MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES) {
             l_command = data[0] >> 4;
@@ -66,8 +65,22 @@ public:
         return l_command;
     }
 
-    int data1 = 0;
-    int data2 = 0;
+    const int data1() const {
+        int l_data1 =0;
+        if (msgtype() == MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES) {
+            if (data.size() >1){l_data1 = data[1];}
+        }
+        return l_data1;
+    }
+
+    const int data2() const {
+        int l_data2 =0;
+        if (msgtype() == MIDI_MSG_TYPE::MIDI_CHANNEL_MESSAGES) {
+            if (data.size() >2){l_data2 = data[2];}
+        }
+        return l_data2;
+    }
+
 
     int portNumber;
     std::string &portName;

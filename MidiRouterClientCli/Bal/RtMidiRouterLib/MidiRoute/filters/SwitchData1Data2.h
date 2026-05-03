@@ -18,9 +18,7 @@ public:
             if (in.data.size() == 3) {
                 int oldData2 = in.data.at(2);
                 in.data[2] = in.data[1];
-                in.data[1] = oldData2;
-                in.data1 = in.data[1];
-                in.data2 = in.data[2];
+                in.data[1] = oldData2;                
             }
         }
     };

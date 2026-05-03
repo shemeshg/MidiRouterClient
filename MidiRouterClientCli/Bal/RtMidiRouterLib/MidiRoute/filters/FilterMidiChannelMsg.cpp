@@ -91,8 +91,7 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
                     in.nrpnData = new_data2;
                     in.processNrpn = true;
 
-                    in.data = sndVector;
-                    in.updateProperties();
+                    in.data = sndVector;                    
                     return;
                 }
 
@@ -123,8 +122,7 @@ void filterMidiChannelMsg(RtMidiWrap::MidiEvent &in, RangeMap &fromChannel, Rang
                 }
 
 
-                in.data = sndVector;
-                in.updateProperties();
+                in.data = sndVector;                
             }
 
 

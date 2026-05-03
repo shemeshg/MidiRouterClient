@@ -72,8 +72,8 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
         qvm["msgtype"] = (int)m.msgtype();
         qvm["command"] = m.command();
         qvm["commandStr"] = QString::fromStdString(m.commandStr());
-        qvm["data1"] = m.data1;
-        qvm["data2"] = m.data2;
+        qvm["data1"] = m.data1();
+        qvm["data2"] = m.data2();
         qvm["userdata"] = QString::fromStdString(userdata);
         qvm["nrpnControl"] = m.nrpnControl;
         qvm["nrpnData"] = m.nrpnData;
@@ -108,8 +108,8 @@ void WcMidiIn::msgSend(RtMidiWrap::MidiEvent &m, LOG_TO logto, std::string userd
         std::cout<<m.deltatime<<" ";
         std::cout<<m.channel()<<" ";
         std::cout<<m.commandStr()<<" ";
-        std::cout<<m.data1<<" ";
-        std::cout<<m.data2<<" "<<std::endl;
+        std::cout<<m.data1()<<" ";
+        std::cout<<m.data2()<<" "<<std::endl;
         std::cout<<userdata<<std::endl;
 
         unsigned int nBytes = (unsigned int)m.data.size();
