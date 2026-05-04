@@ -143,9 +143,20 @@ ColumnLayout {
 
                         }
                     }
-                    favBtnsListResult.sort((a, b) => b.sortOrder - a.sortOrder );
-                    favBtnsList = favBtnsListResult;
 
+                    const sortOrders = favBtnsListResult.map(x => x.sortOrder);
+                    const allSame = sortOrders.every(x => x === sortOrders[0]);
+
+                    if (!allSame) {
+                        // Only sort when priorities differ
+                        favBtnsListResult.sort((a, b) => {
+                            if (b.sortOrder !== a.sortOrder) {
+                                return b.sortOrder - a.sortOrder;
+                            }
+                            return a.originalIndex - b.originalIndex; // stable for ties
+                        });
+                    }
+                    favBtnsList = favBtnsListResult;
                 }
 
                 id: cmbSliderId
