@@ -151,7 +151,7 @@ ColumnLayout {
                         // Only sort when priorities differ
                         favBtnsListResult.sort((a, b) => {
                             if (b.sortOrder !== a.sortOrder) {
-                                return b.sortOrder - a.sortOrder;
+                                return a.sortOrder - b.sortOrder;
                             }
                             return a.originalIndex - b.originalIndex; // stable for ties
                         });
