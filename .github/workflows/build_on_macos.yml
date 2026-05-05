@@ -21,6 +21,10 @@ jobs:
           host: mac
           target: desktop
           arch: clang_64
+          modules: |
+            qtwebsockets
+            qtdeclarative
+            qtquick
 
       - name: Create build directory
         run: mkdir deploye
