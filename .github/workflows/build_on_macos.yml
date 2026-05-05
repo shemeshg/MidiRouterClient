@@ -1,0 +1,60 @@
+name: Build MidiRouterClient for macOS aarch64
+
+on:
+  workflow_dispatch:
+
+env:
+  QT_VERSION: '6.11.0'
+
+jobs:
+  build-macos-aarch64:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: mac
+          target: desktop
+          arch: clang_64
+
+      - name: Create build directory
+        run: mkdir deploye
+
+      - name: Configure CMake
+        working-directory: deploye
+        run: |
+          ~/Qt/${{ env.QT_VERSION }}/macos/bin/qt-cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=. \
+            ../MidiRouterClient
+
+      - name: Build
+        working-directory: deploye
+        run: cmake --build . --config Release --parallel
+
+      - name: Install
+        working-directory: deploye
+        run: cmake --install .
+
+      - name: Package (CPack)
+        working-directory: deploye
+        run: |
+          cpack -G DragNDrop
+          cpack -G ZIP
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-dmg
+          path: deploye/*.dmg
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-zip
+          path: deploye/*.zip
