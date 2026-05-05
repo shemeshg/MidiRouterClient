@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  QT_VERSION: '6.5.3'
+  QT_VERSION: '6.7.0'
 
 jobs:
   build-macos-aarch64:
@@ -22,8 +22,8 @@ jobs:
           target: desktop
           arch: clang_64
           modules: |
-            qtwebsockets
-            qtdeclarative
+            qtwebchannel
+            qtwebengine
             qtquick
 
       - name: Create build directory
