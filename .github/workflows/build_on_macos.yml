@@ -25,13 +25,19 @@ jobs:
       - name: Create build directory
         run: mkdir deploye
 
+      - name: Debug directory structure
+        run: |
+          pwd
+          ls -R .
+
       - name: Configure CMake
         working-directory: deploye
         run: |
           $QT_ROOT_DIR/bin/qt-cmake \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=. \
-            ../MidiRouterClient
+            ..
+
 
       - name: Build
         working-directory: deploye
