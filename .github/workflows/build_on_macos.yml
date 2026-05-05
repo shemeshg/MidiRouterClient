@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  QT_VERSION: '6.6.3'
+  QT_VERSION: '6.5.3'
 
 jobs:
   build-macos-aarch64:
