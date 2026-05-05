@@ -28,7 +28,7 @@ jobs:
       - name: Configure CMake
         working-directory: deploye
         run: |
-          ~/Qt/${{ env.QT_VERSION }}/macos/bin/qt-cmake \
+          $QT_ROOT_DIR/bin/qt-cmake \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_INSTALL_PREFIX=. \
             ../MidiRouterClient
