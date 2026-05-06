@@ -220,26 +220,31 @@ public slots:
     void presetOnOff(int presetMidiType, QString presetUuid)
     //-only-file body
     {
+        auto json = userdata.toJsonObject();
 
-        if (presetMidiType == 3){
-            auto json = userdata.toJsonObject();
+        // build logic of presetOnOffStatus
+        // this is temporary map used to modify the client side json
+        if (presetMidiType == 3){            
             applayConfig.selectPreset(json, presetOnOffStatus,presetUuid);
-        } else if (presetMidiType == 2){
-            auto json = userdata.toJsonObject();
+        } else if (presetMidiType == 2){            
             applayConfig.togglePreset(json, presetOnOffStatus,presetUuid);
         } else  {
             presetOnOffStatus[presetUuid] = presetMidiType;
         }
-
+        int activePreset = json["_activePresetID"].toInt();
 
 
         if (isInPresetOnOff){return;}
         wcmidiin->listenersStop();
         isInPresetOnOff = true;
+
         QTimer::singleShot(10, [=]() {
             auto json = userdata.toJsonObject();
+            // modify the real client json config based on our calculation object
             auto j = applayConfig.presetOnOff(json, presetOnOffStatus);
             j["uniqueId"] = uniqueId++;
+            // update also active preset if required
+            j["_activePresetID"] = activePreset;
             applyConfig(j);
             isInPresetOnOff = false;
         });
