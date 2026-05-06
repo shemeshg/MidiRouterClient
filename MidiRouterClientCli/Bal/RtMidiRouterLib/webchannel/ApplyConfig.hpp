@@ -123,6 +123,7 @@ public:
             QString key = getJson<QString>(midiRoutePresetObj["uuid"]);
             if (key == presetUuid) {
                 presetOnOffStatus[key] = 1;
+                json["_activePresetID"] = i ;
             } else {
                 presetOnOffStatus[key] = 0;
             }
