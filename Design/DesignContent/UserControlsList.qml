@@ -75,7 +75,7 @@ ColumnLayout {
                     const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
 
                     if (theEntryFound) {
-                        const theEntryFoundData = theEntryFound.data.trim().split("\n")
+                        const theEntryFoundData = theEntryFound.data.replace(/\n\.\./g, "").trim().split("\n")
                         return theEntryFoundData
 
                     }
@@ -96,16 +96,19 @@ ColumnLayout {
 
                         const theEntryFound = ddlists.find(entry => entry.uuid === controlModelData.dropdownListUuid);
 
-                        if (theEntryFound) {
-                            const theEntryFoundData = theEntryFound.data.trim().split("\n")
+                        if (theEntryFound) {                            
+                            const theEntryFoundData = theEntryFound.data.replace(/\n\.\./g, "").trim().split("\n")
                             .filter(line => !line.trim().startsWith("PRE-ANY") && !line.trim().startsWith("POST-ANY"))
                             .join("\n");
+
+
 
                             retList = theEntryFoundData.trim().split("\n").map((row, idx) => {
                                                                                    return { text: row.trim().split("|")[0],
                                                                                        fullText: row,
                                                                                        value: idx + controlModelData.minVal };
                                                                                });
+
                         }
 
 
@@ -170,6 +173,7 @@ ColumnLayout {
                 outputPortnNameMissing: (Constants.balData.midiClientConnection.userDataConfig.connectedOutPorts.indexOf(modelData.outputPortnName) === -1)
                 cmbModel: []
                 onSetVal: (i, isForce)=>{
+
                               //isForece, means send cmd although control already set to that value
                               if (i=== modelData.inputVal && !isForce){return;}
                               modelData.inputVal = i;
@@ -226,7 +230,7 @@ ColumnLayout {
                         onClicked: {
                             cmbSliderId.cmb.currentIndex = modelData.idx
                             cmbSliderId.slider.value = cmbSliderId.cmb.currentValue
-                            cmbSliderId.setVal(cmbSliderId.cmb.currentValue, true)
+                            cmbSliderId.setVal(cmbSliderId.cmb.currentValue, true)                            
                         }
                     }
                 }

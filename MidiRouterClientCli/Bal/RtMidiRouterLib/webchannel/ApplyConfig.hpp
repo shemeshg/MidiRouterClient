@@ -320,7 +320,7 @@ private:
                             for (const auto &value : array) {
                                 auto obj = getJson<QJsonObject>(value);
                                 if (getJson<QString>(obj["uuid"]) == getJson<QString>(ctrlObj["dropdownListUuid"])){
-                                    ddItems = getJson<QString>(obj["data"]).split("\n");
+                                    ddItems = getJson<QString>(obj["data"]).replace("\n..", "").split("\n");
                                 }
                             }
                         }
