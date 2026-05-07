@@ -230,6 +230,15 @@ ColumnLayout {
                             CoreLabel {
                                 text: modelData.name
                             }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                            UiBtnUp {
+                                visible: currentChain.midiRoutersFilters.length > 1
+                                onClicked: {
+                                    currentChain.moveMidiRoutersFilter(index, index - 1);
+                                }
+                            }
 
                         }
                     }

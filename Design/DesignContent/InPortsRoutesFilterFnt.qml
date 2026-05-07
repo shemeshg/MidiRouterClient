@@ -146,5 +146,19 @@ ColumnLayout {
                 }
             }
         }
+        CoreLabel {
+            text: `
+Common event types:
+    [8, 9] - Note on/off
+    [9] - Note off
+    [8] - Note on
+    [10] - Key Aftertouch
+    [11] - Control Change
+    [100] - NRPN
+    [12] - Program Change
+    [13] - Channel Aftertouch
+    [14] - Pitch Bend
+`
+        }
     }
 }

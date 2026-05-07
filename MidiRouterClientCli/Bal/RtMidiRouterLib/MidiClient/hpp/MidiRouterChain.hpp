@@ -24,6 +24,9 @@
 #include "PresetMidiControl.hpp" //- #include "PresetMidiControl.h"
 //- {include-header}
 #include "../genPrpt/MidiRouterChainPrivate.hpp" //- #include "../genPrpt/MidiRouterChainPrivate.h"
+//- {include-header}
+#include "MidiClientUtil.hpp" //- #include "MidiClientUtil.h"
+
 //-only-file null
 
 
@@ -89,6 +92,15 @@ public slots:
         m_midiRoutersFilters.clear();
 
         emit midiRoutersFiltersChanged();
+    }
+
+    //- {fn}
+    void moveMidiRoutersFilter(int idxFrom, int idxTo)
+    //-only-file body
+    {
+        moveItem(m_midiRoutersFilters,idxFrom, idxTo);
+        emit midiRoutersFiltersChanged();
+
     }
 
     //- {fn}
