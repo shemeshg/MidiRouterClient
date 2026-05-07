@@ -61,10 +61,10 @@ public:
             QStringList preAnyItems;
             QStringList ddItemsCleanItems;
             for (const QString &item : ddItems) {
-                if (item.startsWith("PRE-ANY")) {
+                if (item.trimmed().startsWith("PRE-ANY")) {
                     preAnyItems << item.mid(QString("PRE-ANY").length()).trimmed();
                 }
-                else if (item.startsWith("POST-ANY")) {
+                else if (item.trimmed().startsWith("POST-ANY")) {
                     postAnyItems << item.mid(QString("POST-ANY").length()).trimmed();
                 }
                 else {

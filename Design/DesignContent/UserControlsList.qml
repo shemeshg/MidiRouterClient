@@ -98,7 +98,7 @@ ColumnLayout {
 
                         if (theEntryFound) {
                             const theEntryFoundData = theEntryFound.data.trim().split("\n")
-                            .filter(line => !line.startsWith("PRE-ANY") && !line.startsWith("POST-ANY"))
+                            .filter(line => !line.trim().startsWith("PRE-ANY") && !line.trim().startsWith("POST-ANY"))
                             .join("\n");
 
                             retList = theEntryFoundData.trim().split("\n").map((row, idx) => {
