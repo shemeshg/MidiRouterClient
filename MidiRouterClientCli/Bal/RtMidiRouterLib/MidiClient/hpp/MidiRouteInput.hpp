@@ -145,6 +145,14 @@ public slots:
     }
 
     //- {fn}
+    void moveMidiRouterChain(int idxFrom, int idxTo)
+    //-only-file body
+    {
+        moveItem(*m_midiRouterChains,idxFrom, idxTo);
+        emit midiRouterChainsChanged();
+    }
+
+    //- {fn}
     void delMidiRouterChain(const int idx)
     //-only-file body
     {

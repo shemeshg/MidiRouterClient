@@ -128,6 +128,13 @@ ColumnLayout {
                         onClicked: midiRouteInput.delMidiRouterChain(index);
                         enabled: chainEnabled
                     }
+                    UiBtnUp {
+                        enabled: chainEnabled
+                        visible: midiRouteInput.midiRouterChains.length > 1
+                        onClicked: {
+                            midiRouteInput.moveMidiRouterChain(index, index - 1);
+                        }
+                    }
                     CoreLabel {
                         text: `${modelData.isEasyConfig ? "auto EasyConfig" : ""}  ${modelData.isRunForPresetOnAndOff?
                                                               "auto Preset on/off": ""}`
