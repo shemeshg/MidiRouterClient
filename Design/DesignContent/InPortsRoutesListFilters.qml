@@ -234,6 +234,7 @@ ColumnLayout {
                                 Layout.fillWidth: true
                             }
                             UiBtnUp {
+                                enabled: chainEnabled
                                 visible: currentChain.midiRoutersFilters.length > 1
                                 onClicked: {
                                     currentChain.moveMidiRoutersFilter(index, index - 1);
