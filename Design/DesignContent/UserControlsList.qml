@@ -32,74 +32,33 @@ ColumnLayout {
         }
     }
 
-    Flow {
-        Layout.fillWidth: true
-        Layout.leftMargin:  Constants.font.pixelSize
-        Layout.rightMargin:  Constants.font.pixelSize
-        spacing: Constants.font.pixelSize
-        Repeater {
-            model:  extractTags(
-                  activePreset.userControls,
-                    "description"
-                )
-            CoreButton {
-                text: modelData
-                onClicked: {
-                    filterByDescription.text = modelData
-                }
-            }
+
+
+    RegexFilter {
+        id: regexFilter
+
+        regexPlaceholderText: "RegEx filter by description ex. tag1|tag2 (⏎ - send 1st)"
+        extractTagsAry: activePreset.userControls
+        extractTagsField: "description"
+        onControlAccepted: ()=>{
+               for (let i = 0; i < controlRepeater.count; i++) {
+                   let item = controlRepeater.itemAt(i)
+                   if (item && item.visible) {
+                       item.cmbSliderId.setVal(item.val, true)
+                       break
+                   }
+               }
         }
     }
-    CoreTextField {
-        Layout.margins:  Constants.font.pixelSize
-        id: filterByDescription
-        Layout.fillWidth: true
-        placeholderText: "RegEx filter by description ex. tag1|tag2 (⏎ - send 1st)"
-        onAccepted: {
-            for (let i = 0; i < controlRepeater.count; i++) {
-                let item = controlRepeater.itemAt(i)
-                if (item && item.visible) {
-                    item.setVal(item.val, true)
-                    break
-                }
-            }
-        }
-    }
-    function extractTags(arr, fieldName) {
-        var regex = /:\w+/g
-        var set = new Set()
 
-        for (var i = 0; i < arr.length; i++) {
-            var value = arr[i][fieldName]
-            if (!value)
-                continue
-
-            var matches = value.match(regex)
-            if (matches) {
-                for (var j = 0; j < matches.length; j++) {
-                    set.add(matches[j])
-                }
-            }
-        }
-
-        // Convert Set → Array of strings
-        var result = Array.from(set)
-
-        return result
-    }
-
-    function testFilterByDescription(userInput) {
-        const searchRegExp = new RegExp(filterByDescription.text,"i");
-        return searchRegExp.test(userInput);
-    }
 
     Repeater {
         id: controlRepeater
         model: activePreset.userControls
         ColumnLayout {
-            visible: testFilterByDescription(modelData.description)
+            visible: regexFilter.testFilterByDescription(modelData.description)
             property var favBtnsList: []
-
+            property alias cmbSliderId: cmbSliderId
 
             ComboSilder {
                 Layout.leftMargin:  Constants.font.pixelSize
