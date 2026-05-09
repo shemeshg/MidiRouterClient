@@ -78,6 +78,7 @@ void stopClient();
 void testDummyDelete(const QJSValue &callback);
 void applyConfig(const QJSValue &callback);
 void applyConfigEngine(const QJSValue &callback, QJSEngine *engine);
+void quitServerEngine(const QJSValue &callback, QJSEngine *engine);
 void uploadJson(QString filePath, const QJSValue &callback);
 void getPortNumber(const QString &midiPortName, const QJSValue &callback);
 void setNonRegisteredParameterInt( int portNumber,int parameter,int data,QStringList channels,const QJSValue &callback);
@@ -96,6 +97,8 @@ MidiClientConnection *midiClientConnection() { return mcc->midiClientConnection;
 
 void startClient();
 
+signals:
+    void requestedServerStop();
 
 private:
    #ifdef Q_OS_WIN

@@ -31,7 +31,10 @@ loadDefaultHeaderTabSelected();
 loadConnBookmarksList();
 
 //[[[end]]]
-
+QObject::connect(msc,&MidiServerClass::requestedServerStop, [=](){
+    stopServer();
+    emit requestedServerStop();
+});
 }
 
 void BalData::openCashFolder(){
@@ -281,6 +284,16 @@ void BalData::applyConfigEngine(const QJSValue &callback, QJSEngine *engine )
 
     mcc->invokeMethod("wcuserdata", "applyConfig", {s}, true, callback, engine);
 
+}
+
+void BalData::quitServerEngine(const QJSValue &callback, QJSEngine *engine)
+{
+    if (midiClientConnection()->serverStatus() != MidiClientConnectionPrivate::ServerStatus::RUNNING){
+        qDebug()<<"Not connected";
+        return;
+    }
+
+    mcc->invokeMethod("wcuserdata", "applicationQuit", {}, true, callback, engine);
 }
 
 void BalData::uploadJson(QString filePath, const QJSValue &callback)

@@ -43,7 +43,11 @@ void MidiServerClass::start(int portNumber)
         getConfigFilePath(),
         wcmidiin, wcmidiout, server); //NOLINT
     channel->registerObject(QStringLiteral("wcuserdata"), wcuserdata);
-    //QObject::connect(wcuserdata, SIGNAL(applicationQuitSignal()), &app, SLOT(quit()));
+    QObject::connect(wcuserdata, &WcUserData::applicationQuitSignal,[=](){
+        QTimer::singleShot(1000, [=](){
+             emit requestedServerStop();
+        });
+    });
 
     QObject::connect(wcmidiin, &WcMidiIn::presetOnOff, wcuserdata, &WcUserData::presetOnOff);
 
@@ -64,7 +68,7 @@ void MidiServerClass::start(int portNumber)
 void MidiServerClass::stop()
 {
     if (serverIsRunning) {
-        delete server;
+        server->deleteLater();
         serverIsRunning = false;
     }
 }

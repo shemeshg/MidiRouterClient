@@ -29,6 +29,10 @@ public:
     const QString getConfigFilePath();
     const bool getIsSaveConfigOnServer();
 
+signals:
+    void requestedServerStop();
+
+
 private:
     int port = -1;
     bool serverIsRunning = false;

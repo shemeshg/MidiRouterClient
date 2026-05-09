@@ -19,6 +19,7 @@ public:
     explicit ParsedArguments(){
     }
 
+    bool isQuit = false;
     bool isCustomServerPort = false;
     int customServerPort = 0;
 

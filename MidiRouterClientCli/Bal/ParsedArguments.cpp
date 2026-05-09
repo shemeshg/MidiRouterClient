@@ -62,12 +62,21 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
         );
     serverPortOption.setFlags(QCommandLineOption::HiddenFromHelp);
 
+
+    QString quitDesc = "Quit server (local or remote).\n"
+                        "  --address <address>      Remote address (ip:port).\n";
+    QCommandLineOption quitOption(
+        QStringList() << "quit",
+        quitDesc
+        );
+
     parser.addOption(headlessOption);
     parser.addOption(applyOption);
     parser.addOption(addressOption);
     parser.addOption(presetNameOption);
     parser.addOption(configFileOption);
     parser.addOption(serverPortOption);
+    parser.addOption(quitOption);
 
     parser.process(tempApp);
 
@@ -108,6 +117,11 @@ void ParsedArguments::parseArgumentsMain(int argc, char *argv[]) {
             return;
         }
     }
+
+    if (parser.isSet(quitOption)) {
+        mode = RunMode::ApplyDefaultPreset;
+        isQuit = true;
+    }
 }
 
 int ParsedArguments::runHeadless(int argc, char *argv[]) {
@@ -134,6 +148,11 @@ int ParsedArguments::runHeadless(int argc, char *argv[]) {
 
     std::signal(SIGINT, handleSigInt);  //for ^c
     std::signal(SIGTERM, handleSigInt); //for systemd
+
+    QObject::connect(&bl,&BalData::requestedServerStop, [=](){
+        QCoreApplication::quit();
+    });
+
     return app.exec();
 }
 
@@ -171,6 +190,10 @@ int ParsedArguments::runApplyDefaultPreset(int argc, char *argv[]){
         "(function(result) { QuitHelper.quit(); })"
         );
 
+    if (isQuit) {
+        bl.quitServerEngine(callback, &engine);
+        return app.exec();
+    }
 
     if (isRegexPresetName){
 
