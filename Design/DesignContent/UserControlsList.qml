@@ -28,6 +28,7 @@ ColumnLayout {
                 onClicked: {
                     activePreset.addUserControl()
                 }
+                enabled: regexFilter.isEmpty()
             }
         }
     }

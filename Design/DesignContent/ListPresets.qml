@@ -26,7 +26,7 @@ ColumnLayout {
                 onClicked: {
                     Constants.balData.midiClientConnection.userDataConfig.addPreset();
                 }
-
+                enabled: regexFilter.isEmpty()
             }
         }
     }

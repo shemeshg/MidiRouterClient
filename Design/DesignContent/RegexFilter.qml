@@ -10,6 +10,10 @@ ColumnLayout {
     required property string regexPlaceholderText
     required property var extractTagsAry
     required property string extractTagsField
+    function isEmpty(){
+                      return filterByDescription.text.length === 0
+                                    }
+
     signal controlAccepted()
 
     Flow {

@@ -75,7 +75,7 @@ ColumnLayout {
                 onClicked: {
                     midiRouteInput.addMidiRouterChain(`chain ${midiRouteInput.midiRouterChains.length + 1}`)
                 }
-
+                enabled: regexFilter.isEmpty()
             }
         }
     }

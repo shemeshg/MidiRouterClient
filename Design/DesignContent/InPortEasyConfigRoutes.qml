@@ -24,8 +24,9 @@ ColumnLayout {
             }
             UiBtnAdd {
                 onClicked: {
-                    midiRouteInput.easyConfig.addEasyConfigRoute()
+                    midiRouteInput.easyConfig.addEasyConfigRoute()                
                 }
+                enabled: regexFilter.isEmpty()
 
             }
         }
