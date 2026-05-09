@@ -23,6 +23,7 @@ CoreSwitch.qml
 CoreSystemPalette.qml
 CoreTextArea.qml
 CoreTextField.qml
+CoreThinBar.qml
 CoreToolTip.qml
         RESOURCES
             

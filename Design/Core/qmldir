@@ -12,4 +12,5 @@ CoreSwitch 1.0 CoreSwitch.qml
 singleton  CoreSystemPalette 1.0 CoreSystemPalette.qml
 CoreTextArea 1.0 CoreTextArea.qml
 CoreTextField 1.0 CoreTextField.qml
+CoreThinBar 1.0 CoreThinBar.qml
 CoreToolTip 1.0 CoreToolTip.qml

@@ -52,7 +52,9 @@ ColumnLayout {
         }
     }
 
-
+    CoreThinBar{
+        Layout.leftMargin:  Constants.font.pixelSize
+    }
     Repeater {
         id: controlRepeater
         model: activePreset.userControls
@@ -234,6 +236,9 @@ ColumnLayout {
                 }
             }
 
+            CoreThinBar{
+                Layout.leftMargin:  Constants.font.pixelSize
+            }
         }
 
     }
