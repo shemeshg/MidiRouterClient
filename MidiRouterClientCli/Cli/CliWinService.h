@@ -56,6 +56,22 @@ private:
         // Create worker BEFORE QTimer
         instance->worker = std::make_unique<BalData>();
 
+        QObject::connect(instance->worker.get(), &BalData::requestedServerStop, [] {
+            // Tell SCM we are stopping
+            instance->status.dwCurrentState = SERVICE_STOP_PENDING;
+            SetServiceStatus(instance->statusHandle, &instance->status);
+
+            // Stop server
+            instance->worker->stopServer();
+
+            // Quit Qt loop
+            instance->app->quit();
+
+            // Signal stop event
+            SetEvent(instance->stopEvent);
+        });
+
+
         // Delay server start until event loop is running
         QTimer::singleShot(0, [] {
             instance->worker->startServer(instance->worker->reqServerPortNumber());
