@@ -35,76 +35,97 @@ RowLayout {
     }
     GroupBox {
         RowLayout {
+
+
+
+
+            ButtonGroup {
+                id: navGroup
+                exclusive: true
+            }
+            Shortcut {
+                sequences: ["Ctrl+2"]
+                onActivated: ()=>{
+                                 let buttons = navGroup.buttons
+                                 let count = buttons.length
+                                 let index = buttons.indexOf(navGroup.checkedButton)
+
+                                 let prev = index
+                                 do {
+                                     prev = (prev - 1 + count) % count
+                                     if (buttons[prev].visible && buttons[prev].enabled) {
+                                         buttons[prev].checked = true
+                                         return
+                                     }
+                                 } while (prev !== index)
+                             }
+            }
+
+            Shortcut {
+                sequences: ["Ctrl+1"]
+                onActivated: ()=>{
+                                 let buttons = navGroup.buttons
+                                 let count = buttons.length
+                                 let index = buttons.indexOf(navGroup.checkedButton)
+
+                                 let next = index
+                                 do {
+                                     next = (next + 1) % count
+                                     if (buttons[next].visible && buttons[next].enabled) {
+                                         buttons[next].checked = true
+                                         return
+                                     }
+                                 } while (next !== index)
+
+
+                             }
+            }
+
             CoreButton {
                 id: btnLoginId
                 text: "Login"
-                hooverText: "<b>⌘1</b> Login"
-                autoExclusive: true
+                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
+                ButtonGroup.group: navGroup
                 checkable: true
                 checked: true
                 isAnimation: false
-                Shortcut {
-                    enabled: btnLoginId.visible && btnLoginId.enabled
-                    sequences: ["Ctrl+1"]
-                    onActivated: btnLoginId.click()
-                }
             }
             CoreButton {
                 id: btnVirtualPortsId
                 text: "Virtual ports"
-                hooverText: "<b>⌘2</b> Virtual ports"
-                autoExclusive: true
+                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
+                ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
                 visible: Qt.platform.os !== "windows"
                 isAnimation: false
-                Shortcut {
-                    enabled: btnVirtualPortsId.visible && btnVirtualPortsId.enabled
-                    sequences: ["Ctrl+2"]
-                    onActivated: btnVirtualPortsId.click()
-                }
             }
             CoreButton {
                 id: btnPresetsId
                 text: "Presets"
-                hooverText: "<b>⌘3</b> Presets"
-                autoExclusive: true
+                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
+                ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
                 isAnimation: false
-                Shortcut {
-                    enabled: btnPresetsId.visible && btnPresetsId.enabled
-                    sequences: ["Ctrl+3"]
-                    onActivated: btnPresetsId.click()
-                }
             }
             CoreButton {
                 id: btnUserControlsId
                 text: "User controls"
-                hooverText: "<b>⌘4</b> User controls"
-                autoExclusive: true
+                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
+                ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
                 isAnimation: false
-                Shortcut {
-                    enabled: btnUserControlsId.visible && btnUserControlsId.enabled
-                    sequences: ["Ctrl+4"]
-                    onActivated: btnUserControlsId.click()
-                }
             }
             CoreButton {
                 id: btnInPortsId
                 text: "In ports"
-                hooverText: "<b>⌘5</b> In ports"
-                autoExclusive: true
+                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
+                ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
                 isAnimation: false
-                Shortcut {
-                    enabled: btnInPortsId.visible && btnInPortsId.enabled
-                    sequences: ["Ctrl+5"]
-                    onActivated: btnInPortsId.click()
-                }
             }
 
 
