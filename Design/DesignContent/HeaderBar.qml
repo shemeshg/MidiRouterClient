@@ -83,8 +83,7 @@ RowLayout {
 
             CoreButton {
                 id: btnLoginId
-                text: "Login"
-                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
+                text: "Login"                
                 ButtonGroup.group: navGroup
                 checkable: true
                 checked: true
@@ -93,7 +92,6 @@ RowLayout {
             CoreButton {
                 id: btnVirtualPortsId
                 text: "Virtual ports"
-                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
                 ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
@@ -103,7 +101,6 @@ RowLayout {
             CoreButton {
                 id: btnPresetsId
                 text: "Presets"
-                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
                 ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
@@ -112,7 +109,6 @@ RowLayout {
             CoreButton {
                 id: btnUserControlsId
                 text: "User controls"
-                hooverText: "<b>⌘1</b>← <b>⌘2</b>→"
                 ButtonGroup.group: navGroup
                 checkable: true
                 checked: false
