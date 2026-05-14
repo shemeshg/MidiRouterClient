@@ -44,6 +44,7 @@ RowLayout {
                 exclusive: true
             }
             Shortcut {
+                enabled: isClientConnected && !isSubForm
                 sequences: ["Ctrl+2"]
                 onActivated: ()=>{
                                  let buttons = navGroup.buttons
@@ -62,6 +63,7 @@ RowLayout {
             }
 
             Shortcut {
+                enabled: isClientConnected && !isSubForm
                 sequences: ["Ctrl+1"]
                 onActivated: ()=>{
                                  let buttons = navGroup.buttons
@@ -74,7 +76,7 @@ RowLayout {
                                      if (buttons[next].visible && buttons[next].enabled) {
                                          buttons[next].checked = true
                                          return
-                                     }
+                                     }                     
                                  } while (next !== index)
 
 
