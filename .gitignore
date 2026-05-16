@@ -85,3 +85,5 @@ Design-Debug/
 Design/App/autogen/
 .vscode/
 .cache/
+
+.venv/
