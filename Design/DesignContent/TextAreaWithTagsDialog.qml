@@ -5,7 +5,7 @@ import Core
 import QtQuick.Layouts
 import UiComp
 
-CoreTextField {
+CoreTextArea {
     id: textFieldWithDialogId
 
     property string textFieldText: ""
@@ -25,7 +25,7 @@ CoreTextField {
             }
         }
     }
-    
+
     TagsEditorDialog {
         id: tagsEditorDialog
     }
@@ -34,10 +34,10 @@ CoreTextField {
                       setTextFieldText(text)
                   }
     Component.onCompleted: {
-        
-        
+
+
         textFieldWithDialogId.ContextMenu.menu.addItem(separatorComponent.createObject())
         textFieldWithDialogId.ContextMenu.menu.addItem(tagsPopupMenuItemComponent.createObject())
-        
+
     }
 }

@@ -55,13 +55,14 @@ ColumnLayout {
             ColumnLayout {
                 width: parent.width
                 RowLayout {
-                    CoreTextField {
+                    TextFieldWithTagsDialog {
                         Layout.fillWidth: true
-                        text: modelData.description
-                        onTextEdited: ()=>{
-                                          modelData.description = text
+                        textFieldText: modelData.description
+                        onSetTextFieldText: (s)=>{
+                                          modelData.description = s
                                       }
                         placeholderText: "Enter EasyConfig Description"
+                        extractedTags: regexFilter.extractedTags()
                     }
                 }
 
