@@ -8,6 +8,7 @@ Dialog {
     
     id: monitorDialog
     popupType: Popup.Window
+
     modal: false
     property string inputName: ""
     property bool isClientConnected : {

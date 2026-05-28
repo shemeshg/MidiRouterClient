@@ -64,6 +64,8 @@ ColumnLayout {
             property alias cmbSliderId: cmbSliderId
 
             ComboSilder {
+                enableTagEdits: true
+                sliderExtractedTags: regexFilter.extractedTags()
                 Layout.leftMargin:  Constants.font.pixelSize
                 Layout.rightMargin:  Constants.font.pixelSize
 

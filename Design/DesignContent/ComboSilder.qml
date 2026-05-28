@@ -25,6 +25,9 @@ ColumnLayout {
     signal upBtn()
 
 
+    property bool enableTagEdits: false
+    property var sliderExtractedTags: []
+
     RowLayout {
         id: row
 
@@ -33,7 +36,18 @@ ColumnLayout {
             visible: outputPortnNameMissing
             text: "❗ "
         }
+        TextFieldWithTagsDialog {
+            visible: enableTagEdits
+            textFieldText: name
+            onSetTextFieldText: (s)=>{
+                                    setName(s)
+                                }
+            extractedTags: sliderExtractedTags
+            Layout.fillWidth: true
+        }
+
         CoreTextField {
+            visible: !enableTagEdits
             text: name
             Layout.fillWidth: true
             onTextEdited: ()=>{

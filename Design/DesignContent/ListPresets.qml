@@ -87,12 +87,16 @@ ColumnLayout {
                 }
             }
 
-            CoreTextField {
-                text: modelData.name
+            TextFieldWithTagsDialog {
+
                 Layout.fillWidth: true
-                onTextEdited: ()=>{
-                                 modelData.name = text;
-                              }
+                textFieldText: modelData.name
+                onSetTextFieldText: (s)=>{
+                                        modelData.name = s
+                                    }
+                extractedTags: regexFilter.extractedTags()
+
+
             }
 
             UiBtnDel {

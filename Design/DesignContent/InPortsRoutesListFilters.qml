@@ -108,13 +108,14 @@ ColumnLayout {
                 RowLayout {
                     Layout.leftMargin: Constants.font.pixelSize
                     Layout.rightMargin: Constants.font.pixelSize
-                    CoreTextField {
-                        text: modelData.name
+                    TextFieldWithTagsDialog {
+                        textFieldText: modelData.name
                         Layout.fillWidth: true
-                        onTextEdited: ()=>{
-                                        modelData.name = text
+                        onSetTextFieldText: (s)=>{
+                                        modelData.name = s
                                       }
                         enabled: chainEnabled
+                        extractedTags: regexFilter.extractedTags()
                     }
 
                     Item {
