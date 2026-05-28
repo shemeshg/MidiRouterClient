@@ -87,92 +87,16 @@ ColumnLayout {
                 }
             }
 
-            CoreTextField {
-                id: myInput
-                Component {
-                    id: separatorComponent
-                    MenuSeparator {}
-                }
-                Component {
-                    id: tagsPopupMenuItemComponent
-                    MenuItem {
-                        text: "Tags"
-                           onTriggered: {
-                               tagsEditorDialog.tagsEditorText = myInput.text
-                               tagsEditorDialog.open();
-                           }
-                    }
-                }
+            TextFieldWithTagsDialog {
 
-
-                Dialog {
-
-                    id: tagsEditorDialog
-                    property string tagsEditorText: modelData.name
-
-                    popupType: Popup.Window
-                    implicitWidth:  Constants.balData.width * 0.75
-                    implicitHeight: Constants.balData.height * 0.75
-
-                    modal: false
-                    ColumnLayout {
-                        width: parent.width
-                        //Layout.fillWidth: true
-
-                        CoreLabel {
-                            text: tagsEditorDialog.tagsEditorText
-                        }
-                        RowLayout {
-                            CoreTextField {
-                                id: newTagName
-                                placeholderText: "Type new tag name"
-                                Layout.fillWidth: true
-                            }
-                            CoreButton {
-                                text: "Add tag"
-                                onClicked: {
-                                    let tag = newTagName.text.trim().replace(/^:+/, "")
-                                    tag = tag.replace(/ /g, "_")
-                                    if (modelData.name.includes(tag) ){return}
-                                    modelData.name  = modelData.name.trim()  + " :" + tag
-                                    newTagName.text = ""
-                                }
-                            }
-                        }
-                        Repeater {
-                            id: innerRepeaterId
-                            property var parentModelFata: modelData
-                            model:  regexFilter.extractedTags()
-
-                            CoreCheckBox {
-                                text: modelData
-                                checked: innerRepeaterId.parentModelFata.name.includes(modelData )
-                                onToggled: ()=>{
-                                               if (checked) {
-                                                   innerRepeaterId.parentModelFata.name  = innerRepeaterId.parentModelFata.name.trim() + " " + modelData
-                                               } else {
-                                                   innerRepeaterId.parentModelFata.name  = innerRepeaterId.parentModelFata.name.replace(
-                                                       new RegExp(modelData, "g")
-                                                       ,"").trim()
-                                               }
-                                           }
-                            }
-                        }
-
-                    }
-                }
-                text: modelData.name
                 Layout.fillWidth: true
-                onTextEdited: ()=>{
-                                 modelData.name = text;
-                              }
-                Component.onCompleted: {
+                textFieldText: modelData.name
+                onSetTextFieldText: (s)=>{
+                                        modelData.name = s
+                                    }
+                extractedTags: regexFilter.extractedTags()
 
 
-                        myInput.ContextMenu.menu.addItem(separatorComponent.createObject())
-                        myInput.ContextMenu.menu.addItem(tagsPopupMenuItemComponent.createObject())
-
-                }
             }
 
             UiBtnDel {
