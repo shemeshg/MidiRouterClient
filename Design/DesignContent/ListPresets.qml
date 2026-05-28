@@ -88,11 +88,50 @@ ColumnLayout {
             }
 
             CoreTextField {
+                id: myInput
+                Component {
+                    id: separatorComponent
+                    MenuSeparator {}
+                }
+                Component {
+                    id: tagsPopupMenuItemComponent
+                    MenuItem {
+                        text: "Tags"
+                           onTriggered: {
+                               tagsEditorDialog.tagsEditorText = myInput.text
+
+                               tagsEditorDialog.open();
+                           }
+                    }
+                }
+
+
+                Dialog {
+
+                    id: tagsEditorDialog
+                    property string tagsEditorText: ""
+                    popupType: Popup.Window
+                    height: 100
+                    width: 100
+                    modal: false
+                    ColumnLayout {
+                        CoreLabel {
+                            text: tagsEditorDialog.tagsEditorText
+                        }
+                    }
+                }
                 text: modelData.name
                 Layout.fillWidth: true
                 onTextEdited: ()=>{
                                  modelData.name = text;
                               }
+                Component.onCompleted: {
+
+
+                        myInput.ContextMenu.menu.addItem(separatorComponent.createObject())
+                        myInput.ContextMenu.menu.addItem(tagsPopupMenuItemComponent.createObject())
+
+                }
             }
 
             UiBtnDel {
