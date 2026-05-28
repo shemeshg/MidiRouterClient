@@ -24,18 +24,26 @@ Dialog {
         }
         RowLayout {
             Layout.margins: Constants.font.pixelSize
+
+
             CoreTextField {
                 id: newTagName
                 placeholderText: "Type new tag name"
                 Layout.fillWidth: true
                 focus: true
+                onAccepted: {
+                    acceptBtnId.click()
+                }
             }
             CoreButton {
+                id: acceptBtnId
                 text: "Add tag"
                 onClicked: {
                     let tag = newTagName.text.trim().replace(/^:+/, "")
                     tag = tag.replace(/ /g, "_")
-                    if (textFieldText.includes(tag) ){return}
+                    if (textFieldText.includes(":" + tag) ){
+                        return
+                    }
                     setTextFieldText(textFieldText.trim()  + " :" + tag )
                     newTagName.text = ""
                 }
