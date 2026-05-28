@@ -14,6 +14,13 @@ ColumnLayout {
                       return filterByDescription.text.length === 0
                                     }
 
+    function extractedTags(){
+        return extractTags(
+                    extractTagsAry,
+                    extractTagsField
+                    )
+    }
+
     signal controlAccepted()
 
     Flow {
@@ -22,10 +29,7 @@ ColumnLayout {
         Layout.rightMargin:  Constants.font.pixelSize
         spacing: Constants.font.pixelSize
         Repeater {
-            model:  extractTags(
-                        extractTagsAry,
-                        extractTagsField
-                        )
+            model:  extractedTags()
             CoreButton {
                 text: modelData
                 onClicked: {
@@ -44,6 +48,8 @@ ColumnLayout {
         }
     }
     function extractTags(arr, fieldName) {
+        if (!arr){return [];}
+
         var regex = /:\w+/g
         var set = new Set()
         

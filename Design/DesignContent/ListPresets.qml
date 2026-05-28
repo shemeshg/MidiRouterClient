@@ -110,6 +110,7 @@ ColumnLayout {
 
                     id: tagsEditorDialog
                     property string tagsEditorText: ""
+
                     popupType: Popup.Window
                     height: 100
                     width: 100
@@ -117,6 +118,26 @@ ColumnLayout {
                     ColumnLayout {
                         CoreLabel {
                             text: tagsEditorDialog.tagsEditorText
+                        }
+                        RowLayout {
+                            CoreTextField {
+                                id: newTagName
+                                placeholderText: "Type new tag name"
+                            }
+                            CoreButton {
+                                text: "Add tag"
+                                onClicked: {
+                                    let tag = newTagName.text.trim().replace(/^:+/, "")
+                                    modelData.name  = modelData.name  + " :" + tag
+                                    newTagName.text = ""
+                                }
+                            }
+                        }
+                        Repeater {
+                            model:  regexFilter.extractedTags()
+                            CoreCheckBox {
+                                text: modelData
+                            }
                         }
                     }
                 }
