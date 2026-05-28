@@ -99,7 +99,6 @@ ColumnLayout {
                         text: "Tags"
                            onTriggered: {
                                tagsEditorDialog.tagsEditorText = myInput.text
-
                                tagsEditorDialog.open();
                            }
                     }
@@ -109,13 +108,17 @@ ColumnLayout {
                 Dialog {
 
                     id: tagsEditorDialog
-                    property string tagsEditorText: ""
+                    property string tagsEditorText: modelData.name
 
                     popupType: Popup.Window
-                    height: 100
-                    width: 100
+                    implicitWidth:  Constants.balData.width * 0.75
+                    implicitHeight: Constants.balData.height * 0.75
+
                     modal: false
                     ColumnLayout {
+                        width: parent.width
+                        //Layout.fillWidth: true
+
                         CoreLabel {
                             text: tagsEditorDialog.tagsEditorText
                         }
@@ -123,22 +126,39 @@ ColumnLayout {
                             CoreTextField {
                                 id: newTagName
                                 placeholderText: "Type new tag name"
+                                Layout.fillWidth: true
                             }
                             CoreButton {
                                 text: "Add tag"
                                 onClicked: {
                                     let tag = newTagName.text.trim().replace(/^:+/, "")
-                                    modelData.name  = modelData.name  + " :" + tag
+                                    tag = tag.replace(/ /g, "_")
+                                    if (modelData.name.includes(tag) ){return}
+                                    modelData.name  = modelData.name.trim()  + " :" + tag
                                     newTagName.text = ""
                                 }
                             }
                         }
                         Repeater {
+                            id: innerRepeaterId
+                            property var parentModelFata: modelData
                             model:  regexFilter.extractedTags()
+
                             CoreCheckBox {
                                 text: modelData
+                                checked: innerRepeaterId.parentModelFata.name.includes(modelData )
+                                onToggled: ()=>{
+                                               if (checked) {
+                                                   innerRepeaterId.parentModelFata.name  = innerRepeaterId.parentModelFata.name.trim() + " " + modelData
+                                               } else {
+                                                   innerRepeaterId.parentModelFata.name  = innerRepeaterId.parentModelFata.name.replace(
+                                                       new RegExp(modelData, "g")
+                                                       ,"").trim()
+                                               }
+                                           }
                             }
                         }
+
                     }
                 }
                 text: modelData.name
