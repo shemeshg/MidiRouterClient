@@ -222,12 +222,13 @@ ColumnLayout {
             CoreLabel {
                 text: modelData
             }
-            CoreTextArea {
-                text: getInputDescription(modelData)
+            TextAreaWithTagsDialog {
+                textFieldText: getInputDescription(modelData)
                 Layout.fillWidth: true
-                onTextEdited: ()=>{
-                                  setInputDescription( modelData,text )
+                onSetTextFieldText: (s)=>{
+                                  setInputDescription( modelData,s )
                               }
+                extractedTags: regexFilter.extractedTags()
             }            
         }
     }
