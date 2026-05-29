@@ -12,19 +12,6 @@ CoreTextField {
     signal setTextFieldText(string s);
     property var extractedTags: []
 
-    Component {
-        id: separatorComponent
-        MenuSeparator {}
-    }
-    Component {
-        id: tagsPopupMenuItemComponent
-        MenuItem {
-            text: "Tags"
-            onTriggered: {
-                tagsEditorDialog.open();
-            }
-        }
-    }
     
     TagsEditorDialog {
         id: tagsEditorDialog
@@ -33,11 +20,18 @@ CoreTextField {
     onTextEdited: ()=>{
                       setTextFieldText(text)
                   }
-    Component.onCompleted: {
-        
-        
-        textFieldWithDialogId.ContextMenu.menu.addItem(separatorComponent.createObject())
-        textFieldWithDialogId.ContextMenu.menu.addItem(tagsPopupMenuItemComponent.createObject())
-        
+
+
+    ContextMenu.menu: Menu {
+        MenuSeparator {}
+        MenuItem {
+            text: "Tags"
+            onTriggered: {
+                tagsEditorDialog.open();
+            }
+        }
+        MenuSeparator {}
     }
+
+
 }

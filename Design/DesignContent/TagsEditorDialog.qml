@@ -15,65 +15,84 @@ Dialog {
     standardButtons: Dialog.Ok
     
     modal: true
-    ColumnLayout {
-        width: parent.width
-        
-        
-        CoreLabel {
-            text: textFieldText
+    Column {
+        ColumnLayout {
+            width: tagsEditorDialog.width
+            id: scrollerWidthId
+            Layout.fillWidth: true
         }
-        RowLayout {
-            Layout.margins: Constants.font.pixelSize
+
+        ScrollView {
+            contentHeight: colId.height + Constants.font.pixelSize * 10
+            contentWidth: colId.width
+            width: tagsEditorDialog.width
+            height: tagsEditorDialog.height
 
 
-            CoreTextField {
-                id: newTagName
-                placeholderText: "Type new tag name"
+            ColumnLayout {
                 Layout.fillWidth: true
-                focus: true
-                onAccepted: {
-                    acceptBtnId.click()
+                width: scrollerWidthId.width - 30
+
+                id: colId
+
+                CoreLabel {
+                    text: textFieldText
                 }
-            }
-            CoreButton {
-                id: acceptBtnId
-                text: "Add tag"
-                onClicked: {
-                    let tag = newTagName.text.trim().replace(/^:+/, "")
-                    tag = tag.replace(/ /g, "_")
-                    if (textFieldText.includes(":" + tag) ){
-                        return
+                RowLayout {
+                    Layout.margins: Constants.font.pixelSize
+
+
+                    CoreTextField {
+                        id: newTagName
+                        placeholderText: "Type new tag name"
+                        Layout.fillWidth: true
+                        focus: true
+                        onAccepted: {
+                            acceptBtnId.click()
+                        }
                     }
-                    setTextFieldText(textFieldText.trim()  + " :" + tag )
-                    newTagName.text = ""
+                    CoreButton {
+                        id: acceptBtnId
+                        text: "Add tag"
+                        onClicked: {
+                            let tag = newTagName.text.trim().replace(/^:+/, "")
+                            tag = tag.replace(/ /g, "_")
+                            if (textFieldText.includes(":" + tag) ){
+                                return
+                            }
+                            setTextFieldText(textFieldText.trim()  + " :" + tag )
+                            newTagName.text = ""
+                        }
+                    }
                 }
+                Repeater {
+                    id: innerRepeaterId
+
+                    model:  extractedTags
+
+                    CoreCheckBox {
+                        Layout.leftMargin:  Constants.font.pixelSize
+                        text: modelData
+                        checked: textFieldText.includes(modelData )
+                        onToggled: ()=>{
+                                       if (checked) {
+                                           setTextFieldText(
+                                               textFieldText.trim() + " " + modelData
+                                               )
+                                       } else {
+                                           setTextFieldText(
+                                               textFieldText.
+                                               replace(
+                                                   new RegExp(modelData, "g")
+                                                   ,"").trim()
+                                               )
+                                       }
+                                   }
+                    }
+                }
+
             }
         }
-        Repeater {
-            id: innerRepeaterId
-            
-            model:  extractedTags
-            
-            CoreCheckBox {
-                Layout.leftMargin:  Constants.font.pixelSize
-                text: modelData
-                checked: textFieldText.includes(modelData )
-                onToggled: ()=>{
-                               if (checked) {
-                                   setTextFieldText(
-                                       textFieldText.trim() + " " + modelData
-                                       )
-                               } else {
-                                   setTextFieldText(
-                                       textFieldText.
-                                       replace(
-                                           new RegExp(modelData, "g")
-                                           ,"").trim()
-                                       )
-                               }
-                           }
-            }
-        }
-        
+
     }
 }
