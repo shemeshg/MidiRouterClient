@@ -1,3 +1,16 @@
+/*[[[cog
+import cog
+
+filename = "TextFieldWithTagsDialog.qml"
+
+with open(filename, "r", encoding="utf-8") as f:
+    content = f.read()
+
+# Replace only the first occurrence
+updated = content.replace("CoreTextField", "CoreTextArea", 1)
+
+cog.outl(updated)
+]]]*/
 import QtQuick
 import QtQuick.Controls
 import Design
@@ -25,7 +38,7 @@ CoreTextArea {
             }
         }
     }
-
+    
     TagsEditorDialog {
         id: tagsEditorDialog
     }
@@ -34,10 +47,14 @@ CoreTextArea {
                       setTextFieldText(text)
                   }
     Component.onCompleted: {
-
-
+        
+        
         textFieldWithDialogId.ContextMenu.menu.addItem(separatorComponent.createObject())
         textFieldWithDialogId.ContextMenu.menu.addItem(tagsPopupMenuItemComponent.createObject())
-
+        
     }
 }
+
+//[[[end]]]
+
+

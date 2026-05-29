@@ -32,6 +32,10 @@ MidiControlChannel 1.0 MidiControlChannel.qml
 MidiControlData 1.0 MidiControlData.qml
 MidiControlEventType 1.0 MidiControlEventType.qml
 Presets 1.0 Presets.qml
+RegexFilter 1.0 RegexFilter.qml
+TagsEditorDialog 1.0 TagsEditorDialog.qml
+TextAreaWithTagsDialog 1.0 TextAreaWithTagsDialog.qml
+TextFieldWithTagsDialog 1.0 TextFieldWithTagsDialog.qml
 UserControls 1.0 UserControls.qml
 UserControlsDropdowns 1.0 UserControlsDropdowns.qml
 UserControlsEditControl 1.0 UserControlsEditControl.qml

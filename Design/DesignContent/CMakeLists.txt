@@ -38,6 +38,10 @@ MidiControlChannel.qml
 MidiControlData.qml
 MidiControlEventType.qml
 Presets.qml
+RegexFilter.qml
+TagsEditorDialog.qml
+TextAreaWithTagsDialog.qml
+TextFieldWithTagsDialog.qml
 UserControls.qml
 UserControlsDropdowns.qml
 UserControlsEditControl.qml
@@ -48,9 +52,5 @@ VirtualPorts.qml
 icons/ink_selection_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/mop_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
 icons/upload_2_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg
-QML_FILES RegexFilter.qml
-QML_FILES TextFieldWithTagsDialog.qml
-QML_FILES TagsEditorDialog.qml
-QML_FILES TextAreaWithTagsDialog.qml
         )
     

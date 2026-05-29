@@ -34,3 +34,11 @@ cog -r CMakeLists.txt
 
 cd "$script_dir/.."
 cog -r CMakeLists.txt
+
+cd "$script_dir/.."
+cd Design/DesignContent
+python3 genQmlDirAndCMake.py
+
+cd "$script_dir/.."
+cd Design/DesignContent
+cog -r TextAreaWithTagsDialog.qml
