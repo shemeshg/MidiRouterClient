@@ -9,6 +9,7 @@ import QtQuick.Layouts
 
 
 Window {
+    id: mainWindow
     width: Constants.balData.width
     height: Constants.balData.height
     x: Constants.balData.x

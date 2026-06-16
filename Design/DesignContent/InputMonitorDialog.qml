@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 Dialog {
-    
+    closePolicy: Popup.NoAutoClose
     id: monitorDialog
     popupType: Popup.Window
 

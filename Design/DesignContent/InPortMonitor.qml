@@ -88,7 +88,7 @@ ColumnLayout {
             text: "⧉"
 
             onClicked: ()=>{
-                           var d = monitorDialogComponent.createObject(loaderId);
+                           var d = monitorDialogComponent.createObject(mainWindow);
                            d.inputName = inputName
                            d.open();
                        }
