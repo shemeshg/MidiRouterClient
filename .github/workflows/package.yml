@@ -78,7 +78,7 @@ jobs:
           set -euo pipefail
           mkdir -p build
           pushd build
-          # Tell CMake to find Qt and RtAudio. The qt-actions/setup-qt action sets QTDIR.
+          # Tell CMake to find Qt and RtAudio. install-qt-action sets QT_ROOT_DIR.
           if [ "$RUNNER_OS" = "Windows" ]; then
             cmake .. -G "Visual Studio 17 2022" -A x64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
             cmake --build . --config Release
@@ -202,10 +202,10 @@ jobs:
           mkdir -p build
           pushd build
           if [ "$RUNNER_OS" = "Windows" ]; then
-            cmake .. -G "Visual Studio 17 2022" -A ARM64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake .. -G "Visual Studio 17 2022" -A ARM64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
             cmake --build . --config Release
           else
-            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
             cmake --build . --config Release -j$(nproc || sysctl -n hw.ncpu)
           fi
           popd
