@@ -8,25 +8,35 @@ on:
 
 jobs:
   build-package:
-    runs-on: ${{ matrix.runner }}
+    runs-on: ${{ matrix['runs-on'] }}
     strategy:
       matrix:
         include:
           - name: ubuntu-x64
-            runner: ubuntu-22.04
+            runs-on: ubuntu-22.04
             qt_version: 6
             platform: linux
             arch: x64
           - name: macos-arm64
-            runner: macos-latest
+            runs-on: macos-latest
             qt_version: 6
             platform: macos
             arch: arm64
           - name: windows-x64
-            runner: windows-2022
+            runs-on: windows-2022
             qt_version: 6
             platform: windows
             arch: x64
+          - name: ubuntu-arm64
+            runs-on: [self-hosted, linux, ARM64]
+            qt_version: 6
+            platform: linux
+            arch: arm64
+          - name: windows-arm64
+            runs-on: [self-hosted, windows, ARM64]
+            qt_version: 6
+            platform: windows
+            arch: arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,13 +80,13 @@ jobs:
           pushd build
           # Tell CMake to find Qt and RtAudio. The qt-actions/setup-qt action sets QTDIR.
           if [ "$RUNNER_OS" = "Windows" ]; then
-            cmake .. -G "Visual Studio 17 2022" -A x64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake .. -G "Visual Studio 17 2022" -A x64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
             cmake --build . --config Release
           elif [ "$RUNNER_OS" = "macOS" ]; then
-            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR" -DCMAKE_OSX_ARCHITECTURES=arm64
+            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR" -DCMAKE_OSX_ARCHITECTURES=arm64
             cmake --build . --config Release -j$(sysctl -n hw.ncpu)
           else
-            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
             cmake --build . --config Release -j$(nproc || sysctl -n hw.ncpu)
           fi
           popd
