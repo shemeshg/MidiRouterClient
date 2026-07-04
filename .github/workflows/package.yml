@@ -2,9 +2,6 @@ name: Build and package Qt/QML app
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
 
 jobs:
   build-package:
