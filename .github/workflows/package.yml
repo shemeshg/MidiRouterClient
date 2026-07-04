@@ -46,6 +46,7 @@ jobs:
         with:
           version: '6.6.*'
           target: 'desktop'
+          modules: 'qtwebsockets qtwebchannel'
           cache: 'true'
           setup-python: 'true'
 
@@ -181,6 +182,7 @@ jobs:
         with:
           version: '6.6.*'
           target: 'desktop'
+          modules: 'qtwebsockets qtwebchannel'
           cache: 'true'
           setup-python: 'true'
 
