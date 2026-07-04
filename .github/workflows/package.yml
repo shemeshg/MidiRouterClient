@@ -1,0 +1,211 @@
+name: Build and package Qt/QML app
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-package:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - name: ubuntu-x64
+            runner: ubuntu-22.04
+            qt_version: 6
+            platform: linux
+            arch: x64
+          - name: macos-arm64
+            runner: macos-latest
+            qt_version: 6
+            platform: macos
+            arch: arm64
+          - name: windows-x64
+            runner: windows-2022
+            qt_version: 6
+            platform: windows
+            arch: x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Qt
+        uses: qt-actions/setup-qt@v2
+        with:
+          version: '6.6.2'
+
+      - name: Show environment
+        run: |
+          echo "OS: $RUNNER_OS"
+          echo "Runner: $RUNNER_NAME"
+          echo "Workspace: $GITHUB_WORKSPACE"
+
+      - name: Build and install RtAudio
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/thestk/rtaudio.git rtaudio
+          mkdir -p rtaudio/build rtaudio/install
+          pushd rtaudio/build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/../install
+          cmake --build . --config Release --target install
+          popd
+
+      - name: Configure CMake build
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          pushd build
+          # Tell CMake to find Qt and RtAudio. The qt-actions/setup-qt action sets QTDIR.
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            cmake .. -G "Visual Studio 17 2022" -A x64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake --build . --config Release
+          elif [ "$RUNNER_OS" = "macOS" ]; then
+            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR" -DCMAKE_OSX_ARCHITECTURES=arm64
+            cmake --build . --config Release -j$(sysctl -n hw.ncpu)
+          else
+            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake --build . --config Release -j$(nproc || sysctl -n hw.ncpu)
+          fi
+          popd
+
+      - name: Package with CPack (per-platform generators)
+        shell: bash
+        run: |
+          set -euo pipefail
+          pushd build
+          # Always produce a ZIP
+          cpack -C Release -G ZIP
+
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            # Produce DEB for Ubuntu
+            cpack -C Release -G DEB || true
+          fi
+
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            # Produce NSIS installer for Windows
+            cpack -C Release -G NSIS || true
+          fi
+
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            # Produce DragNDrop (dmg) for macOS
+            cpack -C Release -G DragNDrop || true
+          fi
+
+          ls -lah
+          popd
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-${{ matrix.name }}-zip
+          path: build/*.zip
+
+      - name: Upload DEB artifact (Linux)
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-${{ matrix.name }}-deb
+          path: build/*.deb
+
+      - name: Upload NSIS/EXE artifact (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-${{ matrix.name }}-exe
+          path: build/*.exe
+
+      - name: Upload DMG artifact (macOS)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-${{ matrix.name }}-dmg
+          path: build/*.dmg
+
+      - name: Build summary
+        run: echo "Build finished for ${{ matrix.name }}"
+
+  notes:
+    runs-on: ubuntu-22.04
+    needs: build-package
+    steps:
+      - name: Add notes
+        run: |
+          echo "Note: For Windows ARM64 or Ubuntu ARM64 builds you will likely need self-hosted runners or cross-compilation; GitHub-hosted Windows ARM runners are not generally available." 
+
+  build-package-arm:
+    # ARM builds require self-hosted runners for those platforms
+    strategy:
+      matrix:
+        include:
+          - name: ubuntu-arm64
+            runs-on: [self-hosted, linux, ARM64]
+            qt_version: 6
+            platform: linux
+            arch: arm64
+          - name: windows-arm64
+            runs-on: [self-hosted, windows, ARM64]
+            qt_version: 6
+            platform: windows
+            arch: arm64
+    runs-on: ${{ matrix['runs-on'] }}
+    needs: build-package
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Qt
+        uses: qt-actions/setup-qt@v2
+        with:
+          version: '6.6.2'
+
+      - name: Build and install RtAudio
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/thestk/rtaudio.git rtaudio
+          mkdir -p rtaudio/build rtaudio/install
+          pushd rtaudio/build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/../install
+          cmake --build . --config Release --target install
+          popd
+
+      - name: Configure CMake build (ARM)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          pushd build
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            cmake .. -G "Visual Studio 17 2022" -A ARM64 -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake --build . --config Release
+          else
+            cmake .. -DCMAKE_BUILD_TYPE=Release -DRTAUDIO_ROOT=$PWD/../rtaudio/install -DCMAKE_PREFIX_PATH="$QTDIR"
+            cmake --build . --config Release -j$(nproc || sysctl -n hw.ncpu)
+          fi
+          popd
+
+      - name: Package with CPack (ARM)
+        shell: bash
+        run: |
+          set -euo pipefail
+          pushd build
+          cpack -C Release -G ZIP || true
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            cpack -C Release -G DEB || true
+          fi
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            cpack -C Release -G NSIS || true
+          fi
+          ls -lah
+          popd
+
+      - name: Upload ARM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-router-client-${{ matrix.name }}-zip
+          path: build/*.zip
+
