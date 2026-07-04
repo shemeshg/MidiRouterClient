@@ -31,10 +31,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Qt
-        uses: qt-actions/setup-qt@v2
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
         with:
-          version: '6.6.2'
+          version: '6.6.*'
+          target: 'desktop'
+          cache: 'true'
+          setup-python: 'true'
 
       - name: Show environment
         run: |
