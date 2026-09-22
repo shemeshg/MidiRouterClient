@@ -5,7 +5,7 @@
 # ]]]
 cmake_minimum_required(VERSION 3.16)
 
-project(midi-router-client VERSION 2.44.0 LANGUAGES CXX)
+project(midi-router-client VERSION 2.45.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
@@ -23,7 +23,6 @@ qt_standard_project_setup(REQUIRES 6.5)
 
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
     set(MACOSX TRUE)
     set(PROJECT_OS "MACOSX")
 endif()

@@ -14,7 +14,7 @@ void virtualInOutPortCallback( double deltatime, std::vector< unsigned char > *m
 void VirtualInOut::addVirtualInOutPort(std::string portname){
 
     midiinVirtual->openVirtualPort(portname);
-
+    midiinVirtual->ignoreTypes(false, false, false);
     midioutVirtual->openVirtualPort(portname);
     midiinVirtual->setCallback( &virtualInOutPortCallback, (void *)this );
 
