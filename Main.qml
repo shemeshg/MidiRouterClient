@@ -1,4 +1,4 @@
-import QtQuick
+import QtQuick.Controls.Fusion
 import DesignContent
 
 App {

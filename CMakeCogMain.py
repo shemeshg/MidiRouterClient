@@ -2,7 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 import os
 
 template_dict = {
-           "APP_VER": "2.45.0",
+           "APP_VER": "2.45.1",
            "APP_NAME": "midi-router-client",
            "APP_DESCRIPTION": "Midi router client",
            "APP_VENDOR": "shemeshg",
