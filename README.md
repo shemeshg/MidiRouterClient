@@ -1,6 +1,9 @@
 # Midi Router Client (Ver 2)
 
-<a href="https://sourceforge.net/projects/midi-router-client"><img alt="Midi router Reviews" src="https://sourceforge.net/cdn/syndication/badge_img/3211406/oss-rising-star-white?achievement=oss-rising-star&amp;r=https://sourceforge.net/p/midi-router-client/admin/files/badges"  style="width: 200px;"></a>
+<a href="https://sourceforge.net/projects/midi-router-client"><img alt="Midi router Reviews" src="https://a.fsdn.com/con/app/syndication/badge_img_direct/oss-community-choice/oss-community-choice/?variant_id=sf"  style="width: 200px;"></a>
+
+
+
 
 Create routes from anywhere to anywhere
 
